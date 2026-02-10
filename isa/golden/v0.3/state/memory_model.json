@@ -1,0 +1,76 @@
+{
+  "notes": [
+    "This file defines the Linx memory ordering contract in Linx terms.",
+    "The goal is a weakly-ordered model with explicit acquire/release and fence operations, suitable for out-of-order implementations.",
+    "v0.3 staged profile adds an explicit BCC/MTC channel contract for AI tile workloads while preserving v0.2 ordering baseline."
+  ],
+  "model": {
+    "endianness": "little",
+    "default_memory_type": "Normal",
+    "coherence": {
+      "per_location_total_order": true,
+      "scope": "Normal"
+    },
+    "ordering": {
+      "base_load_store": "Relaxed",
+      "channel_contract": {
+        "bcc": "Scalar load/store/atomic/fence channel",
+        "mtc": "Tile memory channel (TLOAD/TSTORE/TPREFETCH and staged MCALL-like flow)",
+        "rule": "BCC and MTC memory operations participate in one architectural ordering domain for a single LXCPU unless profile overrides."
+      },
+      "atomic_qualifiers": {
+        "aq": "Acquire",
+        "rl": "Release",
+        "aqrl": "AcquireRelease"
+      },
+      "mcall_mode_transition": {
+        "enter": "Acquire-style boundary required before MCALL-like execution starts.",
+        "exit": "Release-style boundary required before scalar memory issue resumes.",
+        "scalar_channel_state": "BCC scalar memory issue is architecturally closed while MCALL-like mode is active."
+      },
+      "tma": {
+        "ops": [
+          "TLOAD",
+          "TSTORE",
+          "TPREFETCH"
+        ],
+        "domain": "Normal",
+        "semantics": [
+          "TLOAD/TSTORE are architectural memory operations in the same global ordering domain as scalar loads/stores for the current LXCPU.",
+          "TLOAD/TSTORE participate in the Linx ordering rules, including acquire/release qualifiers (e.g. B.ATTR.{aq,rl,aqrl}) and fence operations where applicable.",
+          "Minimal correctness rule: a core must not allow a TSTORE to become visible before an older scalar store from the same LXCPU that is ordered-before it (and similarly, a TLOAD must not bypass older ordered stores).",
+          "A single TLOAD/TSTORE may decompose into multiple internal memory beats and is architecturally non-atomic to external observers."
+        ]
+      },
+      "simt_lane_policy": {
+        "inactive_lane_modes": [
+          "merge",
+          "zero"
+        ],
+        "scope": "Vector/tile execution blocks (e.g. BSTART.VPAR/BSTART.VSEQ)",
+        "rule": "Inactive-lane behavior is explicit and deterministic; implementations must not mix merge/zero semantics within one architectural mode."
+      }
+    },
+    "fences": {
+      "FENCE.D": {
+        "pred_succ_bitmap_bits": [
+          "R (normal reads)",
+          "W (normal writes)",
+          "O (device/MMIO)",
+          "I (instruction fetch visibility)"
+        ],
+        "semantics": [
+          "Orders memory operations of the classes selected by pred_imm before subsequent operations selected by succ_imm in program order for the current LXCPU.",
+          "If pred_imm and succ_imm include O, the fence orders device/MMIO accesses with respect to normal memory accesses.",
+          "If pred_imm or succ_imm include I, the fence additionally provides instruction-fetch visibility ordering similar to FENCE.I."
+        ]
+      },
+      "FENCE.I": {
+        "semantics": [
+          "Ensures instruction fetch observes prior stores from the current LXCPU to memory that may be executed as code.",
+          "Defines the architectural boundary for self-modifying code and code generation."
+        ]
+      }
+    }
+  }
+}

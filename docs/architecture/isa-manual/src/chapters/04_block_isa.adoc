@@ -14,6 +14,8 @@ granularity.
 * `BSTART.*` / `C.BSTART.*` terminate the current block and begin the next one.
 * A block may also be *implicitly* terminated by the next `BSTART.*` marker in the instruction stream (toolchain
   convention; some code emits an explicit `BSTOP`/`C.BSTOP` for clarity).
+* Canonical v0.3 assembly uses typed `BSTART.<type>` forms only; legacy PAR-style shorthand is treated as a non-canonical
+  alias in reconciliation tooling and is rejected by v0.3 drift gates.
 * Conditional transitions use a two-step sequence:
   1. set the block condition using `SETC.*` / `C.SETC.*`
   2. select the next block using `BSTART.* COND, <target>`
@@ -21,7 +23,7 @@ granularity.
 [[blockisa-forms]]
 === Block forms (coupled / decoupled / template)
 
-The v0.2 bring-up profile defines **three block forms**. Toolchains and implementations MUST enforce the legality
+The v0.3 staged profile (preserving v0.2 baseline encodings) defines **three block forms**. Toolchains and implementations MUST enforce the legality
 rules in this section.
 
 [[blockisa-forms-coupled]]
@@ -153,8 +155,8 @@ The bring-up profile constrains certain combinations (examples):
 * `.FP` blocks mirror `.STD` transitions but mark a floating-point execution context.
 
 Block types beyond the scalar core (e.g. `.TMA`, `.TEPL`, `.VPAR`, `.VSEQ`, `.CUBE`, `.FIXP`) appear in the catalog as
-Block Split forms; this manual treats their detailed execution semantics as outside scope of the v0.2 bring-up unless
-explicitly specified in the golden sources (`isa/golden/v0.2/`).
+Block Split forms; this manual treats their detailed execution semantics as staged in v0.3 unless explicitly specified
+in the golden sources (`isa/golden/v0.3/`).
 
 [[blockisa-tile]]
 === Tile blocks (TAU)
@@ -170,10 +172,12 @@ Tile blocks operate on **tile registers** (see <<progmodel-tile>>), and use expl
 * `B.IOR` describes GPR inputs/outputs for the block
 * `B.DIM` / `C.B.DIM*` may be used to provide block-local dimensions and valid masks via `LB0..LB2`
 
-Bring-up contract (v0.2 profile):
+Bring-up contract (v0.3 staged profile):
 
 * `BSTART.TMA`, `BSTART.CUBE`, `BSTART.VPAR`, and `BSTART.VSEQ` are treated as **decoupled headers** (see
   <<blockisa-forms-decoupled>>). Their body is selected by `B.TEXT`.
+* `TLOAD`/`TSTORE`/`TPREFETCH` are the staged memory-tile baseline for AI workloads.
+* `MCALL` semantics remain represented via `.MPAR`/`.MSEQ` execution modes in the staged profile.
 
 **Immutability rule (design intent):** a tile block consumes input tiles and produces a new destination tile; it does
 not mutate the input tiles in-place.
@@ -195,7 +199,7 @@ Bring-up conventions:
 * Scalar-only implementations may treat most descriptors as **hints/no-ops**, but accelerated implementations may
   consult them for correctness (tile operand binding, ordering, traps).
 
-The v0.2 catalog includes the following descriptor families:
+The v0.3 staged catalog includes the following descriptor families:
 
 * **Block I/O binding**
   - `B.IOR`: binds GPR inputs/outputs for a block.
@@ -213,6 +217,16 @@ The v0.2 catalog includes the following descriptor families:
 NOTE: Detailed semantics for tile operand binding and for attribute/hint fields are under active bring-up. This manual
 specifies the *encoded contract* (see <<insnref>>) and provides bring-up guidance; implementations may initially treat
 these as metadata that does not affect scalar execution unless explicitly stated by the platform profile.
+
+[[blockisa-v03-ai]]
+=== v0.3 staged AI extension rules
+
+The v0.3 staged profile integrates only reconciled and internally consistent AI-oriented behavior:
+
+* Canonical mnemonic policy: vector canonical forms are `V.*`; legacy raw `L.*` spellings are normalization-only input.
+* Canonical block-start policy: use typed `BSTART.{TMA,CUBE,VPAR,VSEQ,...}` forms in spec/docs/tests.
+* `B.IOT/B.IOTI` group scheduling is defined for staged groups 0/1; unresolved `group=2` behavior is deferred.
+* `MAMULBMX*` raw material with contradictory `group=2` contracts is deferred and not part of canonical v0.3 outputs.
 
 [[blockisa-assembly]]
 === Assembly/disassembly conventions

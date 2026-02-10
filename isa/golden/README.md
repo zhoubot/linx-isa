@@ -12,19 +12,28 @@ This directory contains the **golden** (authoritative) ISA sources for LinxISA.
 
 ## Source vs compiled outputs
 
-- **Golden sources** (authoritative, current): `isa/golden/v0.2/**`
-- **Compiled catalog** (checked in, current): `isa/spec/current/linxisa-v0.2.json`
+- **Golden sources (stable current)**: `isa/golden/v0.2/**`
+- **Compiled catalog (stable current)**: `isa/spec/current/linxisa-v0.2.json`
+- **Golden sources (staged next)**: `isa/golden/v0.3/**`
+- **Compiled catalog (staged next)**: `isa/spec/v0.3/linxisa-v0.3.json`
 - **Generated decoders/codecs** (checked in): `isa/generated/codecs/**`
 
-The compiled catalog is generated from the golden sources using:
+Build stable v0.2:
 
 ```bash
-python3 tools/isa/build_golden.py --in isa/golden/v0.2 --out isa/spec/current/linxisa-v0.2.json
+python3 tools/isa/build_golden.py --profile v0.2 --pretty
+```
+
+Build staged v0.3:
+
+```bash
+python3 tools/isa/build_golden.py --profile v0.3 --pretty
 ```
 
 ## Opcode database
 
-Instruction encodings live in `isa/golden/v0.2/opcodes/*.opc` using a simple, line-based DSL.
+Instruction encodings live in `isa/golden/v0.2/opcodes/*.opc` and `isa/golden/v0.3/opcodes/*.opc` using a simple,
+line-based DSL.
 These files are the authoritative encoding database.
 
 ## References

@@ -3,6 +3,32 @@
 
 This section records notable changes to the LinxISA catalog and to the associated manual/tooling in this repository.
 
+[[changelog-v0-3-staged-2026-02-11]]
+=== v0.3 (staged) — 2026-02-11
+
+**Reconciliation and canonicalization**
+
+* Added machine-checkable v0.3 reconciliation artifacts generated from raw sources:
+  - `isa/golden/v0.3/reconcile/reconcile_report.json`
+  - `isa/golden/v0.3/reconcile/reconcile_notes.md`
+* Locked canonical output policy for v0.3 staged artifacts:
+  - typed block starts (`BSTART.<type>`) only; no canonical `BSTART.PAR`,
+  - `V.*` mnemonic family only in canonical v0.3 outputs,
+  - legacy `.kill` spellings treated as non-canonical input forms.
+
+**Spec/tooling**
+
+* Added staged v0.3 compiled catalog path: `isa/spec/v0.3/linxisa-v0.3.json`.
+* Extended ISA generators/validators with `--profile {v0.2,v0.3}` defaults.
+* Added v0.3 drift gate: `tools/isa/check_no_legacy_v03.py`.
+
+**AI-extension staging**
+
+* Staged consistent AI bring-up subset (SIMT-lane policy, typed tile/vector block headers, TMA channel baseline).
+* Deferred unresolved raw contracts from canonical v0.3 outputs:
+  - `MAMULBMX*` `group=2` semantics,
+  - non-reconciled legacy 0.53 fragments.
+
 [[changelog-v0-2-bringup-2026-02-09]]
 === v0.2 (bring-up) — 2026-02-09
 

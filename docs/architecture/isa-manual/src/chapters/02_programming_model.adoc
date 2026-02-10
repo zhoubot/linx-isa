@@ -24,16 +24,17 @@ Bring-up conventions:
 * PC-relative immediates in this manual and in the ISA catalog use **TPC** as the base unless stated otherwise. For a
   multi-part instruction, the base address is the address of the first part.
 
-Address translation (v0.2 bring-up profile):
+Address translation (v0.3 staged profile, preserving v0.2 MMU baseline):
 
 * When `TCR_ACR1.MME = 0`, instruction fetch and data accesses treat addresses as physical (identity translation).
 * When `TCR_ACR1.MME = 1`, `TPC`/`BPC` and all instruction/data addresses are virtual and translated by the CPU MMU
   defined in <<system-mm>>.
 
-The privileged SSR state uses these names in exception capture (see <<ssr-acr-scoped>>):
+The privileged SSR state uses `EBARG` as the authoritative trap/context capture (see <<ssr-acr-scoped>>):
 
-* `EBPC_ACRn` captures the faulting block's BPC.
-* `ETPC_ACRn` captures the faulting instruction's TPC.
+* `EBARG_BPC_CUR_ACRn` captures the current block PC (`BPC`).
+* `EBARG_TPC_ACRn` captures the resume/fault PC for body execution (`BI=1`).
+* Legacy trap-save singleton naming from pre-v0.2 drafts is not part of canonical v0.2/v0.3 artifacts.
 
 [[progmodel-gpr]]
 === General-purpose registers (GPRs)
@@ -43,7 +44,7 @@ JSON catalog (`registers.reg5`).
 
 include::../generated/registers_reg5.adoc[]
 
-NOTE: The v0.2 `reg5` table also includes special spellings used by the assembler/disassembler for queue operations
+NOTE: The v0.2/v0.3 `reg5` table also includes special spellings used by the assembler/disassembler for queue operations
 (e.g. destination selectors `t`/`u` used as `->t` / `->u`). These are not general-purpose
 architectural registers in the same sense as `a0`, `s0`, etc.
 
@@ -79,6 +80,15 @@ Rules (bring-up convention):
 * LB registers are part of the LXCPU architectural state and must be preserved across context switches.
 * Accelerator-style blocks (e.g. tile blocks) may use LB0–LB2 to pass dimensions and valid masks.
 
+[[progmodel-lane-policy]]
+=== SIMD lane policy (v0.3 staged)
+
+For `BSTART.VPAR`/`BSTART.VSEQ` execution, v0.3 staged profile locks an explicit inactive-lane policy:
+
+* **merge mode**: inactive lanes preserve the previous destination value.
+* **zero mode**: inactive lanes write zero.
+* Lane policy is architecturally selected by block/vector mode state and must be deterministic across LLVM, QEMU, and RTL.
+
 [[progmodel-tile]]
 === Tile registers (TAU)
 
@@ -104,7 +114,7 @@ BARG is initialized at block start and is consulted at block commit to determine
 * the next block target (direct/conditional/indirect/call/return), and
 * per-block commit metadata (e.g. output register mapping for split blocks).
 
-Bring-up conventions (v0.2):
+Bring-up conventions (v0.3 staged, with v0.2 trap ABI baseline):
 
 * `BARG.BPC` records the current block start address (**BPC**).
 * `BARG.BPCN` records the selected next block address (**BPCN**).
@@ -127,7 +137,7 @@ control.
 ==== Access Control Rings (ACR)
 
 Linx partitions privileged state using **Access Control Rings (ACR)**. The architecture defines up to **16** rings
-named **ACR0..ACR15**, which are organized as a tree rooted at **ACR0** (see <<system-acr-tree>>). In the v0.2 bring-up
+named **ACR0..ACR15**, which are organized as a tree rooted at **ACR0** (see <<system-acr-tree>>). In the v0.3 staged
 profile:
 
 * **ACR0 is the most privileged** (root management privilege).
@@ -159,7 +169,7 @@ include::../generated/trapno_encoding.adoc[]
 Linx defines a floating-point control and status register, **FCSR**, that controls rounding and records floating-point
 exceptions for floating-point instructions.
 
-NOTE: In the v0.2 bring-up profile, floating-point exceptions do **not** trap; they only update sticky flags in `FCSR`
+NOTE: In the v0.3 staged profile (same as v0.2 baseline), floating-point exceptions do **not** trap; they only update sticky flags in `FCSR`
 (and `CSTATE` mirrors as defined by the platform).
 
 For bring-up, Linx uses the following layout (32-bit):

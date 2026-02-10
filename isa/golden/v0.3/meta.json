@@ -1,0 +1,16 @@
+{
+  "isa": "LinxISA",
+  "version": "0.3",
+  "status": "draft",
+  "instruction_lengths_bits": [
+    16,
+    32,
+    48,
+    64
+  ],
+  "notes": [
+    "This directory is the authoritative staged golden ISA definition for v0.3.",
+    "v0.3 staging keeps the v0.2 encoding baseline and integrates only reconciled, consistent AI-extension semantics.",
+    "Canonical v0.3 artifacts must use V.* mnemonic families and typed BSTART forms; raw aliases are normalized via reconciliation tooling."
+  ]
+}

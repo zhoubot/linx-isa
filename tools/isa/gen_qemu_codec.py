@@ -321,8 +321,14 @@ def _generate_decode_file(
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument(
+        "--profile",
+        choices=["v0.2", "v0.3"],
+        default="v0.2",
+        help="ISA profile for default --spec path",
+    )
+    ap.add_argument(
         "--spec",
-        default=os.path.join("isa", "spec", "current", "linxisa-v0.2.json"),
+        default=None,
         help="Path to ISA JSON spec",
     )
     ap.add_argument(
@@ -337,10 +343,17 @@ def main() -> int:
     )
     args = ap.parse_args()
 
-    with open(args.spec, "r", encoding="utf-8") as f:
+    default_spec = (
+        os.path.join("isa", "spec", "v0.3", "linxisa-v0.3.json")
+        if args.profile == "v0.3"
+        else os.path.join("isa", "spec", "current", "linxisa-v0.2.json")
+    )
+    spec_path = args.spec or default_spec
+
+    with open(spec_path, "r", encoding="utf-8") as f:
         spec = json.load(f)
 
-    spec_label = os.path.normpath(str(spec.get("_spec_path") or _normalize_spec_label(args.spec)))
+    spec_label = os.path.normpath(str(spec.get("_spec_path") or _normalize_spec_label(spec_path)))
 
     by_len: Dict[int, List[Dict[str, Any]]] = defaultdict(list)
     for inst in spec.get("instructions", []):

@@ -2,11 +2,13 @@
 """
 Build the compiled LinxISA catalog from the multi-file golden sources.
 
-Golden sources live under:
+Golden sources live under versioned roots such as:
   isa/golden/v0.2/
+  isa/golden/v0.3/
 
-Compiled output is checked in at:
+Compiled outputs are checked in at:
   isa/spec/current/linxisa-v0.2.json
+  isa/spec/v0.3/linxisa-v0.3.json
 
 This builder is intentionally deterministic:
   - no timestamps
@@ -591,16 +593,29 @@ def _canonical_json(obj: Any) -> str:
     return json.dumps(obj, sort_keys=True, separators=(",", ":"))
 
 
+def _profile_defaults(profile: str) -> Tuple[str, str]:
+    if profile == "v0.3":
+        return "isa/golden/v0.3", "isa/spec/v0.3/linxisa-v0.3.json"
+    return "isa/golden/v0.2", "isa/spec/current/linxisa-v0.2.json"
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--in", dest="in_dir", default="isa/golden/v0.2", help="Golden source directory")
-    ap.add_argument("--out", default="isa/spec/current/linxisa-v0.2.json", help="Output catalog JSON path")
+    ap.add_argument(
+        "--profile",
+        choices=["v0.2", "v0.3"],
+        default="v0.2",
+        help="ISA profile for default in/out paths",
+    )
+    ap.add_argument("--in", dest="in_dir", default=None, help="Golden source directory")
+    ap.add_argument("--out", default=None, help="Output catalog JSON path")
     ap.add_argument("--pretty", action="store_true", help="Pretty-print JSON")
     ap.add_argument("--check", action="store_true", help="Verify output is up-to-date without writing")
     args = ap.parse_args()
 
-    in_dir = Path(args.in_dir)
-    out_path = Path(args.out)
+    default_in, default_out = _profile_defaults(args.profile)
+    in_dir = Path(args.in_dir or default_in)
+    out_path = Path(args.out or default_out)
 
     built = build(in_dir)
 

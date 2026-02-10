@@ -5,7 +5,7 @@ This chapter summarizes the addressing conventions used by the scalar memory ins
 instruction reference for the full set of encodings and per-form notes.
 
 [[memory-model]]
-=== Memory model and ordering (v0.2)
+=== Memory model and ordering (v0.3 staged, v0.2 baseline preserved)
 
 Linx uses a **weakly ordered** memory model suitable for out-of-order
 implementations. The ordering contract is expressed in Linx terms:
@@ -16,7 +16,7 @@ implementations. The ordering contract is expressed in Linx terms:
 * A **device/MMIO** access is any access to regions defined by the platform
   as device memory (including UART-style MMIO used by bring-up).
 
-Unless a platform profile tightens the rules, the v0.2 contract is:
+Unless a platform profile tightens the rules, the staged v0.3 contract is:
 
 * Plain loads/stores are **Relaxed** with respect to other addresses.
 * For a single aligned location in **Normal** memory, writes participate in a
@@ -30,10 +30,45 @@ barrier definitions, but using Linx terms (LXCPU, commit, and the Block ISA
 execution model). A platform profile MAY define stronger ordering for
 performance or compatibility.
 
+[[memory-channels]]
+=== BCC and MTC channels (v0.3 staged)
+
+v0.3 staged bring-up explicitly models two architectural memory issue channels:
+
+* **BCC channel**: scalar `load/store/atomic/fence` operations and ordering point for scalar blocks.
+* **MTC channel**: tile-oriented memory blocks (`TLOAD`, `TSTORE`, `TPREFETCH`) and staged MCALL-like memory mode.
+
+Staged rules:
+
+* In normal tile mode, BCC and MTC requests share one architectural ordering contract (`Program order` + fences/aq/rl).
+* Entering MCALL-like mode requires an acquire-style boundary before MTC-only execution begins.
+* Exiting MCALL-like mode requires a release-style boundary before subsequent scalar blocks execute.
+* While MCALL-like mode is active, scalar memory issue is architecturally closed for correctness.
+
+[[memory-tload-tstore]]
+=== TLOAD/TSTORE staged semantics
+
+`TLOAD` and `TSTORE` are template-style tile memory operations. The staged architectural model is:
+
+* Address footprint is 2D and derived from base/stride/dimension state (`RegSrc0`, `RegSrc1`, `LB0/LB1`).
+* A single `TLOAD`/`TSTORE` may decompose into multiple internal memory beats; completion is not atomic to observers.
+* Internal beats of one operation are not guaranteed to issue in source-program order.
+* Unaligned shared-memory access is allowed in staged profile unless tightened by platform policy.
+* Group-overlap contracts that are unresolved in raw v0.3 material are deferred from canonical spec behavior.
+
+[[memory-mcall]]
+=== MCALL staged semantics
+
+MCALL-like behavior remains staged through `.MPAR/.MSEQ` execution modes:
+
+* Execution is non-speculative until declared input dependencies (`B.IOT`/`B.IOD`) are resolved.
+* Prior side-effecting tile stores must be globally ordered before MCALL-like execution starts.
+* Detailed VREG-only local register semantics from raw notes are deferred until fully reconciled.
+
 [[memory-types]]
 ==== Memory types (Normal vs Device)
 
-Linx platforms classify memory addresses into types. This v0.2 manual uses two
+Linx platforms classify memory addresses into types. This v0.3 staged manual uses two
 high-level types:
 
 * **Normal**: cacheable memory used for code and data (SRAM/DRAM).
@@ -79,7 +114,7 @@ stronger behavior unless the platform profile states so.
 [[memory-endianness]]
 === Endianness and alignment
 
-The v0.2 Linx toolchain and emulator model are **little-endian**: the least-significant byte of a multi-byte value is
+The v0.3 staged Linx toolchain and emulator model are **little-endian**: the least-significant byte of a multi-byte value is
 stored at the lowest address.
 
 Alignment rules are profile-defined. Unless a profile explicitly enables split/misaligned accesses, software should
@@ -133,9 +168,9 @@ These forms are used by toolchains for efficient access to nearby constants and 
 [[memory-atomics]]
 === Atomics (overview)
 
-The v0.2 catalog includes load-reserved/store-conditional (`LR.*`/`SC.*`) and read-modify-write style atomic operations
+The v0.3 staged catalog includes load-reserved/store-conditional (`LR.*`/`SC.*`) and read-modify-write style atomic operations
 with qualifier suffixes (e.g. `.aq`, `.rl`). The precise memory ordering semantics are defined by the ISA draft
-(`isa/golden/v0.2/`) and the architectural model implemented by the toolchain/QEMU/RTL.
+(`isa/golden/v0.3/`) and the architectural model implemented by the toolchain/QEMU/RTL.
 
 Bring-up model (ordering qualifiers):
 
@@ -153,7 +188,7 @@ memory ordering; ordering with respect to **Device/MMIO** requires selecting
 [[memory-fences]]
 === Fences
 
-The v0.2 catalog defines two fence instructions:
+The v0.3 staged catalog defines two fence instructions:
 
 * `FENCE.D pred_imm, succ_imm`: orders memory operations.
 * `FENCE.I`: synchronizes instruction fetch with prior data stores (self-modifying code / I-cache coherence boundary).
@@ -163,14 +198,14 @@ The v0.2 catalog defines two fence instructions:
 
 `pred_imm` and `succ_imm` are **bitmaps** selecting classes of operations.
 
-Bring-up definition (v0.2):
+Bring-up definition (v0.3 staged):
 
 * Bit 0 (`R`): normal memory reads
 * Bit 1 (`W`): normal memory writes
 * Bit 2 (`O`): device/MMIO accesses
 * Bit 3 (`I`): instruction-fetch visibility (see `FENCE.I`)
 
-Semantics (v0.2):
+Semantics (v0.3 staged):
 
 * `FENCE.D` orders all prior operations selected by `pred_imm` before all later
   operations selected by `succ_imm` in program order on the same LXCPU.

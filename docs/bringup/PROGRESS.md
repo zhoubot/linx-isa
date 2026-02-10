@@ -1,13 +1,13 @@
 # Bring-up Progress
 
-Last updated: 2026-02-10
+Last updated: 2026-02-11
 
 ## Phase status matrix
 
 | Phase | Not Started | In Progress | Blocked | Passed | Evidence |
 | --- | --- | --- | --- | --- | --- |
 | 1. Compiler |  | X |  |  | `compiler/COMPILER_PLAN.md`, `compiler/llvm/tests/` |
-| 2. ISA spec integration |  | X |  |  | `isa/golden/v0.2/`, `isa/spec/current/linxisa-v0.2.json`, `tools/isa/` |
+| 2. ISA spec integration |  | X |  |  | `isa/golden/v0.2/`, `isa/golden/v0.3/`, `isa/spec/current/linxisa-v0.2.json`, `isa/spec/v0.3/linxisa-v0.3.json`, `tools/isa/` |
 | 3. Emulator/QEMU |  | X |  |  | `tests/qemu/`, `docs/bringup/phases/03_emulator_qemu.md` |
 | 4. RTL (pyCircuit agile) |  | X |  |  | `docs/bringup/phases/04_rtl.md`, `/Users/zhoubot/pyCircuit` |
 | 5. FPGA (ZYBO Z7-20) | X |  |  |  | `docs/bringup/phases/05_fpga_zybo_z7.md` |
@@ -32,11 +32,14 @@ Last updated: 2026-02-10
 
 ## Latest validation snapshot in `linxisa`
 
-### Compiler + QEMU regression (2026-02-10)
+### Compiler + QEMU regression (2026-02-11)
 
 - End-to-end regression: `bash tools/regression/run.sh` (PASS)
-- Strict system gate: `./tests/qemu/run_tests.sh --suite system --require-test-id 0x110E` (PASS)
+- v0.3 staged catalog checks: `python3 tools/isa/build_golden.py --profile v0.3 --check` + `python3 tools/isa/validate_spec.py --profile v0.3` (PASS)
+- v0.3 canonical alias gate: `python3 tools/isa/check_no_legacy_v03.py --root .` (PASS)
+- Strict system gate: `./tests/qemu/check_system_strict.sh` (PASS)
 - Compiler tests: 31 compile tests for `linx64` and `linx32` (PASS)
+- PTO v0.3 compile flow: `bash tools/pto/run_v03_pto_to_linx.sh` (PASS)
 - ISA mnemonic coverage (from `compiler/llvm/tests/analyze_coverage.py`):
   - Spec unique mnemonics: 702
   - Covered spec mnemonics: 702

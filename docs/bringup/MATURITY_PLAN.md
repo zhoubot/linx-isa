@@ -1,6 +1,6 @@
 # LinxISA Maturity Plan (Bring-up to "Tier-1" Quality)
 
-Last updated: 2026-02-10
+Last updated: 2026-02-11
 
 This document is a **concrete roadmap** to bring LinxISA to a maturity level
 comparable to established ISAs (Arm/x86/RISC-V) across:
@@ -14,8 +14,10 @@ This plan intentionally uses repository artifacts as gates and evidence sources.
 
 ## Definitions
 
-- **ISA catalog**: `isa/spec/current/linxisa-v0.2.json` (generated from
+- **ISA catalog (stable)**: `isa/spec/current/linxisa-v0.2.json` (generated from
   `isa/golden/v0.2/`).
+- **ISA catalog (staged)**: `isa/spec/v0.3/linxisa-v0.3.json` (generated from
+  `isa/golden/v0.3/`).
 - **Block ISA invariants**: safety rule, commit-time control flow, template
   block behavior, call-header adjacency.
 - **AVS**: architecture validation suite (see `avs/`).
@@ -27,8 +29,10 @@ This plan intentionally uses repository artifacts as gates and evidence sources.
 Evidence in repo:
 
 - `bash tools/regression/run.sh` passes.
-- `./tests/qemu/run_tests.sh --suite system --require-test-id 0x110E` passes (strict v0.2 ACR/debug resume gate).
+- `./tests/qemu/check_system_strict.sh` passes (strict v0.2 ACR/debug resume + log-noise gate).
 - `./tests/qemu/run_tests.sh --all` passes.
+- `python3 tools/isa/check_no_legacy_v03.py --root .` passes (canonical v0.3 alias gate).
+- `bash tools/pto/run_v03_pto_to_linx.sh` passes (PTO minimal compile flow to canonical v0.3 asm).
 - Benchmarks run (CoreMark + Dhrystone).
 
 ### Level 1: Spec + emulator/compiler correctness baseline
@@ -74,6 +78,7 @@ Evidence:
 ## Immediate Work Items (Next Agents)
 
 - Implement Linx-AVS v1 tests under `tests/qemu/tests/` and/or compiler tests.
+- Promote v0.3 from staged to current defaults after Janus/RTL parity evidence is captured.
 - Wire difftest gate A3/B3 in `docs/bringup/PROGRESS.md` using
   `docs/bringup/contracts/trace_schema.md`.
 - Close the known `-O2` miscompile noted in `workloads/benchmarks/README.md`.

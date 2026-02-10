@@ -61,4 +61,41 @@ extern "C" void run_tile_tests(void)
     }
 
     test_pass();
+
+    test_start(0x000A0002);
+    uart_puts("PTO tload/tstore roundtrip ... ");
+
+    alignas(16) static int32_t SRC[1024];
+    alignas(16) static int32_t DST[1024];
+    for (unsigned i = 0; i < 1024; i++) {
+        SRC[i] = (int32_t)((int)i * 3 - 7);
+        DST[i] = 0;
+    }
+
+    auto tRT = pto::linx::tload<0>(SRC);
+    pto::linx::tstore<0>(DST, tRT);
+
+    for (unsigned i = 0; i < 128; i++) {
+        TEST_EQ32((uint32_t)DST[i], (uint32_t)SRC[i], 0x000A2000u + i);
+    }
+
+    test_pass();
+
+    test_start(0x000A0003);
+    uart_puts("PTO tmatmul_acc pipeline ... ");
+
+    alignas(16) static int32_t C_ACC[1024];
+    for (unsigned i = 0; i < 1024; i++) {
+        C_ACC[i] = 0;
+    }
+
+    auto tAcc = pto::linx::tload<0>(C_ACC);
+    auto tOut = pto::linx::tmatmul_acc<8, 8, 8>(tAcc, tA, tB);
+    pto::linx::tstore<0>(C_ACC, tOut);
+
+    for (unsigned i = 0; i < 64; i++) {
+        TEST_EQ32((uint32_t)C_ACC[i], (uint32_t)EXP[i], 0x000A3000u + i);
+    }
+
+    test_pass();
 }

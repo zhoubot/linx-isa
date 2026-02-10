@@ -28,11 +28,7 @@ SUITES: dict[str, dict[str, str]] = {
     "system": {"src": "tests/11_system.c", "macro": "LINX_TEST_ENABLE_SYSTEM"},
 }
 
-EXPERIMENTAL_SUITES: set[str] = {
-    # Requires external PTO headers and triggers currently-unimplemented vector
-    # legalization paths in the Linx LLVM backend.
-    "tile",
-}
+EXPERIMENTAL_SUITES: set[str] = set()
 
 CORE_SUITES: list[str] = [
     "arithmetic",
@@ -210,17 +206,18 @@ def main(argv: list[str]) -> int:
 
     include_dir = SCRIPT_DIR / "lib"
     libc_include_dir = REPO_ROOT / "toolchain" / "libc" / "include"
+    pto_bridge_include_dir = REPO_ROOT / "toolchain" / "pto" / "include"
+    if "tile" in selected and not pto_bridge_include_dir.exists():
+        raise SystemExit(
+            f"error: tile suite requires bridge headers: {pto_bridge_include_dir}"
+        )
     pto_include_dir: Path | None = None
-    if "tile" in selected:
-        env = os.environ.get("PTO_ISA_INCLUDE")
-        if env:
-            pto_include_dir = Path(os.path.expanduser(env))
-        else:
-            pto_include_dir = Path.home() / "pto-isa" / "include"
-        if not pto_include_dir.exists():
-            raise SystemExit(
-                f"error: tile suite requires PTO headers; set PTO_ISA_INCLUDE or install to {pto_include_dir}"
-            )
+    env = os.environ.get("PTO_ISA_INCLUDE")
+    if env:
+        candidate = Path(os.path.expanduser(env))
+        if not candidate.exists():
+            raise SystemExit(f"error: PTO_ISA_INCLUDE does not exist: {candidate}")
+        pto_include_dir = candidate
     sources: list[Path] = [SCRIPT_DIR / "tests" / "main.c"]
     sources += [SCRIPT_DIR / SUITES[s]["src"] for s in selected]
     if "float" in selected:
@@ -248,6 +245,8 @@ def main(argv: list[str]) -> int:
         *suite_macros,
         f"-DLINX_TEST_QUIET={'0' if emit_test_logs else '1'}",
     ]
+    if pto_bridge_include_dir.exists():
+        common_cflags.append(f"-I{pto_bridge_include_dir}")
     if pto_include_dir:
         common_cflags.append(f"-I{pto_include_dir}")
 

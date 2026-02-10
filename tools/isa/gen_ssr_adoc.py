@@ -237,8 +237,14 @@ def gen_trapno_encoding(spec_path: str, sysregs: Dict[str, Any]) -> str:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument(
+        "--profile",
+        choices=["v0.2", "v0.3"],
+        default="v0.2",
+        help="ISA profile for default --spec path",
+    )
+    ap.add_argument(
         "--spec",
-        default=os.path.join("isa", "spec", "current", "linxisa-v0.2.json"),
+        default=None,
         help="Path to ISA JSON spec",
     )
     ap.add_argument(
@@ -253,13 +259,19 @@ def main() -> int:
     )
     args = ap.parse_args()
 
-    spec = _read_json(args.spec)
+    default_spec = (
+        os.path.join("isa", "spec", "v0.3", "linxisa-v0.3.json")
+        if args.profile == "v0.3"
+        else os.path.join("isa", "spec", "current", "linxisa-v0.2.json")
+    )
+    spec_path = args.spec or default_spec
+    spec = _read_json(spec_path)
     sysregs = (((spec.get("state") or {}).get("system_registers")) or {})
     if not isinstance(sysregs, dict) or not sysregs:
         raise SystemExit("error: spec missing state.system_registers (expected v0.2+ spec)")
 
-    ssr_adoc = gen_system_registers_ssr(args.spec, sysregs)
-    trap_adoc = gen_trapno_encoding(args.spec, sysregs)
+    ssr_adoc = gen_system_registers_ssr(spec_path, sysregs)
+    trap_adoc = gen_trapno_encoding(spec_path, sysregs)
 
     out_ssr = os.path.join(args.out_dir, "system_registers_ssr.adoc")
     out_trap = os.path.join(args.out_dir, "trapno_encoding.adoc")

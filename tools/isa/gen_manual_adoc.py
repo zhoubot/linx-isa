@@ -1159,7 +1159,13 @@ def _write_mnemonic_index(instructions: List[Dict[str, Any]], out_path: str, spe
 
 def main(argv: Optional[List[str]] = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--spec", default="isa/spec/current/linxisa-v0.2.json", help="Path to ISA catalog JSON")
+    ap.add_argument(
+        "--profile",
+        choices=["v0.2", "v0.3"],
+        default="v0.2",
+        help="ISA profile for default --spec path",
+    )
+    ap.add_argument("--spec", default=None, help="Path to ISA catalog JSON")
     ap.add_argument(
         "--out-dir",
         default="docs/architecture/isa-manual/src/generated",
@@ -1168,10 +1174,14 @@ def main(argv: Optional[List[str]] = None) -> int:
     ap.add_argument("--check", action="store_true", help="Fail if outputs are not up-to-date")
     args = ap.parse_args(argv)
 
-    spec = _read_json(args.spec)
+    spec_path = (
+        args.spec
+        or ("isa/spec/v0.3/linxisa-v0.3.json" if args.profile == "v0.3" else "isa/spec/current/linxisa-v0.2.json")
+    )
+    spec = _read_json(spec_path)
     spec_version = str(spec.get("version") or "").strip() or "?"
     golden_hint = f"isa/golden/v{spec_version}/" if spec_version != "?" else "isa/golden/v*/"
-    spec_label = os.path.basename(os.path.normpath(args.spec))
+    spec_label = os.path.basename(os.path.normpath(spec_path))
     source_comment = f"// Source: {spec_label} (built from {golden_hint})"
     instructions: List[Dict[str, Any]] = list(spec.get("instructions", []))
     groups = _group_instructions(instructions)
