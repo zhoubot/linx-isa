@@ -3,7 +3,7 @@
 [[mnemonic-index]]
 === Mnemonic index
 
-This table lists unique mnemonics in the v0.1 catalog. Each mnemonic may have multiple encodable forms (different lengths, operand layouts, or suffix variants).
+This table lists unique mnemonics in the v0.2 catalog. Each mnemonic may have multiple encodable forms (different lengths, operand layouts, or suffix variants).
 
 [cols="2,3,1,1",options="header"]
 |===
@@ -131,6 +131,8 @@ This table lists unique mnemonics in the v0.1 catalog. Each mnemonic may have mu
 |`DIVUW` |Multi-Cycle ALU |32 |1
 |`DIVW` |Multi-Cycle ALU |32 |1
 |`EBREAK` |Execution Control |32 |1
+|`ERCOV` |Block Split |32 |1
+|`ESAVE` |Block Split |32 |1
 |`FABS` |Floating-point Arithmetic |32 |1
 |`FADD` |Floating-point Arithmetic |32 |1
 |`FCVT` |Format Convert |32 |1

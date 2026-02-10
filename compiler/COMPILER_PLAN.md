@@ -33,7 +33,7 @@ Done:
 
 Remaining:
 - Close remaining backend gaps for full spec-driven instruction coverage.
-- Keep instruction naming/encoding parity with `isa/spec/current/linxisa-v0.1.json`.
+- Keep instruction naming/encoding parity with `isa/spec/current/linxisa-v0.2.json`.
 
 ### Phase 2: Block ISA invariants
 

@@ -355,7 +355,7 @@ def main(argv: list[str]) -> int:
                 "--glob",
                 "**/*.objdump.txt*",
                 "--spec",
-                str(REPO_ROOT / "isa" / "spec" / "current" / "linxisa-v0.1.json"),
+                str(REPO_ROOT / "isa" / "spec" / "current" / "linxisa-v0.2.json"),
                 "--out-md",
                 str(static_md),
                 "--out-json",
@@ -462,4 +462,3 @@ def main(argv: list[str]) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main(sys.argv[1:]))
-

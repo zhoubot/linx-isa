@@ -51,8 +51,8 @@ def main() -> int:
     ap.add_argument(
         "--spec",
         type=Path,
-        default=Path(__file__).resolve().parents[3] / "isa/spec/current/linxisa-v0.1.json",
-        help="Path to linxisa-v0.1.json (default: isa/spec/current/linxisa-v0.1.json).",
+        default=Path(__file__).resolve().parents[3] / "isa/spec/current/linxisa-v0.2.json",
+        help="Path to linxisa-v0.2.json (default: isa/spec/current/linxisa-v0.2.json).",
     )
     ap.add_argument(
         "--llvm-project",

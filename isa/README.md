@@ -8,13 +8,14 @@ This directory is the **single source of truth** for the LinxISA instruction-set
 
 ## What is authoritative?
 
-- Golden sources (authoritative): `isa/golden/v0.1/**`
-- Compiled catalog (checked in): `isa/spec/current/linxisa-v0.1.json`
+- Golden sources (authoritative, current): `isa/golden/v0.2/**`
+- Compiled catalog (checked in, current): `isa/spec/current/linxisa-v0.2.json`
+- Legacy catalog (kept for reference): `isa/spec/current/linxisa-v0.1.json`
 
 Build the compiled catalog from golden sources:
 
 ```bash
-python3 tools/isa/build_golden.py --in isa/golden/v0.1 --out isa/spec/current/linxisa-v0.1.json --pretty
+python3 tools/isa/build_golden.py --in isa/golden/v0.2 --out isa/spec/current/linxisa-v0.2.json --pretty
 ```
 
 ## ELF Machine Type
@@ -25,7 +26,7 @@ This value is defined in:
 - LLVM: `llvm/include/llvm/BinaryFormat/ELF.h`
 - glibc: `elf/elf.h`
 
-## Spec conventions (v0.1)
+## Spec conventions (v0.2)
 
 - **Bit numbering**: within an instruction part, `bit 0` is the least-significant bit (LSB) of that part.
 - **Register encoding**: common register fields (`SrcL`, `SrcR`, `RegDst`, ...) use the 5-bit `registers.reg5` table in
@@ -57,7 +58,7 @@ Block boundaries:
 - A block ends at an explicit `BSTOP` / `C.BSTOP` or implicitly at the next block start marker in the instruction
   stream.
 
-## Block forms (v0.1 bring-up profile)
+## Block forms (v0.2 bring-up profile)
 
 The bring-up profile defines three block forms:
 
@@ -113,9 +114,9 @@ For PC-relative forms, the offset fields are **halfword-scaled**:
 - `target = PC + (simm<<1)` (e.g. `simm12`, `simm17`, `simm25` in `BSTART` / `C.BSTART`)
 - `setret` targets are also halfword-scaled: `target = PC + (uimm5<<1)` / `PC + (imm20<<1)`
 
-## MMU/IOMMU (v0.1 bring-up profile)
+## MMU/IOMMU (v0.2 bring-up profile)
 
-The v0.1 bring-up profile defines a real MMU + IOMMU using:
+The v0.2 bring-up profile defines a real MMU + IOMMU using:
 
 - **TTBR0/TTBR1 split** (ARM-inspired): `VA[47]=0` selects `TTBR0`, `VA[47]=1` selects `TTBR1`.
 - 48-bit canonical virtual addresses, 4 KiB pages, 4-level tables (512 entries per level).
@@ -127,7 +128,7 @@ The intended end-to-end flow is:
 
 1. **C source** (`.c/.h`)
 2. **Compiler** (`compiler/`) emits LinxISA assembly / object code
-3. **ISA spec** (`isa/spec/current/linxisa-v0.1.json`) is referenced for encoding/decoding + semantics
+3. **ISA spec** (`isa/spec/current/linxisa-v0.2.json`) is referenced for encoding/decoding + semantics
 4. **Emulator** (`emulator/`) executes the same semantics as the spec
 5. **RTL** (`rtl/`) implements the same decode + architectural behavior as the spec
 

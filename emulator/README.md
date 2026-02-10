@@ -4,7 +4,7 @@ LinxISA's reference emulator is the Linx target in QEMU at `~/qemu`.
 
 The emulator MUST decode/execute instructions according to:
 
-- ISA catalog: `isa/spec/current/linxisa-v0.1.json`
+- ISA catalog: `isa/spec/current/linxisa-v0.2.json`
 - Codec tables (for decode/disasm scaffolding): `isa/generated/codecs/`
 - ISA manual: `docs/architecture/isa-manual/`
 

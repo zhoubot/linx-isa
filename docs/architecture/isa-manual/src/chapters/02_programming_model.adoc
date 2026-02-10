@@ -24,7 +24,7 @@ Bring-up conventions:
 * PC-relative immediates in this manual and in the ISA catalog use **TPC** as the base unless stated otherwise. For a
   multi-part instruction, the base address is the address of the first part.
 
-Address translation (v0.1 bring-up profile):
+Address translation (v0.2 bring-up profile):
 
 * When `TCR_ACR1.MME = 0`, instruction fetch and data accesses treat addresses as physical (identity translation).
 * When `TCR_ACR1.MME = 1`, `TPC`/`BPC` and all instruction/data addresses are virtual and translated by the CPU MMU
@@ -43,7 +43,7 @@ JSON catalog (`registers.reg5`).
 
 include::../generated/registers_reg5.adoc[]
 
-NOTE: The v0.1 `reg5` table also includes special spellings used by the assembler/disassembler for queue operations
+NOTE: The v0.2 `reg5` table also includes special spellings used by the assembler/disassembler for queue operations
 (e.g. destination selectors `t`/`u` used as `->t` / `->u`). These are not general-purpose
 architectural registers in the same sense as `a0`, `s0`, etc.
 
@@ -104,7 +104,7 @@ BARG is initialized at block start and is consulted at block commit to determine
 * the next block target (direct/conditional/indirect/call/return), and
 * per-block commit metadata (e.g. output register mapping for split blocks).
 
-Bring-up conventions (v0.1 draft):
+Bring-up conventions (v0.2):
 
 * `BARG.BPC` records the current block start address (**BPC**).
 * `BARG.BPCN` records the selected next block address (**BPCN**).
@@ -127,7 +127,8 @@ control.
 ==== Access Control Rings (ACR)
 
 Linx partitions privileged state using **Access Control Rings (ACR)**. The architecture defines up to **16** rings
-named **ACR0..ACR15**, which are organized as a tree rooted at **ACR0** (see <<system-acr-tree>>). In the v0.1 draft:
+named **ACR0..ACR15**, which are organized as a tree rooted at **ACR0** (see <<system-acr-tree>>). In the v0.2 bring-up
+profile:
 
 * **ACR0 is the most privileged** (root management privilege).
 * ACR`n` (`n=0..2`) MUST be implemented by all profiles; higher-numbered rings are optional and extension-defined.
@@ -150,12 +151,16 @@ SSR registers are accessed using the SSR access instructions:
 * `SSRSWAP` — atomically swap an SSR value with a source register value
 
 include::../generated/system_registers_ssr.adoc[]
+include::../generated/trapno_encoding.adoc[]
 
 [[progmodel-fcsr]]
 === Floating-point control and status (FCSR)
 
 Linx defines a floating-point control and status register, **FCSR**, that controls rounding and records floating-point
 exceptions for floating-point instructions.
+
+NOTE: In the v0.2 bring-up profile, floating-point exceptions do **not** trap; they only update sticky flags in `FCSR`
+(and `CSTATE` mirrors as defined by the platform).
 
 For bring-up, Linx uses the following layout (32-bit):
 

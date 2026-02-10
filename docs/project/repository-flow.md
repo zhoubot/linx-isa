@@ -5,7 +5,7 @@ This repo is organized so that **the ISA spec is the source of truth**, and all 
 ## 1) C → compiler
 
 - C code is compiled by a LinxISA backend (likely LLVM/Clang-based).
-- The backend emits LinxISA assembly/object code using instruction encodings defined by `isa/spec/current/linxisa-v0.1.json`.
+- The backend emits LinxISA assembly/object code using instruction encodings defined by `isa/spec/current/linxisa-v0.2.json`.
 
 ## 2) compiler → ISA (encoding)
 
@@ -16,7 +16,7 @@ This repo is organized so that **the ISA spec is the source of truth**, and all 
 
 ## 3) ISA → emulator
 
-- The emulator decoder should be generated (or at least validated) from `isa/spec/current/linxisa-v0.1.json`.
+- The emulator decoder should be generated (or at least validated) from `isa/spec/current/linxisa-v0.2.json`.
 - Execution semantics should match the ISA spec exactly.
 
 ## 4) ISA → RTL

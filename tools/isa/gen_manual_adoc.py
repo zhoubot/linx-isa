@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Generate AsciiDoc fragments for the Linx ISA manual from `isa/spec/current/linxisa-v0.1.json`.
+Generate AsciiDoc fragments for the Linx ISA manual from a compiled LinxISA JSON spec
+(`isa/spec/current/linxisa-v*.json`).
 
 This tool is intentionally lightweight: it emits tables and summaries that are easier to keep
 in sync with the canonical machine-readable catalog than handwritten listings.
@@ -873,13 +874,13 @@ def _infer_operation_pseudocode(group: str, mnemonic: str, asm_forms: List[str],
     return None
 
 
-def _write_registers_reg5(spec: Dict[str, Any], out_path: str) -> None:
+def _write_registers_reg5(spec: Dict[str, Any], out_path: str, source_comment: str) -> None:
     regs = spec.get("registers", {}).get("reg5", {})
     entries: List[Dict[str, Any]] = list(regs.get("entries", []))
 
     lines: List[str] = []
     lines.append("// Generated file; do not edit by hand.")
-    lines.append("// Source: isa/spec/current/linxisa-v0.1.json (built from isa/golden/v0.1)")
+    lines.append(source_comment)
     gen_on = str(spec.get("generated_on") or "").strip()
     if gen_on:
         lines.append(f"// Catalog generated_on: {gen_on}")
@@ -985,7 +986,9 @@ def _write_instruction_reference(groups: "OrderedDict[str, List[Dict[str, Any]]]
         f.write("\n".join(lines))
 
 
-def _write_instruction_details(groups: "OrderedDict[str, List[Dict[str, Any]]]", out_path: str) -> None:
+def _write_instruction_details(
+    groups: "OrderedDict[str, List[Dict[str, Any]]]", out_path: str, spec_version: str
+) -> None:
     lines: List[str] = []
     lines.append("// Generated file; do not edit by hand.")
     lines.append("")
@@ -994,7 +997,7 @@ def _write_instruction_details(groups: "OrderedDict[str, List[Dict[str, Any]]]",
     lines.append("")
     lines.append(
         "This section provides per-mnemonic descriptions. The tables above remain the authoritative listing of encodable "
-        "forms and decode layouts in the v0.1 catalog. Descriptions and pseudocode here are derived from mnemonic naming "
+        f"forms and decode layouts in the v{spec_version} catalog. Descriptions and pseudocode here are derived from mnemonic naming "
         "conventions plus catalog assembly templates/notes and are intended to be *informative*."
     )
     lines.append("")
@@ -1098,7 +1101,7 @@ def _write_instruction_details(groups: "OrderedDict[str, List[Dict[str, Any]]]",
     with open(out_path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
 
-def _write_mnemonic_index(instructions: List[Dict[str, Any]], out_path: str) -> None:
+def _write_mnemonic_index(instructions: List[Dict[str, Any]], out_path: str, spec_version: str) -> None:
     """
     Emit a unique-mnemonic index to help readers navigate the catalog.
 
@@ -1125,7 +1128,7 @@ def _write_mnemonic_index(instructions: List[Dict[str, Any]], out_path: str) -> 
     lines.append("=== Mnemonic index")
     lines.append("")
     lines.append(
-        "This table lists unique mnemonics in the v0.1 catalog. Each mnemonic may have multiple encodable forms "
+        f"This table lists unique mnemonics in the v{spec_version} catalog. Each mnemonic may have multiple encodable forms "
         "(different lengths, operand layouts, or suffix variants)."
     )
     lines.append("")
@@ -1156,7 +1159,7 @@ def _write_mnemonic_index(instructions: List[Dict[str, Any]], out_path: str) -> 
 
 def main(argv: Optional[List[str]] = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--spec", default="isa/spec/current/linxisa-v0.1.json", help="Path to ISA catalog JSON")
+    ap.add_argument("--spec", default="isa/spec/current/linxisa-v0.2.json", help="Path to ISA catalog JSON")
     ap.add_argument(
         "--out-dir",
         default="docs/architecture/isa-manual/src/generated",
@@ -1166,6 +1169,10 @@ def main(argv: Optional[List[str]] = None) -> int:
     args = ap.parse_args(argv)
 
     spec = _read_json(args.spec)
+    spec_version = str(spec.get("version") or "").strip() or "?"
+    golden_hint = f"isa/golden/v{spec_version}/" if spec_version != "?" else "isa/golden/v*/"
+    spec_label = os.path.basename(os.path.normpath(args.spec))
+    source_comment = f"// Source: {spec_label} (built from {golden_hint})"
     instructions: List[Dict[str, Any]] = list(spec.get("instructions", []))
     groups = _group_instructions(instructions)
 
@@ -1179,11 +1186,11 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     def _emit(out_dir: str) -> None:
         _mkdirp(out_dir)
-        _write_registers_reg5(spec, os.path.join(out_dir, "registers_reg5.adoc"))
+        _write_registers_reg5(spec, os.path.join(out_dir, "registers_reg5.adoc"), source_comment)
         _write_instruction_group_summary(groups, os.path.join(out_dir, "instruction_group_summary.adoc"))
         _write_instruction_reference(groups, os.path.join(out_dir, "instruction_reference.adoc"))
-        _write_mnemonic_index(instructions, os.path.join(out_dir, "mnemonic_index.adoc"))
-        _write_instruction_details(groups, os.path.join(out_dir, "instruction_details.adoc"))
+        _write_mnemonic_index(instructions, os.path.join(out_dir, "mnemonic_index.adoc"), spec_version)
+        _write_instruction_details(groups, os.path.join(out_dir, "instruction_details.adoc"), spec_version)
 
     if args.check:
         out_dir = args.out_dir

@@ -39,6 +39,16 @@ CORE_SUITES: list[str] = [
 ]
 
 
+def _parse_test_id(text: str) -> int:
+    try:
+        value = int(text, 0)
+    except ValueError as e:
+        raise SystemExit(f"error: invalid --require-test-id value '{text}': {e}")
+    if value < 0 or value > 0xFFFFFFFF:
+        raise SystemExit(f"error: --require-test-id out of range (must fit uint32): {text}")
+    return value
+
+
 def _path_or_none(p: str | None) -> Path | None:
     if not p:
         return None
@@ -156,6 +166,12 @@ def main(argv: list[str]) -> int:
     parser.add_argument("--suite", action="append", help="Enable only this suite (repeatable)")
     parser.add_argument("--filter", help="Regex to select suites by name or filename")
     parser.add_argument("--qemu-arg", action="append", default=[], help="Extra QEMU arg (repeatable)")
+    parser.add_argument(
+        "--require-test-id",
+        action="append",
+        default=[],
+        help="Require UART evidence of test_start for this uint32 test id (hex/dec)",
+    )
     args = parser.parse_args(argv)
 
     if args.list_suites:
@@ -185,6 +201,7 @@ def main(argv: list[str]) -> int:
     selected = _suite_selection(args)
     if args.all_suites:
         selected = list(SUITES.keys())
+    required_test_ids = [_parse_test_id(t) for t in args.require_test_id]
 
     out_dir = Path(os.path.expanduser(args.out_dir))
     obj_dir = out_dir / "obj"
@@ -212,6 +229,7 @@ def main(argv: list[str]) -> int:
     suite_macros: list[str] = []
     for name, meta in SUITES.items():
         suite_macros.append(f"-D{meta['macro']}={'1' if name in selected else '0'}")
+    emit_test_logs = args.verbose or bool(required_test_ids)
 
     common_cflags = [
         "-target",
@@ -228,7 +246,7 @@ def main(argv: list[str]) -> int:
         f"-I{include_dir}",
         f"-I{libc_include_dir}",
         *suite_macros,
-        f"-DLINX_TEST_QUIET={'0' if args.verbose else '1'}",
+        f"-DLINX_TEST_QUIET={'0' if emit_test_logs else '1'}",
     ]
     if pto_include_dir:
         common_cflags.append(f"-I{pto_include_dir}")
@@ -313,6 +331,23 @@ def main(argv: list[str]) -> int:
         if b"REGRESSION PASSED" not in p.stdout:
             sys.stderr.write("warning: exit=0 but did not see 'REGRESSION PASSED' in UART output\n")
             return 2
+        if required_test_ids:
+            missing: list[int] = []
+            for test_id in required_test_ids:
+                marker = f"Test 0x{test_id:08X}:".encode()
+                if marker not in p.stdout:
+                    missing.append(test_id)
+            if missing:
+                sys.stderr.write(
+                    "error: missing required test id marker(s) in UART output: "
+                    + ", ".join(f"0x{tid:08X}" for tid in missing)
+                    + "\n"
+                )
+                if not args.verbose and p.stdout:
+                    sys.stderr.write("---- guest stdout (tail) ----\n")
+                    sys.stderr.buffer.write(_tail(p.stdout))
+                    sys.stderr.write("\n")
+                return 3
         print("PASS")
         return 0
 

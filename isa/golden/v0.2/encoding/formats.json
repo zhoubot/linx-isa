@@ -1,0 +1,53 @@
+{
+  "formats": [
+    {
+      "name": "I16",
+      "length_bits": 16,
+      "parts": [
+        {
+          "index": 0,
+          "width_bits": 16
+        }
+      ]
+    },
+    {
+      "name": "I32",
+      "length_bits": 32,
+      "parts": [
+        {
+          "index": 0,
+          "width_bits": 32
+        }
+      ]
+    },
+    {
+      "name": "I48",
+      "length_bits": 48,
+      "parts": [
+        {
+          "index": 0,
+          "width_bits": 48
+        }
+      ]
+    },
+    {
+      "name": "I64PFX32x2",
+      "length_bits": 64,
+      "parts": [
+        {
+          "index": 0,
+          "width_bits": 32
+        },
+        {
+          "index": 1,
+          "width_bits": 32
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Formats describe instruction lengths and part widths only.",
+    "Field placement and fixed-bit patterns are defined in opcodes/*.opc."
+  ]
+}
+

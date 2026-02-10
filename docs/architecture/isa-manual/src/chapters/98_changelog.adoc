@@ -1,8 +1,31 @@
 [[changelog]]
 == Changelog
 
-This section records notable changes to the LinxISA *v0.1 draft catalog* and to the associated manual/tooling in this
-repository.
+This section records notable changes to the LinxISA catalog and to the associated manual/tooling in this repository.
+
+[[changelog-v0-2-bringup-2026-02-09]]
+=== v0.2 (bring-up) — 2026-02-09
+
+**Privileged/exception model**
+
+* Defined the v0.2 exception model contract:
+  - TRAPNO encoding: `E[63]=async`, `ARGV[62]`, `CAUSE[47:24]`, `TRAPNUM[5:0]`.
+  - Precise PC recording rules via `ECSTATE.BI` and `EBARG` (`BPC.CUR` always; `TPC` is the resume PC when `BI=1`).
+  - `ACRC` triggers an immediate synchronous system-call trap and MUST be followed by an explicit `BSTOP/C.BSTOP`.
+  - `ACRE` is the only architectural restore entry (return/restore behavior keyed by `RRA`).
+* Removed legacy trap-save SSRs from the v0.2 contract: `EBPC/ETPC/EBPCN` MUST NOT be used by v0.2 software.
+* Clarified bring-up behavior for floating-point exceptions: v0.2 does not deliver FP traps; FP operations only update
+  sticky status (e.g., `FFLAGS`).
+
+**System registers (SSRs)**
+
+* Defined the v0.2 manager-ACR SSR map as a single machine-checkable source and generate the manual SSR tables from it.
+* Added the v0.2 `EBARG` register group (trap/context snapshot + extended-context pointers).
+* Added v0.2 debug SSR allocations (breakpoints/watchpoints).
+
+**Templates**
+
+* Added v0.2 template blocks `ESAVE` and `ERCOV` for saving/restoring extended local state.
 
 [[changelog-v0-1-draft-2026-02-06]]
 === v0.1 (draft) — 2026-02-06

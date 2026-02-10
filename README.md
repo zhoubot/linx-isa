@@ -12,8 +12,9 @@ to keep **specification**, **software**, and **hardware** implementations consis
 ## Source of truth
 
 The ISA definition is centralized under `isa/`:
-- Golden sources (authoritative): `isa/golden/v0.1/**`
-- Compiled, machine-readable catalog (checked in): `isa/spec/current/linxisa-v0.1.json`
+- Golden sources (authoritative, current): `isa/golden/v0.2/**`
+- Compiled, machine-readable catalog (checked in, current): `isa/spec/current/linxisa-v0.2.json`
+- Legacy catalog (kept for reference): `isa/spec/current/linxisa-v0.1.json`
 
 All implementations in this repo (compiler, emulator, C++ models, RTL) should reference the formal catalog to avoid
 decode/encode drift.

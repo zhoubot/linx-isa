@@ -3,7 +3,7 @@
 [[insnref-details]]
 === Instruction descriptions (by mnemonic)
 
-This section provides per-mnemonic descriptions. The tables above remain the authoritative listing of encodable forms and decode layouts in the v0.1 catalog. Descriptions and pseudocode here are derived from mnemonic naming conventions plus catalog assembly templates/notes and are intended to be *informative*.
+This section provides per-mnemonic descriptions. The tables above remain the authoritative listing of encodable forms and decode layouts in the v0.2 catalog. Descriptions and pseudocode here are derived from mnemonic naming conventions plus catalog assembly templates/notes and are intended to be *informative*.
 
 [[insndesc-execution-control]]
 ==== Execution Control
@@ -2180,6 +2180,42 @@ Operation (informative)::
 [source]
 ----
 EndBlock()
+----
+
+[[insndesc-block-split-ercov]]
+===== ERCOV
+
+Loads a value from memory using the addressing form shown in the syntax and writes the result to the selected destination.
+
+Catalog forms:: 1 form(s) (32 bits).
+
+Assembly forms::
++
+* `ERCOV [RegSrc0=BasePtr, RegSrc1=LenBytes, RegSrc2=Kind]`
+
+Operation (informative)::
++
+[source]
+----
+Execute operation as selected by the mnemonic and encoded modifiers.
+----
+
+[[insndesc-block-split-esave]]
+===== ESAVE
+
+Loads a value from memory using the addressing form shown in the syntax and writes the result to the selected destination.
+
+Catalog forms:: 1 form(s) (32 bits).
+
+Assembly forms::
++
+* `ESAVE [RegSrc0=BasePtr, RegSrc1=LenBytes, RegSrc2=Kind]`
+
+Operation (informative)::
++
+[source]
+----
+Execute operation as selected by the mnemonic and encoded modifiers.
 ----
 
 [[insndesc-block-split-fentry]]

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Validate basic invariants of `isa/spec/current/linxisa-v0.1.json`.
+Validate basic invariants of the compiled ISA JSON spec.
 
 This is intentionally lightweight and does not attempt to validate semantics.
 It checks that the derived `encoding` view is internally consistent with the
@@ -48,6 +48,43 @@ def validate(path: str) -> List[str]:
         spec = json.load(f)
 
     errors: List[str] = []
+
+    # ---------------------------------------------------------------------
+    # v0.2 bring-up profile sanity checks (system/privileged contract)
+    # ---------------------------------------------------------------------
+    version = str(spec.get("version", "")).strip()
+    if version == "0.2":
+        state = spec.get("state", {})
+        sysregs = state.get("system_registers")
+        if not isinstance(sysregs, dict):
+            errors.append("v0.2: missing state.system_registers (expected dict)")
+        else:
+            legacy = {"EBPC_ACRn", "ETPC_ACRn", "EBPCN_ACRn"}
+
+            def _walk_names(obj: Any) -> List[str]:
+                out: List[str] = []
+                if isinstance(obj, dict):
+                    n = obj.get("name")
+                    if isinstance(n, str):
+                        out.append(n)
+                    fmt = obj.get("name_fmt")
+                    if isinstance(fmt, str):
+                        out.append(fmt)
+                    for v in obj.values():
+                        out.extend(_walk_names(v))
+                elif isinstance(obj, list):
+                    for it in obj:
+                        out.extend(_walk_names(it))
+                return out
+
+            names = set(_walk_names(sysregs))
+            for bad in sorted(legacy):
+                if bad in names:
+                    errors.append(f"v0.2: forbidden legacy SSR name present in system_registers: {bad}")
+
+            ebarg = sysregs.get("ebarg_group") or {}
+            if not isinstance(ebarg, dict):
+                errors.append("v0.2: system_registers.ebarg_group missing/invalid")
 
     for inst in spec.get("instructions", []):
         inst_id = inst.get("id", inst.get("mnemonic", "<missing-id>"))
@@ -110,7 +147,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument(
         "--spec",
-        default="isa/spec/current/linxisa-v0.1.json",
+        default="isa/spec/current/linxisa-v0.2.json",
         help="Path to the generated ISA spec JSON",
     )
     args = ap.parse_args()

@@ -5,7 +5,7 @@ This chapter summarizes the addressing conventions used by the scalar memory ins
 instruction reference for the full set of encodings and per-form notes.
 
 [[memory-model]]
-=== Memory model and ordering (v0.1)
+=== Memory model and ordering (v0.2)
 
 Linx uses a **weakly ordered** memory model suitable for out-of-order
 implementations. The ordering contract is expressed in Linx terms:
@@ -16,7 +16,7 @@ implementations. The ordering contract is expressed in Linx terms:
 * A **device/MMIO** access is any access to regions defined by the platform
   as device memory (including UART-style MMIO used by bring-up).
 
-Unless a platform profile tightens the rules, the v0.1 contract is:
+Unless a platform profile tightens the rules, the v0.2 contract is:
 
 * Plain loads/stores are **Relaxed** with respect to other addresses.
 * For a single aligned location in **Normal** memory, writes participate in a
@@ -33,7 +33,7 @@ performance or compatibility.
 [[memory-types]]
 ==== Memory types (Normal vs Device)
 
-Linx platforms classify memory addresses into types. This v0.1 manual uses two
+Linx platforms classify memory addresses into types. This v0.2 manual uses two
 high-level types:
 
 * **Normal**: cacheable memory used for code and data (SRAM/DRAM).
@@ -79,7 +79,7 @@ stronger behavior unless the platform profile states so.
 [[memory-endianness]]
 === Endianness and alignment
 
-The v0.1 Linx toolchain and emulator model are **little-endian**: the least-significant byte of a multi-byte value is
+The v0.2 Linx toolchain and emulator model are **little-endian**: the least-significant byte of a multi-byte value is
 stored at the lowest address.
 
 Alignment rules are profile-defined. Unless a profile explicitly enables split/misaligned accesses, software should
@@ -93,7 +93,7 @@ Many load/store forms use one of two base addressing styles:
 * *Register-offset:* `[Base, Index<type><<shamt>]`
 * *Immediate-offset:* `[Base, imm]` (scaled or unscaled depending on the mnemonic family)
 
-The v0.1 draft describes common register-offset semantics as:
+The bring-up profile describes common register-offset semantics as:
 
 * `addr = Base + (Index << shamt)`
 
@@ -133,9 +133,9 @@ These forms are used by toolchains for efficient access to nearby constants and 
 [[memory-atomics]]
 === Atomics (overview)
 
-The v0.1 catalog includes load-reserved/store-conditional (`LR.*`/`SC.*`) and read-modify-write style atomic operations
+The v0.2 catalog includes load-reserved/store-conditional (`LR.*`/`SC.*`) and read-modify-write style atomic operations
 with qualifier suffixes (e.g. `.aq`, `.rl`). The precise memory ordering semantics are defined by the ISA draft
-(`isa/golden/v0.1/`) and the architectural model implemented by the toolchain/QEMU/RTL.
+(`isa/golden/v0.2/`) and the architectural model implemented by the toolchain/QEMU/RTL.
 
 Bring-up model (ordering qualifiers):
 
@@ -153,7 +153,7 @@ memory ordering; ordering with respect to **Device/MMIO** requires selecting
 [[memory-fences]]
 === Fences
 
-The v0.1 catalog defines two fence instructions:
+The v0.2 catalog defines two fence instructions:
 
 * `FENCE.D pred_imm, succ_imm`: orders memory operations.
 * `FENCE.I`: synchronizes instruction fetch with prior data stores (self-modifying code / I-cache coherence boundary).
@@ -163,14 +163,14 @@ The v0.1 catalog defines two fence instructions:
 
 `pred_imm` and `succ_imm` are **bitmaps** selecting classes of operations.
 
-Bring-up definition (v0.1):
+Bring-up definition (v0.2):
 
 * Bit 0 (`R`): normal memory reads
 * Bit 1 (`W`): normal memory writes
 * Bit 2 (`O`): device/MMIO accesses
 * Bit 3 (`I`): instruction-fetch visibility (see `FENCE.I`)
 
-Semantics (v0.1):
+Semantics (v0.2):
 
 * `FENCE.D` orders all prior operations selected by `pred_imm` before all later
   operations selected by `succ_imm` in program order on the same LXCPU.

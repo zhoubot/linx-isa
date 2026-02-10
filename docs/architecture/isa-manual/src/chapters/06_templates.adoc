@@ -13,7 +13,7 @@ non-template instructions by the toolchain.
 Template blocks execute via a **code-template generator** that emits a sequence of internal micro-operations
 (*micro-ops*) based on architectural register inputs.
 
-Restartability contract (v0.1 bring-up profile):
+Restartability contract (v0.2 bring-up profile):
 
 * A template block MUST be **restartable**: interrupts and exceptions MAY be taken between generated micro-ops.
 * When a trap is taken during template micro-op execution, the trap-save logic MUST record progress in
@@ -43,7 +43,7 @@ Additional macro blocks appear in the draft catalog for future use (examples):
 
 * `MCOPY [RegSrc0, RegSrc1, RegSrc2]` (bulk copy)
 * `MSET  [RegSrc0, RegSrc1, RegSrc2]` (bulk set)
-* `ESAVE` / `ERET`-class exception/restore template blocks (Tile/TEPL domain)
+* `ESAVE` / `ERCOV` extended-context save/restore template blocks (v0.2 bring-up)
 
 Typical usage patterns in this repo:
 
@@ -66,4 +66,27 @@ FRET.STK  [ra ~ s2], sp!, 16
 ----
 
 The precise memory layout and ordering of the save/restore operation is defined by the architectural specification
-golden sources (`isa/golden/v0.1/`) and the canonical catalog (`isa/spec/current/linxisa-v0.1.json`).
+golden sources (`isa/golden/v0.2/`) and the canonical catalog (`isa/spec/current/linxisa-v0.2.json`).
+
+[[templates-esave]]
+=== Extended context save/restore (`ESAVE` / `ERCOV`) (v0.2 bring-up)
+
+The v0.2 bring-up profile defines two template blocks used to save/restore **extended local state** (vector/tile/mcall
+local registers, group state, and other large block-local state) across traps and context switches.
+
+Assembly syntax:
+
+* `ESAVE [BasePtr, LenBytes, Kind]`
+* `ERCOV [BasePtr, LenBytes, Kind]`
+
+Where:
+
+* `BasePtr` is a pointer to a software-owned buffer,
+* `LenBytes` is the buffer size in bytes, and
+* `Kind` selects the profile-defined extended-state schema to use.
+
+`ESAVE` serializes the extended local state into `[BasePtr, BasePtr+LenBytes)`. `ERCOV` restores it.
+
+Both `ESAVE` and `ERCOV` are **restartable template blocks**: traps may occur between internal micro-ops. When a trap is
+taken during `ESAVE`/`ERCOV` micro-op execution, progress MUST be recorded in `BSTATE`/`EBSTATE` so that execution can
+resume without double-committing any already-completed micro-ops (see <<templates-restart>> and <<system-bstate-ebstate>>).

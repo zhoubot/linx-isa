@@ -1,4 +1,4 @@
-# LinxISA Gap Analysis (v0.1 -> Tier-1)
+# LinxISA Gap Analysis (v0.2 -> Tier-1)
 
 Last updated: 2026-02-07
 
@@ -20,7 +20,7 @@ Comparable to Arm/x86/RISC-V maturity means:
 ## Current Strengths (Evidence in Repo)
 
 - Golden opcode database and generated JSON catalog:
-  - `isa/golden/v0.1/` -> `isa/spec/current/linxisa-v0.1.json`
+  - `isa/golden/v0.2/` -> `isa/spec/current/linxisa-v0.2.json`
 - Encoding conflict checks and hole reporting:
   - `python3 tools/isa/report_encoding_space.py --check`
   - Report: `docs/reference/encoding_space_report.md`

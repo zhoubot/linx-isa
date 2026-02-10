@@ -31,6 +31,7 @@ Verilog/SV for integration and validation in this repo.
 - `docs/bringup/contracts/pyc_artifact_contract.md`
 - `docs/bringup/contracts/trace_schema.md`
 - `docs/bringup/contracts/fpga_platform_contract.md`
+- `docs/bringup/contracts/linxisa_v0_2_profile_lock.md`
 
 ## Scope boundary
 

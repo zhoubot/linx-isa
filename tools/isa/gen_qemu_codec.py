@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Generate QEMU decodetree-style codec files from `isa/spec/current/linxisa-v0.1.json`.
+Generate QEMU decodetree-style codec files from the compiled ISA JSON spec.
 
 Outputs (by default) into `isa/generated/codecs/`:
   - linxisa16.decode
@@ -53,6 +53,29 @@ def _group_pattern(pattern: str, group: int) -> str:
     for i in range(0, len(pattern), group):
         chunks.append(pattern[i : i + group])
     return " ".join(chunks)
+
+def _repo_root() -> str:
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir))
+
+
+def _normalize_spec_label(spec_path: str) -> str:
+    """
+    Render a stable, repo-relative spec label for generated headers.
+
+    The generator output should not depend on whether the caller passed an
+    absolute or relative --spec path. When the spec file lives under the repo
+    root, emit a repo-relative path; otherwise fall back to a normalized path.
+    """
+
+    spec_abs = os.path.abspath(spec_path)
+    root = _repo_root()
+    try:
+        rel = os.path.relpath(spec_abs, root)
+    except ValueError:
+        rel = None
+    if rel and not rel.startswith(os.pardir + os.sep):
+        return os.path.normpath(rel)
+    return os.path.normpath(spec_path)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -209,7 +232,9 @@ def _choose_field_def_names(
     return chosen
 
 
-def _generate_decode_file(instructions: List[Dict[str, Any]], out_path: str) -> None:
+def _generate_decode_file(
+    instructions: List[Dict[str, Any]], out_path: str, spec_label: str
+) -> None:
     inst_encodings: List[Tuple[Dict[str, Any], int, str, Dict[str, Field]]] = []
 
     for inst in instructions:
@@ -238,7 +263,7 @@ def _generate_decode_file(instructions: List[Dict[str, Any]], out_path: str) -> 
     field_defs.sort(key=lambda t: t[0])
 
     lines: List[str] = []
-    lines.append("# Auto-generated from isa/spec/current/linxisa-v0.1.json")
+    lines.append(f"# Auto-generated from {os.path.normpath(spec_label)}")
     lines.append(f"# DO NOT EDIT: run `python3 tools/isa/gen_qemu_codec.py` to regenerate.")
     lines.append("")
 
@@ -297,7 +322,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument(
         "--spec",
-        default=os.path.join("isa", "spec", "current", "linxisa-v0.1.json"),
+        default=os.path.join("isa", "spec", "current", "linxisa-v0.2.json"),
         help="Path to ISA JSON spec",
     )
     ap.add_argument(
@@ -315,6 +340,8 @@ def main() -> int:
     with open(args.spec, "r", encoding="utf-8") as f:
         spec = json.load(f)
 
+    spec_label = os.path.normpath(str(spec.get("_spec_path") or _normalize_spec_label(args.spec)))
+
     by_len: Dict[int, List[Dict[str, Any]]] = defaultdict(list)
     for inst in spec.get("instructions", []):
         length_bits = int(inst.get("length_bits", inst.get("encoding", {}).get("length_bits", 0)))
@@ -330,7 +357,7 @@ def main() -> int:
         with tempfile.TemporaryDirectory() as td:
             for length_bits, filename in targets:
                 tmp_path = os.path.join(td, filename)
-                _generate_decode_file(by_len.get(length_bits, []), tmp_path)
+                _generate_decode_file(by_len.get(length_bits, []), tmp_path, spec_label)
 
                 out_path = os.path.join(args.out_dir, filename)
                 if not os.path.exists(out_path):
@@ -347,7 +374,7 @@ def main() -> int:
     else:
         for length_bits, filename in targets:
             out_path = os.path.join(args.out_dir, filename)
-            _generate_decode_file(by_len.get(length_bits, []), out_path)
+            _generate_decode_file(by_len.get(length_bits, []), out_path, spec_label)
 
     return 0
 

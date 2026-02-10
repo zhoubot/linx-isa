@@ -19,7 +19,7 @@
 :imagesdir: images
 
 // Manual metadata (override when publishing).
-:revnumber: v0.1 (draft)
+:revnumber: v0.2 (draft)
 :revdate: {localdate}
 
 include::chapters/00_preamble.adoc[]

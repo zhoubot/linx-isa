@@ -1,5 +1,5 @@
 // Generated file; do not edit by hand.
-// Source: isa/spec/current/linxisa-v0.1.json (built from isa/golden/v0.1)
+// Source: linxisa-v0.2.json (built from isa/golden/v0.2/)
 
 [cols="1,1,2,4",options="header"]
 |===

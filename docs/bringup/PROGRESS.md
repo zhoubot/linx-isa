@@ -1,13 +1,13 @@
 # Bring-up Progress
 
-Last updated: 2026-02-07
+Last updated: 2026-02-10
 
 ## Phase status matrix
 
 | Phase | Not Started | In Progress | Blocked | Passed | Evidence |
 | --- | --- | --- | --- | --- | --- |
 | 1. Compiler |  | X |  |  | `compiler/COMPILER_PLAN.md`, `compiler/llvm/tests/` |
-| 2. ISA spec integration |  | X |  |  | `isa/golden/v0.1/`, `isa/spec/current/linxisa-v0.1.json`, `tools/isa/` |
+| 2. ISA spec integration |  | X |  |  | `isa/golden/v0.2/`, `isa/spec/current/linxisa-v0.2.json`, `tools/isa/` |
 | 3. Emulator/QEMU |  | X |  |  | `tests/qemu/`, `docs/bringup/phases/03_emulator_qemu.md` |
 | 4. RTL (pyCircuit agile) |  | X |  |  | `docs/bringup/phases/04_rtl.md`, `/Users/zhoubot/pyCircuit` |
 | 5. FPGA (ZYBO Z7-20) | X |  |  |  | `docs/bringup/phases/05_fpga_zybo_z7.md` |
@@ -32,16 +32,18 @@ Last updated: 2026-02-07
 
 ## Latest validation snapshot in `linxisa`
 
-### Compiler + QEMU regression (2026-02-07)
+### Compiler + QEMU regression (2026-02-10)
 
 - End-to-end regression: `bash tools/regression/run.sh` (PASS)
+- Strict system gate: `./tests/qemu/run_tests.sh --suite system --require-test-id 0x110E` (PASS)
 - Compiler tests: 31 compile tests for `linx64` and `linx32` (PASS)
 - ISA mnemonic coverage (from `compiler/llvm/tests/analyze_coverage.py`):
-  - Spec unique mnemonics: 700
-  - Covered spec mnemonics: 700
+  - Spec unique mnemonics: 702
+  - Covered spec mnemonics: 702
   - Missing spec mnemonics: 0
   - Note: `BSTART`/`C.BSTART` and `*.STD` are treated as equivalent spellings for coverage.
 - QEMU runtime tests: `./tests/qemu/run_tests.sh --all` (PASS)
+- Optional ctuning smoke (`CTUNING_LIMIT=5`): PASS (5/5 codelets)
 
 ### Benchmarks (2026-02-07)
 
@@ -49,12 +51,15 @@ Last updated: 2026-02-07
 - CoreMark: static 5594, dynamic 827648
 - Dhrystone: static 3201, dynamic 830152
 
-### Linux/glibc bring-up (2026-02-07)
+### Linux/glibc bring-up (2026-02-10)
 
 - `bash tools/glibc/bringup_linx64.sh`:
   - Linux UAPI headers install: ok
   - glibc configure: ok
   - `csu/subdir_lib`: FAIL (`ld64` rejects GNU linker options)
+- Linux busybox userspace boot on QEMU (external `/Users/zhoubot/linux` tree):
+  - `python3 tools/linxisa/initramfs/virtio_disk_smoke.py` (PASS)
+  - `python3 tools/linxisa/initramfs/full_boot.py` (PASS; reaches userspace checks and `poweroff`)
 
 ## Active blockers snapshot
 

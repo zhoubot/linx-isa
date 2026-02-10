@@ -1,6 +1,6 @@
 # LinxISA Maturity Plan (Bring-up to "Tier-1" Quality)
 
-Last updated: 2026-02-07
+Last updated: 2026-02-10
 
 This document is a **concrete roadmap** to bring LinxISA to a maturity level
 comparable to established ISAs (Arm/x86/RISC-V) across:
@@ -14,8 +14,8 @@ This plan intentionally uses repository artifacts as gates and evidence sources.
 
 ## Definitions
 
-- **ISA catalog**: `isa/spec/current/linxisa-v0.1.json` (generated from
-  `isa/golden/v0.1/`).
+- **ISA catalog**: `isa/spec/current/linxisa-v0.2.json` (generated from
+  `isa/golden/v0.2/`).
 - **Block ISA invariants**: safety rule, commit-time control flow, template
   block behavior, call-header adjacency.
 - **AVS**: architecture validation suite (see `avs/`).
@@ -27,6 +27,7 @@ This plan intentionally uses repository artifacts as gates and evidence sources.
 Evidence in repo:
 
 - `bash tools/regression/run.sh` passes.
+- `./tests/qemu/run_tests.sh --suite system --require-test-id 0x110E` passes (strict v0.2 ACR/debug resume gate).
 - `./tests/qemu/run_tests.sh --all` passes.
 - Benchmarks run (CoreMark + Dhrystone).
 

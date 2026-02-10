@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Generate C encode/decode tables from `isa/spec/current/linxisa-v0.1.json`.
+Generate C encode/decode tables from the compiled ISA JSON spec.
 
 The generated tables are intended as a low-friction bridge for:
   - LLVM MC disassembler/encoder implementations
@@ -25,6 +25,23 @@ def _c_string(s: str) -> str:
     s = s.replace('"', '\\"')
     s = s.replace("\n", "\\n")
     return f'"{s}"'
+
+
+def _repo_root() -> str:
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir))
+
+
+def _normalize_spec_label(spec_path: str) -> str:
+    spec_abs = os.path.abspath(spec_path)
+    root = _repo_root()
+    try:
+        rel = os.path.relpath(spec_abs, root)
+    except ValueError:
+        rel = None
+    if rel and not rel.startswith(os.pardir + os.sep):
+        return os.path.normpath(rel)
+    return os.path.normpath(spec_path)
+
 
 def _pattern_to_mask_match(pattern: str) -> Tuple[int, int]:
     # pattern is MSB->LSB with '0','1','.'
@@ -104,10 +121,11 @@ def _build_combined_encoding(inst: Dict[str, Any]) -> Tuple[int, str, Dict[str, 
     return length_bits, combined_pattern, fields
 
 
-def _render_header() -> str:
+def _render_header(spec_label: str) -> str:
+    spec_label = os.path.normpath(spec_label)
     return "\n".join(
         [
-            "/* Auto-generated from isa/spec/current/linxisa-v0.1.json. */",
+            f"/* Auto-generated from {spec_label}. */",
             "/* DO NOT EDIT: run `python3 tools/isa/gen_c_codec.py` to regenerate. */",
             "",
             "#pragma once",
@@ -154,7 +172,7 @@ def _render_header() -> str:
     )
 
 
-def _emit_tables(spec: Dict[str, Any]) -> Tuple[str, str]:
+def _emit_tables(spec: Dict[str, Any], spec_label: str) -> Tuple[str, str]:
     insts = list(spec.get("instructions", []))
     # Stable ordering.
     insts.sort(key=lambda i: (str(i.get("mnemonic", "")), str(i.get("id", ""))))
@@ -224,11 +242,11 @@ def _emit_tables(spec: Dict[str, Any]) -> Tuple[str, str]:
         )
 
     # Header.
-    h = _render_header()
+    h = _render_header(spec_label)
 
     # C source.
     c_lines: List[str] = []
-    c_lines.append("/* Auto-generated from isa/spec/current/linxisa-v0.1.json. */")
+    c_lines.append(f"/* Auto-generated from {os.path.normpath(spec_label)}. */")
     c_lines.append("/* DO NOT EDIT: run `python3 tools/isa/gen_c_codec.py` to regenerate. */")
     c_lines.append("")
     c_lines.append('#include "linxisa_opcodes.h"')
@@ -303,15 +321,16 @@ def _write_if_different(path: str, content: str, check: bool) -> None:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--spec", default="isa/spec/current/linxisa-v0.1.json", help="Path to the ISA spec JSON")
+    ap.add_argument("--spec", default="isa/spec/current/linxisa-v0.2.json", help="Path to the ISA spec JSON")
     ap.add_argument("--out-dir", default="isa/generated/codecs", help="Output directory")
     ap.add_argument("--check", action="store_true", help="Fail if outputs are not up-to-date")
     args = ap.parse_args()
 
     with open(args.spec, "r", encoding="utf-8") as f:
         spec = json.load(f)
+    spec_label = os.path.normpath(str(spec.get("_spec_path") or _normalize_spec_label(args.spec)))
 
-    header, source = _emit_tables(spec)
+    header, source = _emit_tables(spec, spec_label)
 
     out_h = os.path.join(args.out_dir, "linxisa_opcodes.h")
     out_c = os.path.join(args.out_dir, "linxisa_opcodes.c")

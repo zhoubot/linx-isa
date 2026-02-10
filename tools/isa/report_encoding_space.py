@@ -540,7 +540,7 @@ def _write_report(
 
 def main(argv: List[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="Report encoding space usage and detect conflicts.")
-    ap.add_argument("--spec", type=Path, default=Path("isa/spec/current/linxisa-v0.1.json"))
+    ap.add_argument("--spec", type=Path, default=Path("isa/spec/current/linxisa-v0.2.json"))
     ap.add_argument("--out", type=Path, default=Path("docs/reference/encoding_space_report.md"))
     ap.add_argument(
         "--check",

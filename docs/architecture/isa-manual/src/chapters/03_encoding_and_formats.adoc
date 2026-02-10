@@ -45,7 +45,7 @@ The codec generators pack multi-part instructions in *instruction-stream order*:
 [[encoding-namespaces]]
 === Mnemonic namespaces (C./HL./V.)
 
-In the v0.1 catalog, mnemonic prefixes are used to distinguish families of encodings:
+In the v0.2 catalog, mnemonic prefixes are used to distinguish families of encodings:
 
 * `C.*`: 16-bit compressed forms
 * `HL.*`: 48-bit “high-level” (extended immediate / address) forms
@@ -157,7 +157,7 @@ late-stage optimization:
 [[encoding-json]]
 === The machine-readable catalog
 
-The authoritative encoding details live in `isa/spec/current/linxisa-v0.1.json`:
+The authoritative encoding details live in `isa/spec/current/linxisa-v0.2.json`:
 
 * Each instruction form has `parts[].segments[]` describing `[msb:lsb]` bit ranges.
 * Each form includes derived `encoding` fields (`mask`, `match`, `pattern`, `fields`) suitable for generating

@@ -3,10 +3,10 @@
 Build the compiled LinxISA catalog from the multi-file golden sources.
 
 Golden sources live under:
-  isa/golden/v0.1/
+  isa/golden/v0.2/
 
 Compiled output is checked in at:
-  isa/spec/current/linxisa-v0.1.json
+  isa/spec/current/linxisa-v0.2.json
 
 This builder is intentionally deterministic:
   - no timestamps
@@ -593,8 +593,8 @@ def _canonical_json(obj: Any) -> str:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--in", dest="in_dir", default="isa/golden/v0.1", help="Golden source directory")
-    ap.add_argument("--out", default="isa/spec/current/linxisa-v0.1.json", help="Output catalog JSON path")
+    ap.add_argument("--in", dest="in_dir", default="isa/golden/v0.2", help="Golden source directory")
+    ap.add_argument("--out", default="isa/spec/current/linxisa-v0.2.json", help="Output catalog JSON path")
     ap.add_argument("--pretty", action="store_true", help="Pretty-print JSON")
     ap.add_argument("--check", action="store_true", help="Verify output is up-to-date without writing")
     args = ap.parse_args()

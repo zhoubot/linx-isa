@@ -4,7 +4,7 @@ Primary RTL notes: `rtl/README.md`
 
 ## Scope and source of truth
 
-- Architecture/spec authority: `linxisa` (`isa/golden/v0.1/`, `isa/spec/current/linxisa-v0.1.json`, `isa/generated/codecs/`).
+- Architecture/spec authority: `linxisa` (`isa/golden/v0.2/`, `isa/spec/current/linxisa-v0.2.json`, `isa/generated/codecs/`).
 - RTL/model generation authority: `/Users/zhoubot/pyCircuit`.
 - Core targets:
   - **Linx CPU** first

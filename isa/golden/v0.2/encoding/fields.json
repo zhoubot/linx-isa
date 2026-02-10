@@ -1,0 +1,8 @@
+{
+  "fields": {},
+  "notes": [
+    "Optional field metadata (signedness, scaling, and validation constraints) lives here.",
+    "The current pipeline derives field placement from opcodes/*.opc and does not require this file."
+  ]
+}
+

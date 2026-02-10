@@ -1,83 +1,131 @@
-// Curated from isa-draft.txt (system registers + ACR sections).
-// Keep this file in sync with docs/isa-manual and the source drafts.
-
+// Generated file. Do not edit by hand.
+// Source: linxisa-v0.2.json (state.system_registers)
 [[ssr-table]]
 ==== System Status Registers (SSR)
 
-The following **System Status Registers (SSR)** are defined by the v0.1 privilege/system draft.
+The following **System Status Registers (SSR)** are defined by the current bring-up profile.
 Unless noted, SSR values are **XLEN** wide and are accessed with the SSR access instructions.
 
 SSR access instructions:
 
 * `SSRGET` / `SSRSET` / `SSRSWAP` (32-bit forms) encode a **12-bit** `SSR_ID[11:0]`.
 * `HL.SSRGET` / `HL.SSRSET` (48-bit forms) encode a **24-bit** `SSR_ID[23:0]` and are used when the full SSR ID does
-  not fit in 12 bits (e.g. `0x1F10`).
+  not fit in 12 bits (e.g. manager-ACR IDs like `0x1Fxx`).
 * `C.SSRGET` (16-bit) reads a small set of commonly used registers; its `SSRID` encoding is a profile-defined remap.
 
-[%header,cols="1,1,4"]
+[%header,cols="1,1,1,4"]
 |===
-|SSR_ID |Name |Description
+|SSR_ID |Name |Access |Description
 
-|`0x0000` |`TP` |Thread pointer (TLS base).
-|`0x0001` |`GP` |Global pointer (global data base).
-
-|`0x0010` |`TIME` |Timer counter.
-|`0x0C00` |`CYCLE` |Cycle counter.
-
-|`0x0020` |`CSTATE` |Common state (privilege + execution state). See <<system-service-request>>.
-|`0x0021` |`LXLCID` |Linx logical core ID.
-|`0x0022` |`VENDOR` |Vendor ID.
-|`0x0023` |`VERSION` |Core version.
-|`0x0024` |`LCFR` |Core feature description (includes `LaneNum`).
-|`0x0025` |`LCFR_EN` |Core feature enable.
-
+|`0x0000` |`TP` |RW |Thread pointer (TLS base).
+|`0x0001` |`GP` |RW |Global pointer (global data base).
+|`0x0010` |`TIME` |RO |Timer counter.
+|`0x0020` |`CSTATE` |RW |Common state (privilege + execution state). Includes active ACR and interrupt mask.
+|`0x0021` |`LXLCID` |RO |Linx logical core ID.
+|`0x0022` |`VENDOR` |RO |Vendor ID.
+|`0x0023` |`VERSION` |RO |Core version.
+|`0x0024` |`LCFR` |RO |Core feature description (includes LaneNum).
+|`0x0025` |`LCFR_EN` |RW |Core feature enable.
+|`0x0050` |`LB0` |RW |Loop/lane boundary register 0 (bring-up).
+|`0x0051` |`LB1` |RW |Loop/lane boundary register 1 (bring-up).
+|`0x0052` |`LB2` |RW |Loop/lane boundary register 2 (bring-up).
+|`0x0053` |`LC0` |RW |Loop/lane counter register 0 (bring-up).
+|`0x0054` |`LC1` |RW |Loop/lane counter register 1 (bring-up).
+|`0x0055` |`LC2` |RW |Loop/lane counter register 2 (bring-up).
+|`0x0C00` |`CYCLE` |RO |Cycle counter (bring-up may model as instruction count).
 |===
-
-NOTE: The v0.1 draft reserves `0x0050..0x005F` for loop-control registers used by parallel/loop blocks.
 
 [[ssr-acr-scoped]]
 ==== Manager-ACR (privileged) SSR families
 
 Privileged SSRs are addressed using IDs of the form `SSR_ID = 0x n f xx` (16-bit), where `n` is the manager ACR ID.
 
-In the v0.1 privilege model:
+In the bring-up privilege model:
 
 * These SSRs MUST be accessible from **ACR0** and **ACR1**.
-* Accesses from other ACRs MAY be ignored or MAY raise `E_ISSR` (illegal-SSR trap), depending on the platform profile.
+* Accesses from other ACRs MAY be ignored or MAY raise an exception, depending on the platform profile.
 
 Use `HL.SSRGET/HL.SSRSET` when the full `SSR_ID` does not fit in 12 bits.
 
-[%header,cols="1,1,4"]
+[%header,cols="1,1,1,4"]
 |===
-|SSR_ID |Name |Description
+|SSR_ID |Name |Access |Description
 
-|`0xnf00` |`ECSTATE_ACRn` |Exception state. Includes `BI` and mirrors key `CSTATE` fields.
-|`0xnf01` |`EVBASE_ACRn` |Exception vector base.
-|`0xnf02` |`TRAPNO_ACRn` |Trap number + cause + sync/async bit (`E`).
-|`0xnf03` |`TRAPARG0_ACRn` |Trap argument 0.
-|`0xnf05` |`ETEMP_ACRn` |Exception temporary.
-|`0xnf06` |`FUTO_ACRn` |Fixup takeover.
-|`0xnf07` |`ECONFIG_ACRn` |Exception/interrupt configuration.
-|`0xnf08` |`IPENDING_ACRn` |Interrupt pending.
-|`0xnf09` |`TOPEI_ACRn` |Top pending interrupt ID.
-|`0xnf0A` |`EOIEI_ACRn` |End-of-interrupt.
-|`0xnf0B` |`EBPC_ACRn` |Saved BPC of the trap source block.
-|`0xnf0C` |`EBARG_ACRn` |Saved BARG (block arguments) of the trap source block.
-|`0xnf0D` |`ETPC_ACRn` |Saved TPC of the trap source instruction (scalar block types).
-|`0xnf0E` |`EBPCN_ACRn` |Saved next-BPC (`BPCN`) of the trap source block.
+|`0xnf00` |`ECSTATE_ACRn` |RW |Exception state. Mirrors key CSTATE fields. Includes BI and ACR target for ACRE.
+|`0xnf01` |`EVBASE_ACRn` |RW |Exception vector base.
+|`0xnf02` |`TRAPNO_ACRn` |RW |Trap number encoding (E/ARGV/CAUSE/TRAPNUM).
+|`0xnf03` |`TRAPARG0_ACRn` |RW |Trap argument 0 (valid when TRAPNO.ARGV=1).
+|`0xnf05` |`ETEMP_ACRn` |RW |Exception temporary register.
+|`0xnf06` |`ETEMP0_ACRn` |RW |Exception temporary register 0 (v0.2 bring-up).
+|`0xnf07` |`ECONFIG_ACRn` |RW |Exception/interrupt configuration.
+|`0xnf08` |`IPENDING_ACRn` |RW |Interrupt pending bitmap.
+|`0xnf09` |`TOPEI_ACRn` |RW |Top pending interrupt ID.
+|`0xnf0A` |`EOIEI_ACRn` |WO |End-of-interrupt.
+|`0xnf10` |`TTBR0_ACR1` |RW |CPU MMU table base register 0 (ACR1).
+|`0xnf11` |`TTBR1_ACR1` |RW |CPU MMU table base register 1 (ACR1).
+|`0xnf12` |`TCR_ACR1` |RW |CPU MMU translation control (ACR1).
+|`0xnf13` |`MAIR_ACR1` |RW |CPU MMU memory attribute indirection register (ACR1).
+|`0xnf14` |`IOTTBR_ACR1` |RW |IOMMU translation table base (ACR1).
+|`0xnf15` |`IOTCR_ACR1` |RW |IOMMU translation control (ACR1).
+|`0xnf16` |`IOMAIR_ACR1` |RW |IOMMU memory attribute indirection register (ACR1).
+|`0xnf20` |`TIMER_TIME_ACRn` |RO |Timer register.
+|`0xnf21` |`TIMER_TIMECMP_ACRn` |RW |Timer compare register.
+|===
 
-|`0x1F10` |`TTBR0_ACR1` |CPU MMU table base register 0 (ACR1). Alias: `MMTBASE_ACR1`.
-|`0x1F11` |`TTBR1_ACR1` |CPU MMU table base register 1 (ACR1). Alias: `MMCONFIG_ACR1`.
-|`0x1F12` |`TCR_ACR1` |CPU MMU translation control (ACR1).
-|`0x1F13` |`MAIR_ACR1` |CPU MMU memory attribute indirection register (ACR1).
-|`0x1F14` |`IOTTBR_ACR1` |IOMMU translation table base (ACR1).
-|`0x1F15` |`IOTCR_ACR1` |IOMMU translation control (ACR1).
-|`0x1F16` |`IOMAIR_ACR1` |IOMMU memory attribute indirection register (ACR1).
+[[ssr-ebarg]]
+==== EBARG group (v0.2)
 
-|`0xnf20` |`TIMER_TIME_ACRn` |Timer register.
-|`0xnf21` |`TIMER_TIMECMP_ACRn` |Timer compare register.
+EBARG is the authoritative trap/context snapshot for v0.2. EBARG words are ACR-scoped manager-family SSRs (0xnf40+).
 
-|`0xnf30` |`XBINFO_ACRn` |Cross-block info (XB entry metadata).
-|`0xnf31` |`ACR_PARAM_ACRn` |ACR parameter.
+[%header,cols="1,1,1,4"]
+|===
+|SSR_ID |Name |Access |Description
 
+|`0xnf40` |`EBARG0_ACRn` |RW |Packed control word: BlockType, GroupID, TYPE/TAKEN/TRAP, order attributes.
+|`0xnf41` |`EBARG_BPC_CUR_ACRn` |RW |Current block start PC (BPC.CUR).
+|`0xnf42` |`EBARG_BPC_TGT_ACRn` |RW |Next block PC target (BPC.TGT).
+|`0xnf43` |`EBARG_TPC_ACRn` |RW |Body resume PC (TPC). Valid when ECSTATE.BI=1.
+|`0xnf44` |`EBARG_LRA_ACRn` |RW |Local return address (LRA) for split/decoupled blocks.
+|`0xnf45` |`EBARG_TQ0_ACRn` |RW |T-hand queue entry 0.
+|`0xnf46` |`EBARG_TQ1_ACRn` |RW |T-hand queue entry 1.
+|`0xnf47` |`EBARG_TQ2_ACRn` |RW |T-hand queue entry 2.
+|`0xnf48` |`EBARG_TQ3_ACRn` |RW |T-hand queue entry 3.
+|`0xnf49` |`EBARG_UQ0_ACRn` |RW |U-hand queue entry 0.
+|`0xnf4A` |`EBARG_UQ1_ACRn` |RW |U-hand queue entry 1.
+|`0xnf4B` |`EBARG_UQ2_ACRn` |RW |U-hand queue entry 2.
+|`0xnf4C` |`EBARG_UQ3_ACRn` |RW |U-hand queue entry 3.
+|`0xnf4D` |`EBARG_LB_ACRn` |RW |Packed LB0..LB2 as 16-bit each (low bits).
+|`0xnf4E` |`EBARG_LC_ACRn` |RW |Packed LC0..LC2 as 16-bit each (low bits).
+|`0xnf4F` |`EBARG_EXTCTX_PTR_ACRn` |RW |Pointer to extended-context buffer for ESAVE/ERCOV.
+|`0xnf50` |`EBARG_EXTCTX_META_ACRn` |RW |Extended-context metadata (kind/version/length/checksum; profile-defined).
+|===
+
+[[ssr-debug]]
+==== Debug SSRs (v0.2 bring-up)
+
+v0.2 bring-up debug SSRs (breakpoints/watchpoints with optional linking).
+
+[%header,cols="1,1,1,4"]
+|===
+|SSR_ID |Name |Access |Description
+
+|`0xnf80` |`DBGID_ACRn` |RO |Debug capability ID register (CPs/BPs/WPs).
+|`0xnf90` |`DBCR0_ACRn` |RW |Address breakpoint control.
+|`0xnf91` |`DBVR0_ACRn` |RW |Address breakpoint value (full address).
+|`0xnf92` |`DBCR1_ACRn` |RW |Address breakpoint control.
+|`0xnf93` |`DBVR1_ACRn` |RW |Address breakpoint value (full address).
+|`0xnf94` |`DBCR2_ACRn` |RW |Address breakpoint control.
+|`0xnf95` |`DBVR2_ACRn` |RW |Address breakpoint value (full address).
+|`0xnf96` |`DBCR3_ACRn` |RW |Address breakpoint control.
+|`0xnf97` |`DBVR3_ACRn` |RW |Address breakpoint value (full address).
+|`0xnfA0` |`DCCR0_ACRn` |RW |Context breakpoint control.
+|`0xnfA1` |`DCVR0_ACRn` |RW |Context breakpoint value (LC0/LC1/LC2).
+|`0xnfB0` |`DWCR0_ACRn` |RW |Watchpoint control.
+|`0xnfB1` |`DWVR0_ACRn` |RW |Watchpoint value (full address).
+|`0xnfB2` |`DWCR1_ACRn` |RW |Watchpoint control.
+|`0xnfB3` |`DWVR1_ACRn` |RW |Watchpoint value (full address).
+|`0xnfB4` |`DWCR2_ACRn` |RW |Watchpoint control.
+|`0xnfB5` |`DWVR2_ACRn` |RW |Watchpoint value (full address).
+|`0xnfB6` |`DWCR3_ACRn` |RW |Watchpoint control.
+|`0xnfB7` |`DWVR3_ACRn` |RW |Watchpoint value (full address).
 |===

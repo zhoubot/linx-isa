@@ -1,6 +1,6 @@
 # Interop (QEMU / LLVM)
 
-This folder documents how to consume `isa/spec/current/linxisa-v0.1.json` when building decoders/encoders.
+This folder documents how to consume `isa/spec/current/linxisa-v0.2.json` when building decoders/encoders.
 
 ## The key data: `instructions[].encoding`
 

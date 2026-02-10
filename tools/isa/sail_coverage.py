@@ -56,7 +56,7 @@ def _relpath_in_repo(p: Path, repo_root: Path) -> str:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--spec", default="isa/spec/current/linxisa-v0.1.json", help="Compiled ISA catalog JSON")
+    ap.add_argument("--spec", default="isa/spec/current/linxisa-v0.2.json", help="Compiled ISA catalog JSON")
     ap.add_argument(
         "--implemented",
         default="isa/sail/implemented_mnemonics.txt",

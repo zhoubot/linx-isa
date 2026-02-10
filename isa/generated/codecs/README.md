@@ -2,7 +2,7 @@
 
 This folder contains **generated codec tables** derived from the canonical ISA JSON spec:
 
-- Source of truth: `isa/spec/current/linxisa-v0.1.json`
+- Source of truth: `isa/spec/current/linxisa-v0.2.json`
 - Generators:
   - `tools/isa/gen_qemu_codec.py` (QEMU decodetree-style text)
   - `tools/isa/gen_c_codec.py` (C tables for LLVM/binutils integration)
@@ -22,9 +22,9 @@ The `.decode` syntax is QEMU *decodetree-style*:
 ## Regenerating
 
 ```bash
-python3 tools/isa/gen_qemu_codec.py --spec isa/spec/current/linxisa-v0.1.json --out-dir isa/generated/codecs
-python3 tools/isa/gen_c_codec.py --spec isa/spec/current/linxisa-v0.1.json --out-dir isa/generated/codecs
-python3 tools/isa/validate_spec.py --spec isa/spec/current/linxisa-v0.1.json
+python3 tools/isa/gen_qemu_codec.py --spec isa/spec/current/linxisa-v0.2.json --out-dir isa/generated/codecs
+python3 tools/isa/gen_c_codec.py --spec isa/spec/current/linxisa-v0.2.json --out-dir isa/generated/codecs
+python3 tools/isa/validate_spec.py --spec isa/spec/current/linxisa-v0.2.json
 ```
 
 ## Notes on 64-bit forms

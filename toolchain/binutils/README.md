@@ -4,9 +4,9 @@ This folder will track work needed to support LinxISA in GNU binutils (assembler
 
 ## Source of truth
 
-- ISA catalog: `isa/spec/current/linxisa-v0.1.json`
+- ISA catalog: `isa/spec/current/linxisa-v0.2.json`
 - Generated C tables (mask/match + field extraction): `isa/generated/codecs/linxisa_opcodes.h`
-- Register encoding (`SrcL`, `SrcR`, `RegDst`, ...): `registers.reg5` in `isa/spec/current/linxisa-v0.1.json`
+- Register encoding (`SrcL`, `SrcR`, `RegDst`, ...): `registers.reg5` in `isa/spec/current/linxisa-v0.2.json`
 
 ## Suggested bring-up order
 
@@ -18,4 +18,4 @@ This folder will track work needed to support LinxISA in GNU binutils (assembler
 3. **bfd/ld integration**
    - Add ELF machine id + relocations matching the ISA’s PC-relative forms.
 
-Everything should be generated/validated from `isa/spec/current/linxisa-v0.1.json` to avoid drift.
+Everything should be generated/validated from `isa/spec/current/linxisa-v0.2.json` to avoid drift.

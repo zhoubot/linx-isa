@@ -11,7 +11,7 @@ Primary plan/status file: `compiler/COMPILER_PLAN.md`
 ## Required invariants
 
 - Generated code must follow Block ISA control-flow invariants.
-- Encodings and decode assumptions must match `isa/spec/current/linxisa-v0.1.json`.
+- Encodings and decode assumptions must match `isa/spec/current/linxisa-v0.2.json`.
 - Call header adjacency rule must hold for direct calls.
 
 ## Execution

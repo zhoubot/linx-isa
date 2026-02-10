@@ -234,6 +234,8 @@
 |`C.BSTART` |16 |- |`C.BSTART COND, label` |-
 |`C.BSTART` |16 |- |`C.BSTART DIRECT, label` |-
 |`C.BSTOP` |16 |- |`C.BSTOP` |-
+|`ERCOV` |32 |- |`ERCOV [RegSrc0=BasePtr, RegSrc1=LenBytes, RegSrc2=Kind]` |-
+|`ESAVE` |32 |- |`ESAVE [RegSrc0=BasePtr, RegSrc1=LenBytes, RegSrc2=Kind]` |-
 |`FENTRY` |32 |- |`FENTRY [RegSrc0 ~ RegSrcn], sp!, uimm` |-
 |`FEXIT` |32 |- |`FEXIT [RegDst0 ~ RegDstn], sp!, uimm` |-
 |`FRET.RA` |32 |- |`FRET.RA [RegDst0 ~ RegDstn], sp!, uimm` |-

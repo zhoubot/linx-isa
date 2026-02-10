@@ -1,6 +1,6 @@
 SHELL := /bin/sh
 
-SPEC ?= ../../../isa/spec/current/linxisa-v0.1.json
+SPEC ?= ../../../isa/spec/current/linxisa-v0.2.json
 GEN_DIR ?= src/generated
 DOC ?= src/linxisa-isa-manual.adoc
 
@@ -18,6 +18,7 @@ bundle-check:
 gen:
 	@mkdir -p $(GEN_DIR)
 	python3 ../../../tools/isa/gen_manual_adoc.py --spec $(SPEC) --out-dir $(GEN_DIR)
+	python3 ../../../tools/isa/gen_ssr_adoc.py --spec $(SPEC) --out-dir $(GEN_DIR)
 
 $(BUILD_DIR):
 	@mkdir -p $(BUILD_DIR)

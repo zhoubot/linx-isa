@@ -1,6 +1,6 @@
 # Phase 2: ISA Spec Integration
 
-Source of truth: `isa/golden/v0.1/**` (compiled to `isa/spec/current/linxisa-v0.1.json`)
+Source of truth: `isa/golden/v0.2/**` (compiled to `isa/spec/current/linxisa-v0.2.json`)
 
 Supporting context:
 - `isa/README.md`
@@ -13,6 +13,6 @@ Compiler, emulator, and RTL behavior must be derived from, or checked against, t
 ## Regeneration
 
 ```bash
-python3 tools/isa/build_golden.py --in isa/golden/v0.1 --out isa/spec/current/linxisa-v0.1.json --pretty
-python3 tools/isa/validate_spec.py --spec isa/spec/current/linxisa-v0.1.json
+python3 tools/isa/build_golden.py --in isa/golden/v0.2 --out isa/spec/current/linxisa-v0.2.json --pretty
+python3 tools/isa/validate_spec.py --spec isa/spec/current/linxisa-v0.2.json
 ```

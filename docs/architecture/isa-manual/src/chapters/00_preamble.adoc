@@ -5,7 +5,7 @@ This document is a *draft* ISA manual for the **Linx Instruction Set Architectur
 
 The single source of truth for instruction encodings in this repo is:
 
-* `isa/spec/current/linxisa-v0.1.json` (machine-readable catalog built from `isa/golden/v0.1/`)
+* `isa/spec/current/linxisa-v0.2.json` (machine-readable catalog built from `isa/golden/v0.2/`)
 * `isa/generated/codecs/` (generated encode/decode tables derived from the JSON)
 
 Where this manual and the machine-readable catalog disagree, treat the JSON as authoritative.

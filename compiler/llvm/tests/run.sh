@@ -170,7 +170,7 @@ if [[ $FAILED -ne 0 ]]; then
   exit 1
 fi
 
-SPEC="${SPEC:-$ROOT/../../../isa/spec/current/linxisa-v0.1.json}"
+SPEC="${SPEC:-$ROOT/../../../isa/spec/current/linxisa-v0.2.json}"
 GEN_VECTORS="$ROOT/gen_disasm_vectors.py"
 
 if [[ -f "$SPEC" && -f "$GEN_VECTORS" ]]; then

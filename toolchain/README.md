@@ -6,7 +6,7 @@ This repo's toolchain surface is split into:
 - Runtime/libc (in-repo): `toolchain/libc/`
 - (Planned) binutils port notes: `toolchain/binutils/`
 
-Canonical ISA catalog: `isa/spec/current/linxisa-v0.1.json`
+Canonical ISA catalog: `isa/spec/current/linxisa-v0.2.json`
 
 ## LLVM bring-up quickstart
 

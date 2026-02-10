@@ -4,17 +4,18 @@
 
 Build the compiled machine-readable catalog from the multi-file golden sources:
 
-- Golden sources: `isa/golden/v0.1/**`
-- Compiled catalog (checked in): `isa/spec/current/linxisa-v0.1.json`
+- Golden sources (current): `isa/golden/v0.2/**`
+- Compiled catalog (checked in, current): `isa/spec/current/linxisa-v0.2.json`
+- Legacy catalog (kept for reference): `isa/spec/current/linxisa-v0.1.json`
 
 ```bash
-python3 tools/isa/build_golden.py --in isa/golden/v0.1 --out isa/spec/current/linxisa-v0.1.json --pretty
+python3 tools/isa/build_golden.py --in isa/golden/v0.2 --out isa/spec/current/linxisa-v0.2.json --pretty
 ```
 
 Use `--check` to verify the checked-in compiled catalog is up-to-date:
 
 ```bash
-python3 tools/isa/build_golden.py --in isa/golden/v0.1 --out isa/spec/current/linxisa-v0.1.json --check
+python3 tools/isa/build_golden.py --in isa/golden/v0.2 --out isa/spec/current/linxisa-v0.2.json --check
 ```
 
 ## `split_compiled.py` (bootstrap / review)
@@ -22,7 +23,7 @@ python3 tools/isa/build_golden.py --in isa/golden/v0.1 --out isa/spec/current/li
 Split a compiled catalog JSON back into opcode DSL files (for bootstrapping/review only):
 
 ```bash
-python3 tools/isa/split_compiled.py --spec isa/spec/current/linxisa-v0.1.json --out isa/golden/v0.1
+python3 tools/isa/split_compiled.py --spec isa/spec/current/linxisa-v0.2.json --out isa/golden/v0.2
 ```
 
 ## `validate_spec.py`
@@ -30,7 +31,25 @@ python3 tools/isa/split_compiled.py --spec isa/spec/current/linxisa-v0.1.json --
 Sanity-checks that the generated `mask`/`match`/`pattern` are internally consistent:
 
 ```bash
-python3 tools/isa/validate_spec.py --spec isa/spec/current/linxisa-v0.1.json
+python3 tools/isa/validate_spec.py --spec isa/spec/current/linxisa-v0.2.json
+```
+
+## `check_no_legacy_v02.py`
+
+Drift gate to ensure v0.2 “current” artifacts do not reintroduce v0.1 trap ABI terminology:
+
+```bash
+python3 tools/isa/check_no_legacy_v02.py --root .
+```
+
+To enforce the same terminology lock across external bring-up repos (Linux/QEMU/LLVM), add `--extra-root`:
+
+```bash
+python3 tools/isa/check_no_legacy_v02.py \
+  --root . \
+  --extra-root ~/linux \
+  --extra-root ~/qemu \
+  --extra-root ~/llvm-project
 ```
 
 ## `gen_qemu_codec.py`
@@ -38,7 +57,7 @@ python3 tools/isa/validate_spec.py --spec isa/spec/current/linxisa-v0.1.json
 Generates QEMU decodetree-style codec tables in `isa/generated/codecs/`:
 
 ```bash
-python3 tools/isa/gen_qemu_codec.py --spec isa/spec/current/linxisa-v0.1.json --out-dir isa/generated/codecs
+python3 tools/isa/gen_qemu_codec.py --spec isa/spec/current/linxisa-v0.2.json --out-dir isa/generated/codecs
 ```
 
 The output is intended to be consumed by:
@@ -54,10 +73,18 @@ which is directly usable for QEMU-style decode tables and LLVM TableGen generati
 Generates a C header/source pair containing packed `mask/match` + field extraction metadata:
 
 ```bash
-python3 tools/isa/gen_c_codec.py --spec isa/spec/current/linxisa-v0.1.json --out-dir isa/generated/codecs
+python3 tools/isa/gen_c_codec.py --spec isa/spec/current/linxisa-v0.2.json --out-dir isa/generated/codecs
 ```
 
 This is intended as a convenient input for LLVM MC and binutils ports without requiring a JSON parser.
+
+## `gen_ssr_adoc.py`
+
+Generates ISA-manual AsciiDoc fragments for the v0.2 SSR map (including EBARG + debug regs) and TRAPNO encoding:
+
+```bash
+python3 tools/isa/gen_ssr_adoc.py --spec isa/spec/current/linxisa-v0.2.json --out-dir docs/architecture/isa-manual/src/generated
+```
 
 ## `linxdisasm.py`
 

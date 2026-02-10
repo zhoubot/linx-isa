@@ -21,7 +21,7 @@ granularity.
 [[blockisa-forms]]
 === Block forms (coupled / decoupled / template)
 
-The v0.1 bring-up profile defines **three block forms**. Toolchains and implementations MUST enforce the legality
+The v0.2 bring-up profile defines **three block forms**. Toolchains and implementations MUST enforce the legality
 rules in this section.
 
 [[blockisa-forms-coupled]]
@@ -114,7 +114,7 @@ is bounded by the block.
 Blocks carry per-block architectural state called the **Block Argument Register** (**BARG**). BARG is evaluated and
 committed at **block boundaries**.
 
-In the v0.1 draft, BARG includes (non-exhaustive):
+In the bring-up model, BARG includes (non-exhaustive):
 
 * the block type (e.g. `.STD`, `.SYS`, `.FP`, …),
 * the selected branch/exit kind (e.g. `FALL`, `DIRECT`, `COND`, `CALL`, `IND`, `ICALL`, `RET`),
@@ -127,7 +127,7 @@ Additional bring-up fields used by tooling and trap recovery include:
 * ordering/atomic qualifiers (e.g. `AQ`/`RL` from `B.ATTR`), and
 * output register mapping for split blocks.
 
-**BARG lifetime rules (v0.1 draft):**
+**BARG lifetime rules (bring-up):**
 
 * BARG is reset/initialized at block start (a block start marker).
 * `SETC.*` / `C.SETC.*` update BARG and MUST execute *inside a block* (after a block start marker). `SETC` may appear
@@ -145,7 +145,7 @@ Additional bring-up fields used by tooling and trap recovery include:
 * a **block type** (e.g. `.STD`, `.SYS`, `.FP`, `.MPAR`, …), and
 * a **branch type** / transition kind (e.g. `FALL`, `DIRECT`, `COND`, `CALL`, `IND`, `ICALL`, `RET`).
 
-The v0.1 draft constrains certain combinations (examples):
+The bring-up profile constrains certain combinations (examples):
 
 * `.SYS` blocks are typically fall-through only (`FALL`), optionally with a fixup label.
 * `.MPAR` / `.MSEQ` blocks are described as fall-through forms used to select memory-parallel vs memory-sequential
@@ -153,8 +153,8 @@ The v0.1 draft constrains certain combinations (examples):
 * `.FP` blocks mirror `.STD` transitions but mark a floating-point execution context.
 
 Block types beyond the scalar core (e.g. `.TMA`, `.TEPL`, `.VPAR`, `.VSEQ`, `.CUBE`, `.FIXP`) appear in the catalog as
-Block Split forms; this manual treats their detailed execution semantics as outside scope of the v0.1 bring-up unless
-explicitly specified in the golden sources (`isa/golden/v0.1/`).
+Block Split forms; this manual treats their detailed execution semantics as outside scope of the v0.2 bring-up unless
+explicitly specified in the golden sources (`isa/golden/v0.2/`).
 
 [[blockisa-tile]]
 === Tile blocks (TAU)
@@ -170,7 +170,7 @@ Tile blocks operate on **tile registers** (see <<progmodel-tile>>), and use expl
 * `B.IOR` describes GPR inputs/outputs for the block
 * `B.DIM` / `C.B.DIM*` may be used to provide block-local dimensions and valid masks via `LB0..LB2`
 
-Bring-up contract (v0.1 profile):
+Bring-up contract (v0.2 profile):
 
 * `BSTART.TMA`, `BSTART.CUBE`, `BSTART.VPAR`, and `BSTART.VSEQ` are treated as **decoupled headers** (see
   <<blockisa-forms-decoupled>>). Their body is selected by `B.TEXT`.
@@ -195,7 +195,7 @@ Bring-up conventions:
 * Scalar-only implementations may treat most descriptors as **hints/no-ops**, but accelerated implementations may
   consult them for correctness (tile operand binding, ordering, traps).
 
-The v0.1 catalog includes the following descriptor families:
+The v0.2 catalog includes the following descriptor families:
 
 * **Block I/O binding**
   - `B.IOR`: binds GPR inputs/outputs for a block.
@@ -226,7 +226,7 @@ these as metadata that does not affect scalar execution unless explicitly stated
 `SETC.TGT` selects a register or link target used by `RET`/`IND`-class transitions in the common convention above.
 `SETRET`/`C.SETRET` materialize a return address into `ra` for call sequences.
 
-NOTE: The v0.1 draft notes that `C.BSTOP` is encoded as all-zeros in the 16-bit space; it functions both as an
+NOTE: The bring-up profile notes that `C.BSTOP` is encoded as all-zeros in the 16-bit space; it functions both as an
 invalid/reserved encoding and as the block-stop marker in current conventions.
 
 [[blockisa-call-return]]

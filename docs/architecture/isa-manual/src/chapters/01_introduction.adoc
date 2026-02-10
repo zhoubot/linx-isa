@@ -12,13 +12,13 @@ At a high level, Linx is designed to be:
 * **Specification-driven:** keep instruction encodings and toolchains aligned via a machine-readable catalog that
   generates decoders/encoders and the instruction reference in this manual.
 
-This manual describes the programmer-visible interface of the Linx ISA as captured in the v0.1 draft catalog used by
+This manual describes the programmer-visible interface of the Linx ISA as captured in the v0.2 draft catalog used by
 this repository (see <<preamble>>). It is not a microarchitecture document.
 
 [[intro-goals]]
-=== Design goals (v0.1 bring-up)
+=== Design goals (v0.2 bring-up)
 
-The v0.1 catalog and toolchain bring-up emphasize:
+The v0.2 catalog and toolchain bring-up emphasize:
 
 * **Block-structured control flow** (see <<blockisa>>): control-flow is expressed at basic-block granularity using
   explicit block markers. This supports a translation model where one architectural block maps naturally to one
