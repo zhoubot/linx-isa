@@ -96,6 +96,22 @@ echo "-- QEMU runtime tests"
 (cd "$ROOT/tests/qemu" && CLANG="$CLANG" LLD="$LLD" QEMU="$QEMU" ./run_tests.sh --all --timeout 10)
 
 echo
+echo "-- TSVC benchmark suite on QEMU (optional)"
+if [[ "${RUN_TSVC:-0}" == "1" ]]; then
+  python3 "$ROOT/workloads/benchmarks/run_tsvc.py" \
+    --clang "$CLANG" \
+    --lld "$LLD" \
+    --qemu "$QEMU" \
+    --timeout "${TSVC_TIMEOUT:-180}" \
+    --iterations "${TSVC_ITERATIONS:-32}" \
+    --len-1d "${TSVC_LEN_1D:-320}" \
+    --len-2d "${TSVC_LEN_2D:-16}" \
+    --vector-mode "${TSVC_VECTOR_MODE:-mseq}"
+else
+  echo "note: skipping TSVC (set RUN_TSVC=1 to enable)"
+fi
+
+echo
 echo "-- ctuning Milepost codelets (optional)"
 CTUNING_ROOT="${CTUNING_ROOT:-$HOME/ctuning-programs}"
 CTUNING_LIMIT="${CTUNING_LIMIT:-5}"

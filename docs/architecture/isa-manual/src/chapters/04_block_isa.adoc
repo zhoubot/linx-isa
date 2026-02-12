@@ -295,6 +295,51 @@ Normative notes:
 * Multiple `B.IOR` and `B.IOT/B.IOTI` descriptors in one header are legal and consumed in order.
 * Canonical v0.3 artifacts MUST NOT encode unresolved `group=2` behavior.
 
+[[blockisa-simt]]
+=== SIMT-style vector blocks (`MSEQ`/`MPAR`/`VSEQ`/`VPAR`)
+
+Linx vector execution is SIMT-style: a vector block body specifies **one lane** of computation, and hardware repeats
+that body across a multi-dimensional lane space defined by `LB0..LB2`.
+
+Bring-up execution model (normative for strict v0.3):
+
+* `LB0..LB2` are written by `B.DIM` / `C.B.DIM*` in the block header.
+* Hardware exposes lane counters `lc0..lc2` to the block body; on block entry they are initialized to `0`.
+* The body is executed for each lane tuple `(lc0, lc1, lc2)` with:
+** `lc0` iterating fastest: `0 .. (LB0-1)`
+** `lc1`: `0 .. (max(LB1,1)-1)`
+** `lc2`: `0 .. (max(LB2,1)-1)`
+* `MSEQ` / `VSEQ`: lanes are committed in lexicographic order (`lc0` inner-most, then `lc1`, then `lc2`).
+* `MPAR` / `VPAR`: lanes are conceptually parallel; an implementation MAY commit lanes in any order, but MUST be
+  observationally equivalent to some interleaving consistent with the architectural memory-order rules.
+
+Decoupled body form (bring-up constraint):
+
+* The header MUST contain exactly one `B.TEXT <tpc>` selecting an out-of-line **linear** body.
+* The body MUST terminate at `BSTOP` / `C.BSTOP`.
+* The body MUST NOT contain any `B.*` header descriptors or block start markers.
+
+Example (2-D nested loop using `MSEQ`):
+
+[source,asm]
+----
+    # for (i=0; i<n; i++)
+    #   for (j=0; j<m; j++)
+    #     a[i][j] = i + j
+
+	    BSTART.MSEQ 0
+	    B.TEXT .body
+	    B.IOR [s0],[]          # a base pointer mapped to ri0
+	    B.DIM a0, 0, ->lb0     # m
+	    B.DIM a1, 0, ->lb1     # n
+	    C.BSTART
+
+	.body:
+	    v.add lc0, lc1.sw, ->vt
+	    v.sw.brg vt#1, [ri0, lc0<<2, lc1<<10]   # example stride: 1024B = (1<<10)
+	    C.BSTOP
+----
+
 [[blockisa-v03-bridge]]
 === Vector memory-bridge naming (strict profile)
 
@@ -314,6 +359,21 @@ Encoding/mnemonic mapping (normative):
 * `load.brg` / `store.brg` correspond to `V.*.BRG` memory ops selecting the bridged global-memory path (the `BRG`
   variant in the mnemonic). Example families: `v.lb.brg`, `v.lw.brg`, `v.sb.brg`, `v.sw.brg`.
 
+Bring-up operand constraints (strict profile):
+
+* `.brg` vector memory ops MUST use `ri*` as their base operand (`SrcL`); using scalar GPR names directly is illegal.
+* `.local` vector memory ops MUST use tile bases (`TA/TB/TC/TD/TO/TS`) as their base operand (`SrcL`).
+* `VSEQ`/`VPAR` blocks MUST NOT use `.brg` memory ops (tile-only vector execution).
+
+Bring-up tile-base binding for `.local` ops (normative for strict v0.3):
+
+* Tile bases are derived from the header's `B.IOT/B.IOTI` descriptors in header order:
+** `TA/TB/TC/TD` map to the first four *present* source tiles across the descriptor stream (in `SrcTile0` then
+   `SrcTile1` order).
+** `TO/TS` map to the first two destination tiles encoded in an *absent* source slot (preferring `SrcTile1`, then
+   `SrcTile0`), matching the v0.3 disassembly contract for `B.IOTI`.
+* If a referenced base is not bound by the current header, the access is illegal.
+
 Vector block bodies may mix scalar-uniform and vector instructions; scalar-uniform forms use scalar block-local queues
 (`t/u`) while vector forms use vector/tile-local namespaces.
 
@@ -322,10 +382,25 @@ Vector block bodies may mix scalar-uniform and vector instructions; scalar-unifo
 
 The architectural interface between the first and second layer is a block command:
 
-* Header descriptors (`B.ARG`, `B.ATTR`, `B.IOR`, `B.IOT`, `B.DIM`, `B.TEXT`) pack command fields.
-* `BSTOP` finalizes and dispatches the command to the selected PE.
-* The PE executes and returns live-out/status metadata.
-* `BROB` tracks command completion and retires blocks in-order.
+* `BSTART.<type>` begins a new command:
+** packs the block opcode/type (and any type-specific info) into the command header.
+** conceptually allocates a `BID` (block ID) for `BROB` tracking.
+* Header descriptors pack additional command fields:
+** `B.IOR`: reads input GPR values when they are ready and packs them into the command payload; reserves tags for GPR
+   live-outs.
+** `B.IOT`: performs tile rename, computes input/output tile base addresses, and packs those addresses into the command
+   payload.
+** `B.ARG` / `B.ATTR`: pack block-type-defined immediates/attributes.
+** `B.IOD` (compat/obsolete): encodes dummy dependence edges for legacy streams.
+** `B.DIM`: packs block dimensions (`LB0..LB2`) for SIMT/vector replay and for tile engines.
+** `B.TEXT`: packs the out-of-line body `TPC` for decoupled blocks.
+* `BSTOP` (or an implicit boundary at the next block start marker) finalizes the command and dispatches it to the
+  selected second-layer PE.
+* The PE executes only when a valid command is received; it may buffer multiple commands internally.
+* On completion (or fault), the PE returns:
+** live-out values (GPR writes and/or tile writes) for architectural state update, and
+** a status code (success, fail, exception metadata) for `BROB`.
+* `BROB` tracks completion and retires block commands in-order; speculative commands may be flushed by misprediction.
 
 [[blockisa-tepl]]
 === Generic accelerator block (`BSTART.TEPL`)

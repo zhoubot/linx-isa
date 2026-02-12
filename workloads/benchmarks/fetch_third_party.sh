@@ -146,6 +146,7 @@ EMBENCH_REF="${EMBENCH_REF:-main}"
 POLYBENCH_REF="${POLYBENCH_REF:-main}"
 LLVM_TEST_SUITE_REF="${LLVM_TEST_SUITE_REF:-main}"
 GBENCH_REF="${GBENCH_REF:-main}"
+TSVC_REF="${TSVC_REF:-master}"
 
 # Try main then master where needed.
 try_fetch_github() {
@@ -167,6 +168,7 @@ try_fetch_github embench embench-iot "$EMBENCH_REF" "$OUT_DIR/embench-iot"
 try_fetch_github ferrandi PolyBenchC "$POLYBENCH_REF" "$OUT_DIR/PolyBenchC"
 try_fetch_github llvm llvm-test-suite "$LLVM_TEST_SUITE_REF" "$OUT_DIR/llvm-test-suite"
 try_fetch_github google benchmark "$GBENCH_REF" "$OUT_DIR/google-benchmark"
+try_fetch_github UoB-HPC TSVC_2 "$TSVC_REF" "$OUT_DIR/TSVC_2"
 
 # MiBench: prefer the maintained mirror; do not rely on the legacy university host.
 MIBENCH_REF="${MIBENCH_REF:-master}"

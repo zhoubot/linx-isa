@@ -154,6 +154,52 @@ static void run_base_tile_tests()
     }
 
     test_pass();
+
+    test_start(0x000A000C);
+    uart_puts("PTO tile tadd (VPAR) ... ");
+
+    alignas(16) static int32_t ADD_A[1024];
+    alignas(16) static int32_t ADD_B[1024];
+    alignas(16) static int32_t ADD_SUM[1024];
+    alignas(16) static int32_t ADD_DIFF[1024];
+
+    for (unsigned i = 0; i < 1024; i++) {
+        ADD_A[i] = (int32_t)((int)i * 3 - 7);
+        ADD_B[i] = (int32_t)((int)i * 5 + 11);
+        ADD_SUM[i] = 0;
+        ADD_DIFF[i] = 0;
+    }
+
+    auto tAA = pto::linx::tload<kTileSizeCode>(ADD_A);
+    auto tBB = pto::linx::tload<kTileSizeCode>(ADD_B);
+    auto tSum = pto::linx::tadd<kTileSizeCode>(tAA, tBB);
+    pto::linx::tstore<kTileSizeCode>(ADD_SUM, tSum);
+
+    for (unsigned i = 0; i < 256; i++) {
+        const int32_t exp_sum = (int32_t)((int64_t)ADD_A[i] + (int64_t)ADD_B[i]);
+        TEST_EQ32((uint32_t)ADD_SUM[i], (uint32_t)exp_sum, 0x000AC000u + i);
+    }
+
+    test_pass();
+
+    test_start(0x000A000D);
+    uart_puts("PTO tile tsub (VPAR) ... ");
+
+    for (unsigned i = 0; i < 1024; i++) {
+        ADD_DIFF[i] = 0;
+    }
+
+    auto tAA2 = pto::linx::tload<kTileSizeCode>(ADD_A);
+    auto tBB2 = pto::linx::tload<kTileSizeCode>(ADD_B);
+    auto tDiff = pto::linx::tsub<kTileSizeCode>(tAA2, tBB2);
+    pto::linx::tstore<kTileSizeCode>(ADD_DIFF, tDiff);
+
+    for (unsigned i = 0; i < 256; i++) {
+        const int32_t exp_diff = (int32_t)((int64_t)ADD_A[i] - (int64_t)ADD_B[i]);
+        TEST_EQ32((uint32_t)ADD_DIFF[i], (uint32_t)exp_diff, 0x000AD000u + i);
+    }
+
+    test_pass();
 }
 
 static void run_auto_mode_gemm_test()

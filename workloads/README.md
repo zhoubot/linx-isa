@@ -24,6 +24,12 @@ Run PTO CPU sim + Linx QEMU checksum matching for GEMM/flash:
 python3 workloads/benchmarks/compare_pto_cpu_qemu.py
 ```
 
+Run TSVC on Linx QEMU:
+
+```bash
+python3 workloads/benchmarks/run_tsvc.py
+```
+
 Primary codegen-quality artifacts:
 
 - `workloads/generated/objdump/`
@@ -31,3 +37,4 @@ Primary codegen-quality artifacts:
 - `workloads/generated/objdump/pto_ai/`
 - `workloads/generated/pto_ai_report.md`
 - `workloads/generated/pto_qemu_value_match.md`
+- `workloads/generated/tsvc_report.md`

@@ -54,6 +54,18 @@ __attribute__((always_inline)) inline TileI32 tmatmul_mx(TileI32 lhs, TileI32 rh
 #endif
 }
 
+template <unsigned SizeCode>
+__attribute__((always_inline)) inline TileI32 tadd(TileI32 lhs, TileI32 rhs) {
+  static_assert(SizeCode == 8, "tadd bring-up supports only 4KiB tiles (SizeCode=8)");
+  return lhs + rhs;
+}
+
+template <unsigned SizeCode>
+__attribute__((always_inline)) inline TileI32 tsub(TileI32 lhs, TileI32 rhs) {
+  static_assert(SizeCode == 8, "tsub bring-up supports only 4KiB tiles (SizeCode=8)");
+  return lhs - rhs;
+}
+
 } // namespace linx
 } // namespace pto
 

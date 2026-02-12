@@ -37,6 +37,19 @@ Run PTO CPU sim baselines and verify GEMM/flash checksums against Linx QEMU:
 python3 workloads/benchmarks/compare_pto_cpu_qemu.py
 ```
 
+Fetch third-party suites (including TSVC):
+
+```bash
+bash workloads/benchmarks/fetch_third_party.sh
+```
+
+Build and run the TSVC suite with a QEMU-sized profile and vector-block
+markers enabled (`BSTART.MSEQ` by default):
+
+```bash
+python3 workloads/benchmarks/run_tsvc.py
+```
+
 Override tool paths:
 
 ```bash
@@ -56,3 +69,4 @@ Generated artifacts are written under:
 - `workloads/generated/objdump/pto_ai/` (PTO GEMM/flash auto-mode objdumps)
 - `workloads/generated/pto_ai_report.md` (PTO AI kernel validation report)
 - `workloads/generated/pto_qemu_value_match.md` (PTO CPU sim vs QEMU checksum match report)
+- `workloads/generated/tsvc_report.md` (TSVC kernel coverage + vector marker check)

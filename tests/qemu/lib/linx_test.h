@@ -75,11 +75,7 @@ static inline void uart_puts(const char *s) {
  * Output a hex digit
  */
 static inline void uart_puthex_digit(uint8_t d) {
-    if (d < 10) {
-        uart_putc('0' + d);
-    } else {
-        uart_putc('A' + d - 10);
-    }
+    uart_putc("0123456789ABCDEF"[d & 0xFu]);
 }
 
 /*
