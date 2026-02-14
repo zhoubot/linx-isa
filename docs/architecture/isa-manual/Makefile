@@ -1,6 +1,6 @@
 SHELL := /bin/sh
 
-SPEC ?= ../../../isa/spec/v0.3/linxisa-v0.3.json
+SPEC ?= ../../../spec/isa/spec/current/linxisa-v0.3.json
 GEN_DIR ?= src/generated
 DOC ?= src/linxisa-isa-manual.adoc
 

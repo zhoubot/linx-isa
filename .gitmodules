@@ -1,0 +1,10 @@
+[submodule "extern/qemu"]
+	path = extern/qemu
+	url = git@github.com:LinxISA/qemu.git
+[submodule "extern/linux"]
+	path = extern/linux
+	url = git@github.com:LinxISA/linux.git
+	ignore = dirty
+[submodule "extern/pyCircuit"]
+	path = extern/pyCircuit
+	url = git@github.com:zhoubot/pyCircuit.git

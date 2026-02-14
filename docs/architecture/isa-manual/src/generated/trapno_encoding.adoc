@@ -1,7 +1,7 @@
 // Generated file. Do not edit by hand.
 // Source: linxisa-v0.3.json (state.system_registers)
 [[trapno-encoding]]
-==== TRAPNO encoding (v0.2 bring-up)
+==== TRAPNO encoding (v0.3 bring-up)
 
 * TRAPNO is shared for faults, traps, and interrupts.
 * E=1 indicates asynchronous interrupt; E=0 indicates synchronous fault/trap.

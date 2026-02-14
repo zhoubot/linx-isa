@@ -39,7 +39,7 @@ case compact.
 === Vector (64-bit `V.*`)
 
 The catalog includes 64-bit forms (commonly `V.*`) represented as a 32-bit prefix + 32-bit main/postfix. Detailed
-vector semantics are outside the current bring-up scope unless specified by the golden sources (`isa/golden/v0.2/`); the instruction reference
+vector semantics are outside the current bring-up scope unless specified by the golden sources (`spec/isa/golden/v0.3/`); the instruction reference
 chapter enumerates the encodings present in the v0.2 catalog.
 
 [[isa-overview-templates]]

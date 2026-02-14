@@ -163,7 +163,7 @@ The bring-up profile constrains certain combinations (examples):
 
 Block types beyond the scalar core (e.g. `.TMA`, `.VPAR`, `.VSEQ`, `.CUBE`, `.FIXP`) appear in the catalog as
 Block Split forms; this manual treats their detailed execution semantics as staged in v0.3 unless explicitly specified
-in the golden sources (`isa/golden/v0.3/`).
+in the golden sources (`spec/isa/golden/v0.3/`).
 
 [[blockisa-tile]]
 === Tile blocks (TAU)
@@ -313,6 +313,11 @@ Bring-up execution model (normative for strict v0.3):
 * `MSEQ` / `VSEQ`: lanes are committed in lexicographic order (`lc0` inner-most, then `lc1`, then `lc2`).
 * `MPAR` / `VPAR`: lanes are conceptually parallel; an implementation MAY commit lanes in any order, but MUST be
   observationally equivalent to some interleaving consistent with the architectural memory-order rules.
+* Group interpretation for canonical 1-D lowering:
+** `LB0` denotes lanes per group (`lane_count`),
+** `LB1` denotes group count (`group_count`),
+** the linear lane index is `lc0 + lc1 * lane_count`.
+* Scalar instructions in vector bodies are **uniform per group** (one scalar-uniform lane context per group replay).
 
 Decoupled body form (bring-up constraint):
 
@@ -335,11 +340,33 @@ Example (2-D nested loop using `MSEQ`):
 	    B.DIM a1, 0, ->lb1     # n
 	    C.BSTART
 
-	.body:
+.body:
 	    v.add lc0, lc1.sw, ->vt
 	    v.sw.brg vt#1, [ri0, lc0<<2, lc1<<10]   # example stride: 1024B = (1<<10)
 	    C.BSTOP
 ----
+
+[[blockisa-rdc]]
+=== Vector reduction operations in SIMT bodies (`V.RD*`)
+
+`V.RD*` operations provide lane-to-scalar reductions inside vector bodies:
+
+* `V.RDADD`, `V.RDAND`, `V.RDOR`, `V.RDXOR`, `V.RDMIN`, `V.RDMAX`,
+  `V.RDFADD`, `V.RDFMIN`, `V.RDFMAX`.
+* Source operand is a vector-lane value (`vt`/`vu`/`vm`/`vn` namespace).
+* Destination is a scalar destination encoding:
+** block/group-local scalar state (`t/u` and profile-defined block-local scalar destinations), or
+** global scalar registers (`R0..R23`) for inter-group accumulation.
+
+Execution/ordering rules:
+
+* `MSEQ` reductions are deterministic in lexical `LC` replay order.
+* `MPAR` reductions are only valid when dependence-safe; compiler emission must require associative/commutative legality
+  (or an explicit programmer parallel hint with matching semantics).
+* Non-associative reductions in `MPAR` are illegal unless the profile explicitly defines the numerical relaxation.
+* Strict bring-up compiler lowering of reduction live-outs MAY stage through a bridged scratch path:
+  `V.RD*` to scalar destination, followed by `V.SW.BRG` to an `ri*`-bound scratch slot consumed by scalar continuation code.
+* The staged lowering form requires an operation-identity initializer (`0` for add/xor/or, `-1` for and, `1` for mul when enabled).
 
 [[blockisa-v03-bridge]]
 === Vector memory-bridge naming (strict profile)
@@ -375,8 +402,18 @@ Bring-up tile-base binding for `.local` ops (normative for strict v0.3):
    `SrcTile0`), matching the v0.3 disassembly contract for `B.IOTI`.
 * If a referenced base is not bound by the current header, the access is illegal.
 
-Vector block bodies may mix scalar-uniform and vector instructions; scalar-uniform forms use scalar block-local queues
-(`t/u`) while vector forms use vector/tile-local namespaces.
+Vector block bodies may mix scalar-uniform and vector instructions; scalar-uniform forms use scalar block-local state
+(`GPR`, `t/u`, block-condition state), while vector forms use vector/tile-local namespaces.
+
+Predicate and replay semantics for mixed bodies:
+
+* `SETC.*` in the body updates the scalar block-control predicate domain (`BARG.CARG`); it does not directly mask vector lanes.
+* Vector lane predicates are data values produced by `V.CMP.*`/`V.F*` compare ops and consumed by vector predicate forms
+  (`V.CSEL`, and profile-defined predicated vector ops); lane predicate truth is `value != 0`.
+* The body is replayed once per `LC` tuple. Scalar instructions execute on every replay iteration in program order together
+  with vector instructions.
+* Vector instructions MUST import scalar inputs through `B.IOR`/`ri*` (except `zero` where encoding permits). Direct scalar
+  GPR operand names in `V.*` forms are illegal in strict v0.3.
 
 [[blockisa-bcmd]]
 === Block-command lifecycle

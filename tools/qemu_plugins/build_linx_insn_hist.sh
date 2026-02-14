@@ -28,10 +28,10 @@ cc -O2 -fPIC -shared \
   $GLIB_CFLAGS \
   -I"$QEMU_SRC/include/qemu" \
   -I"$QEMU_SRC/include" \
-  -I"$REPO_ROOT/isa/generated/codecs" \
+  -I"$REPO_ROOT/spec/isa/generated/codecs" \
   -o "$OUT_SO" \
   "$REPO_ROOT/tools/qemu_plugins/linx_insn_hist.c" \
-  "$REPO_ROOT/isa/generated/codecs/linxisa_opcodes.c" \
+  "$REPO_ROOT/spec/isa/generated/codecs/linxisa_opcodes.c" \
   $GLIB_LIBS \
   "${EXTRA_LDFLAGS[@]}"
 

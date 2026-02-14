@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Generate AsciiDoc fragments for the Linx ISA manual from a compiled LinxISA JSON spec
-(`isa/spec/current/linxisa-v*.json`).
+(`spec/isa/spec/current/linxisa-v*.json`).
 
 This tool is intentionally lightweight: it emits tables and summaries that are easier to keep
 in sync with the canonical machine-readable catalog than handwritten listings.
@@ -1170,9 +1170,9 @@ def main(argv: Optional[List[str]] = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument(
         "--profile",
-        choices=["v0.2", "v0.3"],
+        choices=["v0.3"],
         default="v0.3",
-        help="ISA profile for default --spec path",
+        help="ISA profile for default --spec path (v0.3 only)",
     )
     ap.add_argument("--spec", default=None, help="Path to ISA catalog JSON")
     ap.add_argument(
@@ -1183,17 +1183,10 @@ def main(argv: Optional[List[str]] = None) -> int:
     ap.add_argument("--check", action="store_true", help="Fail if outputs are not up-to-date")
     args = ap.parse_args(argv)
 
-    spec_path = (
-        args.spec
-        or (
-            "isa/spec/current/linxisa-v0.3.json"
-            if args.profile == "v0.3"
-            else "isa/spec/current/linxisa-v0.2.json"
-        )
-    )
+    spec_path = args.spec or "spec/isa/spec/current/linxisa-v0.3.json"
     spec = _read_json(spec_path)
     spec_version = str(spec.get("version") or "").strip() or "?"
-    golden_hint = f"isa/golden/v{spec_version}/" if spec_version != "?" else "isa/golden/v*/"
+    golden_hint = f"spec/isa/golden/v{spec_version}/" if spec_version != "?" else "spec/isa/golden/v*/"
     spec_label = os.path.basename(os.path.normpath(spec_path))
     source_comment = f"// Source: {spec_label} (built from {golden_hint})"
     instructions: List[Dict[str, Any]] = _filter_canonical_instructions(

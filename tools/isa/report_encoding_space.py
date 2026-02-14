@@ -438,6 +438,14 @@ def _index_to_masked(index: int, bit_positions_lsb_to_msb: List[int]) -> int:
     return masked
 
 
+def _display_path(path: Path) -> str:
+    try:
+        repo_root = Path(__file__).resolve().parents[2]
+        return str(path.resolve().relative_to(repo_root))
+    except Exception:
+        return str(path)
+
+
 def _write_report(
     out_path: Path,
     *,
@@ -476,7 +484,7 @@ def _write_report(
 
     lines: List[str] = []
     lines.append("# LinxISA Encoding Space Report\n")
-    lines.append(f"Spec: `{spec_path}`\n")
+    lines.append(f"Spec: `{_display_path(spec_path)}`\n")
 
     lines.append("## Conflicts (part0 mask/match overlaps)\n")
     lines.append("Conflicts are reported at the **full instruction length** (all parts), not just part0.\n\n")
@@ -557,7 +565,7 @@ def _write_report(
 
 def main(argv: List[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="Report encoding space usage and detect conflicts.")
-    ap.add_argument("--spec", type=Path, default=Path("isa/spec/current/linxisa-v0.3.json"))
+    ap.add_argument("--spec", type=Path, default=Path("spec/isa/spec/current/linxisa-v0.3.json"))
     ap.add_argument("--out", type=Path, default=Path("docs/reference/encoding_space_report.md"))
     ap.add_argument(
         "--check",

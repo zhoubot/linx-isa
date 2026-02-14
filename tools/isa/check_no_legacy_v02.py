@@ -43,7 +43,7 @@ SKIP_BASENAMES = {
 
 def _local_targets(root: Path) -> List[Path]:
     return [
-        root / "isa" / "spec" / "current" / "linxisa-v0.2.json",
+        root / "isa" / "spec" / "current" / "linxisa-v0.3.json",
         root / "isa" / "golden" / "v0.2",
         root / "isa" / "generated" / "codecs",
         root / "docs" / "architecture" / "isa-manual" / "src",

@@ -1,0 +1,217 @@
+//===-- LinxInstrInfo.td - Linx Instruction Definitions --------*- tablegen -*-===//
+//
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+//
+//===----------------------------------------------------------------------===//
+//
+// This file contains the Linx instruction definitions in TableGen format.
+// Generated from spec/isa/spec/current/linxisa-v0.3.json
+//
+//===----------------------------------------------------------------------===//
+
+include "LinxInstrFormats.td"
+include "LinxRegisterInfo.td"
+
+//===----------------------------------------------------------------------===//
+// Instruction Classes
+//===----------------------------------------------------------------------===//
+
+class LinxInst<dag outs, dag ins, string asmstr, list<dag> pattern>
+    : Instruction {
+  let OutOperandList = outs;
+  let InOperandList = ins;
+  let AsmString = asmstr;
+  let Pattern = pattern;
+  let Size = 4; // Default 32-bit, override for 16/48/64-bit
+}
+
+class LinxPseudo<dag outs, dag ins, string asmstr, list<dag> pattern>
+    : LinxInst<outs, ins, asmstr, pattern> {
+  let isPseudo = 1;
+}
+
+//===----------------------------------------------------------------------===//
+// Operand Types
+//===----------------------------------------------------------------------===//
+
+def simm12 : Operand<i32> {
+  let PrintMethod = "printSImm12";
+  let MIOperandInfo = (ops i32imm:$imm);
+}
+
+def simm17 : Operand<i32> {
+  let PrintMethod = "printSImm17";
+  let MIOperandInfo = (ops i32imm:$imm);
+}
+
+def simm25 : Operand<i32> {
+  let PrintMethod = "printSImm25";
+  let MIOperandInfo = (ops i32imm:$imm);
+}
+
+def uimm5 : Operand<i32> {
+  let PrintMethod = "printUImm5";
+  let MIOperandInfo = (ops i32imm:$imm);
+}
+
+def uimm12 : Operand<i32> {
+  let PrintMethod = "printUImm12";
+  let MIOperandInfo = (ops i32imm:$imm);
+}
+
+//===----------------------------------------------------------------------===//
+// Block ISA Instructions
+//===----------------------------------------------------------------------===//
+
+// Block Start instructions
+def BSTART_STD : LinxInst<(outs), (ins), "BSTART", []> {
+  let Size = 2; // 16-bit compressed form
+}
+
+def BSTART_COND : LinxInst<(outs), (ins GPR:$cond, simm12:$offset), 
+                           "BSTART COND, $offset", []> {
+  let Size = 2;
+}
+
+def BSTART_DIRECT : LinxInst<(outs), (ins simm12:$offset), 
+                              "BSTART DIRECT, $offset", []> {
+  let Size = 2;
+}
+
+def BSTART_CALL : LinxInst<(outs), (ins simm12:$offset), 
+                            "BSTART CALL, $offset", []> {
+  let Size = 2;
+}
+
+def BSTART_RET : LinxInst<(outs), (ins), "BSTART RET", []> {
+  let Size = 2;
+}
+
+// Block Stop instruction
+def BSTOP : LinxInst<(outs), (ins), "BSTOP", []> {
+  let Size = 2;
+}
+
+// Set Condition instructions
+def SETC_EQ : LinxInst<(outs), (ins GPR:$src1, GPR:$src2), 
+                       "SETC.EQ $src1, $src2", []>;
+
+def SETC_NE : LinxInst<(outs), (ins GPR:$src1, GPR:$src2), 
+                       "SETC.NE $src1, $src2", []>;
+
+def SETC_LT : LinxInst<(outs), (ins GPR:$src1, GPR:$src2), 
+                       "SETC.LT $src1, $src2", []>;
+
+def SETC_GE : LinxInst<(outs), (ins GPR:$src1, GPR:$src2), 
+                       "SETC.GE $src1, $src2", []>;
+
+//===----------------------------------------------------------------------===//
+// Arithmetic Instructions
+//===----------------------------------------------------------------------===//
+
+def ADD : LinxInst<(outs GPR:$dst), (ins GPR:$src1, GPR:$src2),
+                   "add $dst, $src1, $src2",
+                   [(set i32:$dst, (add i32:$src1, i32:$src2))]>;
+
+def ADDI : LinxInst<(outs GPR:$dst), (ins GPR:$src1, simm12:$imm),
+                    "addi $dst, $src1, $imm",
+                    [(set i32:$dst, (add i32:$src1, simm12:$imm))]>;
+
+def SUB : LinxInst<(outs GPR:$dst), (ins GPR:$src1, GPR:$src2),
+                   "sub $dst, $src1, $src2",
+                   [(set i32:$dst, (sub i32:$src1, i32:$src2))]>;
+
+def MUL : LinxInst<(outs GPR:$dst), (ins GPR:$src1, GPR:$src2),
+                   "mul $dst, $src1, $src2",
+                   [(set i32:$dst, (mul i32:$src1, i32:$src2))]>;
+
+//===----------------------------------------------------------------------===//
+// Memory Instructions
+//===----------------------------------------------------------------------===//
+
+def LWI : LinxInst<(outs GPR:$dst), (ins GPR:$base, simm12:$offset),
+                   "lwi $dst, [$base, $offset]",
+                   [(set i32:$dst, (load (add i32:$base, simm12:$offset)))]>;
+
+def SWI : LinxInst<(outs), (ins GPR:$src, GPR:$base, simm12:$offset),
+                   "swi $src, [$base, $offset]",
+                   [(store i32:$src, (add i32:$base, simm12:$offset))]>;
+
+def LDI : LinxInst<(outs GPR:$dst), (ins GPR:$base, simm12:$offset),
+                   "ldi $dst, [$base, $offset]",
+                   [(set i64:$dst, (load (add i64:$base, simm12:$offset)))]>;
+
+def SDI : LinxInst<(outs), (ins GPR:$src, GPR:$base, simm12:$offset),
+                   "sdi $src, [$base, $offset]",
+                   [(store i64:$src, (add i64:$base, simm12:$offset))]>;
+
+// PC-relative loads
+def LDL : LinxInst<(outs GPR:$dst), (ins simm25:$offset),
+                   "ldl $dst, $offset",
+                   [(set i32:$dst, (LinxPCrel simm25:$offset))]>;
+
+def SDL : LinxInst<(outs), (ins GPR:$src, simm25:$offset),
+                   "sdl $src, $offset",
+                   [(LinxPCrelStore i32:$src, simm25:$offset)]>;
+
+//===----------------------------------------------------------------------===//
+// Compressed Instructions (16-bit)
+//===----------------------------------------------------------------------===//
+
+def C_ADD : LinxInst<(outs GPR:$dst), (ins GPR:$src1, GPR:$src2),
+                     "c.add $dst, $src1, $src2",
+                     [(set i32:$dst, (add i32:$src1, i32:$src2))]> {
+  let Size = 2;
+}
+
+def C_ADDI : LinxInst<(outs GPR:$dst), (ins GPR:$src1, simm12:$imm),
+                      "c.addi $dst, $src1, $imm",
+                      [(set i32:$dst, (add i32:$src1, simm12:$imm))]> {
+  let Size = 2;
+}
+
+def C_LWI : LinxInst<(outs GPR:$dst), (ins GPR:$base, simm12:$offset),
+                     "c.lwi $dst, [$base, $offset]",
+                     [(set i32:$dst, (load (add i32:$base, simm12:$offset)))]> {
+  let Size = 2;
+}
+
+def C_SWI : LinxInst<(outs), (ins GPR:$src, GPR:$base, simm12:$offset),
+                     "c.swi $src, [$base, $offset]",
+                     [(store i32:$src, (add i32:$base, simm12:$offset))]> {
+  let Size = 2;
+}
+
+//===----------------------------------------------------------------------===//
+// Extended Instructions (48-bit)
+//===----------------------------------------------------------------------===//
+
+def HL_ADDI : LinxInst<(outs GPR:$dst), (ins GPR:$src1, simm32:$imm),
+                       "hl.addi $dst, $src1, $imm",
+                       [(set i32:$dst, (add i32:$src1, simm32:$imm))]> {
+  let Size = 6; // 48-bit
+}
+
+def HL_LUI : LinxInst<(outs GPR:$dst), (ins uimm32:$imm),
+                      "hl.lui $dst, $imm",
+                      [(set i32:$dst, (LinxHi simm32:$imm))]> {
+  let Size = 6;
+}
+
+//===----------------------------------------------------------------------===//
+// Instruction Selection Patterns
+//===----------------------------------------------------------------------===//
+
+// Immediate materialization patterns
+def : Pat<(i32 imm:$val), (ADDI ZERO, imm:$val)>;
+def : Pat<(i32 (LinxHi simm32:$val)), (HL_LUI simm32:$val)>;
+
+// Load/store patterns
+def : Pat<(load GPR:$addr), (LWI ZERO, GPR:$addr, 0)>;
+def : Pat<(store GPR:$val, GPR:$addr), (SWI GPR:$val, GPR:$addr, 0)>;
+
+// PC-relative patterns
+def : Pat<(LinxPCrel simm25:$off), (LDL simm25:$off)>;
+def : Pat<(LinxPCrelStore GPR:$val, simm25:$off), (SDL GPR:$val, simm25:$off)>;

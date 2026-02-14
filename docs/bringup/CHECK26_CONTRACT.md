@@ -2,13 +2,13 @@
 
 Last updated: 2026-02-12
 
-This document freezes the architectural contract from `/Users/zhoubot/linxisa/linx-bingup.md` into a machine-checkable
+This document freezes the architectural contract from `docs/architecture/v0.3-architecture-contract.md` into a machine-checkable
 ledger used by bring-up gates.
 
 Machine-readable source:
 
-- `/Users/zhoubot/linxisa/docs/bringup/check26_contract.yaml`
-- Gate script: `/Users/zhoubot/linxisa/tools/bringup/check26_contract.py`
+- `./docs/bringup/check26_contract.yaml`
+- Gate script: `./tools/bringup/check26_contract.py`
 
 ## Numbering policy
 
@@ -37,14 +37,14 @@ The gate enforces:
 
 Pattern scanning is restricted to the strict v0.3 source-of-truth artifacts:
 
-- `/Users/zhoubot/linxisa/isa/golden/v0.3/opcodes/lx_32.opc`
-- `/Users/zhoubot/linxisa/isa/golden/v0.3/state/memory_model.json`
-- `/Users/zhoubot/linxisa/docs/architecture/isa-manual/src/chapters/02_programming_model.adoc`
-- `/Users/zhoubot/linxisa/docs/architecture/isa-manual/src/chapters/04_block_isa.adoc`
-- `/Users/zhoubot/linxisa/docs/architecture/isa-manual/src/chapters/08_memory_operations.adoc`
-- `/Users/zhoubot/linxisa/docs/architecture/isa-manual/src/chapters/09_system_and_privilege.adoc`
+- `./spec/isa/golden/v0.3/opcodes/lx_32.opc`
+- `./spec/isa/golden/v0.3/state/memory_model.json`
+- `./docs/architecture/isa-manual/src/chapters/02_programming_model.adoc`
+- `./docs/architecture/isa-manual/src/chapters/04_block_isa.adoc`
+- `./docs/architecture/isa-manual/src/chapters/08_memory_operations.adoc`
+- `./docs/architecture/isa-manual/src/chapters/09_system_and_privilege.adoc`
 
 ## Exit criteria
 
-- `python3 /Users/zhoubot/linxisa/tools/bringup/check26_contract.py --root /Users/zhoubot/linxisa` returns `OK`.
+- `python3 ./tools/bringup/check26_contract.py --root .` returns `OK`.
 

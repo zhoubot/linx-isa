@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Split a compiled catalog JSON into golden source files under isa/golden/<version>/.
+Split a compiled catalog JSON into golden source files under spec/isa/golden/<version>/.
 
 This is intended for bootstrapping/review and is not authoritative. The authoritative
 pipeline is build_golden.py (golden -> compiled).
@@ -117,8 +117,8 @@ def _bucket_opc_path(inst: Dict[str, Any], out_dir: Path) -> Path:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--spec", default="isa/spec/current/linxisa-v0.3.json", help="Compiled spec JSON path")
-    ap.add_argument("--out", default="isa/golden/v0.3", help="Golden output directory")
+    ap.add_argument("--spec", default="spec/isa/spec/current/linxisa-v0.3.json", help="Compiled spec JSON path")
+    ap.add_argument("--out", default="spec/isa/golden/v0.3", help="Golden output directory")
     args = ap.parse_args()
 
     spec_path = Path(args.spec)

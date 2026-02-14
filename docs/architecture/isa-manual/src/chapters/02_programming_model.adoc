@@ -101,6 +101,52 @@ For `BSTART.VPAR`/`BSTART.VSEQ` execution, v0.3 staged profile locks an explicit
 * **zero mode**: inactive lanes write zero.
 * Lane policy is architecturally selected by block/vector mode state and must be deterministic across LLVM, QEMU, and RTL.
 
+[[progmodel-vpred]]
+=== Vector predicate and mixed-body contract (strict v0.3)
+
+Strict v0.3 defines two predicate domains and keeps them distinct:
+
+* **Block-control predicate** (`BARG.CARG`): produced by `SETC.*` / `C.SETC.*`, consumed by block-control forms (`BSTART COND`,
+  `BWE`, `BWI`, etc.) at block commit.
+* **Vector-lane predicate values**: produced by `V.CMP.*`/`V.F*` compare families as lane values written to vector queues
+  (`vt`/`vu`/`vm`/`vn`), consumed by vector select/predicate forms such as `V.CSEL`.
+
+Predicate truth rule for vector consumers:
+
+* lane predicate value `0` means false;
+* any non-zero lane predicate value means true.
+
+Mixed scalar/vector vector-body replay rules (for `BSTART.MSEQ`/`BSTART.MPAR`/`BSTART.VSEQ`/`BSTART.VPAR` decoupled bodies):
+
+* The body is replayed once per current `LC` tuple in strict linear program order.
+* Scalar instructions in the body are uniform instructions and may update scalar architectural state (`GPR`, `t/u`, and
+  scalar condition state), subject to normal body legality rules.
+* Vector instructions in the body must use vector namespaces (`ri*`, `lc*`, `vt/vu/vm/vn`, `TA/TB/TC/TD/TO/TS`) and MUST NOT
+  read arbitrary scalar GPR names directly.
+* Scalar constants/inputs required by vector instructions MUST be bound via header `B.IOR` and then referenced through `ri*`
+  in the body (the scalar `zero` literal is allowed where the encoding permits it).
+
+SIMT group model (strict v0.3):
+
+* The lane space is partitioned into **groups**.
+* For the canonical 1-D compiler lowering profile:
+** `LB0` is the vector lane count per group.
+** `LB1` is the group count (`ceil(total_lanes / LB0)`; strict compiler paths use exact integer groups where enabled).
+** `LB2` defaults to `1`.
+* `lc0` is the lane index within a group; `lc1` is the group index.
+* Each group has one scalar-uniform execution context; scalar instructions in the body execute once per group replay.
+
+Vector reduction contract (`V.RD*` family):
+
+* `V.RD*` instructions reduce lane values to one scalar destination.
+* Group-local reduce destinations use block/scalar local destinations (`t/u` and profile-defined block-local scalar state).
+* Inter-group reduce destinations use global scalar registers (`R0..R23`) when selected by the destination encoding.
+* Compiler policy:
+** `MSEQ` is always legal for reductions.
+** `MPAR` reductions are emitted only when dependence-safe by analysis or when an explicit programmer parallel hint is present.
+* Bring-up staged lowering for reduction live-out may bridge through memory (`V.RD*` + `V.SW.BRG` to `ri*`-bound scratch).
+* Staged lowering requires identity initialization for the selected reduction operation.
+
 [[progmodel-tile]]
 === Tile registers (TAU)
 

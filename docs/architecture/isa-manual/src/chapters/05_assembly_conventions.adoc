@@ -38,7 +38,7 @@ The draft ISA tables use several common conventions:
 * `.sw` / `.uw` suffixes annotate sign/zero extension or “use as signed/unsigned word” in mixed-width operations.
 * Bracketed memory operands take the form `[...]` with base + offset, or base + index with optional shift.
 
-Refer to `instructions[].asm` in `isa/spec/current/linxisa-v0.2.json` for the full syntax used by each instruction form.
+Refer to `instructions[].asm` in `spec/isa/spec/current/linxisa-v0.3.json` for the full syntax used by each instruction form.
 
 NOTE: The toolchain may fold common bit-manipulation idioms (such as paired shifts used for `zext/sext-in-reg`) into
 `BXU`/`BXS` bitfield extracts.

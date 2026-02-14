@@ -1,0 +1,52 @@
+profile: v0.3
+commit: 36c45461f934ddb693a21d31fa84a4f7429edefd
+generated_at: 2026-02-14T05:53:06Z
+entries:
+  - path: examples/assembly/v0.3/curated/disasm_example.s
+    source: examples/assembly/v0.3/legacy-reference/disasm_example.s
+    generation: manual-curation
+  - path: examples/assembly/v0.3/curated/linxisa-v0.3-normalized.asm
+    source: spec/isa/golden/v0.3/reconcile/linxisa-v0.3-example.normalized.asm
+    generation: manual-curation
+  - path: examples/assembly/v0.3/scratch-legacy/simple.s
+    source: tests/scratch/simple.s
+    generation: migrated-allowlist
+  - path: examples/assembly/v0.3/scratch-legacy/test_asm_call.S
+    source: tests/scratch/test_asm_call.S
+    generation: migrated-allowlist
+  - path: examples/assembly/v0.3/scratch-legacy/test_branch.s
+    source: tests/scratch/test_branch.s
+    generation: migrated-allowlist
+  - path: examples/assembly/v0.3/scratch-legacy/test_branch2.s
+    source: tests/scratch/test_branch2.s
+    generation: migrated-allowlist
+  - path: examples/assembly/v0.3/scratch-legacy/test_csel.s
+    source: tests/scratch/test_csel.s
+    generation: migrated-allowlist
+  - path: examples/assembly/v0.3/scratch-legacy/test_or.s
+    source: tests/scratch/test_or.s
+    generation: migrated-allowlist
+  - path: examples/assembly/v0.3/scratch-legacy/test_regs.s
+    source: tests/scratch/test_regs.s
+    generation: migrated-allowlist
+  - path: examples/assembly/v0.3/scratch-legacy/test_simple.s
+    source: tests/scratch/test_simple.s
+    generation: migrated-allowlist
+  - path: examples/assembly/v0.3/scratch-legacy/test_simple_fixed.s
+    source: tests/scratch/test_simple_fixed.s
+    generation: migrated-allowlist
+  - path: examples/assembly/v0.3/generated/pto_flash_attention_auto.s
+    source: tools/pto/examples/pto_flash_attention_auto.cpp
+    generation: RUN_QEMU_TILE=0 bash tools/pto/run_v03_pto_to_linx.sh
+  - path: examples/assembly/v0.3/generated/pto_gemm_auto.s
+    source: tools/pto/examples/pto_gemm_auto.cpp
+    generation: RUN_QEMU_TILE=0 bash tools/pto/run_v03_pto_to_linx.sh
+  - path: examples/assembly/v0.3/generated/pto_mamulb.s
+    source: tools/pto/examples/pto_mamulb.cpp
+    generation: RUN_QEMU_TILE=0 bash tools/pto/run_v03_pto_to_linx.sh
+  - path: examples/assembly/v0.3/generated/pto_tload_store.s
+    source: tools/pto/examples/pto_tload_store.cpp
+    generation: RUN_QEMU_TILE=0 bash tools/pto/run_v03_pto_to_linx.sh
+  - path: examples/assembly/v0.3/generated/pto_tmatmul_acc.s
+    source: tools/pto/examples/pto_tmatmul_acc.cpp
+    generation: RUN_QEMU_TILE=0 bash tools/pto/run_v03_pto_to_linx.sh

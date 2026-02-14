@@ -253,7 +253,7 @@ def _decode_one(forms_by_len: Dict[int, List[Form]], val: int, length_bits: int)
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--spec", default="isa/spec/current/linxisa-v0.3.json")
+    ap.add_argument("--spec", default="spec/isa/spec/current/linxisa-v0.3.json")
     ap.add_argument("--hex", nargs="*", default=[], help="Hex instruction words (e.g. 5316 000fcf87)")
     ap.add_argument("--format", choices=("pretty", "fields"), default="pretty")
     args = ap.parse_args()

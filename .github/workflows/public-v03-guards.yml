@@ -1,0 +1,21 @@
+name: public-v03-guards
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Enforce Public v0.3 Guard
+        run: bash tools/ci/check_public_v03.sh
+
+      - name: Warn On Shim Path Touches
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: bash tools/ci/warn_shim_touches.sh "$PR_BASE_SHA"

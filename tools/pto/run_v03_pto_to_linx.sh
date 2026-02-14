@@ -27,7 +27,7 @@ COMMON_FLAGS=(
   -fno-exceptions
   -fno-rtti
   -nostdlib
-  -I"$ROOT/toolchain/pto/include"
+  -I"$ROOT/impl/toolchain/pto/include"
 )
 
 compile_one() {

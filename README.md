@@ -1,80 +1,97 @@
-# linxisa
+<p align="center">
+  <img src="docs/architecture/isa-manual/src/images/linxisa-logo.svg" alt="LinxISA logo" width="220" />
+</p>
 
-LinxISA is a new instruction-set architecture (ISA) in the spirit of RISC-style ISAs, with a repository layout intended
-to keep **specification**, **software**, and **hardware** implementations consistent.
+<h1 align="center">Linx Instruction Set Architecture</h1>
 
-## Naming
+<p align="center"><strong>Public v0.3 repository for the LinxISA specification, tooling, and implementations.</strong></p>
 
-- Official ISA name: **LinxISA** (Linx Instruction Set Architecture)
-- Short name: **Linx**
-- LLVM/MC arch names: `linx32`, `linx64`
+## Overview
 
-## Source of truth
+LinxISA is a specification-first ISA project with aligned compiler, emulator, and RTL implementation tracks.
+The public tree is v0.3-only and uses canonical `spec/` + `impl/` layout.
 
-The ISA definition is centralized under `isa/`:
-- Golden sources (authoritative, current): `isa/golden/v0.3/**`
-- Compiled, machine-readable catalog (checked in, current): `isa/spec/current/linxisa-v0.3.json`
-- Legacy catalogs (kept for reference): `isa/spec/current/linxisa-v0.2.json`, `isa/spec/current/linxisa-v0.1.json`
+## Canonical v0.3 Sources
 
-All implementations in this repo (compiler, emulator, C++ models, RTL) should reference the formal catalog to avoid
-decode/encode drift.
+- ISA golden sources: `spec/isa/golden/v0.3/`
+- ISA compiled catalog: `spec/isa/spec/current/linxisa-v0.3.json`
+- ISA generated codecs: `spec/isa/generated/codecs/`
+- Manual sources: `docs/architecture/isa-manual/`
+- Public assembly samples: `examples/assembly/v0.3/`
 
-## ISA manual (PDF)
+## Workspace Dependencies (Submodules)
 
-A draft ISA manual (AsciiDoc → PDF) lives in:
+The bring-up workspace pins external implementation repositories as git submodules:
 
-- `docs/architecture/isa-manual/`
+- `extern/qemu` -> `git@github.com:LinxISA/qemu.git`
+- `extern/linux` -> `git@github.com:LinxISA/linux.git`
+- `extern/pyCircuit` -> `git@github.com:zhoubot/pyCircuit.git` (temporary until org transfer)
 
-Build:
+Fresh clone:
 
 ```bash
-cd docs/architecture/isa-manual
-make pdf
+git clone --recurse-submodules git@github.com:LinxISA/linx-isa.git
+cd linx-isa
+git submodule update --init --recursive
 ```
 
-## Bring-up plan and progress
+With GitHub CLI:
 
-Canonical bring-up hierarchy and progress tracking live in:
+```bash
+gh repo clone LinxISA/linx-isa -- --recurse-submodules
+cd linx-isa
+git submodule update --init --recursive
+```
 
-- `docs/bringup/README.md`
-- `docs/bringup/PROGRESS.md`
+If you already cloned this repo:
 
-Current execution roadmap:
+```bash
+git submodule sync --recursive
+git submodule update --init --recursive
+```
 
-1. `docs/bringup/phases/04_rtl.md` (agile pyCircuit RTL/model loop)
-2. `docs/bringup/phases/05_fpga_zybo_z7.md` (ZYBO Z7-20 platform bring-up)
-3. `docs/bringup/phases/06_linux_on_janus.md` (Linux to BusyBox shell on Janus)
+When `LinxISA/pyCircuit` becomes available, switch the submodule URL:
 
-## Regression
+```bash
+git submodule set-url extern/pyCircuit git@github.com:LinxISA/pyCircuit.git
+git submodule sync --recursive
+git submodule update --init extern/pyCircuit
+```
 
-Run the repo's end-to-end regression (compiler compile-only tests + coverage + QEMU runtime tests):
+## Quick Start
 
 ```bash
 bash tools/regression/run.sh
 ```
 
-Override tool locations as needed:
+Optional tool overrides:
 
 ```bash
 export CLANG=~/llvm-project/build-linxisa-clang/bin/clang
 export LLD=~/llvm-project/build-linxisa-clang/bin/ld.lld
-export QEMU=~/qemu/build-tci/qemu-system-linx64
+export QEMU=~/linx-isa/extern/qemu/build-tci/qemu-system-linx64
 bash tools/regression/run.sh
 ```
 
-## Repository layout (initial)
+## Bring-up Onboarding
 
-- `isa/`: ISA specification and generated catalogs
-- `tools/isa/`: spec extraction/validation tools
-- `compiler/`: compiler/backend work (planned)
-- `toolchain/`: assembler/linker/runtime tooling (planned)
-- `emulator/`: reference emulator (planned)
-- `models/`: C++ core models / reference models (planned)
-- `rtl/`: RTL implementation (planned)
-- `docs/`: design notes and development docs (architecture, bring-up, reference, project)
-- `tests/`: QEMU runtime tests and scratch tests
-- `workloads/`: benchmarks, examples, and generated codegen/runtime reports
+See the public contributor onboarding guide:
 
-## Target flow
+- `docs/bringup/GETTING_STARTED.md`
 
-1. C source → 2. compiler → 3. LinxISA encoding/spec → 4. emulator → 5. RTL (simulation/FPGA/ASIC)
+## Repository Layout
+
+- `spec/`: ISA specification assets
+- `impl/`: compiler, emulator, RTL, models, and toolchain implementation assets
+- `examples/`: canonical public examples and sample packs
+- `docs/`: manual, architecture, bring-up, and migration docs
+- `tools/`: generators, validators, and regression tooling
+- `tests/`: runtime and integration test suites
+- `extern/`: pinned bring-up dependencies as git submodules
+
+## Migration and Compatibility
+
+v0.3.0 includes one-release compatibility shims for old top-level paths (`isa/`, `compiler/`, `emulator/`, etc.).
+New code must use canonical `spec/` and `impl/` paths.
+
+Migration map: `docs/migration/path-map-v0.3.0.md`

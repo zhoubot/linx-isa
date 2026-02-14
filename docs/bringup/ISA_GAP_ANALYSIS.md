@@ -13,19 +13,19 @@ Primary roadmap: `docs/bringup/MATURITY_PLAN.md`.
 Comparable to Arm/x86/RISC-V maturity means:
 
 - A spec that is unambiguous and machine-checkable (encoding + semantics + traps).
-- A compiler/toolchain that is correct, well-tested, and debuggable.
+- A impl/compiler/toolchain that is correct, well-tested, and debuggable.
 - An emulator that is correct, deterministic, observable, and useful as a reference model.
 - A validation suite (AVS) with clear pass/fail criteria and coverage gates.
 
 ## Current Strengths (Evidence in Repo)
 
 - Golden opcode database and generated JSON catalog:
-  - `isa/golden/v0.2/` -> `isa/spec/current/linxisa-v0.2.json`
+  - `spec/isa/golden/v0.3/` -> `spec/isa/spec/current/linxisa-v0.3.json`
 - Encoding conflict checks and hole reporting:
   - `python3 tools/isa/report_encoding_space.py --check`
   - Report: `docs/reference/encoding_space_report.md`
 - LLVM backend has full mnemonic disassembly coverage when using the per-target outputs:
-  - `python3 compiler/llvm/tests/analyze_coverage.py --out-dir compiler/llvm/tests/out-linx64 --fail-under 100`
+  - `python3 impl/compiler/llvm/tests/analyze_coverage.py --out-dir impl/compiler/llvm/tests/out-linx64 --fail-under 100`
 - Benchmark harness exists with static and dynamic instruction statistics:
   - `python3 workloads/benchmarks/run_benchmarks.py --dynamic-hist`
 
@@ -75,11 +75,11 @@ Comparable to Arm/x86/RISC-V maturity means:
 - Object/relocation model:
   - ET_DYN/dynamic linking is not yet a bring-up gate; relocation coverage must be
     expanded before hosted workloads (LLVM test-suite) can run.
-  - Evidence: `compiler/llvm/tests/run.sh` has PIC relocation checks, shared-lib gated.
+  - Evidence: `impl/compiler/llvm/tests/run.sh` has PIC relocation checks, shared-lib gated.
 
 - Disasm coverage gate ergonomics:
-  - Stale `compiler/llvm/tests/out/` directories can cause false failures if used.
-  - Mitigation: `compiler/llvm/tests/analyze_coverage.py` auto-detects `out-linx*`.
+  - Stale `impl/compiler/llvm/tests/out/` directories can cause false failures if used.
+  - Mitigation: `impl/compiler/llvm/tests/analyze_coverage.py` auto-detects `out-linx*`.
 
 ## Gaps: Emulator (QEMU)
 
@@ -99,7 +99,7 @@ Comparable to Arm/x86/RISC-V maturity means:
   - Machine-readable: `avs/linx_avs_v1_test_matrix.yaml`
   - Required work:
     - Implement runtime tests under `tests/qemu/`
-    - Implement compile-only / MC tests under `compiler/llvm/tests/`
+    - Implement compile-only / MC tests under `impl/compiler/llvm/tests/`
 
 ## Gaps: Benchmark Portfolio
 
