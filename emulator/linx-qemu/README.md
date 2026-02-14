@@ -2,13 +2,13 @@
 
 The LinxISA QEMU implementation lives in `~/qemu` (external to this repo).
 
-This repo provides small patch sets under `impl/emulator/qemu/patches/` to keep the
+This repo provides small patch sets under `emulator/linx-qemu/patches/` to keep the
 QEMU Linx target aligned with the canonical ISA spec in `isa/`.
 
 ## Apply patches
 
 ```bash
-QEMU_DIR=~/qemu bash impl/emulator/qemu/apply_patches.sh
+QEMU_DIR=~/qemu bash emulator/linx-qemu/apply_patches.sh
 ```
 
 ## Current patches

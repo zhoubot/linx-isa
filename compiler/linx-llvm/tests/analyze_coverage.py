@@ -332,7 +332,7 @@ def main() -> int:
     
     if not args.out_dir.exists():
         print(f"Error: output directory not found: {args.out_dir}", file=sys.stderr)
-        print("Hint: run ./impl/compiler/llvm/tests/run.sh first", file=sys.stderr)
+        print("Hint: run ./compiler/linx-llvm/tests/run.sh first", file=sys.stderr)
         return 1
     
     spec_data = load_isa_spec(args.spec)

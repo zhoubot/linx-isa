@@ -19,8 +19,12 @@ warned=0
 while IFS= read -r p; do
   [[ -z "$p" ]] && continue
   case "$p" in
-    isa/*|compiler/*|emulator/*|rtl/*|models/*|toolchain/*|avs/*)
-      echo "::warning file=$p::Compatibility shim path touched. Use canonical spec/ or impl/ paths (shim removal scheduled for v0.3.1)."
+    isa/*)
+      echo "::warning file=$p::Compatibility shim path touched. Use canonical spec/isa paths."
+      warned=1
+      ;;
+    avs/*)
+      echo "::warning file=$p::Compatibility shim path touched. Use canonical docs/validation/avs paths."
       warned=1
       ;;
   esac

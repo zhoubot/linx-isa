@@ -32,7 +32,7 @@ Use the tool in this repo to generate TableGen instruction patterns:
 ```bash
 python3 tools/isa/gen_llvm_tablegen.py \
   --spec spec/isa/spec/current/linxisa-v0.3.json \
-  --out impl/compiler/llvm/LinxISAInstrInfo.td
+  --out compiler/linx-llvm/LinxISAInstrInfo.td
 ```
 
 Then integrate the generated patterns into `LinxInstrInfo.td`.
@@ -100,14 +100,14 @@ The `MCCodeEmitter` should select the shortest encoding that fits.
 Run the test suite:
 
 ```bash
-cd impl/compiler/llvm/tests
+cd compiler/linx-llvm/tests
 CLANG=~/llvm-project/build-linxisa-clang/bin/clang ./run.sh
 ```
 
 Analyze coverage:
 
 ```bash
-python3 impl/compiler/llvm/tests/analyze_coverage.py --verbose
+python3 compiler/linx-llvm/tests/analyze_coverage.py --verbose
 ```
 
 ## Naming Convention
@@ -159,5 +159,5 @@ python3 impl/compiler/llvm/tests/analyze_coverage.py --verbose
 
 - ISA Spec: `spec/isa/spec/current/linxisa-v0.3.json`
 - Codec Tables: `spec/isa/generated/codecs/linxisa*.decode`
-- Test Programs: `impl/compiler/llvm/tests/c/*.c`
-- Coverage Tool: `impl/compiler/llvm/tests/analyze_coverage.py`
+- Test Programs: `compiler/linx-llvm/tests/c/*.c`
+- Coverage Tool: `compiler/linx-llvm/tests/analyze_coverage.py`

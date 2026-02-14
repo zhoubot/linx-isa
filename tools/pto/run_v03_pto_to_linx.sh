@@ -7,9 +7,14 @@ mkdir -p "$OUT_DIR"
 
 CXX="${CLANGXX:-${CLANG:-}}"
 if [[ -z "$CXX" ]]; then
-  CAND="$HOME/llvm-project/build-linxisa-clang/bin/clang++"
+  CAND="$ROOT/compiler/llvm/build-linxisa-clang/bin/clang++"
   if [[ -x "$CAND" ]]; then
     CXX="$CAND"
+  else
+    CAND="$HOME/llvm-project/build-linxisa-clang/bin/clang++"
+    if [[ -x "$CAND" ]]; then
+      CXX="$CAND"
+    fi
   fi
 fi
 if [[ -z "$CXX" || ! -x "$CXX" ]]; then
@@ -27,7 +32,7 @@ COMMON_FLAGS=(
   -fno-exceptions
   -fno-rtti
   -nostdlib
-  -I"$ROOT/impl/toolchain/pto/include"
+  -I"$ROOT/toolchain/pto/include"
 )
 
 compile_one() {

@@ -1,6 +1,6 @@
 # Phase 4: RTL Bring-up and Verification (Agile pyCircuit)
 
-Primary RTL notes: `impl/rtl/README.md`
+Primary RTL notes: `rtl/README.md`
 
 ## Scope and source of truth
 
@@ -11,7 +11,7 @@ Primary RTL notes: `impl/rtl/README.md`
   - **Janus Core** second
 
 The Linux end goal is handled in later phases (`05_fpga_zybo_z7.md`, `06_linux_on_janus.md`), but this phase must
-produce stable and diffable impl/models/RTL as prerequisites.
+produce stable and diffable models/RTL as prerequisites.
 
 ## Contracts (mandatory links)
 
@@ -84,8 +84,8 @@ One sprint = one feature slice (instruction/CSR/exception/pipeline rule):
 
 `linxisa` stores planning, contracts, and validation outcomes. When needed, stage generated integration collateral into:
 
-- `impl/rtl/` for integration wrappers or snapshots
-- `impl/models/` for model wrappers and trace adapters
+- `rtl/` for integration wrappers or snapshots
+- `models/` for model wrappers and trace adapters
 - `tools/` for reproducible import/check scripts
 
 Direct authoring remains in `~/pyCircuit`; copied artifacts in `linxisa` must be script-derived.

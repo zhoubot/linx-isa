@@ -46,7 +46,7 @@ def main() -> int:
         "--out-dir",
         type=Path,
         default=Path(__file__).resolve().parent / "out",
-        help="Directory containing per-test output folders (default: impl/compiler/llvm/tests/out).",
+        help="Directory containing per-test output folders (default: compiler/linx-llvm/tests/out).",
     )
     ap.add_argument(
         "--spec",
@@ -57,8 +57,8 @@ def main() -> int:
     ap.add_argument(
         "--llvm-project",
         type=Path,
-        default=Path(__file__).resolve().parents[5] / "llvm-project",
-        help="Path to llvm-project checkout (default: ../../../../../llvm-project).",
+        default=Path(__file__).resolve().parents[3] / "compiler/llvm",
+        help="Path to llvm-project checkout (default: compiler/llvm).",
     )
     ap.add_argument(
         "--list",
@@ -70,7 +70,7 @@ def main() -> int:
     if not args.out_dir.exists():
         print(f"error: out dir not found: {args.out_dir}", file=sys.stderr)
         print(
-            "hint: run ./impl/compiler/llvm/tests/run.sh first (or set --out-dir)",
+            "hint: run ./compiler/linx-llvm/tests/run.sh first (or set --out-dir)",
             file=sys.stderr,
         )
         return 2

@@ -25,7 +25,7 @@ This checklist tracks the implementation of the LinxISA LLVM backend. Use this t
 - [ ] Handle instruction length selection (16/32/48/64-bit)
 
 ### Testing
-- [ ] Run test suite: `impl/compiler/llvm/tests/run.sh`
+- [ ] Run test suite: `compiler/linx-llvm/tests/run.sh`
 - [ ] Verify arithmetic operations compile correctly
 - [ ] Verify memory operations compile correctly
 - [ ] Verify control flow compiles correctly
@@ -200,22 +200,22 @@ This checklist tracks the implementation of the LinxISA LLVM backend. Use this t
 
 ### In This Repository
 - [x] `tools/isa/gen_llvm_tablegen.py` - TableGen generator
-- [x] `impl/compiler/llvm/tests/analyze_coverage.py` - Coverage analysis
-- [x] `impl/compiler/llvm/templates/` - Implementation templates
+- [x] `compiler/linx-llvm/tests/analyze_coverage.py` - Coverage analysis
+- [x] `compiler/linx-llvm/templates/` - Implementation templates
 
 ### Usage
 ```bash
 # Generate TableGen patterns
 python3 tools/isa/gen_llvm_tablegen.py \
   --spec spec/isa/spec/current/linxisa-v0.3.json \
-  --out impl/compiler/llvm/LinxInstrInfo.td
+  --out compiler/linx-llvm/LinxInstrInfo.td
 
 # Run tests
-cd impl/compiler/llvm/tests
+cd compiler/linx-llvm/tests
 CLANG=~/llvm-project/build-linxisa-clang/bin/clang ./run.sh
 
 # Analyze coverage
-python3 impl/compiler/llvm/tests/analyze_coverage.py --verbose
+python3 compiler/linx-llvm/tests/analyze_coverage.py --verbose
 ```
 
 ## Validation Criteria
@@ -232,6 +232,6 @@ python3 impl/compiler/llvm/tests/analyze_coverage.py --verbose
 ## Notes
 
 - LLVM backend code is in `~/llvm-project/llvm/lib/Target/Linx/`
-- Use templates in `impl/compiler/llvm/templates/` as starting points
+- Use templates in `compiler/linx-llvm/templates/` as starting points
 - Run tests frequently to catch regressions
 - Update this checklist as you complete items

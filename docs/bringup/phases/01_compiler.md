@@ -1,12 +1,12 @@
 # Phase 1: Compiler Bring-up
 
-Primary plan/status file: `impl/compiler/COMPILER_PLAN.md`
+Primary plan/status file: `compiler/COMPILER_PLAN.md`
 
 ## Current checkpoint
 
 - Compiler binary in use: `~/llvm-project/build-linxisa-clang/bin/clang`
 - Supported targets: `linx64-linx-none-elf`, `linx32-linx-none-elf`
-- Compile test suite: `impl/compiler/llvm/tests/`
+- Compile test suite: `compiler/linx-llvm/tests/`
 
 ## Required invariants
 
@@ -17,5 +17,5 @@ Primary plan/status file: `impl/compiler/COMPILER_PLAN.md`
 ## Execution
 
 ```bash
-CLANG=~/llvm-project/build-linxisa-clang/bin/clang ./impl/compiler/llvm/tests/run.sh
+CLANG=~/llvm-project/build-linxisa-clang/bin/clang ./compiler/linx-llvm/tests/run.sh
 ```

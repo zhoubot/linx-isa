@@ -54,7 +54,7 @@ Typical usage patterns in this repo:
 [[templates-example]]
 === Example (startup sequence)
 
-The minimal libc startup in `impl/toolchain/libc/src/crt0.s` uses `FENTRY` + `FRET.STK` around a direct call:
+The minimal libc startup in `toolchain/libc/src/crt0.s` uses `FENTRY` + `FRET.STK` around a direct call:
 
 [source,asm]
 ----

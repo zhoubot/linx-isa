@@ -4,7 +4,7 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 QEMU_DIR="${QEMU_DIR:-$HOME/qemu}"
 
-PATCH_DIR="$REPO_ROOT/impl/emulator/qemu/patches"
+PATCH_DIR="$REPO_ROOT/emulator/linx-qemu/patches"
 
 if [[ ! -d "$QEMU_DIR/.git" ]]; then
   echo "error: QEMU repo not found: $QEMU_DIR" >&2
