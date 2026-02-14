@@ -2,7 +2,7 @@
 """
 Generate AsciiDoc fragments for LinxISA System Status Registers (SSR) and TRAPNO encoding.
 
-Source of truth (v0.2+): `state.system_registers` inside the compiled ISA JSON spec.
+Source of truth (v0.3): `state.system_registers` inside the compiled ISA JSON spec.
 
 Outputs into an output directory (typically `docs/architecture/isa-manual/src/generated/`):
   - system_registers_ssr.adoc
@@ -147,7 +147,7 @@ def gen_system_registers_ssr(spec_path: str, sysregs: Dict[str, Any]) -> str:
     lines.append("")
 
     lines.append("[[ssr-ebarg]]")
-    lines.append("==== EBARG group (v0.2)")
+    lines.append("==== EBARG group (v0.3)")
     lines.append("")
     lines.append(str(ebarg.get("description") or "EBARG trap-save group.").strip())
     lines.append("")
@@ -161,7 +161,7 @@ def gen_system_registers_ssr(spec_path: str, sysregs: Dict[str, Any]) -> str:
     lines.append("")
 
     lines.append("[[ssr-debug]]")
-    lines.append("==== Debug SSRs (v0.2 bring-up)")
+    lines.append("==== Debug SSRs (v0.3 bring-up)")
     lines.append("")
     lines.append(str(dbg.get("description") or "Debug configuration SSRs.").strip())
     lines.append("")
@@ -185,7 +185,7 @@ def gen_trapno_encoding(spec_path: str, sysregs: Dict[str, Any]) -> str:
     lines: List[str] = []
     lines.append(_adoc_header(spec_path).rstrip("\n"))
     lines.append("[[trapno-encoding]]")
-    lines.append("==== TRAPNO encoding (v0.2 bring-up)")
+    lines.append("==== TRAPNO encoding (v0.3 bring-up)")
     lines.append("")
     for n in enc.get("notes", []) or []:
         lines.append(f"* {str(n).strip()}")
@@ -238,9 +238,9 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument(
         "--profile",
-        choices=["v0.2", "v0.3"],
+        choices=["v0.3"],
         default="v0.3",
-        help="ISA profile for default --spec path",
+        help="ISA profile for default --spec path (v0.3 only)",
     )
     ap.add_argument(
         "--spec",
@@ -259,16 +259,12 @@ def main() -> int:
     )
     args = ap.parse_args()
 
-    default_spec = (
-        os.path.join("isa", "spec", "current", "linxisa-v0.3.json")
-        if args.profile == "v0.3"
-        else os.path.join("isa", "spec", "current", "linxisa-v0.2.json")
-    )
+    default_spec = os.path.join("spec", "isa", "spec", "current", "linxisa-v0.3.json")
     spec_path = args.spec or default_spec
     spec = _read_json(spec_path)
     sysregs = (((spec.get("state") or {}).get("system_registers")) or {})
     if not isinstance(sysregs, dict) or not sysregs:
-        raise SystemExit("error: spec missing state.system_registers (expected v0.2+ spec)")
+        raise SystemExit("error: spec missing state.system_registers (expected v0.3 spec)")
 
     ssr_adoc = gen_system_registers_ssr(spec_path, sysregs)
     trap_adoc = gen_trapno_encoding(spec_path, sysregs)

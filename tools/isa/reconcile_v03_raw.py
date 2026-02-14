@@ -8,9 +8,9 @@ Inputs:
   - Janus reference section for intent cross-check
 
 Outputs:
-  - isa/golden/v0.3/reconcile/reconcile_report.json
-  - isa/golden/v0.3/reconcile/reconcile_notes.md
-  - isa/golden/v0.3/reconcile/linxisa-v0.3-example.normalized.asm
+  - spec/isa/golden/v0.3/reconcile/reconcile_report.json
+  - spec/isa/golden/v0.3/reconcile/reconcile_notes.md
+  - spec/isa/golden/v0.3/reconcile/linxisa-v0.3-example.normalized.asm
 """
 
 from __future__ import annotations
@@ -262,7 +262,7 @@ def main() -> int:
     )
     ap.add_argument(
         "--out-dir",
-        default="isa/golden/v0.3/reconcile",
+        default="spec/isa/golden/v0.3/reconcile",
         help="Output reconciliation directory",
     )
     args = ap.parse_args()

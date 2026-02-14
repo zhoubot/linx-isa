@@ -7,7 +7,7 @@ Primary automation/scripts:
 
 ## Objective
 
-Close compiler/linker/libc gaps needed by Linux-on-FPGA milestones and sustained userspace validation.
+Close impl/compiler/linker/libc gaps needed by Linux-on-FPGA milestones and sustained userspace validation.
 
 ## Role in the bring-up sequence
 

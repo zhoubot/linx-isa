@@ -1,25 +1,11 @@
-# LinxISA end-to-end flow (planned)
+# LinxISA Repository Flow (v0.3)
 
-This repo is organized so that **the ISA spec is the source of truth**, and all implementations derive from it.
+The repository is organized around a spec-first flow where all implementations consume the same v0.3 catalog.
 
-## 1) C → compiler
+## Flow
 
-- C code is compiled by a LinxISA backend (likely LLVM/Clang-based).
-- The backend emits LinxISA assembly/object code using instruction encodings defined by `isa/spec/current/linxisa-v0.2.json`.
-
-## 2) compiler → ISA (encoding)
-
-- Instruction selection must be consistent with the ISA catalog:
-  - which encodings exist
-  - operand fields / immediate widths
-  - reserved encodings
-
-## 3) ISA → emulator
-
-- The emulator decoder should be generated (or at least validated) from `isa/spec/current/linxisa-v0.2.json`.
-- Execution semantics should match the ISA spec exactly.
-
-## 4) ISA → RTL
-
-- The RTL decode should be generated from the same catalog (or checked against it).
-- Any micro-architectural choices are allowed, but the architected behavior must match the ISA.
+1. ISA definition in `spec/isa/golden/v0.3/`
+2. Compiled catalog in `spec/isa/spec/current/linxisa-v0.3.json`
+3. Generated decode assets in `spec/isa/generated/codecs/`
+4. Compiler/emulator/RTL integration under `impl/`
+5. Validation through `tools/regression/run.sh` and `tools/bringup/check26_contract.py`

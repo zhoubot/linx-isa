@@ -157,11 +157,11 @@ late-stage optimization:
 [[encoding-json]]
 === The machine-readable catalog
 
-The authoritative encoding details live in `isa/spec/current/linxisa-v0.2.json`:
+The authoritative encoding details live in `spec/isa/spec/current/linxisa-v0.3.json`:
 
 * Each instruction form has `parts[].segments[]` describing `[msb:lsb]` bit ranges.
 * Each form includes derived `encoding` fields (`mask`, `match`, `pattern`, `fields`) suitable for generating
   decoders/encoders (QEMU decodetree, LLVM TableGen, etc).
 
-The generated codec tables in `isa/generated/codecs/` are derived directly from the JSON and are the recommended entry point for
+The generated codec tables in `spec/isa/generated/codecs/` are derived directly from the JSON and are the recommended entry point for
 tooling.

@@ -12,7 +12,7 @@ This section records notable changes to the LinxISA catalog and to the associate
   - `docs/architecture/isa-manual/src/images/linxisa-logo.svg`
 * Added logo usage in repository README and ISA manual preamble.
 * Refined the mark by preserving the original silhouette and adding semiconductor-style technical detailing
-  (routed traces, pads/vias) while keeping the **灵犀** identity direction for ISA branding consistency.
+  (routed traces, pads/vias) while keeping the **Lingxi** identity direction for ISA branding consistency.
 
 [[changelog-v0-3-strict-26check-2026-02-12]]
 === v0.3 (strict 26-check cutover) — 2026-02-12
@@ -27,8 +27,8 @@ This section records notable changes to the LinxISA catalog and to the associate
 
 **Current spec cutover**
 
-* Switched default compiled catalog to `isa/spec/current/linxisa-v0.3.json`.
-* Kept `isa/spec/current/linxisa-v0.2.json` as legacy reference.
+* Switched default compiled catalog to `spec/isa/spec/current/linxisa-v0.3.json`.
+* Kept `spec/isa/spec/current/linxisa-v0.3.json` as legacy reference.
 * Updated regression/codegen generator paths to use strict v0.3 current catalog by default.
 
 **Architecture alignment**
@@ -52,7 +52,7 @@ This section records notable changes to the LinxISA catalog and to the associate
 
 **Canonical specification**
 
-* Updated preamble to reference `isa/spec/current/linxisa-v0.3.json` as the single source of truth.
+* Updated preamble to reference `spec/isa/spec/current/linxisa-v0.3.json` as the single source of truth.
 * The v0.3 profile now unifies the v0.2 bring-up baseline with v0.3 staged extensions.
 
 [[changelog-v0-3-staged-2026-02-11]]
@@ -61,8 +61,8 @@ This section records notable changes to the LinxISA catalog and to the associate
 **Reconciliation and canonicalization**
 
 * Added machine-checkable v0.3 reconciliation artifacts generated from raw sources:
-  - `isa/golden/v0.3/reconcile/reconcile_report.json`
-  - `isa/golden/v0.3/reconcile/reconcile_notes.md`
+  - `spec/isa/golden/v0.3/reconcile/reconcile_report.json`
+  - `spec/isa/golden/v0.3/reconcile/reconcile_notes.md`
 * Locked canonical output policy for v0.3 staged artifacts:
   - typed block starts (`BSTART.<type>`) only; no canonical `BSTART.PAR`,
   - `V.*` mnemonic family only in canonical v0.3 outputs,
@@ -70,7 +70,7 @@ This section records notable changes to the LinxISA catalog and to the associate
 
 **Spec/tooling**
 
-* Added staged v0.3 compiled catalog path: `isa/spec/v0.3/linxisa-v0.3.json`.
+* Added staged v0.3 compiled catalog path: `spec/isa/spec/v0.3/linxisa-v0.3.json`.
 * Extended ISA generators/validators with `--profile {v0.2,v0.3}` defaults.
 * Added v0.3 drift gate: `tools/isa/check_no_legacy_v03.py`.
 
@@ -121,7 +121,7 @@ This section records notable changes to the LinxISA catalog and to the associate
   - `B.DIM` (shows `LB0/LB1/LB2` behavior),
   - `B.*` descriptor families (named operations instead of generic metadata),
   - execution-control and privileged instructions (`ASSERT`, `EBREAK`, `FENCE.*`, `ACRE/ACRC`).
-* Privileged architecture alignment (from golden sources under `isa/golden/v0.1/`):
+* Privileged architecture alignment (from golden sources under `spec/isa/golden/v0.3/`):
 ** Rewrote the system/privilege chapter to define the v0.1 ACR model (up to 16 rings in a tree rooted at ACR0),
    `ACR_ENTER`/`SERVICE_REQUEST` flows, and `ACRC` routing.
 ** Updated the curated SSR table (`system_registers_ssr.adoc`) to match the v0.1 draft system-register IDs and to

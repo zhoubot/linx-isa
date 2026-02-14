@@ -1,0 +1,136 @@
+# Auto-generated from spec/isa/spec/current/linxisa-v0.3.json
+# DO NOT EDIT: run `python3 tools/isa/gen_qemu_codec.py` to regenerate.
+
+# Fields
+%BrType 11:3
+%LoopNest_11_3 11:3
+%LoopNest_14_2 14:2
+%RegDst 11:5
+%RegSrc 6:5
+%SSRID 6:5
+%SrcL 6:5
+%SrcR 11:5
+%imm5 6:5
+%imm8 6:8
+%simm12 4:s12
+%simm5_11_s5 11:s5
+%simm5_6_s5 6:s5
+%uimm5 6:5
+
+# Instruction forms
+# C.ADD | c.add srcL, srcR, ->t | opcodes/lx_c.opc:11
+c_add_16_85136d1e4904 .... .... ..00 1000 %SrcL %SrcR
+
+# C.ADDI | c.addi srcL, simm, ->t | opcodes/lx_c.opc:12
+c_addi_16_3050744f2322 .... .... ..00 1100 %SrcL simm5=%simm5_11_s5
+
+# C.AND | c.and srcL, srcR, ->t | opcodes/lx_c.opc:13
+c_and_16_379e5bed3352 .... .... ..10 1000 %SrcL %SrcR
+
+# C.B.DIM | C.B.DIM RegSrc, ->{LB0, LB1, LB2} | opcodes/lx_c.opc:14
+c_b_dim_16_14f1b8fba5e6 11.. .... ..11 1100 LoopNest=%LoopNest_11_3 %RegSrc
+
+# C.B.DIMI | C.B.DIMI imm, ->{LB0, LB1, LB2} | opcodes/lx_c.opc:15
+c_b_dimi_16_3f1b113c76ce .... .... ..11 1100 LoopNest=%LoopNest_14_2 %imm8
+
+# C.BSTART | C.BSTART COND,  label | opcodes/lx_c.opc:16
+c_bstart_16_c4e238a9227a .... .... .... 0100 %simm12
+
+# C.BSTART | C.BSTART DIRECT, label | opcodes/lx_c.opc:17
+c_bstart_16_f833d2a4753c .... .... .... 0010 %simm12
+
+# C.BSTART.FP | C.BSTART.FP BrType | opcodes/lx_c.opc:18
+c_bstart_fp_16_9dcef7e3a85b 00.. .000 1000 0000 %BrType
+
+# C.BSTART.MPAR | C.BSTART.MPAR FALL | opcodes/lx_c.opc:19
+c_bstart_mpar_16_66c3ef2226ec 0000 1000 1100 0000
+
+# C.BSTART.MSEQ | C.BSTART.MSEQ FALL | opcodes/lx_c.opc:20
+c_bstart_mseq_16_b5597e0e41c2 0100 1000 1100 0000
+
+# C.BSTART.STD | C.BSTART.STD BrType | opcodes/lx_c.opc:21
+c_bstart_std_16_8b40f078c14a 00.. .000 0000 0000 %BrType
+
+# C.BSTART.SYS | C.BSTART.SYS FALL | opcodes/lx_c.opc:22
+c_bstart_sys_16_ec213ce96eb7 0000 1000 0100 0000
+
+# C.BSTART.VPAR | C.BSTART.VPAR FALL | opcodes/lx_c.opc:23
+c_bstart_vpar_16_c4d89efc71ea 1000 1000 1100 0000
+
+# C.BSTART.VSEQ | C.BSTART.VSEQ FALL | opcodes/lx_c.opc:24
+c_bstart_vseq_16_50d70de3f84f 1100 1000 1100 0000
+
+# C.BSTOP | C.BSTOP | opcodes/lx_c.opc:25
+c_bstop_16_ca4743d8a95e 0000 0000 0000 0000
+
+# C.CMP.EQI | c.cmp.eqi t#1, simm, ->t | opcodes/lx_c.opc:26
+c_cmp_eqi_16_e34367883ba1 0000 0... ..10 1100 simm5=%simm5_6_s5
+
+# C.CMP.NEI | c.cmp.nei t#1, simm, ->t | opcodes/lx_c.opc:27
+c_cmp_nei_16_35d1f02063e2 0000 1... ..10 1100 simm5=%simm5_6_s5
+
+# C.EBREAK | c.break imm | opcodes/lx_c.opc:28
+c_ebreak_16_7f9c245fa13c 1100 0... ..10 1100 %imm5
+
+# C.LDI | c.ldi [srcL, simm], ->t | opcodes/lx_c.opc:29
+c_ldi_16_973f42d37f29 .... .... ..01 1010 %SrcL simm5=%simm5_11_s5
+
+# C.LWI | c.lwi [srcL, simm], ->t | opcodes/lx_c.opc:30
+c_lwi_16_b224525971da .... .... ..00 1010 %SrcL simm5=%simm5_11_s5
+
+# C.MOVI | c.movi simm, ->{t, u, Rd} | opcodes/lx_c.opc:31
+c_movi_16_2c84faf1bc72 .... .... ..01 0110 %RegDst simm5=%simm5_6_s5
+
+# C.MOVR | c.movr SrcL, ->{t, u, Rd} | opcodes/lx_c.opc:32
+c_movr_16_80d2b5f3580b .... .... ..00 0110 %RegDst %SrcL
+
+# C.OR | c.or srcL, srcR, ->t | opcodes/lx_c.opc:33
+c_or_16_90864d13a661 .... .... ..11 1000 %SrcL %SrcR
+
+# C.SDI | c.sdi t#1, [srcL, simm] | opcodes/lx_c.opc:34
+c_sdi_16_bbec69bcfd5d .... .... ..11 1010 %SrcL simm5=%simm5_11_s5
+
+# C.SETC.EQ | c.setc.eq srcL, srcR | opcodes/lx_c.opc:35
+c_setc_eq_16_03e6b07a3699 .... .... ..10 0110 %SrcL %SrcR
+
+# C.SETC.NE | c.setc.ne srcL, srcR | opcodes/lx_c.opc:36
+c_setc_ne_16_e9092e487e98 .... .... ..11 0110 %SrcL %SrcR
+
+# C.SETC.TGT | c.setc.tgt srcL | opcodes/lx_c.opc:37
+c_setc_tgt_16_736be9cada01 0000 0... ..01 1100 %SrcL
+
+# C.SETRET | c.setret uimm, - >Ra | opcodes/lx_c.opc:38
+c_setret_16_335651ef6c27 0101 0... ..01 0110 %uimm5
+
+# C.SEXT.B | c.sext.b srcL, ->t | opcodes/lx_c.opc:39
+c_sext_b_16_8ffd07d15409 0100 0... ..01 1100 %SrcL
+
+# C.SEXT.H | c.sext.h srcL, ->t | opcodes/lx_c.opc:40
+c_sext_h_16_90cb7ea36bd3 0100 1... ..01 1100 %SrcL
+
+# C.SEXT.W | c.sext.w srcL, ->t | opcodes/lx_c.opc:41
+c_sext_w_16_f2bb13f0797b 0101 0... ..01 1100 %SrcL
+
+# C.SLLI | c.slli t#1, uimm, ->t | opcodes/lx_c.opc:42
+c_slli_16_958a14dc4058 0001 0... ..10 1100 %uimm5
+
+# C.SRLI | c.srli t#1, uimm, ->t | opcodes/lx_c.opc:43
+c_srli_16_b411862f7820 0001 1... ..10 1100 %uimm5
+
+# C.SSRGET | c.ssrget SSR-ID, ->t | opcodes/lx_c.opc:44
+c_ssrget_16_9d83a6f2749a 1000 0... ..10 1100 %SSRID
+
+# C.SUB | c.sub srcL, srcR, ->t | opcodes/lx_c.opc:45
+c_sub_16_ff0056ac7053 .... .... ..01 1000 %SrcL %SrcR
+
+# C.SWI | c.swi t#1, [srcL, simm] | opcodes/lx_c.opc:46
+c_swi_16_ca6c111163e5 .... .... ..10 1010 %SrcL simm5=%simm5_11_s5
+
+# C.ZEXT.B | c.zext.b srcL, ->t | opcodes/lx_c.opc:47
+c_zext_b_16_7ea1a59fa2da 0101 1... ..01 1100 %SrcL
+
+# C.ZEXT.H | c.zext.h srcL, ->t | opcodes/lx_c.opc:48
+c_zext_h_16_4c0976791cbc 0110 0... ..01 1100 %SrcL
+
+# C.ZEXT.W | c.zext.w srcL, ->t | opcodes/lx_c.opc:49
+c_zext_w_16_e8bc051c7e8c 0110 1... ..01 1100 %SrcL

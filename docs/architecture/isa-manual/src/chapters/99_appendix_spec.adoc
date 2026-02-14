@@ -6,10 +6,10 @@
 
 The Linx ISA specification is tracked in multiple forms:
 
-* Golden sources (authoritative): `isa/golden/v0.2/`
-* Canonical machine-readable catalog (checked in): `isa/spec/current/linxisa-v0.2.json`
-* Generated codec tables: `isa/generated/codecs/linxisa{16,32,48,64}.decode`
-* Generated C tables: `isa/generated/codecs/linxisa_opcodes.{h,c}`
+* Golden sources (authoritative): `spec/isa/golden/v0.3/`
+* Canonical machine-readable catalog (checked in): `spec/isa/spec/current/linxisa-v0.3.json`
+* Generated codec tables: `spec/isa/generated/codecs/linxisa{16,32,48,64}.decode`
+* Generated C tables: `spec/isa/generated/codecs/linxisa_opcodes.{h,c}`
 
 [[appendix-regenerate]]
 === Regenerating the catalog and codecs
@@ -18,10 +18,10 @@ From the repo root:
 
 [source,bash]
 ----
-python3 tools/isa/build_golden.py --in isa/golden/v0.2 --out isa/spec/current/linxisa-v0.2.json --pretty
-python3 tools/isa/gen_qemu_codec.py --spec isa/spec/current/linxisa-v0.2.json --out-dir isa/generated/codecs
-python3 tools/isa/gen_c_codec.py --spec isa/spec/current/linxisa-v0.2.json --out-dir isa/generated/codecs
-python3 tools/isa/validate_spec.py --spec isa/spec/current/linxisa-v0.2.json
+python3 tools/isa/build_golden.py --in spec/isa/golden/v0.3 --out spec/isa/spec/current/linxisa-v0.3.json --pretty
+python3 tools/isa/gen_qemu_codec.py --spec spec/isa/spec/current/linxisa-v0.3.json --out-dir spec/isa/generated/codecs
+python3 tools/isa/gen_c_codec.py --spec spec/isa/spec/current/linxisa-v0.3.json --out-dir spec/isa/generated/codecs
+python3 tools/isa/validate_spec.py --spec spec/isa/spec/current/linxisa-v0.3.json
 ----
 
 [[appendix-build-manual]]

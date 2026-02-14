@@ -195,7 +195,7 @@ These forms are used by toolchains for efficient access to nearby constants and 
 
 The v0.3 staged catalog includes load-reserved/store-conditional (`LR.*`/`SC.*`) and read-modify-write style atomic operations
 with qualifier suffixes (e.g. `.aq`, `.rl`). The precise memory ordering semantics are defined by the ISA draft
-(`isa/golden/v0.3/`) and the architectural model implemented by the toolchain/QEMU/RTL.
+(`spec/isa/golden/v0.3/`) and the architectural model implemented by the impl/toolchain/QEMU/RTL.
 
 Bring-up model (ordering qualifiers):
 

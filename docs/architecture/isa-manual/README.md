@@ -21,7 +21,7 @@ Outputs:
 ## Regenerate generated sections
 
 The manual includes generated AsciiDoc derived from the canonical spec:
-- `isa/spec/current/linxisa-v0.2.json`
+- `spec/isa/spec/current/linxisa-v0.3.json`
 
 Regenerate:
 

@@ -10,8 +10,8 @@ Legend:
 
 ## Current source-of-truth
 
-- Current ISA catalog: `isa/spec/current/linxisa-v0.3.json`
-- Legacy ISA catalog: `isa/spec/current/linxisa-v0.2.json` (non-default)
+- Current ISA catalog: `spec/isa/spec/current/linxisa-v0.3.json`
+- Legacy ISA catalog: `spec/isa/spec/current/linxisa-v0.3.json` (non-default)
 - Machine-checkable contract: `docs/bringup/check26_contract.yaml`
 - Contract gate: `tools/bringup/check26_contract.py`
 
@@ -31,10 +31,10 @@ Legend:
 - `bash tools/regression/run.sh` ✅
 - `bash tools/regression/full_stack.sh` ✅
 - `llvm-lit llvm/test/MC/LinxISA llvm/test/CodeGen/LinxISA` ✅
-- `python3 /Users/zhoubot/linux/tools/linxisa/initramfs/smoke.py` ✅
-- `python3 /Users/zhoubot/linux/tools/linxisa/initramfs/full_boot.py` ✅
-- `python3 /Users/zhoubot/linux/tools/linxisa/initramfs/virtio_disk_smoke.py` ✅
-- `bash /Users/zhoubot/pyCircuit/tools/run_linx_cpu_pyc_cpp.sh` ✅
-- `bash /Users/zhoubot/pyCircuit/janus/tools/run_janus_bcc_pyc_cpp.sh` ✅
-- `bash /Users/zhoubot/pyCircuit/janus/tools/run_janus_bcc_ooo_pyc_cpp.sh` ✅
-- `QEMU_BIN=/Users/zhoubot/qemu/build-tci/qemu-system-linx64 bash /Users/zhoubot/pyCircuit/tools/run_linx_qemu_vs_pyc.sh` ✅
+- `python3 ~/linux/tools/linxisa/initramfs/smoke.py` ✅
+- `python3 ~/linux/tools/linxisa/initramfs/full_boot.py` ✅
+- `python3 ~/linux/tools/linxisa/initramfs/virtio_disk_smoke.py` ✅
+- `bash ~/pyCircuit/tools/run_linx_cpu_pyc_cpp.sh` ✅
+- `bash ~/pyCircuit/janus/tools/run_janus_bcc_pyc_cpp.sh` ✅
+- `bash ~/pyCircuit/janus/tools/run_janus_bcc_ooo_pyc_cpp.sh` ✅
+- `QEMU_BIN=~/qemu/build-tci/qemu-system-linx64 bash ~/pyCircuit/tools/run_linx_qemu_vs_pyc.sh` ✅

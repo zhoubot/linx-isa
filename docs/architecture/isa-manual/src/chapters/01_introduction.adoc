@@ -91,7 +91,7 @@ reference:
 
 This manual uses the following terms:
 
-* **LXCPU:** an architectural execution context. In toolchain/QEMU bring-up, an LXCPU plays the role of an independent
+* **LXCPU:** an architectural execution context. In impl/toolchain/QEMU bring-up, an LXCPU plays the role of an independent
   hardware thread with its own architectural state.
 * **Block start marker:** an instruction that begins a block and is a legal architectural control-flow target. This
   includes explicit `BSTART.*`/`C.BSTART.*`/`HL.BSTART.*` forms and template blocks such as `FENTRY`/`FRET.*`.

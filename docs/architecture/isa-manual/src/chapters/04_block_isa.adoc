@@ -163,7 +163,7 @@ The bring-up profile constrains certain combinations (examples):
 
 Block types beyond the scalar core (e.g. `.TMA`, `.VPAR`, `.VSEQ`, `.CUBE`, `.FIXP`) appear in the catalog as
 Block Split forms; this manual treats their detailed execution semantics as staged in v0.3 unless explicitly specified
-in the golden sources (`isa/golden/v0.3/`).
+in the golden sources (`spec/isa/golden/v0.3/`).
 
 [[blockisa-tile]]
 === Tile blocks (TAU)

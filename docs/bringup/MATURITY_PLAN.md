@@ -4,7 +4,7 @@ Last updated: 2026-02-12
 
 ## Baseline policy
 
-- `isa/spec/current/linxisa-v0.3.json` is the default architectural contract.
+- `spec/isa/spec/current/linxisa-v0.3.json` is the default architectural contract.
 - `v0.2` remains available only as explicit legacy compatibility.
 - 26 checks in `docs/bringup/check26_contract.yaml` are mandatory and machine-gated.
 
@@ -17,7 +17,7 @@ Required evidence:
 - `bash tools/regression/full_stack.sh` passes.
 - `bash tools/regression/run.sh` passes.
 - `python3 tools/bringup/check26_contract.py --root .` passes.
-- `python3 tools/isa/check_no_legacy_v03.py --root . --extra-root /Users/zhoubot/qemu --extra-root /Users/zhoubot/linux --extra-root /Users/zhoubot/llvm-project` passes.
+- `python3 tools/isa/check_no_legacy_v03.py --root . --extra-root ~/qemu --extra-root ~/linux --extra-root ~/llvm-project` passes.
 - Linux userspace QEMU boot scripts pass (smoke/full/virtio).
 - LLVM Linx MC+CodeGen test suites pass.
 - pyCircuit/Janus cpp tests and QEMU-vs-pyCircuit trace diff pass.

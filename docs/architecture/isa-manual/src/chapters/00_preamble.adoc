@@ -5,8 +5,8 @@ This document is the canonical ISA manual for the **Linx Instruction Set Archite
 
 The single source of truth for instruction encodings in this repository is:
 
-* `isa/spec/current/linxisa-v0.3.json` (machine-readable catalog built from `isa/golden/v0.3/`)
-* `isa/generated/codecs/` (generated encode/decode tables derived from the JSON)
+* `spec/isa/spec/current/linxisa-v0.3.json` (machine-readable catalog built from `spec/isa/golden/v0.3/`)
+* `spec/isa/generated/codecs/` (generated encode/decode tables derived from the JSON)
 
 Where this manual and the machine-readable catalog disagree, the JSON catalog MUST be treated as authoritative.
 
@@ -17,7 +17,7 @@ NOTE: v0.3 unifies the previous v0.2 bring-up profile with v0.3 staged extension
 
 image::linxisa-logo.svg[align="center",width=140]
 
-The LinxISA brand mark is a stylized **灵犀** form that preserves the original silhouette while adding subtle
+The LinxISA brand mark is a stylized **Lingxi** form that preserves the original silhouette while adding subtle
 semiconductor-style detailing (routed traces, pads/vias) to preserve crisp readability in manual PDFs, web docs, and
 toolchain-generated reports.
 
@@ -31,7 +31,7 @@ This manual describes the **v0.3 Linx ISA** - a production-ready architecture th
 
 The LinxISA project maintains alignment between:
 
-* The machine-readable catalog (`isa/spec/current/linxisa-v0.3.json`)
+* The machine-readable catalog (`spec/isa/spec/current/linxisa-v0.3.json`)
 * The LLVM backend (`llvm-project/llvm/lib/Target/LinxISA/`)
 * The QEMU emulator (`qemu/target/linx/`)
 * This manual

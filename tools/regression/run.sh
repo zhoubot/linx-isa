@@ -10,24 +10,29 @@ echo "-- ISA golden checks"
 python3 "$ROOT/tools/isa/lint_no_cjk.py"
 python3 "$ROOT/tools/isa/build_golden.py" --profile v0.3 --check
 python3 "$ROOT/tools/isa/validate_spec.py" --profile v0.3
-python3 "$ROOT/tools/isa/build_golden.py" --profile v0.2 --check
-python3 "$ROOT/tools/isa/validate_spec.py" --profile v0.2
 python3 "$ROOT/tools/bringup/check26_contract.py" --root "$ROOT"
-LINUX_ROOT="${LINUX_ROOT:-$HOME/linux}"
-QEMU_ROOT_CHECK="${QEMU_ROOT_CHECK:-$HOME/qemu}"
-LLVM_ROOT="${LLVM_ROOT:-$HOME/llvm-project}"
+
 LEGACY_SCAN_ARGS=()
-[[ -d "$LINUX_ROOT" ]] && LEGACY_SCAN_ARGS+=(--extra-root "$LINUX_ROOT")
-[[ -d "$QEMU_ROOT_CHECK" ]] && LEGACY_SCAN_ARGS+=(--extra-root "$QEMU_ROOT_CHECK")
-[[ -d "$LLVM_ROOT" ]] && LEGACY_SCAN_ARGS+=(--extra-root "$LLVM_ROOT")
-python3 "$ROOT/tools/isa/check_no_legacy_v02.py" --root "$ROOT" "${LEGACY_SCAN_ARGS[@]}"
-python3 "$ROOT/tools/isa/check_no_legacy_v03.py" --root "$ROOT" "${LEGACY_SCAN_ARGS[@]}"
-python3 "$ROOT/tools/isa/report_encoding_space.py" --spec "$ROOT/isa/spec/current/linxisa-v0.3.json" --out "$ROOT/docs/reference/encoding_space_report.md" --check
-python3 "$ROOT/tools/isa/gen_qemu_codec.py" --spec "$ROOT/isa/spec/current/linxisa-v0.3.json" --out-dir "$ROOT/isa/generated/codecs" --check
-python3 "$ROOT/tools/isa/gen_c_codec.py" --spec "$ROOT/isa/spec/current/linxisa-v0.3.json" --out-dir "$ROOT/isa/generated/codecs" --check
-python3 "$ROOT/tools/isa/gen_manual_adoc.py" --spec "$ROOT/isa/spec/current/linxisa-v0.3.json" --out-dir "$ROOT/docs/architecture/isa-manual/src/generated" --check
-python3 "$ROOT/tools/isa/gen_ssr_adoc.py" --spec "$ROOT/isa/spec/current/linxisa-v0.3.json" --out-dir "$ROOT/docs/architecture/isa-manual/src/generated" --check
-python3 "$ROOT/tools/isa/sail_coverage.py" --spec "$ROOT/isa/spec/current/linxisa-v0.3.json" --implemented "$ROOT/isa/sail/implemented_mnemonics.txt" --out "$ROOT/isa/sail/coverage.json" --check
+if [[ "${ENABLE_CROSS_REPO_SCAN:-0}" == "1" ]]; then
+  LINUX_ROOT="${LINUX_ROOT:-$HOME/linux}"
+  QEMU_ROOT_CHECK="${QEMU_ROOT_CHECK:-$HOME/qemu}"
+  LLVM_ROOT="${LLVM_ROOT:-$HOME/llvm-project}"
+  [[ -d "$LINUX_ROOT" ]] && LEGACY_SCAN_ARGS+=(--extra-root "$LINUX_ROOT")
+  [[ -d "$QEMU_ROOT_CHECK" ]] && LEGACY_SCAN_ARGS+=(--extra-root "$QEMU_ROOT_CHECK")
+  [[ -d "$LLVM_ROOT" ]] && LEGACY_SCAN_ARGS+=(--extra-root "$LLVM_ROOT")
+fi
+if (( ${#LEGACY_SCAN_ARGS[@]} )); then
+  python3 "$ROOT/tools/isa/check_no_legacy_v03.py" --root "$ROOT" "${LEGACY_SCAN_ARGS[@]}"
+else
+  python3 "$ROOT/tools/isa/check_no_legacy_v03.py" --root "$ROOT"
+fi
+
+python3 "$ROOT/tools/isa/report_encoding_space.py" --spec "$ROOT/spec/isa/spec/current/linxisa-v0.3.json" --out "$ROOT/docs/reference/encoding_space_report.md" --check
+python3 "$ROOT/tools/isa/gen_qemu_codec.py" --spec "$ROOT/spec/isa/spec/current/linxisa-v0.3.json" --out-dir "$ROOT/spec/isa/generated/codecs" --check
+python3 "$ROOT/tools/isa/gen_c_codec.py" --spec "$ROOT/spec/isa/spec/current/linxisa-v0.3.json" --out-dir "$ROOT/spec/isa/generated/codecs" --check
+python3 "$ROOT/tools/isa/gen_manual_adoc.py" --spec "$ROOT/spec/isa/spec/current/linxisa-v0.3.json" --out-dir "$ROOT/docs/architecture/isa-manual/src/generated" --check
+python3 "$ROOT/tools/isa/gen_ssr_adoc.py" --spec "$ROOT/spec/isa/spec/current/linxisa-v0.3.json" --out-dir "$ROOT/docs/architecture/isa-manual/src/generated" --check
+python3 "$ROOT/tools/isa/sail_coverage.py" --spec "$ROOT/spec/isa/spec/current/linxisa-v0.3.json" --implemented "$ROOT/spec/isa/sail/implemented_mnemonics.txt" --out "$ROOT/spec/isa/sail/coverage.json" --check
 
 # Allow callers to override tool locations.
 CLANG="${CLANG:-}"
@@ -73,19 +78,19 @@ fi
 
 echo
 echo "-- Compiler compile-only tests (linx64)"
-(cd "$ROOT/compiler/llvm/tests" && CLANG="$CLANG" TARGET="linx64-linx-none-elf" OUT_DIR="$ROOT/compiler/llvm/tests/out-linx64" ./run.sh)
+(cd "$ROOT/impl/compiler/llvm/tests" && CLANG="$CLANG" TARGET="linx64-linx-none-elf" OUT_DIR="$ROOT/impl/compiler/llvm/tests/out-linx64" ./run.sh)
 
 echo
 echo "-- Compiler coverage report (linx64)"
-python3 "$ROOT/compiler/llvm/tests/analyze_coverage.py" --out-dir "$ROOT/compiler/llvm/tests/out-linx64" --fail-under "${COVERAGE_FAIL_UNDER:-100}"
+python3 "$ROOT/impl/compiler/llvm/tests/analyze_coverage.py" --out-dir "$ROOT/impl/compiler/llvm/tests/out-linx64" --fail-under "${COVERAGE_FAIL_UNDER:-100}"
 
 echo
 echo "-- Compiler compile-only tests (linx32)"
-(cd "$ROOT/compiler/llvm/tests" && CLANG="$CLANG" TARGET="linx32-linx-none-elf" OUT_DIR="$ROOT/compiler/llvm/tests/out-linx32" ./run.sh)
+(cd "$ROOT/impl/compiler/llvm/tests" && CLANG="$CLANG" TARGET="linx32-linx-none-elf" OUT_DIR="$ROOT/impl/compiler/llvm/tests/out-linx32" ./run.sh)
 
 echo
 echo "-- Compiler coverage report (linx32)"
-python3 "$ROOT/compiler/llvm/tests/analyze_coverage.py" --out-dir "$ROOT/compiler/llvm/tests/out-linx32" --fail-under "${COVERAGE_FAIL_UNDER:-100}"
+python3 "$ROOT/impl/compiler/llvm/tests/analyze_coverage.py" --out-dir "$ROOT/impl/compiler/llvm/tests/out-linx32" --fail-under "${COVERAGE_FAIL_UNDER:-100}"
 
 echo
 echo "-- QEMU strict system gate (ACR/IRQ/exception coverage + noise check)"

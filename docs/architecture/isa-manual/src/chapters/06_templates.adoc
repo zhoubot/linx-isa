@@ -54,7 +54,7 @@ Typical usage patterns in this repo:
 [[templates-example]]
 === Example (startup sequence)
 
-The minimal libc startup in `toolchain/libc/src/crt0.s` uses `FENTRY` + `FRET.STK` around a direct call:
+The minimal libc startup in `impl/toolchain/libc/src/crt0.s` uses `FENTRY` + `FRET.STK` around a direct call:
 
 [source,asm]
 ----
@@ -66,7 +66,7 @@ FRET.STK  [ra ~ s2], sp!, 16
 ----
 
 The precise memory layout and ordering of the save/restore operation is defined by the architectural specification
-golden sources (`isa/golden/v0.2/`) and the canonical catalog (`isa/spec/current/linxisa-v0.2.json`).
+golden sources (`spec/isa/golden/v0.3/`) and the canonical catalog (`spec/isa/spec/current/linxisa-v0.3.json`).
 
 [[templates-esave]]
 === Extended context save/restore (`ESAVE` / `ERCOV`) (v0.2 bring-up)

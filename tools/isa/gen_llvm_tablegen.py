@@ -185,7 +185,7 @@ def _generate_tablegen_file(spec: Dict[str, Any], output_path: Path) -> None:
     groups = _group_instructions_by_category(instructions)
     
     lines = []
-    lines.append('// Auto-generated from isa/spec/current/linxisa-v0.3.json')
+    lines.append('// Auto-generated from spec/isa/spec/current/linxisa-v0.3.json')
     lines.append('// DO NOT EDIT: run `python3 tools/isa/gen_llvm_tablegen.py` to regenerate.')
     lines.append('')
     lines.append('// This file contains instruction definitions for LLVM TableGen.')
@@ -224,13 +224,13 @@ def main() -> int:
     parser.add_argument(
         '--spec',
         type=Path,
-        default=Path(__file__).resolve().parents[3] / 'isa/spec/current/linxisa-v0.3.json',
+        default=Path(__file__).resolve().parents[3] / 'spec/isa/spec/current/linxisa-v0.3.json',
         help='Path to linxisa-v0.3.json'
     )
     parser.add_argument(
         '--out',
         type=Path,
-        default=Path(__file__).resolve().parents[3] / 'compiler/llvm/LinxISAInstrInfo.td',
+        default=Path(__file__).resolve().parents[3] / 'impl/compiler/llvm/LinxISAInstrInfo.td',
         help='Output TableGen file path'
     )
     

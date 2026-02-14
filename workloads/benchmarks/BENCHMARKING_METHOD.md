@@ -21,7 +21,7 @@ under `workloads/benchmarks/`.
 
 - Fix input sizes and iteration counts; avoid wall-clock timing as a primary signal during bring-up.
 - Record revisions for every run:
-  - LinxISA spec version (`isa/spec/current/linxisa-v0.1.json`)
+  - LinxISA spec version (`spec/isa/spec/current/linxisa-v0.3.json`)
   - LLVM revision + build dir
   - QEMU revision + build dir
   - run flags (`-O2`, `-ffreestanding`, etc.)
@@ -52,7 +52,7 @@ Sources and pinned revisions are tracked in `workloads/benchmarks/third_party/SO
    - Embench IoT
    - PolyBench/C kernels (compile+run with fixed sizes)
 2. Add a minimal hosted layer only when required:
-   - syscall ABI + `printf` is already available via `toolchain/libc/`
+   - syscall ABI + `printf` is already available via `impl/toolchain/libc/`
    - file I/O and time APIs should remain stubbed until Linux/hosted ABI is ready
 3. Treat LLVM test-suite as a long-term gate:
    - begin with a small curated subset of `SingleSource/Benchmarks/` that does not require OS services

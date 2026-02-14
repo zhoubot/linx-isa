@@ -2,9 +2,9 @@
 
 ## Authority and source roots
 
-- pyCircuit repository (authoritative): `/Users/zhoubot/pyCircuit`
-- Linx CPU source root: `/Users/zhoubot/pyCircuit/examples/linx_cpu_pyc`
-- Janus source root: `/Users/zhoubot/pyCircuit/janus/pyc/janus`
+- pyCircuit repository (authoritative): `~/pyCircuit`
+- Linx CPU source root: `~/pyCircuit/examples/linx_cpu_pyc`
+- Janus source root: `~/pyCircuit/janus/pyc/janus`
 
 `linxisa` does not manually author these RTL/model sources.
 
@@ -18,14 +18,14 @@ For each tracked core target:
 
 Recommended generated locations in pyCircuit:
 
-- Linx: `/Users/zhoubot/pyCircuit/examples/generated/linx_cpu_pyc/`
-- Janus: `/Users/zhoubot/pyCircuit/janus/generated/`
+- Linx: `~/pyCircuit/examples/generated/linx_cpu_pyc/`
+- Janus: `~/pyCircuit/janus/generated/`
 
 ## Canonical generation entrypoints
 
-- `bash /Users/zhoubot/pyCircuit/scripts/pyc build`
-- `bash /Users/zhoubot/pyCircuit/scripts/pyc regen`
-- `bash /Users/zhoubot/pyCircuit/janus/update_generated.sh`
+- `bash ~/pyCircuit/scripts/pyc build`
+- `bash ~/pyCircuit/scripts/pyc regen`
+- `bash ~/pyCircuit/janus/update_generated.sh`
 
 ## Reproducibility rules
 

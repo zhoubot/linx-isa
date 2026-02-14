@@ -6,17 +6,17 @@ set -euo pipefail
 # attempts to build early startup objects (csu) first.
 #
 # Expected local checkouts:
-#   - /Users/zhoubot/llvm-project (build dir: build-linxisa-clang)
-#   - /Users/zhoubot/glibc
-#   - /Users/zhoubot/sysroots/linx64-linux-gnu/src/linux-6.1 (Linux source)
+#   - ~/llvm-project (build dir: build-linxisa-clang)
+#   - ~/glibc
+#   - ~/sysroots/linx64-linux-gnu/src/linux-6.1 (Linux source)
 #
 # Outputs:
-#   - /Users/zhoubot/glibc/build-linx64-glibc1 (configure)
+#   - ~/glibc/build-linx64-glibc1 (configure)
 #   - /tmp/glibc_linx_build_csu*.log (build logs)
 
-LLVM_BUILD="${LLVM_BUILD:-/Users/zhoubot/llvm-project/build-linxisa-clang}"
-GLIBC_SRC="${GLIBC_SRC:-/Users/zhoubot/glibc}"
-SYSROOT="${SYSROOT:-/Users/zhoubot/sysroots/linx64-linux-gnu}"
+LLVM_BUILD="${LLVM_BUILD:-~/llvm-project/build-linxisa-clang}"
+GLIBC_SRC="${GLIBC_SRC:-~/glibc}"
+SYSROOT="${SYSROOT:-~/sysroots/linx64-linux-gnu}"
 LINUX_SRC="${LINUX_SRC:-$SYSROOT/src/linux-6.1}"
 LINUX_HDRS="${LINUX_HDRS:-$SYSROOT/linux-headers}"
 BUILD_DIR="${BUILD_DIR:-$GLIBC_SRC/build-linx64-glibc1}"

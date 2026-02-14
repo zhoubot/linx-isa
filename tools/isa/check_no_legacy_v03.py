@@ -40,8 +40,8 @@ ALLOWED_EXTS = {
 
 def _local_targets(root: Path) -> List[Path]:
     return [
-        root / "isa" / "golden" / "v0.3",
-        root / "isa" / "spec" / "v0.3" / "linxisa-v0.3.json",
+        root / "spec" / "isa" / "golden" / "v0.3",
+        root / "spec" / "isa" / "spec" / "v0.3" / "linxisa-v0.3.json",
         root / "docs" / "architecture" / "isa-manual" / "src" / "chapters" / "02_programming_model.adoc",
         root / "docs" / "architecture" / "isa-manual" / "src" / "chapters" / "04_block_isa.adoc",
         root / "docs" / "architecture" / "isa-manual" / "src" / "chapters" / "08_memory_operations.adoc",
@@ -83,7 +83,7 @@ def _extra_targets(root: Path) -> List[Path]:
 
 def _should_skip(path: Path) -> bool:
     p = str(path)
-    if "/isa/golden/v0.3/reconcile/" in p:
+    if "/spec/isa/golden/v0.3/reconcile/" in p or "/isa/golden/v0.3/reconcile/" in p:
         return True
     if path.name in {
         "linxisa-v0.3.txt",
@@ -98,7 +98,7 @@ def _should_skip(path: Path) -> bool:
     if "/llvm/lib/Target/LinxISA/MCTargetDesc/" in p and path.name == "linxisa_opcodes.c":
         # Compatibility aliases are retained in generated opcode catalogs.
         return True
-    if "/isa/golden/v0.3/opcodes/" in p:
+    if "/spec/isa/golden/v0.3/opcodes/" in p:
         # v0.3 keeps compatibility aliases in opcode sources; canonical-output
         # checks run on docs/spec/tests and generated outputs.
         return True
@@ -192,8 +192,8 @@ def main() -> int:
                 root / "tools" / "isa" / "reconcile_v03_raw.py",
                 root / "tools" / "isa" / "normalize_v03_example_asm.py",
                 root / "tools" / "isa" / "check_no_legacy_v03.py",
-                root / "isa" / "spec" / "v0.3" / "linxisa-v0.3.json",
-                root / "isa" / "spec" / "current" / "linxisa-v0.3.json",
+                root / "spec" / "isa" / "spec" / "v0.3" / "linxisa-v0.3.json",
+                root / "spec" / "isa" / "spec" / "current" / "linxisa-v0.3.json",
             ],
         ),
     ]

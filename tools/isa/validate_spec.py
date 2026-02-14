@@ -147,9 +147,9 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument(
         "--profile",
-        choices=["v0.2", "v0.3"],
+        choices=["v0.3"],
         default="v0.3",
-        help="ISA profile for default --spec path",
+        help="ISA profile for default --spec path (v0.3 only)",
     )
     ap.add_argument(
         "--spec",
@@ -158,11 +158,7 @@ def main() -> int:
     )
     args = ap.parse_args()
 
-    default_spec = (
-        "isa/spec/current/linxisa-v0.3.json"
-        if args.profile == "v0.3"
-        else "isa/spec/current/linxisa-v0.2.json"
-    )
+    default_spec = "spec/isa/spec/current/linxisa-v0.3.json"
     errors = validate(args.spec or default_spec)
     if errors:
         for e in errors[:200]:

@@ -1,8 +1,0 @@
-{
-  "notes": [
-    "Architectural state is intentionally minimal here: this repo treats the compiled catalog as the primary machine-readable source.",
-    "Extend this file as privilege state, CSRs, exceptions, and memory model are formalized."
-  ],
-  "state": {}
-}
-

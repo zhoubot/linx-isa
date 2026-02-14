@@ -19,9 +19,9 @@ Last updated: 2026-02-12
 
 | Gate | Status | Command |
 | --- | --- | --- |
-| A1 Linx pyCircuit C++ | ✅ | `bash /Users/zhoubot/pyCircuit/tools/run_linx_cpu_pyc_cpp.sh` |
-| A3 Linx trace diff | ✅ | `QEMU_BIN=/Users/zhoubot/qemu/build-tci/qemu-system-linx64 bash /Users/zhoubot/pyCircuit/tools/run_linx_qemu_vs_pyc.sh` |
-| B1 Janus C++ | ✅ | `bash /Users/zhoubot/pyCircuit/janus/tools/run_janus_bcc_pyc_cpp.sh` |
+| A1 Linx pyCircuit C++ | ✅ | `bash ~/pyCircuit/tools/run_linx_cpu_pyc_cpp.sh` |
+| A3 Linx trace diff | ✅ | `QEMU_BIN=~/qemu/build-tci/qemu-system-linx64 bash ~/pyCircuit/tools/run_linx_qemu_vs_pyc.sh` |
+| B1 Janus C++ | ✅ | `bash ~/pyCircuit/janus/tools/run_janus_bcc_pyc_cpp.sh` |
 | B3 Janus/Linx trace compatibility (bring-up subset) | ✅ | same trace diff gate (commit-schema compatible subset) |
 | Linux userspace boot | ✅ | linux initramfs smoke/full/virtio scripts |
 | PTO GEMM/Flash value match | ✅ | `python3 workloads/benchmarks/compare_pto_cpu_qemu.py` |
@@ -32,10 +32,10 @@ Last updated: 2026-02-12
 
 - `bash tools/regression/run.sh` ✅
 - `bash tools/regression/full_stack.sh` ✅
-- `python3 tools/isa/check_no_legacy_v03.py --root . --extra-root /Users/zhoubot/qemu --extra-root /Users/zhoubot/linux --extra-root /Users/zhoubot/llvm-project` ✅
+- `python3 tools/isa/check_no_legacy_v03.py --root . --extra-root ~/qemu --extra-root ~/linux --extra-root ~/llvm-project` ✅
 - `python3 workloads/benchmarks/run_pto_ai_kernels.py` ✅
 - `python3 workloads/benchmarks/compare_pto_cpu_qemu.py` ✅
-- `python3 /Users/zhoubot/linux/tools/linxisa/initramfs/smoke.py` ✅
-- `python3 /Users/zhoubot/linux/tools/linxisa/initramfs/full_boot.py` ✅
-- `python3 /Users/zhoubot/linux/tools/linxisa/initramfs/virtio_disk_smoke.py` ✅
-- `/Users/zhoubot/llvm-project/build-linxisa-clang/bin/llvm-lit -sv /Users/zhoubot/llvm-project/llvm/test/MC/LinxISA /Users/zhoubot/llvm-project/llvm/test/CodeGen/LinxISA` ✅
+- `python3 ~/linux/tools/linxisa/initramfs/smoke.py` ✅
+- `python3 ~/linux/tools/linxisa/initramfs/full_boot.py` ✅
+- `python3 ~/linux/tools/linxisa/initramfs/virtio_disk_smoke.py` ✅
+- `~/llvm-project/build-linxisa-clang/bin/llvm-lit -sv ~/llvm-project/llvm/test/MC/LinxISA ~/llvm-project/llvm/test/CodeGen/LinxISA` ✅

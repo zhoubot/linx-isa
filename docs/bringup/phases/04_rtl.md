@@ -1,17 +1,17 @@
 # Phase 4: RTL Bring-up and Verification (Agile pyCircuit)
 
-Primary RTL notes: `rtl/README.md`
+Primary RTL notes: `impl/rtl/README.md`
 
 ## Scope and source of truth
 
-- Architecture/spec authority: `linxisa` (`isa/golden/v0.2/`, `isa/spec/current/linxisa-v0.2.json`, `isa/generated/codecs/`).
-- RTL/model generation authority: `/Users/zhoubot/pyCircuit`.
+- Architecture/spec authority: `linxisa` (`spec/isa/golden/v0.3/`, `spec/isa/spec/current/linxisa-v0.3.json`, `spec/isa/generated/codecs/`).
+- RTL/model generation authority: `~/pyCircuit`.
 - Core targets:
   - **Linx CPU** first
   - **Janus Core** second
 
 The Linux end goal is handled in later phases (`05_fpga_zybo_z7.md`, `06_linux_on_janus.md`), but this phase must
-produce stable and diffable models/RTL as prerequisites.
+produce stable and diffable impl/models/RTL as prerequisites.
 
 ## Contracts (mandatory links)
 
@@ -38,15 +38,15 @@ produce stable and diffable models/RTL as prerequisites.
 One sprint = one feature slice (instruction/CSR/exception/pipeline rule):
 
 1. Implement/update pyCircuit source in:
-   - `/Users/zhoubot/pyCircuit/examples/linx_cpu_pyc/`
+   - `~/pyCircuit/examples/linx_cpu_pyc/`
 2. Regenerate C++ and Verilog artifacts via canonical scripts.
 3. Run C++ and RTL simulations on identical program vectors.
 4. Diff against QEMU using the trace contract.
 
 ### Canonical runners
 
-- `bash /Users/zhoubot/pyCircuit/tools/run_linx_cpu_pyc_cpp.sh`
-- `python3 /Users/zhoubot/pyCircuit/tools/pyc_flow.py verilog-sim linx_cpu_pyc --tool verilator`
+- `bash ~/pyCircuit/tools/run_linx_cpu_pyc_cpp.sh`
+- `python3 ~/pyCircuit/tools/pyc_flow.py verilog-sim linx_cpu_pyc --tool verilator`
 
 ### Exit criteria
 
@@ -63,10 +63,10 @@ One sprint = one feature slice (instruction/CSR/exception/pipeline rule):
 
 ### Canonical runners
 
-- `bash /Users/zhoubot/pyCircuit/janus/tools/run_janus_bcc_ooo_pyc_cpp.sh`
-- `bash /Users/zhoubot/pyCircuit/janus/tools/run_janus_bcc_ooo_pyc_sv.sh`
-- `bash /Users/zhoubot/pyCircuit/janus/tools/run_janus_bcc_ooo_pyc_verilator.sh`
-- `bash /Users/zhoubot/pyCircuit/janus/tools/run_janus_benchmarks.sh`
+- `bash ~/pyCircuit/janus/tools/run_janus_bcc_ooo_pyc_cpp.sh`
+- `bash ~/pyCircuit/janus/tools/run_janus_bcc_ooo_pyc_sv.sh`
+- `bash ~/pyCircuit/janus/tools/run_janus_bcc_ooo_pyc_verilator.sh`
+- `bash ~/pyCircuit/janus/tools/run_janus_benchmarks.sh`
 
 ### Validation
 
@@ -84,8 +84,8 @@ One sprint = one feature slice (instruction/CSR/exception/pipeline rule):
 
 `linxisa` stores planning, contracts, and validation outcomes. When needed, stage generated integration collateral into:
 
-- `rtl/` for integration wrappers or snapshots
-- `models/` for model wrappers and trace adapters
+- `impl/rtl/` for integration wrappers or snapshots
+- `impl/models/` for model wrappers and trace adapters
 - `tools/` for reproducible import/check scripts
 
 Direct authoring remains in `~/pyCircuit`; copied artifacts in `linxisa` must be script-derived.

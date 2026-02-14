@@ -7,7 +7,7 @@ The generated tables are intended as a low-friction bridge for:
   - binutils opcodes/disassembler implementations
   - standalone reference tooling
 
-Outputs into `isa/generated/codecs/`:
+Outputs into `spec/isa/generated/codecs/`:
   - linxisa_opcodes.h
   - linxisa_opcodes.c
 """
@@ -323,20 +323,16 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument(
         "--profile",
-        choices=["v0.2", "v0.3"],
+        choices=["v0.3"],
         default="v0.3",
-        help="ISA profile for default --spec path",
+        help="ISA profile for default --spec path (v0.3 only)",
     )
     ap.add_argument("--spec", default=None, help="Path to the ISA spec JSON")
-    ap.add_argument("--out-dir", default="isa/generated/codecs", help="Output directory")
+    ap.add_argument("--out-dir", default="spec/isa/generated/codecs", help="Output directory")
     ap.add_argument("--check", action="store_true", help="Fail if outputs are not up-to-date")
     args = ap.parse_args()
 
-    default_spec = (
-        "isa/spec/current/linxisa-v0.3.json"
-        if args.profile == "v0.3"
-        else "isa/spec/current/linxisa-v0.2.json"
-    )
+    default_spec = "spec/isa/spec/current/linxisa-v0.3.json"
     spec_path = args.spec or default_spec
 
     with open(spec_path, "r", encoding="utf-8") as f:
