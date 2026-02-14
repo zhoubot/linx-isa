@@ -8,22 +8,45 @@ namespace linx {
 
 using TileI32 = int __attribute__((vector_size(4096)));
 
-template <unsigned SizeCode, unsigned Layout = 0, unsigned LB0 = 0, unsigned LB1 = 0>
-__attribute__((always_inline)) inline TileI32 tload(const void *base) {
-  static_assert(SizeCode <= 31, "tload size-code must fit 5 bits");
-  static_assert(Layout <= 31, "tload layout must fit 5 bits");
-  static_assert(LB0 <= 0x1ffff, "tload LB0 must fit 17 bits");
-  static_assert(LB1 <= 0x1ffff, "tload LB1 must fit 17 bits");
-  return __builtin_linx_tma_tload_desc(base, Layout, LB0, LB1, SizeCode);
+enum : unsigned {
+  kTMAFmtNorm  = 0u,
+  kTMAFmtND2NZ = 1u,
+  kTMAFmtND2ZN = 2u,
+  kTMAFmtDN2NZ = 3u,
+  kTMAFmtDN2ZN = 4u,
+};
+
+enum : unsigned {
+  kTMAPadNull = 0u,
+  kTMAPadZero = 1u,
+  kTMAPadMax  = 2u,
+  kTMAPadMin  = 3u,
+};
+
+constexpr unsigned make_tma_arg(unsigned format, unsigned pad = kTMAPadNull) {
+  return ((pad & 0x3u) << 3) | (format & 0x7u);
 }
 
-template <unsigned SizeCode, unsigned Layout = 0, unsigned LB0 = 0, unsigned LB1 = 0>
+template <unsigned SizeCode, unsigned Arg = 0, unsigned LB0 = 0, unsigned LB1 = 0,
+          unsigned LB2 = 0>
+__attribute__((always_inline)) inline TileI32 tload(const void *base) {
+  static_assert(SizeCode <= 31, "tload size-code must fit 5 bits");
+  static_assert(Arg <= 31, "tload arg must fit 5 bits");
+  static_assert(LB0 <= 0x1ffff, "tload LB0 must fit 17 bits");
+  static_assert(LB1 <= 0x1ffff, "tload LB1 must fit 17 bits");
+  static_assert(LB2 <= 0x1ffff, "tload LB2 must fit 17 bits");
+  return __builtin_linx_tma_tload_desc(base, Arg, LB0, LB1, LB2, SizeCode);
+}
+
+template <unsigned SizeCode, unsigned Arg = 0, unsigned LB0 = 0, unsigned LB1 = 0,
+          unsigned LB2 = 0>
 __attribute__((always_inline)) inline void tstore(void *base, TileI32 tile) {
   static_assert(SizeCode <= 31, "tstore size-code must fit 5 bits");
-  static_assert(Layout <= 31, "tstore layout must fit 5 bits");
+  static_assert(Arg <= 31, "tstore arg must fit 5 bits");
   static_assert(LB0 <= 0x1ffff, "tstore LB0 must fit 17 bits");
   static_assert(LB1 <= 0x1ffff, "tstore LB1 must fit 17 bits");
-  __builtin_linx_tma_tstore_desc(base, tile, Layout, LB0, LB1, SizeCode);
+  static_assert(LB2 <= 0x1ffff, "tstore LB2 must fit 17 bits");
+  __builtin_linx_tma_tstore_desc(base, tile, Arg, LB0, LB1, LB2, SizeCode);
 }
 
 template <unsigned M, unsigned N, unsigned K>

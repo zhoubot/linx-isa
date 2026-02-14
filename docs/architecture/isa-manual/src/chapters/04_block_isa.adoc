@@ -178,7 +178,7 @@ Tile blocks operate on **tile registers** (see <<progmodel-tile>>), and use expl
 
 * `B.IOT` / `B.IOTI` describe tile inputs/outputs (including relative tile references and transfer sizing)
 * `B.IOR` describes GPR inputs/outputs for the block
-* `B.ARG` carries tile/tensor layout format selection for the block
+* `B.ARG` carries TMA layout-format selection and pad policy for the block
 * `B.DIM` / `C.B.DIM*` may be used to provide block-local dimensions and valid masks via `LB0..LB2`
 
 Bring-up contract (strict v0.3 current profile):
@@ -251,10 +251,10 @@ The v0.3 staged catalog includes the following descriptor families:
   - `B.IOT` / `B.IOTI`: binds tile inputs/outputs for a block (including optional input reuse and transfer sizing).
   - `B.IOD`: binds dependency metadata (e.g. for scheduling between producer/consumer blocks).
 * **Block arguments**
-  - `B.ARG`: writes a per-block layout/format selector used by TMA tile load/store pipelines.
+  - `B.ARG`: writes a per-block argument used by TMA tile load/store pipelines (layout format + pad policy).
   - `B.DIM`: writes a block argument register (`LB0`–`LB2`) used for loop bounds, dimensions, and valid masks.
 * **Block attributes and hints**
-  - `B.ATTR`: sets attributes such as trap/atomic/order/layout qualifiers for the current block.
+  - `B.ATTR`: sets generic block attributes/hints; strict TMA execution does not source dtype/layout/pad from `B.ATTR`.
   - `B.HINT`: sets performance hints (branch likelihood, temperature, prefetch sizing, trace markers).
 * **Text/offset annotations**
   - `B.TEXT`: in a decoupled block header, selects the out-of-line body entrypoint (`BodyTPC`). In coupled blocks it
@@ -281,9 +281,9 @@ The v0.3 staged profile integrates only reconciled and internally consistent AI-
 The canonical v0.3 auto-mode profile maps PTO tile primitives to typed TAU block headers and descriptors:
 
 * `PTO TLOAD`:
-  `BSTART.TMA(TLOAD)` + `B.DIM(LB0/LB1)` + `B.ARG` + `B.IOR*` + `B.IOT/B.IOTI`
+  `BSTART.TMA(TLOAD)` + `B.DIM(LB0/LB1/LB2)` + `B.ARG` + `B.IOR*` + `B.IOT/B.IOTI`
 * `PTO TSTORE`:
-  `BSTART.TMA(TSTORE)` + `B.DIM(LB0/LB1)` + `B.ARG` + `B.IOR*` + `B.IOT/B.IOTI`
+  `BSTART.TMA(TSTORE)` + `B.DIM(LB0/LB1/LB2)` + `B.ARG` + `B.IOR*` + `B.IOT/B.IOTI`
 * `PTO TMATMUL`:
   `BSTART.CUBE(MAMULB)` (+ ACC convert/output block when needed)
 * `PTO TMATMUL_ACC`:
@@ -292,6 +292,7 @@ The canonical v0.3 auto-mode profile maps PTO tile primitives to typed TAU block
 Normative notes:
 
 * `B.ARG + B.IOR` are both required for descriptor-rich `TLOAD/TSTORE`.
+* `TLOAD/TSTORE` dtype comes from `BSTART.TMA`, and pad policy comes from `B.ARG` (not `B.ATTR`).
 * Multiple `B.IOR` and `B.IOT/B.IOTI` descriptors in one header are legal and consumed in order.
 * Canonical v0.3 artifacts MUST NOT encode unresolved `group=2` behavior.
 
