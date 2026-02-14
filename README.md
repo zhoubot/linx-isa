@@ -4,14 +4,14 @@
 
 <h1 align="center">Linx Instruction Set Architecture</h1>
 
-<p align="center"><strong>Public v0.3 repository for the LinxISA specification, tooling, and implementations.</strong></p>
+<p align="center"><strong>Public repository for the LinxISA specification, bring-up tooling, and implementation tracks.</strong></p>
 
 ## Overview
 
-LinxISA is a specification-first ISA project with aligned compiler, emulator, and RTL implementation tracks.
-The public tree is v0.3-only and uses canonical `spec/` + `impl/` layout.
+LinxISA is a specification-first ISA project with aligned compiler, emulator, kernel, model, and RTL workstreams.
+The public tree is v0.3+ and uses a top-level domain layout (no `impl/` root).
 
-## Canonical v0.3 Sources
+## Canonical ISA Sources
 
 - ISA golden sources: `spec/isa/golden/v0.3/`
 - ISA compiled catalog: `spec/isa/spec/current/linxisa-v0.3.json`
@@ -19,13 +19,19 @@ The public tree is v0.3-only and uses canonical `spec/` + `impl/` layout.
 - Manual sources: `docs/architecture/isa-manual/`
 - Public assembly samples: `examples/assembly/v0.3/`
 
-## Workspace Dependencies (Submodules)
+## Workspace Submodules
 
-The bring-up workspace pins external implementation repositories as git submodules:
+The workspace pins upstream dependencies as domain submodules:
 
-- `extern/qemu` -> `git@github.com:LinxISA/qemu.git`
-- `extern/linux` -> `git@github.com:LinxISA/linux.git`
-- `extern/pyCircuit` -> `git@github.com:zhoubot/pyCircuit.git` (temporary until org transfer)
+- `compiler/llvm` -> `git@github.com:LinxISA/llvm-project.git`
+- `emulator/qemu` -> `git@github.com:LinxISA/qemu.git`
+- `kernel/linux` -> `git@github.com:LinxISA/linux.git`
+- `models/pyCircuit` -> `git@github.com:zhoubot/pyCircuit.git` (temporary until org transfer)
+
+LinxISA in-repo integration assets stay separate from upstream mirrors:
+
+- LLVM integration/tests: `compiler/linx-llvm/`
+- QEMU integration patches/scripts: `emulator/linx-qemu/`
 
 Fresh clone:
 
@@ -53,9 +59,9 @@ git submodule update --init --recursive
 When `LinxISA/pyCircuit` becomes available, switch the submodule URL:
 
 ```bash
-git submodule set-url extern/pyCircuit git@github.com:LinxISA/pyCircuit.git
+git submodule set-url models/pyCircuit git@github.com:LinxISA/pyCircuit.git
 git submodule sync --recursive
-git submodule update --init extern/pyCircuit
+git submodule update --init models/pyCircuit
 ```
 
 ## Quick Start
@@ -69,29 +75,28 @@ Optional tool overrides:
 ```bash
 export CLANG=~/llvm-project/build-linxisa-clang/bin/clang
 export LLD=~/llvm-project/build-linxisa-clang/bin/ld.lld
-export QEMU=~/linx-isa/extern/qemu/build-tci/qemu-system-linx64
+export QEMU=~/linx-isa/emulator/qemu/build-tci/qemu-system-linx64
 bash tools/regression/run.sh
 ```
 
 ## Bring-up Onboarding
 
-See the public contributor onboarding guide:
-
-- `docs/bringup/GETTING_STARTED.md`
+- Contributor guide: `docs/bringup/GETTING_STARTED.md`
 
 ## Repository Layout
 
 - `spec/`: ISA specification assets
-- `impl/`: compiler, emulator, RTL, models, and toolchain implementation assets
-- `examples/`: canonical public examples and sample packs
-- `docs/`: manual, architecture, bring-up, and migration docs
+- `compiler/`: compiler plans, Linx integration assets, and LLVM submodule
+- `kernel/`: kernel integrations and Linux submodule
+- `emulator/`: emulator integrations and QEMU submodule
+- `models/`: model integrations and pyCircuit submodule
+- `rtl/`: RTL notes and integration wrappers
+- `toolchain/`: libc/binutils/pto support code
+- `examples/`: canonical public sample packs
+- `docs/`: architecture, bring-up, migration, and references
 - `tools/`: generators, validators, and regression tooling
-- `tests/`: runtime and integration test suites
-- `extern/`: pinned bring-up dependencies as git submodules
+- `tests/`: runtime and integration tests
 
-## Migration and Compatibility
+## Migration
 
-v0.3.0 includes one-release compatibility shims for old top-level paths (`isa/`, `compiler/`, `emulator/`, etc.).
-New code must use canonical `spec/` and `impl/` paths.
-
-Migration map: `docs/migration/path-map-v0.3.0.md`
+Latest path migration map: `docs/migration/path-map-v0.3.1.md`

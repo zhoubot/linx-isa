@@ -1,12 +1,12 @@
-# LinxISA v0.3.0 Path Migration Map
+# LinxISA v0.3.0 Path Migration Map (Historical)
 
 This document records the public repository refactor introduced in `v0.3.0`.
 
-Compatibility shims are provided for one release and will be removed in `v0.3.1`.
+For the current layout after `v0.3.1` path updates, see `docs/migration/path-map-v0.3.1.md`.
 
-## Path Map
+## Path Map at v0.3.0
 
-| Old Path | New Canonical Path | Action | v0.3.0 Shim |
+| Old Path | New Canonical Path (v0.3.0) | Action | v0.3.0 Shim |
 |---|---|---|---|
 | `isa/` | `spec/isa/` | moved | `isa -> spec/isa` symlink |
 | `compiler/` | `impl/compiler/` | moved | `compiler -> impl/compiler` symlink |
@@ -28,8 +28,7 @@ Removed from public tree in `v0.3.0`:
 - `spec/isa/spec/current/linxisa-v0.2.json`
 - `linx-bingup.md` (replaced by `docs/architecture/v0.3-architecture-contract.md`)
 
-## Shim Policy
+## Shim Policy at v0.3.0
 
-- Shim paths are compatibility-only for `v0.3.0`.
-- New development MUST use canonical `spec/` and `impl/` paths.
-- Shim paths are scheduled for deletion in `v0.3.1`.
+- Shim paths were compatibility-only for `v0.3.0`.
+- Shim removal was scheduled for `v0.3.1`.

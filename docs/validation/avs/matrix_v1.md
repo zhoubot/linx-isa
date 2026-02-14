@@ -4,7 +4,7 @@ Version: v1 (draft)
 
 This file is a **test matrix**, not an implementation. It defines test IDs,
 required architectural behavior, and pass/fail criteria. A later agent should
-implement tests under `tests/qemu/` (runtime) and `impl/compiler/llvm/tests/`
+implement tests under `tests/qemu/` (runtime) and `compiler/linx-llvm/tests/`
 (compile-only), and wire difftest once RTL trace output conforms to
 `docs/bringup/contracts/trace_schema.md`.
 
@@ -49,7 +49,7 @@ Unless stated otherwise, tests apply to both `LNX-S32` and `LNX-S64`.
 - `ATOM` atomics/fences
 - `SYS` SSR/ACR/traps
 - `ABI` calling convention / varargs (toolchain-facing)
-- `TOOL` impl/toolchain/disasm/asm validation (non-architectural but required for bring-up)
+- `TOOL` toolchain/disasm/asm validation (non-architectural but required for bring-up)
 
 ## Decode and Illegal Encodings (`DEC`)
 
@@ -82,9 +82,9 @@ Unless stated otherwise, tests apply to both `LNX-S32` and `LNX-S64`.
 - Requirement:
   - `llvm-objdump -d` MUST be able to decode and print a mnemonic token for
     every mnemonic enumerated in `spec/isa/spec/current/linxisa-v0.3.json` when fed
-    the generated decode vectors (`impl/compiler/llvm/tests/gen_disasm_vectors.py`).
+    the generated decode vectors (`compiler/linx-llvm/tests/gen_disasm_vectors.py`).
 - Pass criteria:
-  - `python3 impl/compiler/llvm/tests/analyze_coverage.py --fail-under 100` exits 0.
+  - `python3 compiler/linx-llvm/tests/analyze_coverage.py --fail-under 100` exits 0.
 
 ## Block ISA (`BLK`)
 
@@ -379,7 +379,7 @@ Unless stated otherwise, tests apply to both `LNX-S32` and `LNX-S64`.
   - The generated spec decode vectors (`99_spec_decode`) cover all spec
     mnemonics as printed by `llvm-objdump`.
 - Pass criteria:
-  - `python3 impl/compiler/llvm/tests/analyze_coverage.py --fail-under 100` exits 0
+  - `python3 compiler/linx-llvm/tests/analyze_coverage.py --fail-under 100` exits 0
     (auto-detecting the newest `out-linx*` directory).
 
 ## Emulator Observability (`EMU`)

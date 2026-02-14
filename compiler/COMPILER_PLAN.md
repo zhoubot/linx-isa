@@ -8,17 +8,17 @@ Last updated: 2026-02-07
 
 This plan follows the repository bring-up order:
 
-1. Compiler (`impl/compiler/`)
+1. Compiler (`compiler/`)
 2. ISA spec/catalog (`isa/`)
-3. Emulator (`impl/emulator/`, `tests/qemu/`)
-4. RTL (`impl/rtl/`)
-5. Toolchain + libc (`impl/toolchain/`, `tools/glibc/`)
+3. Emulator (`emulator/`, `tests/qemu/`)
+4. RTL (`rtl/`)
+5. Toolchain + libc (`toolchain/`, `tools/glibc/`)
 
 ## Current status snapshot
 
 - Host compiler binary used by tests: `~/llvm-project/build-linxisa-clang/bin/clang`
 - Active backend targets: `linx64-linx-none-elf`, `linx32-linx-none-elf`
-- Compile test suite in-repo: `impl/compiler/llvm/tests/c/01_*.c` through `31_*.c` (31 tests total)
+- Compile test suite in-repo: `compiler/linx-llvm/tests/c/01_*.c` through `31_*.c` (31 tests total)
 - Cross-component regression entrypoint: `tools/regression/run.sh`
 
 ## Phases and progress
@@ -29,7 +29,7 @@ Status: In progress
 
 Done:
 - Spec-driven helpers in `tools/isa/` are present and used by bring-up scripts.
-- Basic compile pipeline used by `impl/compiler/llvm/tests/run.sh` is operational.
+- Basic compile pipeline used by `compiler/linx-llvm/tests/run.sh` is operational.
 
 Remaining:
 - Close remaining backend gaps for full spec-driven instruction coverage.
@@ -84,7 +84,7 @@ Remaining:
 
 ```bash
 # Compile tests
-CLANG=~/llvm-project/build-linxisa-clang/bin/clang ./impl/compiler/llvm/tests/run.sh
+CLANG=~/llvm-project/build-linxisa-clang/bin/clang ./compiler/linx-llvm/tests/run.sh
 
 # QEMU runtime tests
 ./tests/qemu/run_tests.sh --all
@@ -97,7 +97,7 @@ bash tools/regression/run.sh
 
 - Regression: `env CLANG=~/llvm-project/build-linxisa-clang/bin/clang QEMU=~/qemu/build-tci/qemu-system-linx64 bash tools/regression/run.sh` (PASS)
 - Compile tests: 31 compile tests for both `linx64` and `linx32` (PASS)
-- ISA mnemonic coverage (from `impl/compiler/llvm/tests/analyze_coverage.py`):
+- ISA mnemonic coverage (from `compiler/linx-llvm/tests/analyze_coverage.py`):
   - Spec unique mnemonics: 700
   - Covered spec mnemonics: 700
   - Missing spec mnemonics: 0
@@ -105,7 +105,7 @@ bash tools/regression/run.sh
 
 Keeping LLVM aligned:
 
-- Sync spec-driven opcode tables into `~/llvm-project` with `bash impl/toolchain/llvm/sync_generated_opcodes.sh`.
+- Sync spec-driven opcode tables into `~/llvm-project` with `bash toolchain/llvm/sync_generated_opcodes.sh`.
 - Rebuild `llvm-objdump` (and friends) after syncing to keep disassembly coverage accurate.
 
 ## Ownership rule

@@ -6,7 +6,7 @@ to a maturity bar comparable to established ISAs (Arm/x86/RISC-V).
 
 This repository currently runs:
 
-- compiler compile-only tests (`./impl/compiler/llvm/tests/`)
+- compiler compile-only tests (`./compiler/linx-llvm/tests/`)
 - QEMU runtime tests (`./tests/qemu/`)
 - a small benchmark harness (`./workloads/benchmarks/`)
 

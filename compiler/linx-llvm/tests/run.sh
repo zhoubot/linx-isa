@@ -8,13 +8,18 @@ TARGET="${TARGET:-linx64-linx-none-elf}"
 
 CLANG="${CLANG:-}"
 if [[ -z "$CLANG" ]]; then
-  # Default: assume llvm-project is a sibling of the linxisa repo.
-  DEFAULT_CLANG="$ROOT/../../../../../llvm-project/build-linxisa-clang/bin/clang"
+  # Default: prefer the in-workspace LLVM submodule build, then fallback to sibling checkout.
+  DEFAULT_CLANG="$ROOT/../../../llvm/build-linxisa-clang/bin/clang"
   if [[ -x "$DEFAULT_CLANG" ]]; then
     CLANG="$DEFAULT_CLANG"
   else
-    echo "error: set CLANG=/path/to/clang (built with Linx target)" >&2
-    exit 1
+    FALLBACK_CLANG="$ROOT/../../../../../llvm-project/build-linxisa-clang/bin/clang"
+    if [[ -x "$FALLBACK_CLANG" ]]; then
+      CLANG="$FALLBACK_CLANG"
+    else
+      echo "error: set CLANG=/path/to/clang (built with Linx target)" >&2
+      exit 1
+    fi
   fi
 fi
 
@@ -42,7 +47,7 @@ if [[ ! -x "$LLD" ]]; then
 fi
 
 REPO_ROOT="$(cd "$ROOT/../../../../" && pwd)"
-LIBC_DIR="$REPO_ROOT/impl/toolchain/libc"
+LIBC_DIR="$REPO_ROOT/toolchain/libc"
 LIBC_INCLUDE="$LIBC_DIR/include"
 SOFTFP_SRC="$LIBC_DIR/src/softfp/softfp.c"
 SOFTFP_STUBS_SRC="$ROOT/support/softfp_stubs.c"

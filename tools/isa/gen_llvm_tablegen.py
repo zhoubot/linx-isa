@@ -230,7 +230,7 @@ def main() -> int:
     parser.add_argument(
         '--out',
         type=Path,
-        default=Path(__file__).resolve().parents[3] / 'impl/compiler/llvm/LinxISAInstrInfo.td',
+        default=Path(__file__).resolve().parents[3] / 'compiler/linx-llvm/LinxISAInstrInfo.td',
         help='Output TableGen file path'
     )
     

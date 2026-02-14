@@ -34,7 +34,7 @@ tests:
     area: TOOL
     profiles: [LNX-S32, LNX-S64, LNX-PRIV, LNX-ATOM, LNX-FP, LNX-VPAR, LNX-VSEQ]
     requirement: "llvm-objdump recognizes and prints a mnemonic token for every spec mnemonic."
-    pass_fail: "python3 impl/compiler/llvm/tests/analyze_coverage.py --fail-under 100 exits 0."
+    pass_fail: "python3 compiler/linx-llvm/tests/analyze_coverage.py --fail-under 100 exits 0."
 
   - id: AVS-TOOL-010
     area: TOOL

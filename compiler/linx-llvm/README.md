@@ -71,7 +71,7 @@ this model to other macro blocks (e.g. `MCOPY`, `MSET`, exception save/restore t
 
 ## Tests (C → .s/.o/.bin)
 
-The compile tests live in `impl/compiler/llvm/tests` and generate:
+The compile tests live in `compiler/linx-llvm/tests` and generate:
 
 - `.s` (for inspection)
 - `.o` (ELF object)
@@ -81,13 +81,13 @@ The compile tests live in `impl/compiler/llvm/tests` and generate:
 Run (linx64):
 
 ```bash
-CLANG=~/llvm-project/build-linxisa-clang/bin/clang ./impl/compiler/llvm/tests/run.sh
+CLANG=~/llvm-project/build-linxisa-clang/bin/clang ./compiler/linx-llvm/tests/run.sh
 ```
 
 Run (linx32):
 
 ```bash
-CLANG=~/llvm-project/build-linxisa-clang/bin/clang TARGET=linx32-linx-none-elf OUT_DIR=./impl/compiler/llvm/tests/out-linx32 ./impl/compiler/llvm/tests/run.sh
+CLANG=~/llvm-project/build-linxisa-clang/bin/clang TARGET=linx32-linx-none-elf OUT_DIR=./compiler/linx-llvm/tests/out-linx32 ./compiler/linx-llvm/tests/run.sh
 ```
 
 ## Known limitations (current bring-up)

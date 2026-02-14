@@ -9,13 +9,13 @@ current Linx clang/LLVM backend.
 Run:
 
 ```bash
-CLANG=/path/to/clang ./impl/compiler/llvm/tests/run.sh
+CLANG=/path/to/clang ./compiler/linx-llvm/tests/run.sh
 ```
 
 Run (linx32):
 
 ```bash
-CLANG=/path/to/clang TARGET=linx32-linx-none-elf OUT_DIR=./impl/compiler/llvm/tests/out-linx32 ./impl/compiler/llvm/tests/run.sh
+CLANG=/path/to/clang TARGET=linx32-linx-none-elf OUT_DIR=./compiler/linx-llvm/tests/out-linx32 ./compiler/linx-llvm/tests/run.sh
 ```
 
 ## C test programs
@@ -63,13 +63,13 @@ Notes:
 After running the tests, you can summarize which ISA mnemonics show up in the generated `.s`:
 
 ```bash
-python3 ./impl/compiler/llvm/tests/report_isa_coverage.py
+python3 ./compiler/linx-llvm/tests/report_isa_coverage.py
 ```
 
 For detailed coverage analysis:
 
 ```bash
-python3 ./impl/compiler/llvm/tests/analyze_coverage.py --verbose
+python3 ./compiler/linx-llvm/tests/analyze_coverage.py --verbose
 ```
 
 This will show:

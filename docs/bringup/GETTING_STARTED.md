@@ -27,9 +27,10 @@ git submodule update --init --recursive
 
 Submodule map:
 
-- `extern/qemu` -> `LinxISA/qemu`
-- `extern/linux` -> `LinxISA/linux`
-- `extern/pyCircuit` -> `zhoubot/pyCircuit` (temporary until `LinxISA/pyCircuit` transfer is complete)
+- `compiler/llvm` -> `LinxISA/llvm-project`
+- `emulator/qemu` -> `LinxISA/qemu`
+- `kernel/linux` -> `LinxISA/linux`
+- `models/pyCircuit` -> `zhoubot/pyCircuit` (temporary until `LinxISA/pyCircuit` transfer is complete)
 
 If you already cloned `linx-isa` before submodules were added:
 
@@ -51,7 +52,7 @@ If tools are not on default paths, set overrides:
 ```bash
 export CLANG=~/llvm-project/build-linxisa-clang/bin/clang
 export LLD=~/llvm-project/build-linxisa-clang/bin/ld.lld
-export QEMU=~/linx-isa/extern/qemu/build-tci/qemu-system-linx64
+export QEMU=~/linx-isa/emulator/qemu/build-tci/qemu-system-linx64
 bash tools/regression/run.sh
 ```
 
@@ -64,16 +65,16 @@ python3 tools/bringup/check26_contract.py --root .
 ## 4. Daily Contributor Workflow
 
 1. Pick a bring-up area from `docs/bringup/phases/`.
-2. Implement changes in the relevant repo (`linx-isa` or one of the `extern/*` submodules).
+2. Implement changes in the relevant repo (`linx-isa` or one of the domain submodules).
 3. Run local validation (at minimum: changed tests + `check26` gate).
-4. Open PRs in upstream repos first when submodule content changes (`qemu`, `linux`, `pyCircuit`).
+4. Open PRs in upstream repos first when submodule content changes (`llvm-project`, `qemu`, `linux`, `pyCircuit`).
 5. Update submodule pointers in `linx-isa` only after upstream commits are merged.
 
 Update submodule pointers after upstream merge:
 
 ```bash
-git submodule update --remote extern/qemu extern/linux extern/pyCircuit
-git add .gitmodules extern/qemu extern/linux extern/pyCircuit
+git submodule update --remote compiler/llvm emulator/qemu kernel/linux models/pyCircuit
+git add .gitmodules compiler/llvm emulator/qemu kernel/linux models/pyCircuit
 git commit -m "chore(submodules): bump bring-up dependencies"
 ```
 
@@ -82,9 +83,9 @@ git commit -m "chore(submodules): bump bring-up dependencies"
 When `LinxISA/pyCircuit` is published, switch URL in your local clone:
 
 ```bash
-git submodule set-url extern/pyCircuit git@github.com:LinxISA/pyCircuit.git
+git submodule set-url models/pyCircuit git@github.com:LinxISA/pyCircuit.git
 git submodule sync --recursive
-git submodule update --init extern/pyCircuit
+git submodule update --init models/pyCircuit
 ```
 
 Then commit the `.gitmodules` URL update in `linx-isa`.
@@ -93,4 +94,4 @@ Then commit the `.gitmodules` URL update in `linx-isa`.
 
 - Bring-up status and completion criteria: `docs/bringup/PROGRESS.md`
 - Contract and architecture checkpoints: `docs/bringup/CHECK26_CONTRACT.md`
-- Path and compatibility migration notes: `docs/migration/path-map-v0.3.0.md`
+- Path migration notes: `docs/migration/path-map-v0.3.1.md`

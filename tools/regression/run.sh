@@ -14,9 +14,16 @@ python3 "$ROOT/tools/bringup/check26_contract.py" --root "$ROOT"
 
 LEGACY_SCAN_ARGS=()
 if [[ "${ENABLE_CROSS_REPO_SCAN:-0}" == "1" ]]; then
-  LINUX_ROOT="${LINUX_ROOT:-$HOME/linux}"
-  QEMU_ROOT_CHECK="${QEMU_ROOT_CHECK:-$HOME/qemu}"
-  LLVM_ROOT="${LLVM_ROOT:-$HOME/llvm-project}"
+  DEFAULT_LINUX_ROOT="$ROOT/kernel/linux"
+  [[ -d "$DEFAULT_LINUX_ROOT" ]] || DEFAULT_LINUX_ROOT="$HOME/linux"
+  DEFAULT_QEMU_ROOT="$ROOT/emulator/qemu"
+  [[ -d "$DEFAULT_QEMU_ROOT" ]] || DEFAULT_QEMU_ROOT="$HOME/qemu"
+  DEFAULT_LLVM_ROOT="$ROOT/compiler/llvm"
+  [[ -d "$DEFAULT_LLVM_ROOT" ]] || DEFAULT_LLVM_ROOT="$HOME/llvm-project"
+
+  LINUX_ROOT="${LINUX_ROOT:-$DEFAULT_LINUX_ROOT}"
+  QEMU_ROOT_CHECK="${QEMU_ROOT_CHECK:-$DEFAULT_QEMU_ROOT}"
+  LLVM_ROOT="${LLVM_ROOT:-$DEFAULT_LLVM_ROOT}"
   [[ -d "$LINUX_ROOT" ]] && LEGACY_SCAN_ARGS+=(--extra-root "$LINUX_ROOT")
   [[ -d "$QEMU_ROOT_CHECK" ]] && LEGACY_SCAN_ARGS+=(--extra-root "$QEMU_ROOT_CHECK")
   [[ -d "$LLVM_ROOT" ]] && LEGACY_SCAN_ARGS+=(--extra-root "$LLVM_ROOT")
@@ -40,9 +47,14 @@ LLD="${LLD:-}"
 QEMU="${QEMU:-}"
 
 if [[ -z "$CLANG" ]]; then
-  CAND="$HOME/llvm-project/build-linxisa-clang/bin/clang"
+  CAND="$ROOT/compiler/llvm/build-linxisa-clang/bin/clang"
   if [[ -x "$CAND" ]]; then
     CLANG="$CAND"
+  else
+    CAND="$HOME/llvm-project/build-linxisa-clang/bin/clang"
+    if [[ -x "$CAND" ]]; then
+      CLANG="$CAND"
+    fi
   fi
 fi
 if [[ -z "$LLD" && -n "$CLANG" ]]; then
@@ -52,13 +64,23 @@ if [[ -z "$LLD" && -n "$CLANG" ]]; then
   fi
 fi
 if [[ -z "$QEMU" ]]; then
-  CAND="$HOME/qemu/build-tci/qemu-system-linx64"
+  CAND="$ROOT/emulator/qemu/build-tci/qemu-system-linx64"
   if [[ -x "$CAND" ]]; then
     QEMU="$CAND"
   else
-    CAND="$HOME/qemu/build/qemu-system-linx64"
+    CAND="$ROOT/emulator/qemu/build/qemu-system-linx64"
     if [[ -x "$CAND" ]]; then
       QEMU="$CAND"
+    else
+      CAND="$HOME/qemu/build-tci/qemu-system-linx64"
+      if [[ -x "$CAND" ]]; then
+        QEMU="$CAND"
+      else
+        CAND="$HOME/qemu/build/qemu-system-linx64"
+        if [[ -x "$CAND" ]]; then
+          QEMU="$CAND"
+        fi
+      fi
     fi
   fi
 fi
@@ -78,19 +100,19 @@ fi
 
 echo
 echo "-- Compiler compile-only tests (linx64)"
-(cd "$ROOT/impl/compiler/llvm/tests" && CLANG="$CLANG" TARGET="linx64-linx-none-elf" OUT_DIR="$ROOT/impl/compiler/llvm/tests/out-linx64" ./run.sh)
+(cd "$ROOT/compiler/linx-llvm/tests" && CLANG="$CLANG" TARGET="linx64-linx-none-elf" OUT_DIR="$ROOT/compiler/linx-llvm/tests/out-linx64" ./run.sh)
 
 echo
 echo "-- Compiler coverage report (linx64)"
-python3 "$ROOT/impl/compiler/llvm/tests/analyze_coverage.py" --out-dir "$ROOT/impl/compiler/llvm/tests/out-linx64" --fail-under "${COVERAGE_FAIL_UNDER:-100}"
+python3 "$ROOT/compiler/linx-llvm/tests/analyze_coverage.py" --out-dir "$ROOT/compiler/linx-llvm/tests/out-linx64" --fail-under "${COVERAGE_FAIL_UNDER:-100}"
 
 echo
 echo "-- Compiler compile-only tests (linx32)"
-(cd "$ROOT/impl/compiler/llvm/tests" && CLANG="$CLANG" TARGET="linx32-linx-none-elf" OUT_DIR="$ROOT/impl/compiler/llvm/tests/out-linx32" ./run.sh)
+(cd "$ROOT/compiler/linx-llvm/tests" && CLANG="$CLANG" TARGET="linx32-linx-none-elf" OUT_DIR="$ROOT/compiler/linx-llvm/tests/out-linx32" ./run.sh)
 
 echo
 echo "-- Compiler coverage report (linx32)"
-python3 "$ROOT/impl/compiler/llvm/tests/analyze_coverage.py" --out-dir "$ROOT/impl/compiler/llvm/tests/out-linx32" --fail-under "${COVERAGE_FAIL_UNDER:-100}"
+python3 "$ROOT/compiler/linx-llvm/tests/analyze_coverage.py" --out-dir "$ROOT/compiler/linx-llvm/tests/out-linx32" --fail-under "${COVERAGE_FAIL_UNDER:-100}"
 
 echo
 echo "-- QEMU strict system gate (ACR/IRQ/exception coverage + noise check)"
