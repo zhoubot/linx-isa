@@ -45,11 +45,54 @@ Rules:
 `TLOAD` and `TSTORE` are template-style tile memory operations. The staged architectural model is:
 
 * Address footprint is 2D and derived from descriptor state:
-  - dimensions from `LB0/LB1` (`B.DIM`)
-  - layout format from `B.ARG` (both compact `format` and named v0.3 forms such as `ND2ZN.normal`, `DN2NZ.normal`,
-    `NZ2DN.canon`, `NORM.normal`)
+  - dimensions from `LB0/LB1/LB2` (`B.DIM` / `C.B.DIM*`)
+  - layout-conversion selector and pad policy from `B.ARG`
   - GPR bindings from one-or-more `B.IOR` descriptors
   - tile IO bindings and transfer size from one-or-more `B.IOT/B.IOTI`
+  - element data type from `BSTART.TMA`
+
+Layout and dimension contract (strict v0.3 current profile for TMA):
+
+* The four architectural tile linearization forms are:
+  - `ND` (row-major),
+  - `DN` (column-major),
+  - `NZ` (inner-block row-major + inter-block column-major),
+  - `ZN` (inner-block column-major + inter-block row-major).
+* `B.ARG` encodes one unified format selector for the current TMA tile-memory operation.
+* The only legal format selectors are:
+  - `NORM.normal` (source and destination layout are the same),
+  - `ND2NZ.normal`,
+  - `ND2ZN.normal`,
+  - `DN2NZ.normal`,
+  - `DN2ZN.normal`.
+* For both `TLOAD` and `TSTORE`, `NZ`/`ZN` always denotes the TR-side layout; GM-side layout is `ND` or `DN`.
+* `LB0/LB1/LB2` are interpreted for TLOAD/TSTORE as:
+  - `LB0`: GM-side inner element count
+  - `LB1`: GM-side outer element count
+  - `LB2`: TR-side inner element count
+* TR-side outer element count is derived as:
+  - `TR_outer = TileElements / LB2`
+  - `TileElements = TileBytes / element_size`, where `TileBytes` comes from the active `B.IOTI`/size descriptor.
+* When GM-side and TR-side logical matrix sizes differ, TR-side size MUST be greater than or equal to GM-side size.
+* `NZ`/`ZN` are TR-side-only layouts in the strict profile:
+  - GM-side source/destination layout in TLOAD/TSTORE MUST be `ND` or `DN`.
+* For `NZ`/`ZN` TR-side tiles, the following constraints are required:
+  - `TR_inner * element_size` MUST be a multiple of `32B`.
+  - `TR_outer` MUST be a multiple of `16`.
+* For `ND`/`DN`, implementations SHOULD optimize common power-of-two dimension values (for example: `64/128/256`);
+  software tests SHOULD cover those values preferentially while retaining a small number of non-power-of-two cases.
+
+Padding contract (TLOAD):
+
+* If TR-side logical size is larger than GM-side logical size, elements outside the GM-side footprint are synthesized in
+  TR according to the pad policy encoded in `B.ARG`.
+* Required pad policies are:
+  - `Null`: implementation-defined non-deterministic fill (bring-up model may use deterministic pseudo-random fill),
+  - `Zero`: fill with numeric zero,
+  - `Max`: fill with the maximum representable value of the selected element type,
+  - `Min`: fill with the minimum representable value of the selected element type.
+* TSTORE does not synthesize padding data; values are read from TR and written to GM according to the selected
+  source/destination layouts and the effective GM footprint.
 
 Bring-up (auto-mode) binding convention for `B.IOR` in `TLOAD/TSTORE`:
 
@@ -67,6 +110,7 @@ Bring-up (auto-mode) binding convention for `B.IOR` in `TLOAD/TSTORE`:
 Canonical strict-v0.3 profile constraints:
 
 * `B.ARG + B.IOR` are mandatory in descriptor-rich `TLOAD/TSTORE` headers.
+* TMA execution state is not sourced from `B.ATTR`; `TLOAD/TSTORE` consume only `BSTART/B.ARG/B.DIM/B.IOR/B.IOT`.
 * Repeated `B.IOR` and repeated `B.IOT/B.IOTI` are legal and are consumed in header order.
 * For bring-up code size, emit `C.B.DIMI` for `LB0/LB1/LB2` when the value fits in `imm8` (and `RegSrc=zero`).
 * Unresolved raw contracts (`group=2`, broad fixed-pipe/TCVT metadata flows) are explicitly deferred from canonical behavior.

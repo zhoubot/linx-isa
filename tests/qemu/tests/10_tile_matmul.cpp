@@ -19,6 +19,8 @@ extern "C" void pto_flash_attention_auto_i32(const int *query, const int *key, c
 
 static constexpr unsigned kTileElemsI32 = pto::linx::auto_mode::kTileElemsI32;
 static constexpr unsigned kTileSizeCode = pto::linx::auto_mode::kFullTileSizeCode;
+static constexpr unsigned kFmtNorm = 0;
+static constexpr unsigned kFmtND2NZ = 1;
 
 static void tile_matmul_ref_i32_8x8(int32_t out[64], const int32_t a[64], const int32_t b[64])
 {
@@ -429,6 +431,105 @@ static void run_pto_example_kernel_tests()
     test_pass();
 }
 
+static void run_tma_layout_and_padding_tests()
+{
+    test_start(0x000A000E);
+    uart_puts("PTO TMA desc NORM (32x32) ... ");
+
+    alignas(16) static int32_t ND_DN_SRC[1024];
+    alignas(16) static int32_t ND_DN_DST[1024];
+    for (unsigned i = 0; i < 1024; i++) {
+        ND_DN_SRC[i] = (int32_t)((int)i * 11 - 123);
+        ND_DN_DST[i] = 0;
+    }
+
+    auto t_nd2dn = pto::linx::tload<kTileSizeCode, kFmtNorm, 32, 32, 32>(ND_DN_SRC);
+    pto::linx::tstore<kTileSizeCode, kFmtNorm, 32, 32, 32>(ND_DN_DST, t_nd2dn);
+
+    for (unsigned i = 0; i < 1024; i++) {
+        TEST_EQ32((uint32_t)ND_DN_DST[i], (uint32_t)ND_DN_SRC[i], 0x000AE000u + i);
+    }
+    test_pass();
+
+    test_start(0x000A000F);
+    uart_puts("PTO TMA desc ND<->NZ (8x8 in 64x16 TR) ... ");
+
+    alignas(16) static int32_t ND_NZ_SRC[1024];
+    alignas(16) static int32_t ND_NZ_DST[1024];
+    for (unsigned i = 0; i < 1024; i++) {
+        ND_NZ_SRC[i] = 0;
+        ND_NZ_DST[i] = 0;
+        if (i < 64) {
+            ND_NZ_SRC[i] = (int32_t)((int)i * 7 - 37);
+        }
+    }
+
+    auto t_nd2nz = pto::linx::tload<kTileSizeCode, kFmtND2NZ, 8, 8, 64>(ND_NZ_SRC);
+    pto::linx::tstore<kTileSizeCode, kFmtND2NZ, 8, 8, 64>(ND_NZ_DST, t_nd2nz);
+
+    for (unsigned i = 0; i < 64; i++) {
+        TEST_EQ32((uint32_t)ND_NZ_DST[i], (uint32_t)ND_NZ_SRC[i], 0x000AF000u + i);
+    }
+    test_pass();
+
+    test_start(0x000A0010);
+    uart_puts("PTO TLOAD padding visibility (Null mode) ... ");
+
+    alignas(16) static int32_t PAD_SRC[1024];
+    alignas(16) static int32_t PAD_DUMP[1024];
+    for (unsigned i = 0; i < 1024; i++) {
+        PAD_SRC[i] = 0;
+        PAD_DUMP[i] = (int32_t)0x5a5a5a5a;
+        if (i < 64) {
+            PAD_SRC[i] = (int32_t)((int)i - 9);
+        }
+    }
+
+    auto t_pad = pto::linx::tload<kTileSizeCode, kFmtND2NZ, 8, 8, 64>(PAD_SRC);
+    pto::linx::tstore<kTileSizeCode, kFmtND2NZ, 64, 16, 64>(PAD_DUMP, t_pad);
+
+    for (unsigned row = 0; row < 8; row++) {
+        for (unsigned col = 0; col < 8; col++) {
+            const unsigned idx = row * 64u + col;
+            TEST_EQ32((uint32_t)PAD_DUMP[idx], (uint32_t)PAD_SRC[row * 8u + col],
+                      0x000A10000u + idx);
+        }
+    }
+
+    bool saw_non_sentinel = false;
+    const unsigned pad_samples[4] = {
+        8u * 64u + 0u, 8u * 64u + 9u, 9u * 64u + 13u, 15u * 64u + 63u
+    };
+    for (unsigned i = 0; i < 4; i++) {
+        const uint32_t v = (uint32_t)PAD_DUMP[pad_samples[i]];
+        if (v != 0x5a5a5a5au) {
+            saw_non_sentinel = true;
+        }
+    }
+    TEST_ASSERT(saw_non_sentinel, 0x000A10100u, 1, (uint64_t)PAD_DUMP[8u * 64u]);
+    test_pass();
+
+    test_start(0x000A0011);
+    uart_puts("PTO TMA desc NORM (non-pow2 30x17) ... ");
+
+    alignas(16) static int32_t NP2_SRC[1024];
+    alignas(16) static int32_t NP2_DST[1024];
+    for (unsigned i = 0; i < 1024; i++) {
+        NP2_SRC[i] = 0;
+        NP2_DST[i] = 0;
+        if (i < 30u * 17u) {
+            NP2_SRC[i] = (int32_t)((int)i * 5 + 3);
+        }
+    }
+
+    auto t_np2 = pto::linx::tload<kTileSizeCode, kFmtNorm, 30, 17, 32>(NP2_SRC);
+    pto::linx::tstore<kTileSizeCode, kFmtNorm, 30, 17, 32>(NP2_DST, t_np2);
+    for (unsigned i = 0; i < 30u * 17u; i++) {
+        TEST_EQ32((uint32_t)NP2_DST[i], (uint32_t)NP2_SRC[i], 0x000A11000u + i);
+    }
+    test_pass();
+}
+
 static void run_tso_store_store_order_smoke()
 {
     /*
@@ -480,5 +581,6 @@ extern "C" void run_tile_tests(void)
     run_auto_mode_gemm_test();
     run_auto_mode_flash_test();
     run_pto_example_kernel_tests();
+    run_tma_layout_and_padding_tests();
     run_tso_store_store_order_smoke();
 }
