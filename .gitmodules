@@ -4,6 +4,7 @@
 [submodule "kernel/linux"]
 	path = kernel/linux
 	url = git@github.com:LinxISA/linux.git
+	ignore = dirty
 [submodule "emulator/qemu"]
 	path = emulator/qemu
 	url = git@github.com:LinxISA/qemu.git
