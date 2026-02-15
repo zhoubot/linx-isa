@@ -24,6 +24,7 @@ Last updated: 2026-02-16
 | Strict system gate | ✅ | `./avs/qemu/check_system_strict.sh` |
 | Main regression | ✅ | `bash tools/regression/run.sh` |
 | Linux initramfs smoke/full | ✅ | `python3 /Users/zhoubot/linux/tools/linxisa/initramfs/smoke.py`; `python3 /Users/zhoubot/linux/tools/linxisa/initramfs/full_boot.py` |
+| glibc `G1a` | ✅ (`configure` + `csu/subdir_lib`) | `bash /Users/zhoubot/linx-isa/lib/glibc/tools/linx/build_linx64_glibc.sh` |
 | musl `M1` | ✅ | `MODE=phase-b /Users/zhoubot/linx-isa/lib/musl/tools/linx/build_linx64_musl.sh` |
 | musl `M2` | ✅ (phase-b strict) | `out/libc/musl/logs/phase-b-summary.txt` |
 | musl `M3` | ✅ (phase-b strict) | `out/libc/musl/logs/phase-b-summary.txt`; `out/libc/musl/logs/phase-b-m3-shared.log` |
@@ -34,8 +35,10 @@ Last updated: 2026-02-16
 
 - `MODE=phase-b /Users/zhoubot/linx-isa/lib/musl/tools/linx/build_linx64_musl.sh` ✅ (`M1/M2/M3` pass)
 - `python3 /Users/zhoubot/linx-isa/avs/qemu/run_musl_smoke.py --mode phase-b` ✅ (`runtime_pass`)
+- `bash /Users/zhoubot/linx-isa/lib/glibc/tools/linx/build_linx64_glibc.sh` ✅ (`G1a`: configure + `csu/subdir_lib` + `crt1.o`)
 - `python3 /Users/zhoubot/linux/tools/linxisa/initramfs/smoke.py` ✅
 - `python3 /Users/zhoubot/linux/tools/linxisa/initramfs/full_boot.py` ✅
+- `bash /Users/zhoubot/linx-isa/tools/regression/strict_cross_repo.sh` ✅
 
 ## Canonical Gate Table
 

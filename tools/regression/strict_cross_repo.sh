@@ -75,6 +75,18 @@ echo
 echo "-- musl runtime smoke (phase-b)"
 python3 "$ROOT/avs/qemu/run_musl_smoke.py" --mode "${MUSL_MODE:-phase-b}" --qemu "$QEMU"
 
+RUN_GLIBC_G1="${RUN_GLIBC_G1:-1}"
+GLIBC_G1_SCRIPT="${GLIBC_G1_SCRIPT:-$ROOT/lib/glibc/tools/linx/build_linx64_glibc.sh}"
+if [[ "$RUN_GLIBC_G1" == "1" ]]; then
+  if [[ ! -x "$GLIBC_G1_SCRIPT" ]]; then
+    echo "error: glibc G1 script not found: $GLIBC_G1_SCRIPT" >&2
+    exit 1
+  fi
+  echo
+  echo "-- glibc G1 build gate"
+  bash "$GLIBC_G1_SCRIPT"
+fi
+
 GLIBC_SUMMARY="${GLIBC_SUMMARY:-$ROOT/out/libc/glibc/logs/summary.txt}"
 if [[ ! -f "$GLIBC_SUMMARY" ]]; then
   echo "error: glibc G1 summary not found: $GLIBC_SUMMARY" >&2

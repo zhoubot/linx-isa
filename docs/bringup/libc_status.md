@@ -7,8 +7,8 @@ Canonical libc sources:
 
 ## Repositories and pins
 
-- `lib/glibc` @ `b87a5e30608a7e00aadef9eee035a32ee0611dbf`
-- `lib/musl` @ `98326e72750f9a48eff469f70fcd7e2cf947ef40`
+- `lib/glibc` @ `3cb936060f896ef88f888682a3159a73db1fe411`
+- `lib/musl` @ `b761931e63b6cd6fdbbc7269d07ccd9e4fec20b2`
 
 ## Current policy
 
@@ -17,7 +17,11 @@ Canonical libc sources:
 
 ## Latest verified state (2026-02-16)
 
-- glibc `G1`: blocked (`working alias attribute support required` in current Linx clang flow).
+- glibc `G1`: partial pass.
+  - `configure` pass with `lib/glibc/tools/linx/build_linx64_glibc.sh`.
+  - `csu/subdir_lib` pass and `out/libc/glibc/build/csu/crt1.o` produced.
+  - alias-attribute blocker is resolved in the scripted flow (no `working alias attribute support required`).
+  - remaining gap: full shared `libc.so` gate is not yet proven in this script's default target set.
 - musl `M1`: pass (`configure` accepts `linx64-unknown-linux-musl`).
 - musl `M2`: pass in `phase-b` (strict, no temporary excludes).
 - musl `M3`: pass in `phase-b` (shared `lib/libc.so` builds successfully).
