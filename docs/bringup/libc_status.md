@@ -1,6 +1,6 @@
 # Linx libc Bring-up Status
 
-The canonical libc sources are the forked submodules:
+Canonical libc sources:
 
 - `lib/glibc`
 - `lib/musl`
@@ -12,12 +12,24 @@ The canonical libc sources are the forked submodules:
 
 ## Current policy
 
-- Bring-up changes are maintained in the respective fork history (`LinxISA/glibc`, `LinxISA/musl`).
-- This workspace only pins submodule SHAs and documents status.
-- Any helper scripts belong in the fork repos, not under `tools/`.
+- Bring-up deltas live in fork history (`LinxISA/glibc`, `LinxISA/musl`).
+- This repository provides orchestration, runtime smoke, and status tracking.
 
-## Latest observed blockers (2026-02-15)
+## Latest verified state (2026-02-15)
 
-- glibc `G1`: configure fails with `working alias attribute support required` for current Linx clang backend.
-- musl `M1`: pass.
-- musl `M2`: blocked by Linx clang backend crashes (latest in `src/misc/nftw.c` after locale workarounds).
+- glibc `G1`: blocked (`working alias attribute support required` in current Linx clang flow).
+- musl `M1`: pass (`configure` accepts `linx64-unknown-linux-musl`).
+- musl `M2`: pass in `phase-b` (strict, no temporary excludes).
+- musl `M3`: attempted; blocked by shared-link PIC relocations (`R_LINX_32`, `R_LINX_HL_PCR29_*`).
+  - `-z notext` diagnostic probe additionally shows unresolved runtime symbols (`__add*`, `__sub*`, `__mul*`, `__div*`, `setjmp/longjmp`, `__syscall_cp_*`).
+  - blocker report: `out/libc/musl/logs/phase-b-m3-blockers.md`
+- musl sample compile/link `R1`: pass via `avs/qemu/run_musl_smoke.py`.
+- musl runtime `R2`: pass (`MUSL_SMOKE_START` and `MUSL_SMOKE_PASS` observed).
+
+## Baseline artifacts
+
+- snapshot + dirty state:
+  - `out/libc/musl/logs/baseline.md`
+- baseline Linux boot failure logs:
+  - `out/libc/musl/logs/linux-initramfs-smoke.latest.err`
+  - `out/libc/musl/logs/linux-initramfs-full.latest.err`

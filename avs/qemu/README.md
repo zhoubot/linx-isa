@@ -89,6 +89,21 @@ Custom output directory:
 
 - `out/linx-qemu-tests.o`: single `ET_REL` object built with `ld.lld -r` and passed to QEMU as `-kernel`.
 
+## Linux musl smoke
+
+For Linux initramfs + musl runtime smoke (malloc/free/printf), use:
+
+```bash
+python3 /Users/zhoubot/linx-isa/avs/qemu/run_musl_smoke.py --mode phase-b
+```
+
+`run_musl_smoke.py` links the sample at a high userspace image base by default
+(`--image-base 0x40000000`) to avoid low-VA overlap with the current kernel mapping.
+
+Artifacts are written under:
+
+- `/Users/zhoubot/linx-isa/avs/qemu/out/musl-smoke/`
+
 ## Memory map (Linx virt machine)
 
 | Address | Purpose |

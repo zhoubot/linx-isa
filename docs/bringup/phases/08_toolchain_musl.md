@@ -6,41 +6,80 @@ Canonical source repository:
 
 ## Objective
 
-Bootstrap musl support for `linx64-unknown-linux-musl` with incremental compile gates in the forked musl repository.
+Bring up a reproducible Linx musl path for:
 
-## Role in the bring-up sequence
+- `linx64-unknown-linux-musl` (`M1/M2/M3`)
+- Linux initramfs runtime smoke with a real C program using `malloc/free/printf` (`R1/R2`)
 
-- Musl provides a second libc path for toolchain validation and static userspace experiments.
-- This is a bring-up/diagnostic track and does not replace glibc for Linux userspace parity.
+## Entry points
 
-## Workflow
+- musl build entrypoint:
+  - `lib/musl/tools/linx/build_linx64_musl.sh`
+- runtime harness:
+  - `avs/qemu/run_musl_smoke.py`
+- runtime sample program:
+  - `avs/qemu/tests/linux_musl_malloc_printf.c`
 
-From repo root:
+## Default artifact layout
+
+- musl build/install/logs:
+  - `out/libc/musl/build`
+  - `out/libc/musl/install`
+  - `out/libc/musl/logs`
+- smoke outputs:
+  - `avs/qemu/out/musl-smoke/initramfs.cpio`
+  - `avs/qemu/out/musl-smoke/musl_smoke`
+  - `avs/qemu/out/musl-smoke/qemu.log`
+  - `avs/qemu/out/musl-smoke/summary.json`
+
+## Modes
+
+- `phase-a`:
+  - allows temporary TU exclusions in `arch/linx64/arch.mak`
+  - records active excludes and crash signature in `out/libc/musl/logs/phase-a-exclusions.md`
+- `phase-b`:
+  - strict mode (`LINX_MUSL_MODE=phase-b`)
+  - no temporary excludes allowed
+
+## Commands
+
+Build musl (`M1/M2/M3`):
 
 ```bash
-cd lib/musl
-# run fork-maintained musl bring-up scripts/workflow
+cd /Users/zhoubot/linx-isa/lib/musl
+MODE=phase-b ./tools/linx/build_linx64_musl.sh
 ```
 
-Artifacts and logs:
+Run end-to-end smoke (`R1/R2`):
 
-- Artifacts/log locations are defined by the fork workflow.
-- Gate artifact should include static libc archive (`libc.a`).
+```bash
+cd /Users/zhoubot/linx-isa
+python3 avs/qemu/run_musl_smoke.py --mode phase-b
+```
 
-## Current gates
+## Current status (2026-02-15)
 
-- `M1`: `configure` accepts `linx64-unknown-linux-musl`.
-- `M2`: static libc archive `lib/libc.a` builds.
-- `M3`: shared libc build is attempted and reported as pass/blocker.
+- `M1`: pass.
+- `M2`: pass in `phase-b` (strict, no temporary excludes).
+- `M3`: attempted; currently blocked by shared-link PIC relocation policy.
+  - primary blocker: `R_LINX_32` / `R_LINX_HL_PCR29_{LOAD,STORE}` in shared link.
+  - secondary `-z notext` probe reveals unresolved runtime symbols (`__add*`, `__sub*`, `__mul*`, `__div*`, `setjmp/longjmp`, `__syscall_cp_*`).
+  - blocker report: `out/libc/musl/logs/phase-b-m3-blockers.md`
+- `R1`: pass (sample compiles/links statically with musl sysroot + local builtins fallback objects).
+- `R2`: pass (`MUSL_SMOKE_START` and `MUSL_SMOKE_PASS` observed in `avs/qemu/out/musl-smoke/qemu.log`).
 
-`M3` is non-fatal for now. A blocker is recorded in `out/libc/musl/logs/summary.txt`.
+## Baseline repro pointers
 
-Current Linx backend note:
-
-- `arch/linx64/arch.mak` includes temporary exclusions for `catopen`/`dcngettext` objects because of backend crashes while bringing up `M2`.
+- baseline freeze:
+  - `out/libc/musl/logs/baseline.md`
+- latest Linux userspace boot failures:
+  - `out/libc/musl/logs/linux-initramfs-smoke.latest.err`
+  - `out/libc/musl/logs/linux-initramfs-full.latest.err`
 
 ## Exit criteria
 
-- `M1` and `M2` pass reliably.
-- `M3` is either passing or has an explicit, bounded blocker with owner/action.
-- Status remains tracked in `docs/bringup/libc_status.md`.
+- `M1/M2` pass in strict mode (`phase-b`) with no temporary excludes.
+- `M3` either passes or has bounded blocker with owner + repro.
+- runtime sentinels are observed under QEMU:
+  - `MUSL_SMOKE_START`
+  - `MUSL_SMOKE_PASS`

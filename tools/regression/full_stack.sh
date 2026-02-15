@@ -65,6 +65,13 @@ else
   echo "note: skipping Linux boot scripts (LINUX_ROOT missing: $LINUX_ROOT)"
 fi
 
+if [[ "${RUN_MUSL_SMOKE:-0}" == "1" ]]; then
+  echo
+  echo "-- Linx musl malloc/printf runtime smoke"
+  RUN_MUSL_SMOKE_MODE="${RUN_MUSL_SMOKE_MODE:-phase-b}"
+  python3 "$ROOT/avs/qemu/run_musl_smoke.py" --mode "$RUN_MUSL_SMOKE_MODE"
+fi
+
 PYC_ROOT="${PYC_ROOT:-$ROOT/tools/pyCircuit}"
 if [[ -d "$PYC_ROOT" ]]; then
   echo
