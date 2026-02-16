@@ -15,17 +15,45 @@ from typing import Any
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parents[1]
 
+SAMPLES: dict[str, dict[str, str]] = {
+    "malloc_printf": {
+        "src": "linux_musl_malloc_printf.c",
+        "start": "MUSL_SMOKE_START",
+        "pass": "MUSL_SMOKE_PASS",
+    },
+    "callret": {
+        "src": "linux_musl_callret_matrix.c",
+        "start": "MUSL_CALLRET_START",
+        "pass": "MUSL_CALLRET_PASS",
+    },
+}
+
 
 def _default_clang() -> Path:
-    return Path("/Users/zhoubot/llvm-project/build-linxisa-clang/bin/clang")
+    cands = [
+        Path("/Users/zhoubot/llvm-project/build-linxisa-clang/bin/clang"),
+        REPO_ROOT / "compiler" / "llvm" / "build-linxisa-clang" / "bin" / "clang",
+    ]
+    for p in cands:
+        if p.exists():
+            return p
+    return cands[0]
 
 
 def _default_lld() -> Path:
-    return Path("/Users/zhoubot/llvm-project/build-linxisa-clang/bin/ld.lld")
+    cands = [
+        Path("/Users/zhoubot/llvm-project/build-linxisa-clang/bin/ld.lld"),
+        REPO_ROOT / "compiler" / "llvm" / "build-linxisa-clang" / "bin" / "ld.lld",
+    ]
+    for p in cands:
+        if p.exists():
+            return p
+    return cands[0]
 
 
 def _default_qemu() -> Path:
     cands = [
+        REPO_ROOT / "emulator" / "qemu" / "build" / "qemu-system-linx64",
         Path("/Users/zhoubot/qemu/build/qemu-system-linx64"),
         Path("/Users/zhoubot/qemu/build-tci/qemu-system-linx64"),
     ]
@@ -102,6 +130,19 @@ def main(argv: list[str]) -> int:
     parser.add_argument("--target", default="linx64-unknown-linux-musl")
     parser.add_argument("--image-base", default="0x40000000")
     parser.add_argument("--mode", choices=["phase-a", "phase-b"], default="phase-b")
+    parser.add_argument("--link", choices=["static", "shared", "both"], default="both")
+    parser.add_argument(
+        "--callret-crossstack",
+        choices=["off", "check", "strict"],
+        default="strict",
+        help="Cross-stack Linux call/ret audit mode for --sample callret.",
+    )
+    parser.add_argument(
+        "--sample",
+        action="append",
+        choices=[*SAMPLES.keys(), "all"],
+        help="Runtime sample(s) to run (default: malloc_printf). Repeatable.",
+    )
     parser.add_argument("--timeout", type=int, default=90)
     parser.add_argument(
         "--out-dir",
@@ -112,7 +153,7 @@ def main(argv: list[str]) -> int:
     linux_root = Path(os.path.expanduser(args.linux_root)).resolve()
     musl_root = Path(os.path.expanduser(args.musl_root)).resolve()
     clang = Path(os.path.expanduser(args.clang)).resolve()
-    lld = Path(os.path.expanduser(args.lld)).resolve()
+    lld = Path(os.path.expanduser(args.lld)).absolute()
     qemu = Path(os.path.expanduser(args.qemu)).resolve()
     out_dir = Path(os.path.expanduser(args.out_dir)).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -128,10 +169,18 @@ def main(argv: list[str]) -> int:
             "qemu": str(qemu),
             "out_dir": str(out_dir),
             "image_base": args.image_base,
+            "link": args.link,
         },
         "stages": [],
         "result": {"ok": False, "classification": "not_run"},
     }
+    if not args.sample:
+        selected_samples = ["malloc_printf"]
+    elif "all" in args.sample:
+        selected_samples = list(SAMPLES.keys())
+    else:
+        selected_samples = list(dict.fromkeys(args.sample))
+    summary["samples"] = selected_samples
     summary_path = out_dir / "summary.json"
 
     def add_stage(name: str, status: str, detail: str, log: str | None = None) -> None:
@@ -192,78 +241,191 @@ def main(argv: list[str]) -> int:
 
     sysroot = REPO_ROOT / "out" / "libc" / "musl" / "install" / args.mode
     runtime_lib = REPO_ROOT / "out" / "libc" / "musl" / "runtime" / args.mode / "liblinx_builtin_rt.a"
-    sample_src = SCRIPT_DIR / "tests" / "linux_musl_malloc_printf.c"
-    sample_bin = out_dir / "musl_smoke"
-    compile_log = out_dir / "compile.log"
-
-    sample_obj = out_dir / "linux_musl_malloc_printf.o"
-
-    compile_sample_cmd = [
-        str(clang),
-        "-target",
-        args.target,
-        "--sysroot",
-        str(sysroot),
-        "-c",
-        str(sample_src),
-        "-o",
-        str(sample_obj),
-    ]
-    link_cmd = [
-        str(clang),
-        "-target",
-        args.target,
-        "--sysroot",
-        str(sysroot),
-        "-static",
-        "-fuse-ld=lld",
-        "-nostdlib",
-        str(sysroot / "lib" / "crt1.o"),
-        str(sysroot / "lib" / "crti.o"),
-        str(sample_obj),
-        str(runtime_lib),
-        str(sysroot / "lib" / "libc.a"),
-        str(sysroot / "lib" / "crtn.o"),
-        f"-Wl,--image-base={args.image_base}",
-        "-o",
-        str(sample_bin),
-    ]
     env_compile = os.environ.copy()
     env_compile["PATH"] = f"{lld.parent}:{env_compile.get('PATH', '')}"
+    kernel = _find_kernel(linux_root)
+    gen_init_cpio = _find_gen_init_cpio(linux_root, out_dir)
+
+    if args.link == "both":
+        link_modes = ["static", "shared"]
+    else:
+        link_modes = [args.link]
+    summary["link_modes"] = link_modes
+
+    if "callret" in selected_samples and args.callret_crossstack != "off":
+        audit_script = REPO_ROOT / "tools" / "ci" / "check_linx_callret_crossstack.sh"
+        if not audit_script.exists():
+            add_stage("callret-crossstack", "fail", f"missing audit script: {audit_script}")
+            summary["result"] = {"ok": False, "classification": "callret_crossstack_script_missing"}
+            _write_summary(summary_path, summary)
+            return 2
+
+        audit_log = out_dir / "callret_crossstack.log"
+        audit_env = os.environ.copy()
+        # Whole-vmlinux disassembly audit is expensive and can be enabled
+        # explicitly when needed; keep object-level contract checks on by default.
+        audit_env["LINX_AUDIT_VMLINUX"] = os.environ.get("LINX_AUDIT_VMLINUX", "0")
+        if args.callret_crossstack == "strict":
+            audit_env["LINX_STRICT_CALLRET_RELOCS"] = "1"
+
+        with audit_log.open("w", encoding="utf-8") as fp:
+            cmd = [str(audit_script), str(linux_root)]
+            fp.write("+ " + shlex.join(cmd) + "\n")
+            rc = subprocess.run(
+                cmd,
+                env=audit_env,
+                stdout=fp,
+                stderr=subprocess.STDOUT,
+                check=False,
+            ).returncode
+        if rc != 0:
+            add_stage(
+                "callret-crossstack",
+                "fail",
+                f"linux call/ret cross-stack audit failed (mode={args.callret_crossstack})",
+                str(audit_log),
+            )
+            summary["result"] = {
+                "ok": False,
+                "classification": "callret_linux_crossstack_contract_failure",
+            }
+            _write_summary(summary_path, summary)
+            return 2
+        add_stage(
+            "callret-crossstack",
+            "pass",
+            f"linux call/ret cross-stack audit passed (mode={args.callret_crossstack})",
+            str(audit_log),
+        )
+
     if not runtime_lib.exists():
         add_stage("sample-compile", "fail", f"missing runtime builtins archive: {runtime_lib}")
         summary["result"] = {"ok": False, "classification": "runtime_builtins_missing"}
         _write_summary(summary_path, summary)
         return 2
-    with compile_log.open("w", encoding="utf-8") as fp:
-        rc = 0
-        for cmd in [compile_sample_cmd, link_cmd]:
-            fp.write("+ " + shlex.join(cmd) + "\n")
-            rc = subprocess.run(
-                cmd,
-                env=env_compile,
-                stdout=fp,
-                stderr=subprocess.STDOUT,
-                check=False,
-            ).returncode
+
+    for sample_name in selected_samples:
+        sample_meta = SAMPLES[sample_name]
+        sample_src = SCRIPT_DIR / "tests" / sample_meta["src"]
+        if not sample_src.exists():
+            add_stage("sample-compile", "fail", f"missing sample source: {sample_src}")
+            summary["result"] = {"ok": False, "classification": f"{sample_name}_source_missing"}
+            _write_summary(summary_path, summary)
+            return 2
+
+        for link_mode in link_modes:
+            sample_bin = out_dir / f"{sample_name}_{link_mode}"
+            sample_obj = out_dir / f"{sample_src.stem}_{link_mode}.o"
+            compile_log = out_dir / f"compile_{sample_name}_{link_mode}.log"
+
+            compile_sample_cmd = [
+                str(clang),
+                "-target",
+                args.target,
+                "--sysroot",
+                str(sysroot),
+                "-c",
+                str(sample_src),
+                "-o",
+                str(sample_obj),
+            ]
+
+            shared_lib = sysroot / "lib" / "libc.so"
+            shared_loader = sysroot / "lib" / "ld-musl-linx64.so.1"
+
+            if link_mode == "static":
+                link_cmd = [
+                    str(clang),
+                    "-target",
+                    args.target,
+                    "--sysroot",
+                    str(sysroot),
+                    "-static",
+                    "-fuse-ld=lld",
+                    "-nostdlib",
+                    str(sysroot / "lib" / "crt1.o"),
+                    str(sysroot / "lib" / "crti.o"),
+                    str(sample_obj),
+                    str(runtime_lib),
+                    str(sysroot / "lib" / "libc.a"),
+                    str(sysroot / "lib" / "crtn.o"),
+                    f"-Wl,--image-base={args.image_base}",
+                    "-o",
+                    str(sample_bin),
+                ]
+            else:
+                if not shared_lib.exists() or not shared_loader.exists():
+                    add_stage(
+                        f"sample-compile[{sample_name}:{link_mode}]",
+                        "fail",
+                        f"missing shared runtime artifacts: {shared_lib} / {shared_loader}",
+                    )
+                    summary["result"] = {
+                        "ok": False,
+                        "classification": f"{sample_name}_{link_mode}_runtime_artifacts_missing",
+                    }
+                    _write_summary(summary_path, summary)
+                    return 2
+                link_cmd = [
+                    str(clang),
+                    "-target",
+                    args.target,
+                    "--sysroot",
+                    str(sysroot),
+                    "-fuse-ld=lld",
+                    "-nostdlib",
+                    str(sysroot / "lib" / "crt1.o"),
+                    str(sysroot / "lib" / "crti.o"),
+                    str(sample_obj),
+                    str(runtime_lib),
+                    "-L" + str(sysroot / "lib"),
+                    "-L" + str(sysroot / "usr/lib"),
+                    "-lc",
+                    str(sysroot / "lib" / "crtn.o"),
+                    "-Wl,--dynamic-linker=/lib/ld-musl-linx64.so.1",
+                    f"-Wl,--image-base={args.image_base}",
+                    "-o",
+                    str(sample_bin),
+                ]
+
+            with compile_log.open("w", encoding="utf-8") as fp:
+                rc = 0
+                for cmd in [compile_sample_cmd, link_cmd]:
+                    fp.write("+ " + shlex.join(cmd) + "\n")
+                    rc = subprocess.run(
+                        cmd,
+                        env=env_compile,
+                        stdout=fp,
+                        stderr=subprocess.STDOUT,
+                        check=False,
+                    ).returncode
+                    if rc != 0:
+                        break
             if rc != 0:
-                break
-    if rc != 0:
-        add_stage("sample-compile", "fail", "failed to compile/link musl smoke sample", str(compile_log))
-        summary["result"] = {"ok": False, "classification": "sample_compile_failure"}
-        _write_summary(summary_path, summary)
-        return 2
-    add_stage("sample-compile", "pass", f"built {sample_bin}", str(compile_log))
+                add_stage(
+                    f"sample-compile[{sample_name}:{link_mode}]",
+                    "fail",
+                    "failed to compile/link musl sample",
+                    str(compile_log),
+                )
+                summary["result"] = {
+                    "ok": False,
+                    "classification": f"{sample_name}_{link_mode}_sample_compile_failure",
+                }
+                _write_summary(summary_path, summary)
+                return 2
+            add_stage(
+                f"sample-compile[{sample_name}:{link_mode}]",
+                "pass",
+                f"built {sample_bin}",
+                str(compile_log),
+            )
 
-    kernel = _find_kernel(linux_root)
-    gen_init_cpio = _find_gen_init_cpio(linux_root, out_dir)
-    initramfs_list = out_dir / "initramfs.list"
-    initramfs = out_dir / "initramfs.cpio"
-    initramfs_log = out_dir / "initramfs.log"
+            initramfs_list = out_dir / f"initramfs_{sample_name}_{link_mode}.list"
+            initramfs = out_dir / f"initramfs_{sample_name}_{link_mode}.cpio"
+            initramfs_log = out_dir / f"initramfs_{sample_name}_{link_mode}.log"
 
-    initramfs_list.write_text(
-        "\n".join(
-            [
+            init_lines = [
                 "dir /dev 0755 0 0",
                 "nod /dev/console 0600 0 0 c 5 1",
                 "nod /dev/null 0666 0 0 c 1 3",
@@ -273,81 +435,168 @@ def main(argv: list[str]) -> int:
                 "dir /run 0755 0 0",
                 "dir /tmp 1777 0 0",
                 f"file /init {sample_bin} 0755 0 0",
-                "",
             ]
-        ),
-        encoding="utf-8",
-    )
+            if link_mode == "shared":
+                loader_src = shared_loader if shared_loader.exists() else shared_lib
+                init_lines += [
+                    "dir /lib 0755 0 0",
+                    f"file /lib/libc.so {shared_lib} 0755 0 0",
+                    f"file /lib/ld-musl-linx64.so.1 {loader_src} 0755 0 0",
+                ]
+            init_lines.append("")
+            initramfs_list.write_text("\n".join(init_lines), encoding="utf-8")
 
-    cmd_gen = [str(gen_init_cpio), "-o", str(initramfs), str(initramfs_list)]
-    with initramfs_log.open("w", encoding="utf-8") as fp:
-        fp.write("+ " + shlex.join(cmd_gen) + "\n")
-        rc = subprocess.run(cmd_gen, stdout=fp, stderr=subprocess.STDOUT, check=False).returncode
-    if rc != 0:
-        add_stage("initramfs", "fail", "failed to create initramfs", str(initramfs_log))
-        summary["result"] = {"ok": False, "classification": "initramfs_generation_failure"}
-        _write_summary(summary_path, summary)
-        return 2
-    add_stage("initramfs", "pass", f"built {initramfs}", str(initramfs_log))
+            cmd_gen = [str(gen_init_cpio), "-o", str(initramfs), str(initramfs_list)]
+            with initramfs_log.open("w", encoding="utf-8") as fp:
+                fp.write("+ " + shlex.join(cmd_gen) + "\n")
+                rc = subprocess.run(cmd_gen, stdout=fp, stderr=subprocess.STDOUT, check=False).returncode
+            if rc != 0:
+                add_stage(
+                    f"initramfs[{sample_name}:{link_mode}]",
+                    "fail",
+                    "failed to create initramfs",
+                    str(initramfs_log),
+                )
+                summary["result"] = {
+                    "ok": False,
+                    "classification": f"{sample_name}_{link_mode}_initramfs_generation_failure",
+                }
+                _write_summary(summary_path, summary)
+                return 2
+            add_stage(
+                f"initramfs[{sample_name}:{link_mode}]",
+                "pass",
+                f"built {initramfs}",
+                str(initramfs_log),
+            )
 
-    qemu_log = out_dir / "qemu.log"
-    qemu_cmd = [
-        str(qemu),
-        "-machine",
-        "virt",
-        "-nographic",
-        "-monitor",
-        "none",
-        "-kernel",
-        str(kernel),
-        "-initrd",
-        str(initramfs),
-        "-append",
-        "lpj=1000000 loglevel=1 console=ttyS0",
-    ]
+            qemu_log = out_dir / f"qemu_{sample_name}_{link_mode}.log"
+            qemu_cmd = [
+                str(qemu),
+                "-machine",
+                "virt",
+                "-nographic",
+                "-monitor",
+                "none",
+                "-no-reboot",
+                "-kernel",
+                str(kernel),
+                "-initrd",
+                str(initramfs),
+                "-append",
+                "lpj=1000000 loglevel=1 console=ttyS0",
+            ]
 
-    text = ""
-    qemu_rc = 124
-    timed_out = False
-    try:
-        proc = subprocess.run(
-            qemu_cmd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            timeout=args.timeout,
-            check=False,
-        )
-        qemu_rc = proc.returncode
-        text = proc.stdout.decode("utf-8", errors="replace")
-    except subprocess.TimeoutExpired as exc:
-        timed_out = True
-        data = exc.output if isinstance(exc.output, (bytes, bytearray)) else b""
-        text = data.decode("utf-8", errors="replace")
+            text = ""
+            qemu_rc = 124
+            timed_out = False
+            try:
+                proc = subprocess.run(
+                    qemu_cmd,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    timeout=args.timeout,
+                    check=False,
+                )
+                qemu_rc = proc.returncode
+                text = proc.stdout.decode("utf-8", errors="replace")
+            except subprocess.TimeoutExpired as exc:
+                timed_out = True
+                data = exc.output if isinstance(exc.output, (bytes, bytearray)) else b""
+                text = data.decode("utf-8", errors="replace")
 
-    qemu_log.write_text(text, encoding="utf-8")
+            qemu_log.write_text(text, encoding="utf-8")
 
-    start_seen = "MUSL_SMOKE_START" in text
-    pass_seen = "MUSL_SMOKE_PASS" in text
-    if timed_out:
-        add_stage("qemu-runtime", "fail", f"timeout after {args.timeout}s", str(qemu_log))
-        summary["result"] = {"ok": False, "classification": "runtime_timeout"}
-        _write_summary(summary_path, summary)
-        return 2
-    if not start_seen or not pass_seen:
-        classification = "runtime_missing_marker"
-        if not start_seen:
-            classification = "runtime_syscall_failure"
-        add_stage(
-            "qemu-runtime",
-            "fail",
-            f"missing markers: start={start_seen} pass={pass_seen}, qemu_rc={qemu_rc}",
-            str(qemu_log),
-        )
-        summary["result"] = {"ok": False, "classification": classification}
-        _write_summary(summary_path, summary)
-        return 2
+            panic_seen = "Kernel panic - not syncing" in text
+            trap_seen = "[linx trap]" in text.lower()
+            start_seen = sample_meta["start"] in text
+            pass_seen = sample_meta["pass"] in text
+            if timed_out:
+                if trap_seen and not pass_seen:
+                    add_stage(
+                        f"qemu-runtime[{sample_name}:{link_mode}]",
+                        "fail",
+                        f"linx trap before pass marker (timeout after {args.timeout}s)",
+                        str(qemu_log),
+                    )
+                    summary["result"] = {
+                        "ok": False,
+                        "classification": f"{sample_name}_{link_mode}_runtime_block_trap",
+                    }
+                    _write_summary(summary_path, summary)
+                    return 2
+                if panic_seen and not pass_seen:
+                    add_stage(
+                        f"qemu-runtime[{sample_name}:{link_mode}]",
+                        "fail",
+                        f"kernel panic before pass marker (timeout after {args.timeout}s)",
+                        str(qemu_log),
+                    )
+                    summary["result"] = {
+                        "ok": False,
+                        "classification": f"{sample_name}_{link_mode}_runtime_kernel_panic",
+                    }
+                    _write_summary(summary_path, summary)
+                    return 2
+                add_stage(
+                    f"qemu-runtime[{sample_name}:{link_mode}]",
+                    "fail",
+                    f"timeout after {args.timeout}s",
+                    str(qemu_log),
+                )
+                summary["result"] = {
+                    "ok": False,
+                    "classification": f"{sample_name}_{link_mode}_runtime_timeout",
+                }
+                _write_summary(summary_path, summary)
+                return 2
+            if panic_seen and not pass_seen:
+                add_stage(
+                    f"qemu-runtime[{sample_name}:{link_mode}]",
+                    "fail",
+                    f"kernel panic before pass marker, qemu_rc={qemu_rc}",
+                    str(qemu_log),
+                )
+                summary["result"] = {
+                    "ok": False,
+                    "classification": f"{sample_name}_{link_mode}_runtime_kernel_panic",
+                }
+                _write_summary(summary_path, summary)
+                return 2
+            if trap_seen and not pass_seen:
+                add_stage(
+                    f"qemu-runtime[{sample_name}:{link_mode}]",
+                    "fail",
+                    f"linx trap before pass marker, qemu_rc={qemu_rc}",
+                    str(qemu_log),
+                )
+                summary["result"] = {
+                    "ok": False,
+                    "classification": f"{sample_name}_{link_mode}_runtime_block_trap",
+                }
+                _write_summary(summary_path, summary)
+                return 2
+            if not start_seen or not pass_seen:
+                classification = f"{sample_name}_{link_mode}_runtime_missing_marker"
+                if not start_seen:
+                    classification = f"{sample_name}_{link_mode}_runtime_syscall_failure"
+                add_stage(
+                    f"qemu-runtime[{sample_name}:{link_mode}]",
+                    "fail",
+                    f"missing markers: start={start_seen} pass={pass_seen}, qemu_rc={qemu_rc}",
+                    str(qemu_log),
+                )
+                summary["result"] = {"ok": False, "classification": classification}
+                _write_summary(summary_path, summary)
+                return 2
 
-    add_stage("qemu-runtime", "pass", f"markers observed; qemu_rc={qemu_rc}", str(qemu_log))
+            add_stage(
+                f"qemu-runtime[{sample_name}:{link_mode}]",
+                "pass",
+                f"markers observed; qemu_rc={qemu_rc}",
+                str(qemu_log),
+            )
+
     summary["result"] = {"ok": True, "classification": "runtime_pass"}
     _write_summary(summary_path, summary)
     print(f"ok: musl smoke passed ({summary_path})")

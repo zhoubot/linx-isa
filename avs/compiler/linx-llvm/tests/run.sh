@@ -5,6 +5,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SRC_DIR="$ROOT/c"
 OUT_DIR="${OUT_DIR:-$ROOT/out}"
 TARGET="${TARGET:-linx64-linx-none-elf}"
+STRICT_CALLRET_RELOCS="${LINX_STRICT_CALLRET_RELOCS:-0}"
 
 CLANG="${CLANG:-}"
 if [[ -z "$CLANG" ]]; then
@@ -164,6 +165,29 @@ for SRC in "$SRC_DIR"/*.c; do
   if [[ -n "$READOBJ" ]]; then
     "$READOBJ" -r "$OUT/$BASE.o" >"$OUT/$BASE.relocs" || true
     "$READOBJ" -r "$OUT/$BASE.elf" >"$OUT/$BASE.elf.relocs" || true
+
+    case "$BASE" in
+      33_callret_*|34_callret_*|35_callret_*|36_callret_*|37_callret_*|38_callret_*|39_callret_*|40_callret_*)
+        CHECK_RELOCS_CMD=(
+          python3 "$ROOT/check_callret_relocs.py"
+          --objdump "$OUT/$BASE.objdump"
+          --relocs "$OUT/$BASE.relocs"
+          --label "$BASE"
+        )
+        if [[ "$STRICT_CALLRET_RELOCS" == "1" ]]; then
+          CHECK_RELOCS_CMD+=(--strict-relocs)
+        fi
+        "${CHECK_RELOCS_CMD[@]}"
+        case "$BASE" in
+          33_callret_*|34_callret_*|35_callret_*|36_callret_*|37_callret_*|38_callret_*)
+            python3 "$ROOT/check_callret_templates.py" \
+              --asm "$OUT/$BASE.s" \
+              --label "$BASE"
+            ;;
+        esac
+        ;;
+    esac
+
     if grep -Eq "^\\s*0x" "$OUT/$BASE.elf.relocs"; then
       echo "error: $BASE.elf still has relocations; .bin extraction is unsafe" >&2
       exit 1

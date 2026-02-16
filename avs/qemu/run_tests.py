@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-REPO_ROOT = SCRIPT_DIR.parents[2]
+REPO_ROOT = SCRIPT_DIR.parents[1]
 
 
 SUITES: dict[str, dict[str, str]] = {
@@ -31,6 +31,7 @@ SUITES: dict[str, dict[str, str]] = {
         "src": "tests/13_v03_vector_ops_matrix.c",
         "macro": "LINX_TEST_ENABLE_V03_VECTOR_OPS",
     },
+    "callret": {"src": "tests/14_callret.c", "macro": "LINX_TEST_ENABLE_CALLRET"},
 }
 
 EXTRA_SOURCES_BY_SUITE: dict[str, list[str]] = {
@@ -40,6 +41,9 @@ EXTRA_SOURCES_BY_SUITE: dict[str, list[str]] = {
         "tools/pto/examples/pto_tmatmul_acc.cpp",
         "tools/pto/examples/pto_gemm_auto.cpp",
         "tools/pto/examples/pto_flash_attention_auto.cpp",
+    ],
+    "callret": [
+        "avs/qemu/tests/14_callret_templates.S",
     ],
 }
 
@@ -70,8 +74,14 @@ def _default_clang() -> Path | None:
     env = os.environ.get("CLANG")
     if env:
         return Path(os.path.expanduser(env))
-    cand = Path.home() / "llvm-project" / "build-linxisa-clang" / "bin" / "clang"
-    return cand if cand.exists() else None
+    cands = [
+        Path.home() / "llvm-project" / "build-linxisa-clang" / "bin" / "clang",
+        REPO_ROOT / "compiler" / "llvm" / "build-linxisa-clang" / "bin" / "clang",
+    ]
+    for cand in cands:
+        if cand.exists():
+            return cand
+    return None
 
 
 def _default_clangxx(clang: Path | None) -> Path | None:
@@ -100,6 +110,9 @@ def _default_qemu() -> Path | None:
     env = os.environ.get("QEMU")
     if env:
         return Path(os.path.expanduser(env))
+    cand_local = REPO_ROOT / "emulator" / "qemu" / "build" / "qemu-system-linx64"
+    if cand_local.exists():
+        return cand_local
     cand_tci = Path.home() / "qemu" / "build-tci" / "qemu-system-linx64"
     if cand_tci.exists():
         return cand_tci

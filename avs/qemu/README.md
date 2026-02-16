@@ -104,6 +104,43 @@ Artifacts are written under:
 
 - `/Users/zhoubot/linx-isa/avs/qemu/out/musl-smoke/`
 
+## Call/Ret contract gate
+
+Run the positive call/ret runtime matrix:
+
+```bash
+python3 /Users/zhoubot/linx-isa/avs/qemu/run_tests.py \
+  --suite callret \
+  --require-test-id 0x140b \
+  --require-test-id 0x140c
+```
+
+Run strict call/ret contract checks:
+negative cases must trap with deterministic causes, and positive cases must
+run without block-format faults.
+
+```bash
+python3 /Users/zhoubot/linx-isa/avs/qemu/run_callret_contract.py
+```
+
+Run Linux+musl call/ret sample with strict Linux cross-stack audit:
+
+```bash
+python3 /Users/zhoubot/linx-isa/avs/qemu/run_musl_smoke.py \
+  --sample callret \
+  --link both \
+  --callret-crossstack strict
+```
+
+Enable additional whole-vmlinux contract audit (optional, slower):
+
+```bash
+LINX_AUDIT_VMLINUX=1 python3 /Users/zhoubot/linx-isa/avs/qemu/run_musl_smoke.py \
+  --sample callret \
+  --link both \
+  --callret-crossstack strict
+```
+
 ## Memory map (Linx virt machine)
 
 | Address | Purpose |

@@ -7,6 +7,7 @@ Included suites:
 - `coremark/upstream/` — CoreMark upstream sources
 - `dhrystone/upstream/` — Dhrystone upstream sources
 - `third_party/PolyBenchC/` — fetched on demand
+- `tsvc/` — TSVC strict auto-vectorization runner + pinned source fetch script
 - `ctuning/` — Milepost codelet runner
 
 ## Fetch third-party suites
@@ -58,4 +59,18 @@ python3 workloads/ctuning/run_milepost_codelets.py \
 
 ```bash
 python3 workloads/run_portfolio.py --cc /path/to/clang --target <triple>
+```
+
+## TSVC strict auto-vectorization objdumps
+
+Fetch pinned TSVC source:
+
+```bash
+bash workloads/tsvc/fetch_tsvc.sh
+```
+
+Generate auto-mode objdump + QEMU run + strict coverage/gap reports:
+
+```bash
+python3 workloads/tsvc/run_tsvc.py --vector-mode auto
 ```
