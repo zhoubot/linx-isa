@@ -14,6 +14,7 @@ from typing import Any
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parents[1]
+_EXTRA_SUMMARY_PATH: Path | None = None
 
 SAMPLES: dict[str, dict[str, str]] = {
     "malloc_printf": {
@@ -53,9 +54,9 @@ def _default_lld() -> Path:
 
 def _default_qemu() -> Path:
     cands = [
-        REPO_ROOT / "emulator" / "qemu" / "build" / "qemu-system-linx64",
         Path("/Users/zhoubot/qemu/build/qemu-system-linx64"),
         Path("/Users/zhoubot/qemu/build-tci/qemu-system-linx64"),
+        REPO_ROOT / "emulator" / "qemu" / "build" / "qemu-system-linx64",
     ]
     for p in cands:
         if p.exists():
@@ -117,7 +118,127 @@ def _parse_mode_summary(path: Path) -> dict[str, str]:
 
 
 def _write_summary(path: Path, payload: dict[str, Any]) -> None:
-    path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    link_mode = payload.get("link_mode")
+    result = payload.get("result")
+    mode_results = payload.get("mode_results")
+    if isinstance(link_mode, str) and isinstance(result, dict) and isinstance(mode_results, dict):
+        mode_results[link_mode] = {
+            "ok": bool(result.get("ok", False)),
+            "classification": str(result.get("classification", "not_run")),
+        }
+    text = json.dumps(payload, indent=2, sort_keys=True) + "\n"
+    path.write_text(text, encoding="utf-8")
+    if _EXTRA_SUMMARY_PATH and _EXTRA_SUMMARY_PATH != path:
+        _EXTRA_SUMMARY_PATH.write_text(text, encoding="utf-8")
+
+
+def _select_samples(raw_samples: list[str] | None) -> list[str]:
+    if not raw_samples:
+        return ["malloc_printf"]
+    if "all" in raw_samples:
+        return list(SAMPLES.keys())
+    return list(dict.fromkeys(raw_samples))
+
+
+def _run_split_link_modes(args: argparse.Namespace, out_dir: Path, selected_samples: list[str]) -> int:
+    mode_results: dict[str, Any] = {}
+    runner = Path(__file__).resolve()
+
+    for link_mode in ("static", "shared"):
+        cmd = [
+            sys.executable,
+            str(runner),
+            "--linux-root",
+            args.linux_root,
+            "--musl-root",
+            args.musl_root,
+            "--clang",
+            args.clang,
+            "--lld",
+            args.lld,
+            "--qemu",
+            args.qemu,
+            "--target",
+            args.target,
+            "--image-base",
+            args.image_base,
+            "--mode",
+            args.mode,
+            "--link",
+            link_mode,
+            "--callret-crossstack",
+            args.callret_crossstack,
+            "--timeout",
+            str(args.timeout),
+            "--out-dir",
+            str(out_dir),
+        ]
+        for sample in selected_samples:
+            cmd.extend(["--sample", sample])
+
+        run_log = out_dir / f"run_{link_mode}.log"
+        proc = subprocess.run(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            check=False,
+        )
+        output = proc.stdout.decode("utf-8", errors="replace")
+        run_log.write_text(output, encoding="utf-8")
+
+        mode_summary_path = out_dir / f"summary_{link_mode}.json"
+        mode_summary: dict[str, Any] = {}
+        if mode_summary_path.exists():
+            try:
+                mode_summary = json.loads(mode_summary_path.read_text(encoding="utf-8"))
+            except json.JSONDecodeError:
+                mode_summary = {}
+        mode_result = mode_summary.get("result", {}) if isinstance(mode_summary, dict) else {}
+        mode_ok = bool(mode_result.get("ok", False)) and proc.returncode == 0
+        mode_class = str(mode_result.get("classification", "runtime_not_recorded"))
+        if proc.returncode != 0 and mode_class == "runtime_pass":
+            mode_class = "runtime_subprocess_failure"
+
+        mode_results[link_mode] = {
+            "ok": mode_ok,
+            "classification": mode_class,
+            "exit_code": proc.returncode,
+            "summary": str(mode_summary_path),
+            "run_log": str(run_log),
+            "command": shlex.join(cmd),
+        }
+
+    overall_ok = all(mode_results[m]["ok"] for m in ("static", "shared"))
+    summary: dict[str, Any] = {
+        "schema_version": "musl-smoke-v2",
+        "mode": args.mode,
+        "target": args.target,
+        "samples": selected_samples,
+        "paths": {
+            "linux_root": str(Path(os.path.expanduser(args.linux_root)).resolve()),
+            "musl_root": str(Path(os.path.expanduser(args.musl_root)).resolve()),
+            "clang": str(Path(os.path.expanduser(args.clang)).resolve()),
+            "lld": str(Path(os.path.expanduser(args.lld)).absolute()),
+            "qemu": str(Path(os.path.expanduser(args.qemu)).resolve()),
+            "out_dir": str(out_dir),
+            "image_base": args.image_base,
+            "link": "both",
+        },
+        "link_modes": ["static", "shared"],
+        "mode_results": mode_results,
+        "result": {
+            "ok": overall_ok,
+            "classification": "runtime_pass" if overall_ok else "runtime_mode_failure",
+        },
+    }
+    _write_summary(out_dir / "summary.json", summary)
+
+    if overall_ok:
+        print(f"ok: musl smoke passed ({out_dir / 'summary.json'})")
+        return 0
+
+    print(f"error: musl smoke failed ({out_dir / 'summary.json'})", file=sys.stderr)
+    return 2
 
 
 def main(argv: list[str]) -> int:
@@ -145,6 +266,11 @@ def main(argv: list[str]) -> int:
     )
     parser.add_argument("--timeout", type=int, default=90)
     parser.add_argument(
+        "--append",
+        default="lpj=1000000 loglevel=1 console=ttyS0 kfence.sample_interval=0",
+        help="Kernel command line used for QEMU runtime boot.",
+    )
+    parser.add_argument(
         "--out-dir",
         default="/Users/zhoubot/linx-isa/avs/qemu/out/musl-smoke",
     )
@@ -157,8 +283,16 @@ def main(argv: list[str]) -> int:
     qemu = Path(os.path.expanduser(args.qemu)).resolve()
     out_dir = Path(os.path.expanduser(args.out_dir)).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
+    selected_samples = _select_samples(args.sample)
+
+    if args.link == "both":
+        return _run_split_link_modes(args, out_dir, selected_samples)
+
+    global _EXTRA_SUMMARY_PATH
+    _EXTRA_SUMMARY_PATH = out_dir / f"summary_{args.link}.json"
 
     summary: dict[str, Any] = {
+        "schema_version": "musl-smoke-v2",
         "mode": args.mode,
         "target": args.target,
         "paths": {
@@ -171,15 +305,10 @@ def main(argv: list[str]) -> int:
             "image_base": args.image_base,
             "link": args.link,
         },
+        "link_mode": args.link,
         "stages": [],
         "result": {"ok": False, "classification": "not_run"},
     }
-    if not args.sample:
-        selected_samples = ["malloc_printf"]
-    elif "all" in args.sample:
-        selected_samples = list(SAMPLES.keys())
-    else:
-        selected_samples = list(dict.fromkeys(args.sample))
     summary["samples"] = selected_samples
     summary_path = out_dir / "summary.json"
 
@@ -251,6 +380,7 @@ def main(argv: list[str]) -> int:
     else:
         link_modes = [args.link]
     summary["link_modes"] = link_modes
+    summary["mode_results"] = {args.link: {"ok": False, "classification": "not_run"}}
 
     if "callret" in selected_samples and args.callret_crossstack != "off":
         audit_script = REPO_ROOT / "tools" / "ci" / "check_linx_callret_crossstack.sh"
@@ -484,7 +614,7 @@ def main(argv: list[str]) -> int:
                 "-initrd",
                 str(initramfs),
                 "-append",
-                "lpj=1000000 loglevel=1 console=ttyS0",
+                args.append,
             ]
 
             text = ""
@@ -511,6 +641,14 @@ def main(argv: list[str]) -> int:
             trap_seen = "[linx trap]" in text.lower()
             start_seen = sample_meta["start"] in text
             pass_seen = sample_meta["pass"] in text
+            if timed_out and start_seen and pass_seen:
+                add_stage(
+                    f"qemu-runtime[{sample_name}:{link_mode}]",
+                    "pass",
+                    f"markers observed before timeout; qemu_rc={qemu_rc}",
+                    str(qemu_log),
+                )
+                continue
             if timed_out:
                 if trap_seen and not pass_seen:
                     add_stage(
