@@ -85,6 +85,19 @@ for p in "${expected_submodules[@]}"; do
   fi
 done
 
+# Topology rule: only the superproject root may define LinxISA repo links.
+while IFS= read -r gm; do
+  rel="${gm#./}"
+  if [[ "$rel" == ".gitmodules" ]]; then
+    continue
+  fi
+  if rg -n -e 'github\.com/LinxISA/' -e 'git@github\.com:LinxISA/' "$gm" >/dev/null 2>&1; then
+    echo "error: non-root .gitmodules references LinxISA repo links: $rel" >&2
+    rg -n -e 'github\.com/LinxISA/' -e 'git@github\.com:LinxISA/' "$gm" >&2 || true
+    fail=1
+  fi
+done < <(find . -path './.git' -prune -o -name .gitmodules -print)
+
 if [[ "$fail" -ne 0 ]]; then
   exit 1
 fi
