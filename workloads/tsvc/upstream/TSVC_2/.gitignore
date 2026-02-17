@@ -1,0 +1,7 @@
+*.o
+*.s
+*.lst
+*.optrpt
+*.cg
+*.opt
+bin/

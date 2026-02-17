@@ -1,0 +1,20 @@
+
+CC=cc -h restrict=f
+CXX=CC -h restrict=f
+FC=ftn
+flags = -O3 -h aggress
+vecflags = -h vector3
+novecflags = -h vector0
+# no omp_flags - on by default
+
+ifdef VEC_REPORT
+vecflags+=-h list=ad -h list=am
+endif
+
+ieee_math_flags+=-h flex_mp=intolerant
+fast_math_flags+=-h flex_mp=tolerant
+
+ifdef NO_OMP
+flags+=-h noomp
+endif
+

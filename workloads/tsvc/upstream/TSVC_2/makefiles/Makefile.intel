@@ -1,0 +1,16 @@
+
+CC=icc -restrict -std=c99
+CXX=icpc -restrict
+FC=ifort -align array64byte
+flags = -O3 -ip
+vecflags = -vec
+novecflags = -no-vec
+omp_flags+=-fopenmp
+
+ifdef VEC_REPORT
+vecflags+=-qopt-report=5 -qopt-report-phase=vec
+endif
+
+ieee_math_flags+=-fp-model precise
+fast_math_flags+=-fp-model fast=2
+

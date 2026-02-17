@@ -1,0 +1,17 @@
+
+ifndef COMPILER
+$(error no COMPILER specified)
+endif
+
+include $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))/Makefile.$(COMPILER)
+
+ifndef NO_OMP
+flags+=$(omp_flags)
+endif
+
+ifdef PRECISE_MATH
+flags+=$(ieee_math_flags)
+else ifdef FAST_MATH
+flags+=$(fast_math_flags)
+endif
+

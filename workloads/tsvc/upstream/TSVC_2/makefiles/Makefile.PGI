@@ -1,0 +1,25 @@
+
+CC=pgcc -Msafeptr
+CXX=pgcpp -Msafeptr
+FC=pgf90
+flags = -fast -O3
+vecflags = -Mvect=simd:256,altcode
+novecflags = -Mnovect
+omp_flags=-mp=nonuma
+
+ifdef VEC_REPORT
+vecflags+=-Minfo=vect
+endif
+
+ieee_math_flags+=-Kieee
+fast_math_flags+=-Knoieee -Mfprelaxed
+
+ifdef PRECISE_MATH
+$(warning PGI will not obey IEEE flags if vectorisation is also enabled!)
+endif
+
+ifdef NO_OMP
+# it's not clear from the manpage if this is default or not - be explicit just in case
+flags+=-Mnoopenmp
+endif
+
