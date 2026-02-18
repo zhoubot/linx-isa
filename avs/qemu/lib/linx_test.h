@@ -136,6 +136,9 @@ static inline void test_pass(void) {
  */
 static inline void test_fail(uint32_t test_id, uint64_t expected, uint64_t actual) {
     uart_puts("FAIL\r\n");
+    uart_puts("    Test ID:  0x");
+    uart_puthex32(test_id);
+    uart_puts("\r\n");
     uart_puts("    Expected: 0x");
     uart_puthex64(expected);
     uart_puts("\r\n");

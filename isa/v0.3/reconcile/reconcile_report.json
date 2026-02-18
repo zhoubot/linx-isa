@@ -31,7 +31,7 @@
       "token": "B.TEXT"
     },
     {
-      "canonical": "BSTART.{TMA|CUBE|VPAR}",
+      "canonical": "BSTART.{TMA|CUBE|TEPL|VPAR}",
       "reason": "typed BSTART form is canonical in staged v0.3",
       "status": "normalize",
       "token": "BSTART.PAR"
@@ -122,9 +122,9 @@
   ],
   "inputs": {
     "janus_ref": "~/JanusCore/paper/srcs/sections/04_tile_microarchitecture.tex",
-    "normalized_asm": "./spec/isa/golden/v0.3/reconcile/linxisa-v0.3-example.normalized.asm",
-    "raw_asm": ".-v0.3-example.asm",
-    "raw_text": ".-v0.3.txt"
+    "normalized_asm": "isa/v0.3/reconcile/linxisa-v0.3-example.normalized.asm",
+    "raw_asm": "~/linxisa-v0.3-example.asm",
+    "raw_text": "~/linxisa-v0.3.txt"
   },
   "items": [
     {
@@ -497,7 +497,7 @@
       "status": "keep"
     },
     {
-      "canonical": "TLOAD/TSTORE/TPREFETCH staged in TMA profile",
+      "canonical": "TLOAD/TSTORE/TPREFETCH/TMOV staged in TMA profile",
       "evidence": [
         {
           "pattern": "TLOAD",
@@ -556,7 +556,7 @@
       "id": "tma_baseline_ops",
       "janus_check": {
         "aligned": true,
-        "note": "Janus keyword scan for: TLOAD/TSTORE/TPREFETCH staged in TMA profile",
+        "note": "Janus keyword scan for: TLOAD/TSTORE/TPREFETCH/TMOV staged in TMA profile",
         "signals": {
           "block": true,
           "lane": true,
@@ -655,7 +655,7 @@
       "status": "normalize"
     },
     {
-      "canonical": "BSTART.PAR -> typed BSTART.{TMA,CUBE,VPAR}",
+      "canonical": "BSTART.PAR -> typed BSTART.{TMA,CUBE,TEPL,VPAR}",
       "evidence": [
         {
           "pattern": "BSTART.PAR",
@@ -684,7 +684,7 @@
       "id": "normalize_bstart_par",
       "janus_check": {
         "aligned": true,
-        "note": "Janus keyword scan for: BSTART.PAR -> typed BSTART.{TMA,CUBE,VPAR}",
+        "note": "Janus keyword scan for: BSTART.PAR -> typed BSTART.{TMA,CUBE,TEPL,VPAR}",
         "signals": {
           "block": true,
           "lane": true,

@@ -1,0 +1,17 @@
+{"cycle":0,"pc":65536,"insn":2048,"wb_valid":0,"wb_rd":0,"wb_data":0,"mem_valid":0,"mem_addr":0,"mem_wdata":0,"mem_rdata":0,"mem_size":0,"trap_valid":0,"trap_cause":0,"next_pc":65538}
+{"cycle":1,"pc":65538,"insn":4118,"wb_valid":1,"wb_rd":2,"wb_data":0,"mem_valid":0,"mem_addr":0,"mem_wdata":0,"mem_rdata":0,"mem_size":0,"trap_valid":0,"trap_cause":0,"next_pc":65540}
+{"cycle":2,"pc":65540,"insn":6294,"wb_valid":1,"wb_rd":3,"wb_data":2,"mem_valid":0,"mem_addr":0,"mem_wdata":0,"mem_rdata":0,"mem_size":0,"trap_valid":0,"trap_cause":0,"next_pc":65542}
+{"cycle":3,"pc":65542,"insn":0,"wb_valid":0,"wb_rd":0,"wb_data":0,"mem_valid":0,"mem_addr":0,"mem_wdata":0,"mem_rdata":0,"mem_size":0,"trap_valid":0,"trap_cause":0,"next_pc":65544}
+{"cycle":4,"pc":65544,"insn":2048,"wb_valid":0,"wb_rd":0,"wb_data":0,"mem_valid":0,"mem_addr":0,"mem_wdata":0,"mem_rdata":0,"mem_size":0,"trap_valid":0,"trap_cause":0,"next_pc":65546}
+{"cycle":5,"pc":65546,"insn":70017,"wb_valid":0,"wb_rd":0,"wb_data":0,"mem_valid":0,"mem_addr":0,"mem_wdata":0,"mem_rdata":0,"mem_size":0,"trap_valid":0,"trap_cause":0,"next_pc":65550}
+{"cycle":6,"pc":65550,"insn":0,"wb_valid":0,"wb_rd":0,"wb_data":0,"mem_valid":0,"mem_addr":0,"mem_wdata":0,"mem_rdata":0,"mem_size":0,"trap_valid":0,"trap_cause":0,"next_pc":65552}
+{"cycle":7,"pc":65552,"insn":2048,"wb_valid":0,"wb_rd":0,"wb_data":0,"mem_valid":0,"mem_addr":0,"mem_wdata":0,"mem_rdata":0,"mem_size":0,"trap_valid":0,"trap_cause":0,"next_pc":65554}
+{"cycle":8,"pc":65554,"insn":1114389,"wb_valid":1,"wb_rd":2,"wb_data":1,"mem_valid":0,"mem_addr":0,"mem_wdata":0,"mem_rdata":0,"mem_size":0,"trap_valid":0,"trap_cause":0,"next_pc":65558}
+{"cycle":9,"pc":65558,"insn":103899237,"wb_valid":0,"wb_rd":0,"wb_data":0,"mem_valid":0,"mem_addr":0,"mem_wdata":0,"mem_rdata":0,"mem_size":0,"trap_valid":0,"trap_cause":0,"next_pc":65562}
+{"cycle":10,"pc":65562,"insn":0,"wb_valid":0,"wb_rd":0,"wb_data":0,"mem_valid":0,"mem_addr":0,"mem_wdata":0,"mem_rdata":0,"mem_size":0,"trap_valid":0,"trap_cause":0,"next_pc":65564}
+{"cycle":11,"pc":65564,"insn":65380,"wb_valid":0,"wb_rd":0,"wb_data":0,"mem_valid":0,"mem_addr":0,"mem_wdata":0,"mem_rdata":0,"mem_size":0,"trap_valid":0,"trap_cause":0,"next_pc":65566}
+{"cycle":12,"pc":65566,"insn":0,"wb_valid":0,"wb_rd":0,"wb_data":0,"mem_valid":0,"mem_addr":0,"mem_wdata":0,"mem_rdata":0,"mem_size":0,"trap_valid":0,"trap_cause":0,"next_pc":65568}
+{"cycle":13,"pc":65568,"insn":2048,"wb_valid":0,"wb_rd":0,"wb_data":0,"mem_valid":0,"mem_addr":0,"mem_wdata":0,"mem_rdata":0,"mem_size":0,"trap_valid":0,"trap_cause":0,"next_pc":65570}
+{"cycle":14,"pc":65570,"insn":277,"wb_valid":1,"wb_rd":2,"wb_data":0,"mem_valid":0,"mem_addr":0,"mem_wdata":0,"mem_rdata":0,"mem_size":0,"trap_valid":0,"trap_cause":0,"next_pc":65574}
+{"cycle":15,"pc":65574,"insn":1335300110,"wb_valid":0,"wb_rd":0,"wb_data":0,"mem_valid":0,"mem_addr":0,"mem_wdata":0,"mem_rdata":0,"mem_size":0,"trap_valid":0,"trap_cause":0,"next_pc":65580}
+{"cycle":16,"pc":65580,"insn":25239641,"wb_valid":0,"wb_rd":0,"wb_data":0,"mem_valid":1,"mem_addr":268435460,"mem_wdata":0,"mem_rdata":0,"mem_size":4,"trap_valid":0,"trap_cause":0,"next_pc":65584}

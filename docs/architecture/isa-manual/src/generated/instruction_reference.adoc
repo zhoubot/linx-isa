@@ -213,7 +213,8 @@
 |Mnemonic |Len |Decode |Assembly |Notes
 |`BSTART` |32 |- |`BSTART {DIRECT, CALL}, <label>` |-
 |`BSTART` |32 |- |`BSTART COND, <label>` |-
-|`BSTART.CUBE` |32 |- |`BSTART.CUBE TileOP, DataType` |-
+|`BSTART.ACCCVT` |32 |- |`BSTART.ACCCVT DataType` |Alias of BSTART.CUBE Function=8. ACCCVT requires quantization args via B.ARG+B.IOR (scale/zero-point required in strict profile).
+|`BSTART.CUBE` |32 |- |`BSTART.CUBE Function, DataType` |Generic CUBE selector form. Function=0/2/8 are emitted as BSTART.TMATMUL/BSTART.TMATMUL.ACC/BSTART.ACCCVT aliases.
 |`BSTART.FIXP` |32 |- |`BSTART.FIXP TileOp, DataType` |-
 |`BSTART.FP` |32 |- |`BSTART.FP RET` |-
 |`BSTART.FP` |32 |- |`BSTART.FP IND` |-
@@ -232,10 +233,15 @@
 |`BSTART.STD` |32 |- |`BSTART.STD IND` |-
 |`BSTART.STD` |32 |- |`BSTART.STD DIRECT, <label>` |-
 |`BSTART.SYS` |32 |- |`BSTART.SYS FALL<, fixup_label>` |-
-|`BSTART.TEPL` |32 |- |`BSTART.TEPL TileOp, DataType` |-
-|`BSTART.TMA` |32 |- |`BSTART.TMA TileOp, DataType` |-
-|`BSTART.VPAR` |32 |- |`BSTART.VPAR <VS8, VS16>` |-
-|`BSTART.VSEQ` |32 |- |`BSTART.VSEQ <VS8, VS16>` |-
+|`BSTART.TEPL` |32 |- |`BSTART.TEPL TileOp10, DataType` |TileOp10 selects PTO template ops (for example TADD TSUB TROWMAX). Unassigned TileOp10 values are reserved for future template extension.
+|`BSTART.TLOAD` |32 |- |`BSTART.TLOAD DataType` |Alias of BSTART.TMA Function=0. Requires B.ARG layout/pad and B.IOR stride/base plus B.IOT/B.IOTI tile binding.
+|`BSTART.TMA` |32 |- |`BSTART.TMA Function, DataType` |Generic TMA selector form. Function=0/1/2 are emitted as BSTART.TLOAD/BSTART.TSTORE/BSTART.TMOV aliases; 3..31 are reserved in strict v0.3.
+|`BSTART.TMATMUL` |32 |- |`BSTART.TMATMUL DataType` |Alias of BSTART.CUBE Function=0. Requires B.DIM (LB0/LB1/LB2 as m,n,k) and tile bindings via B.IOT/B.IOTI.
+|`BSTART.TMATMUL.ACC` |32 |- |`BSTART.TMATMUL.ACC DataType` |Alias of BSTART.CUBE Function=2. Requires B.DIM (LB0/LB1/LB2 as m,n,k) and tile bindings via B.IOT/B.IOTI.
+|`BSTART.TMOV` |32 |- |`BSTART.TMOV DataType` |Alias of BSTART.TMA Function=2. TMOV is tile-state only (no GM memory access) and destination allocation is queue-push only.
+|`BSTART.TSTORE` |32 |- |`BSTART.TSTORE DataType` |Alias of BSTART.TMA Function=1. Requires B.ARG layout/pad and B.IOR stride/base plus B.IOT/B.IOTI tile binding.
+|`BSTART.VPAR` |32 |- |`BSTART.VPAR <VS8, VS16>` |TVEC-equivalent parallel SIMT header; requires B.TEXT body target in decoupled form.
+|`BSTART.VSEQ` |32 |- |`BSTART.VSEQ <VS8, VS16>` |TVEC-equivalent sequential SIMT header; requires B.TEXT body target in decoupled form.
 |`BSTOP` |32 |- |`BSTOP` |-
 |`C.BSTART` |16 |- |`C.BSTART COND, label` |-
 |`C.BSTART` |16 |- |`C.BSTART DIRECT, label` |-

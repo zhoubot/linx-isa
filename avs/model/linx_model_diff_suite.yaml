@@ -1,0 +1,62 @@
+version: linx-model-diff-v1
+description: "Deterministic QEMU-vs-model differential fixtures for bring-up gates"
+
+cases:
+  - id: MODEL-SCALAR-COMMIT-SMOKE
+    category: scalar_basic
+    source: emulator/qemu/tests/linxisa/mcopy_mset_basic.s
+    seed: 1001
+    required_in_profile: [dev, release-strict]
+    trace_version: "1.0"
+    ignore_fields: [cycle]
+    notes: "Uses deterministic scalar memcpy/mset fixture while addtpc commit smoke remains optional until model/QEMU addtpc address convergence."
+
+  - id: MODEL-SCALAR-MCOPY-MSET
+    category: scalar_basic
+    source: emulator/qemu/tests/linxisa/mcopy_mset_basic.s
+    seed: 1002
+    required_in_profile: [dev, release-strict]
+    trace_version: "1.0"
+    ignore_fields: [cycle]
+
+  - id: MODEL-VECTOR-LANE-CONTROL
+    category: vector_lane_control
+    source: emulator/qemu/tests/linxisa/vector_header_smoke.s
+    require_block_kind_any_of: [vpar, vseq]
+    seed: 2001
+    required_in_profile: [release-strict]
+    trace_version: "1.0"
+    ignore_fields: [cycle, next_pc]
+    drop_boundary_selfloops: true
+    notes: "Header-only vector fixture keeps model-compatible execution while enforcing vpar/vseq block-kind shape."
+
+  - id: MODEL-TILE-DESCRIPTOR-LEGALITY
+    category: tile_descriptor_legality
+    source: emulator/qemu/tests/linxisa/tile_descriptor_smoke.s
+    require_block_kind_any_of: [tma, cube, tepl]
+    seed: 2002
+    required_in_profile: [release-strict]
+    trace_version: "1.0"
+    ignore_fields: [cycle, next_pc]
+    drop_boundary_selfloops: true
+    notes: "Minimal tile header smoke while deeper tile descriptor/control parity remains in follow-on phase."
+
+  - id: MODEL-TILE-CONTROL-FLOW
+    category: tile_control_flow
+    source: emulator/qemu/tests/linxisa/tile_control_flow_smoke.s
+    require_block_kind_any_of: [tma, cube, tepl]
+    seed: 2003
+    required_in_profile: [release-strict]
+    trace_version: "1.0"
+    ignore_fields: [cycle, next_pc]
+    drop_boundary_selfloops: true
+    notes: "Control-flow baseline for decoupled tile header/body path in current pyCircuit bring-up scope."
+
+  - id: MODEL-PRIVILEGED-EXCEPTION-EDGE
+    category: privileged_exception_edge
+    source: emulator/qemu/tests/linxisa/privileged_ssrset_smoke.s
+    require_block_kind_any_of: [sys]
+    seed: 2004
+    required_in_profile: [release-strict]
+    trace_version: "1.0"
+    ignore_fields: [cycle]

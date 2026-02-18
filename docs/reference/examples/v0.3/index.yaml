@@ -35,18 +35,21 @@ entries:
   - path: docs/reference/examples/v0.3/scratch-legacy/test_simple_fixed.s
     source: avs/scratch/test_simple_fixed.s
     generation: migrated-allowlist
-  - path: docs/reference/examples/v0.3/generated/pto_flash_attention_auto.s
-    source: tools/pto/examples/pto_flash_attention_auto.cpp
+  - path: docs/reference/examples/v0.3/generated/flash_attention.s
+    source: workloads/pto_kernels/flash_attention.cpp
     generation: RUN_QEMU_TILE=0 bash tools/pto/run_v03_pto_to_linx.sh
-  - path: docs/reference/examples/v0.3/generated/pto_gemm_auto.s
-    source: tools/pto/examples/pto_gemm_auto.cpp
+  - path: docs/reference/examples/v0.3/generated/flash_attention_masked.s
+    source: workloads/pto_kernels/flash_attention_masked.cpp
     generation: RUN_QEMU_TILE=0 bash tools/pto/run_v03_pto_to_linx.sh
-  - path: docs/reference/examples/v0.3/generated/pto_mamulb.s
-    source: tools/pto/examples/pto_mamulb.cpp
+  - path: docs/reference/examples/v0.3/generated/gemm.s
+    source: workloads/pto_kernels/gemm.cpp
     generation: RUN_QEMU_TILE=0 bash tools/pto/run_v03_pto_to_linx.sh
-  - path: docs/reference/examples/v0.3/generated/pto_tload_store.s
-    source: tools/pto/examples/pto_tload_store.cpp
+  - path: docs/reference/examples/v0.3/generated/mamulb.s
+    source: workloads/pto_kernels/mamulb.cpp
     generation: RUN_QEMU_TILE=0 bash tools/pto/run_v03_pto_to_linx.sh
-  - path: docs/reference/examples/v0.3/generated/pto_tmatmul_acc.s
-    source: tools/pto/examples/pto_tmatmul_acc.cpp
+  - path: docs/reference/examples/v0.3/generated/tload_store.s
+    source: workloads/pto_kernels/tload_store.cpp
+    generation: RUN_QEMU_TILE=0 bash tools/pto/run_v03_pto_to_linx.sh
+  - path: docs/reference/examples/v0.3/generated/tmatmul_acc.s
+    source: workloads/pto_kernels/tmatmul_acc.cpp
     generation: RUN_QEMU_TILE=0 bash tools/pto/run_v03_pto_to_linx.sh

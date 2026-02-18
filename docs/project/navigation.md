@@ -27,7 +27,7 @@ This is the canonical navigation contract for contributors and agents.
 
 - Freestanding libc support used by AVS/tests: `avs/runtime/freestanding/`
 - Linux libc source forks: `lib/glibc/`, `lib/musl/`
-- PTO bridge headers: `tools/pto/include/pto/`
+- PTO headers (vendored snapshot + Linx backend): `lib/pto/include/pto/`
 - LLVM opcode sync helper: `tools/isa/sync_generated_opcodes.sh`
 
 ## Benchmark locations

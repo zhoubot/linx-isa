@@ -1,0 +1,6 @@
+{"cycle":0,"pc":65536,"insn":2048,"wb_valid":0,"wb_rd":0,"wb_data":0,"mem_valid":0,"mem_addr":0,"mem_wdata":0,"mem_rdata":0,"mem_size":0,"trap_valid":0,"trap_cause":0,"next_pc":65538}
+{"cycle":1,"pc":65538,"insn":305135893,"wb_valid":1,"wb_rd":2,"wb_data":291,"mem_valid":0,"mem_addr":0,"mem_wdata":0,"mem_rdata":0,"mem_size":0,"trap_valid":0,"trap_cause":0,"next_pc":65542}
+{"cycle":2,"pc":65542,"insn":4027650107,"wb_valid":0,"wb_rd":0,"wb_data":0,"mem_valid":0,"mem_addr":0,"mem_wdata":0,"mem_rdata":0,"mem_size":0,"trap_valid":0,"trap_cause":0,"next_pc":65546}
+{"cycle":3,"pc":65546,"insn":277,"wb_valid":1,"wb_rd":2,"wb_data":0,"mem_valid":0,"mem_addr":0,"mem_wdata":0,"mem_rdata":0,"mem_size":0,"trap_valid":0,"trap_cause":0,"next_pc":65550}
+{"cycle":4,"pc":65550,"insn":1335300110,"wb_valid":0,"wb_rd":0,"wb_data":0,"mem_valid":0,"mem_addr":0,"mem_wdata":0,"mem_rdata":0,"mem_size":0,"trap_valid":0,"trap_cause":0,"next_pc":65556}
+{"cycle":5,"pc":65556,"insn":25239641,"wb_valid":0,"wb_rd":0,"wb_data":0,"mem_valid":1,"mem_addr":268435460,"mem_wdata":0,"mem_rdata":0,"mem_size":4,"trap_valid":0,"trap_cause":0,"next_pc":65560}

@@ -5,7 +5,8 @@ Normalize raw v0.3 example asm syntax into canonical Linx v0.3 bring-up style.
 Canonicalization policy for this tool:
   - `l.*`/`L.*` mnemonics -> `v.*`
   - `L.BSTOP` -> `C.BSTOP`
-  - `BSTART.PAR` -> typed `BSTART.{TMA,CUBE,VPAR}` by operand heuristic
+  - `BSTART.PAR` -> typed `BSTART.{TMA,CUBE,TEPL,VPAR}` by operand heuristic
+  - `->*<NKB>` with `N>4` -> `->*<4KB>` for strict v0.3 profile rendering
 
 The goal is deterministic normalization for reconciliation; this script does not
 guarantee that emitted text is directly assemblable.
@@ -23,7 +24,9 @@ from typing import Dict, List, Tuple
 
 _RE_BSTART_PAR = re.compile(r"\bBSTART\.PAR\b")
 _RE_MNEM = re.compile(r"\b([Ll]\.[A-Za-z0-9_.]+|L\.BSTOP)\b")
-_RE_COMMENT = re.compile(r"(;|#|//).*$")
+# Treat '#' as a comment start only at BOL/whitespace so tile refs like t#3 are preserved.
+_RE_COMMENT = re.compile(r"(;|//|(?<!\S)#).*$")
+_RE_TILE_KIB = re.compile(r"(->(?:t|u|m|n|acc)<)(\d+)(KB>)")
 
 
 _CUBE_OPS = {
@@ -36,8 +39,39 @@ _CUBE_OPS = {
     "ACCCVT",
     "TCVT",
 }
-_TMA_OPS = {"TLOAD", "TSTORE", "TPREFETCH"}
+_TMA_OPS = {"TLOAD", "TSTORE", "TPREFETCH", "TMOV"}
 _VPAR_OPS = {"VCALL", "VCALLI"}
+_TEPL_OPS = {
+    "TADD",
+    "TSUB",
+    "TMUL",
+    "TDIV",
+    "TMAX",
+    "TMIN",
+    "TAND",
+    "TOR",
+    "TXOR",
+    "TSHL",
+    "TSHR",
+    "TRELU",
+    "TPRELU",
+    "TCVT",
+    "TROWMAX",
+    "TROWMIN",
+    "TROWSUM",
+    "TCOLMAX",
+    "TCOLMIN",
+    "TCOLSUM",
+    "TEXP",
+    "TLOG",
+    "TSQRT",
+    "TRSQRT",
+    "TRECIP",
+    "TGATHER",
+    "TSCATTER",
+    "TRESHAPE",
+    "TTRANSPOSE",
+}
 
 
 @dataclass
@@ -47,6 +81,21 @@ class Change:
     original: str
     normalized: str
     reason: str
+
+
+def _display_path(path: Path) -> str:
+    p = path.resolve()
+    cwd = Path.cwd().resolve()
+    home = Path.home().resolve()
+    try:
+        return str(p.relative_to(cwd))
+    except ValueError:
+        pass
+    try:
+        return "~/" + str(p.relative_to(home))
+    except ValueError:
+        pass
+    return str(p)
 
 
 def _split_code_comment(line: str) -> Tuple[str, str]:
@@ -69,10 +118,12 @@ def _guess_bstart_kind(code: str) -> Tuple[str, str]:
         return "BSTART.CUBE", f"operand({first})"
     if key in _TMA_OPS:
         return "BSTART.TMA", f"operand({first})"
+    if key in _TEPL_OPS:
+        return "BSTART.TEPL", f"operand({first})"
     if key in _VPAR_OPS:
         return "BSTART.VPAR", f"operand({first})"
-    # Numeric or unknown opcodes are normalized to VPAR in staged v0.3.
-    return "BSTART.VPAR", f"fallback({first})"
+    # Numeric or unknown packed tile-op selectors are normalized to TEPL.
+    return "BSTART.TEPL", f"fallback({first})"
 
 
 def _normalize_line(line: str, line_no: int) -> Tuple[str, List[Change]]:
@@ -125,6 +176,24 @@ def _normalize_line(line: str, line_no: int) -> Tuple[str, List[Change]]:
         return out
 
     code = _RE_MNEM.sub(_mnem_repl, code)
+
+    def _tile_size_repl(m: re.Match[str]) -> str:
+        size_kib = int(m.group(2))
+        if size_kib <= 4:
+            return m.group(0)
+        normalized = f"{m.group(1)}4{m.group(3)}"
+        changes.append(
+            Change(
+                line=line_no,
+                kind="tile_size",
+                original=m.group(0),
+                normalized=normalized,
+                reason="strict v0.3 profile clamps tile transfer/rendered size to <=4KB",
+            )
+        )
+        return normalized
+
+    code = _RE_TILE_KIB.sub(_tile_size_repl, code)
     return code + comment, changes
 
 
@@ -162,8 +231,8 @@ def main() -> int:
     if report_path:
         report_path.parent.mkdir(parents=True, exist_ok=True)
         payload: Dict[str, object] = {
-            "input": str(in_path),
-            "output": str(out_path),
+            "input": _display_path(in_path),
+            "output": _display_path(out_path),
             "change_count": len(changes),
             "changes": [c.__dict__ for c in changes],
         }
@@ -175,4 +244,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

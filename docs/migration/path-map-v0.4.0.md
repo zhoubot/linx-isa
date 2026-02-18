@@ -12,7 +12,7 @@ This map documents the AVS-centric and submodule-first repository tidy.
 | `models/pyCircuit` | `tools/pyCircuit` | submodule moved to tools domain |
 | `docs/validation/avs/` | `avs/` | AVS docs now top-level canonical folder |
 | `toolchain/libc/` | `tools/libc/freestanding/` | freestanding support moved under tools |
-| `toolchain/pto/include/pto/` | `tools/pto/include/pto/` | PTO bridge headers moved |
+| `toolchain/pto/include/pto/` | `lib/pto/include/pto/` | PTO headers moved to vendored snapshot + Linx backend |
 | `toolchain/llvm/sync_generated_opcodes.sh` | `tools/isa/sync_generated_opcodes.sh` | LLVM sync helper moved |
 | `examples/assembly/v0.3/` | `docs/reference/examples/v0.3/` | sample pack consolidated into docs |
 | `tools/ctuning/` | `workloads/benchmarks/ctuning/` | benchmark runner moved under workloads |

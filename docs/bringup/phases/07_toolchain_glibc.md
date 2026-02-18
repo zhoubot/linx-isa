@@ -20,13 +20,15 @@ From the `lib/glibc` submodule:
 ```bash
 cd lib/glibc
 bash tools/linx/build_linx64_glibc.sh
+bash tools/linx/build_linx64_glibc_g1b.sh
 ```
 
 Artifacts and logs:
 
 - Default logs: `out/libc/glibc/logs/02-configure.log`, `out/libc/glibc/logs/03-make.log`, `out/libc/glibc/logs/summary.txt`.
-- Current scripted gate proves `configure` + `csu/subdir_lib` and produces startup objects (`crt*.o`).
-- Full shared `libc.so` proof remains tracked as an explicit follow-up.
+- `G1b` summary: `out/libc/glibc/logs/g1b-summary.txt` (explicit `status` + `classification`).
+- `G1a` gate proves `configure` + `csu/subdir_lib` and produces startup objects (`crt*.o`).
+- `G1b` tracks shared `libc.so` build status and blocker signature if blocked.
 
 ## Current gates
 
@@ -36,6 +38,6 @@ Artifacts and logs:
 ## Exit criteria
 
 - `G1a` passes on the reference bring-up host/toolchain.
-- `G1b` status is tracked in `docs/bringup/libc_status.md`.
+- `G1b` is measured by `build_linx64_glibc_g1b.sh` and status is tracked in `docs/bringup/libc_status.md`.
 - Toolchain/libc no longer blocks Linux shell/userland gates.
 - Remaining issues are tracked explicitly in `docs/bringup/libc_status.md`.

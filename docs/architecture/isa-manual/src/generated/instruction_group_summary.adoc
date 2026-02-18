@@ -18,7 +18,7 @@
 |Block Offset |1 |1
 |Cache Maintain |16 |16
 |Bit Operation |8 |8
-|Block Split |38 |24
+|Block Split |44 |30
 |BSTART |11 |5
 |Arithmetic Operation |20 |20
 |Arithmetic |1 |1

@@ -522,6 +522,12 @@ def build(in_dir: Path) -> Dict[str, Any]:
             }
             if asm:
                 inst["asm"] = asm
+            # Preserve optional metadata (for example human-facing notes) from
+            # opcode source entries so generated references stay self-describing.
+            for mk, mv in ol.meta.items():
+                if mk in {"asm", "group", "length_bits"}:
+                    continue
+                inst[mk] = mv
 
             # constraints are attached to encoding.part[0] to match legacy behavior
             if ol.constraints:

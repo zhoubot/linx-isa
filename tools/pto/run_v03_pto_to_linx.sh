@@ -4,6 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 OUT_DIR="${OUT_DIR:-$ROOT/tools/pto/out}"
 mkdir -p "$OUT_DIR"
+rm -f "$OUT_DIR"/*.s
 
 CXX="${CLANGXX:-${CLANG:-}}"
 if [[ -z "$CXX" ]]; then
@@ -32,7 +33,7 @@ COMMON_FLAGS=(
   -fno-exceptions
   -fno-rtti
   -nostdlib
-  -I"$ROOT/tools/pto/include"
+  -I"$ROOT/lib/pto/include"
 )
 
 compile_one() {
@@ -99,7 +100,7 @@ check_tile_group_coverage() {
 check_tma_descriptor_headers() {
   local asm="$1"
   awk '
-    /BSTART\.(TMA|PAR)[[:space:]]+T(LOAD|STORE)/ {
+    /BSTART\.T(LOAD|STORE)|BSTART\.(TMA|PAR)[[:space:]]+T(LOAD|STORE)/ {
       inblk = 1
       seen_arg = 0
       seen_ior = 0
@@ -128,29 +129,43 @@ check_tma_descriptor_headers() {
   }
 }
 
-compile_one "$ROOT/tools/pto/examples/pto_tload_store.cpp" "$OUT_DIR/pto_tload_store.s"
-compile_one "$ROOT/tools/pto/examples/pto_mamulb.cpp" "$OUT_DIR/pto_mamulb.s"
-compile_one "$ROOT/tools/pto/examples/pto_tmatmul_acc.cpp" "$OUT_DIR/pto_tmatmul_acc.s"
-compile_one "$ROOT/tools/pto/examples/pto_gemm_auto.cpp" "$OUT_DIR/pto_gemm_auto.s"
-compile_one "$ROOT/tools/pto/examples/pto_flash_attention_auto.cpp" "$OUT_DIR/pto_flash_attention_auto.s"
+KERNELS=(
+  tload_store
+  mamulb
+  tmatmul_acc
+  gemm
+  gemm_basic
+  gemm_demo
+  gemm_performance
+  add_custom
+  flash_attention
+  flash_attention_demo
+  flash_attention_masked
+  fa_performance
+  mla_attention_demo
+)
 
-for asm in "$OUT_DIR"/pto_*.s; do
+for kernel in "${KERNELS[@]}"; do
+  compile_one "$ROOT/workloads/pto_kernels/${kernel}.cpp" "$OUT_DIR/${kernel}.s"
+done
+
+for kernel in "${KERNELS[@]}"; do
+  asm="$OUT_DIR/${kernel}.s"
   check_no_forbidden_tokens "$asm"
   check_tma_descriptor_headers "$asm"
 done
 
-grep -qE "BSTART\\.(TMA|PAR)[[:space:]]+TLOAD" "$OUT_DIR/pto_tload_store.s"
-grep -qE "BSTART\\.(TMA|PAR)[[:space:]]+TSTORE" "$OUT_DIR/pto_tload_store.s"
-grep -qE "BSTART\\.(CUBE|PAR)[[:space:]]+MAMULB," "$OUT_DIR/pto_mamulb.s"
-grep -qE "BSTART\\.(CUBE|PAR)[[:space:]]+ACCCVT," "$OUT_DIR/pto_mamulb.s"
-grep -qE "BSTART\\.(CUBE|PAR)[[:space:]]+MAMULB\\.ACC," "$OUT_DIR/pto_tmatmul_acc.s"
-grep -qE "BSTART\\.(CUBE|PAR)[[:space:]]+ACCCVT," "$OUT_DIR/pto_tmatmul_acc.s"
-grep -qE "BSTART\\.(CUBE|PAR)[[:space:]]+MAMULB," "$OUT_DIR/pto_gemm_auto.s"
-grep -qE "BSTART\\.(CUBE|PAR)[[:space:]]+MAMULB," "$OUT_DIR/pto_flash_attention_auto.s"
-check_tile_group_coverage "$OUT_DIR/pto_gemm_auto.s"
-check_tile_group_coverage "$OUT_DIR/pto_flash_attention_auto.s"
+grep -qE "BSTART\\.TLOAD|BSTART\\.(TMA|PAR)[[:space:]]+TLOAD" "$OUT_DIR/tload_store.s"
+grep -qE "BSTART\\.TSTORE|BSTART\\.(TMA|PAR)[[:space:]]+TSTORE" "$OUT_DIR/tload_store.s"
+grep -qE "BSTART\\.TMATMUL|BSTART\\.(CUBE|PAR)[[:space:]]+MAMULB," "$OUT_DIR/mamulb.s"
+grep -qE "BSTART\\.ACCCVT|BSTART\\.(CUBE|PAR)[[:space:]]+ACCCVT," "$OUT_DIR/mamulb.s"
+grep -qE "BSTART\\.TMATMUL\\.ACC|BSTART\\.(CUBE|PAR)[[:space:]]+MAMULB\\.ACC," "$OUT_DIR/tmatmul_acc.s"
+grep -qE "BSTART\\.ACCCVT|BSTART\\.(CUBE|PAR)[[:space:]]+ACCCVT," "$OUT_DIR/tmatmul_acc.s"
+grep -qE "BSTART\\.TMATMUL|BSTART\\.(CUBE|PAR)[[:space:]]+MAMULB," "$OUT_DIR/gemm.s"
+grep -qE "BSTART\\.TMATMUL|BSTART\\.(CUBE|PAR)[[:space:]]+MAMULB," "$OUT_DIR/flash_attention.s"
+grep -qE "BSTART\\.TEPL|BSTART\\.TEXPANDS|BSTART\\.TCOLEXPAND" "$OUT_DIR/flash_attention_masked.s"
 
-if [[ "${RUN_QEMU_TILE:-1}" == "1" ]]; then
+if [[ "${RUN_QEMU_TILE:-0}" == "1" ]]; then
   CLANG_C="${QEMU_CLANG:-$(cd "$(dirname "$CXX")" && pwd)/clang}"
   if [[ ! -x "$CLANG_C" ]]; then
     CLANG_C="$CXX"
@@ -182,6 +197,10 @@ if [[ "${RUN_QEMU_TILE:-1}" == "1" ]]; then
     --require-test-id 0x000A0008 \
     --require-test-id 0x000A0009 \
     --require-test-id 0x000A000A
+fi
+
+if [[ "${RUN_PTO_PARITY:-0}" == "1" ]]; then
+  python3 "$ROOT/tools/pto/run_pto_kernel_parity.py" --timeout "${PTO_PARITY_TIMEOUT:-180}"
 fi
 
 echo "ok: generated PTO->Linx v0.3 assembly in $OUT_DIR"

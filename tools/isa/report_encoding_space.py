@@ -113,6 +113,22 @@ def _eval_constraints(p: PartPat, insn: int) -> bool:
     return True
 
 
+def _eval_constraint_op(op: str, lhs: int, rhs: int) -> bool:
+    if op == "==":
+        return lhs == rhs
+    if op == "!=":
+        return lhs != rhs
+    if op == "<":
+        return lhs < rhs
+    if op == "<=":
+        return lhs <= rhs
+    if op == ">":
+        return lhs > rhs
+    if op == ">=":
+        return lhs >= rhs
+    raise ValueError(f"unsupported constraint operator: {op!r}")
+
+
 def _match_with_constraints(p: PartPat, insn: int) -> bool:
     if (insn & p.mask) != p.match:
         return False
@@ -277,23 +293,25 @@ def _constraints_disjoint(a: PartPat, b: PartPat) -> bool:
             for c in a.constraints:
                 if c.field != field:
                     continue
-                if c.op == "==" and val != c.value:
-                    ok = False
-                    break
-                if c.op == "!=" and val == c.value:
-                    ok = False
-                    break
+                try:
+                    if not _eval_constraint_op(c.op, val, c.value):
+                        ok = False
+                        break
+                except ValueError:
+                    # Unknown operator: cannot prove disjointness.
+                    return False
             if not ok:
                 continue
             for c in b.constraints:
                 if c.field != field:
                     continue
-                if c.op == "==" and val != c.value:
-                    ok = False
-                    break
-                if c.op == "!=" and val == c.value:
-                    ok = False
-                    break
+                try:
+                    if not _eval_constraint_op(c.op, val, c.value):
+                        ok = False
+                        break
+                except ValueError:
+                    # Unknown operator: cannot prove disjointness.
+                    return False
             if not ok:
                 continue
 

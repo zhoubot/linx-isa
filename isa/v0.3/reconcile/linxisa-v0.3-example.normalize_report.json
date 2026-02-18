@@ -1,5 +1,5 @@
 {
-  "change_count": 356,
+  "change_count": 430,
   "changes": [
     {
       "kind": "bstart",
@@ -14,6 +14,20 @@
       "normalized": "1177c: 02001181     \tBSTART.VPAR\tVCALL",
       "original": "1177c: 02001181     \tBSTART.PAR\tVCALL",
       "reason": "BSTART.PAR->typed(operand(VCALL))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 8,
+      "normalized": "->u<4KB>",
+      "original": "->u<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
+      "kind": "tile_size",
+      "line": 9,
+      "normalized": "->u<4KB>",
+      "original": "->u<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -37,6 +51,20 @@
       "reason": "BSTART.PAR->typed(operand(VCALL))"
     },
     {
+      "kind": "tile_size",
+      "line": 26,
+      "normalized": "->t<4KB>",
+      "original": "->t<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
+      "kind": "tile_size",
+      "line": 27,
+      "normalized": "->t<4KB>",
+      "original": "->t<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 32,
       "normalized": "117d4: 02001181     \tBSTART.VPAR\tVCALL",
@@ -51,6 +79,13 @@
       "reason": "BSTART.PAR->typed(operand(TLOAD))"
     },
     {
+      "kind": "tile_size",
+      "line": 39,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 44,
       "normalized": "117fc: 22109181     \tBSTART.TMA\tTLOAD, FP16",
@@ -58,11 +93,25 @@
       "reason": "BSTART.PAR->typed(operand(TLOAD))"
     },
     {
+      "kind": "tile_size",
+      "line": 46,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 52,
-      "normalized": "11814: 22519181     \tBSTART.VPAR\t163, FP16",
+      "normalized": "11814: 22519181     \tBSTART.TEPL\t163, FP16",
       "original": "11814: 22519181     \tBSTART.PAR\t163, FP16",
       "reason": "BSTART.PAR->typed(fallback(163))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 54,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -72,11 +121,25 @@
       "reason": "BSTART.PAR->typed(operand(MAMULB))"
     },
     {
+      "kind": "tile_size",
+      "line": 58,
+      "normalized": "->acc<4KB>",
+      "original": "->acc<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 63,
-      "normalized": "11834: 22519181     \tBSTART.VPAR\t163, FP16",
+      "normalized": "11834: 22519181     \tBSTART.TEPL\t163, FP16",
       "original": "11834: 22519181     \tBSTART.PAR\t163, FP16",
       "reason": "BSTART.PAR->typed(fallback(163))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 65,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -86,6 +149,13 @@
       "reason": "BSTART.PAR->typed(operand(MAMULB.ACC))"
     },
     {
+      "kind": "tile_size",
+      "line": 69,
+      "normalized": "->acc<4KB>",
+      "original": "->acc<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 73,
       "normalized": "11852: 0a811181     \tBSTART.CUBE\tACCCVT, FP32",
@@ -93,11 +163,25 @@
       "reason": "BSTART.PAR->typed(operand(ACCCVT))"
     },
     {
+      "kind": "tile_size",
+      "line": 75,
+      "normalized": "->t<4KB>",
+      "original": "->t<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 79,
-      "normalized": "11864: 22519181     \tBSTART.VPAR\t163, FP16",
+      "normalized": "11864: 22519181     \tBSTART.TEPL\t163, FP16",
       "original": "11864: 22519181     \tBSTART.PAR\t163, FP16",
       "reason": "BSTART.PAR->typed(fallback(163))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 81,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -107,11 +191,25 @@
       "reason": "BSTART.PAR->typed(operand(MAMULB))"
     },
     {
+      "kind": "tile_size",
+      "line": 85,
+      "normalized": "->acc<4KB>",
+      "original": "->acc<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 90,
-      "normalized": "11884: 22519181     \tBSTART.VPAR\t163, FP16",
+      "normalized": "11884: 22519181     \tBSTART.TEPL\t163, FP16",
       "original": "11884: 22519181     \tBSTART.PAR\t163, FP16",
       "reason": "BSTART.PAR->typed(fallback(163))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 92,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -121,11 +219,25 @@
       "reason": "BSTART.PAR->typed(operand(MAMULB.ACC))"
     },
     {
+      "kind": "tile_size",
+      "line": 96,
+      "normalized": "->acc<4KB>",
+      "original": "->acc<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 100,
       "normalized": "118a2: 0a811181     \tBSTART.CUBE\tACCCVT, FP32",
       "original": "118a2: 0a811181     \tBSTART.PAR\tACCCVT, FP32",
       "reason": "BSTART.PAR->typed(operand(ACCCVT))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 102,
+      "normalized": "->t<4KB>",
+      "original": "->t<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -135,11 +247,25 @@
       "reason": "BSTART.PAR->typed(operand(VCALL))"
     },
     {
+      "kind": "tile_size",
+      "line": 106,
+      "normalized": "->m<4KB>",
+      "original": "->m<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 111,
       "normalized": "118c6: 02001181     \tBSTART.VPAR\tVCALL",
       "original": "118c6: 02001181     \tBSTART.PAR\tVCALL",
       "reason": "BSTART.PAR->typed(operand(VCALL))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 112,
+      "normalized": "->m<4KB>",
+      "original": "->m<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -149,11 +275,25 @@
       "reason": "BSTART.PAR->typed(operand(TLOAD))"
     },
     {
+      "kind": "tile_size",
+      "line": 119,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 124,
       "normalized": "118f0: 22109181     \tBSTART.TMA\tTLOAD, FP16",
       "original": "118f0: 22109181     \tBSTART.PAR\tTLOAD, FP16",
       "reason": "BSTART.PAR->typed(operand(TLOAD))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 126,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -163,11 +303,25 @@
       "reason": "BSTART.PAR->typed(operand(MAMULB))"
     },
     {
+      "kind": "tile_size",
+      "line": 132,
+      "normalized": "->acc<4KB>",
+      "original": "->acc<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 136,
       "normalized": "11914: 0a811181     \tBSTART.CUBE\tACCCVT, FP32",
       "original": "11914: 0a811181     \tBSTART.PAR\tACCCVT, FP32",
       "reason": "BSTART.PAR->typed(operand(ACCCVT))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 138,
+      "normalized": "->t<4KB>",
+      "original": "->t<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -177,11 +331,25 @@
       "reason": "BSTART.PAR->typed(operand(MAMULB))"
     },
     {
+      "kind": "tile_size",
+      "line": 142,
+      "normalized": "->acc<4KB>",
+      "original": "->acc<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 146,
       "normalized": "11932: 0a811181     \tBSTART.CUBE\tACCCVT, FP32",
       "original": "11932: 0a811181     \tBSTART.PAR\tACCCVT, FP32",
       "reason": "BSTART.PAR->typed(operand(ACCCVT))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 148,
+      "normalized": "->t<4KB>",
+      "original": "->t<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -191,11 +359,25 @@
       "reason": "BSTART.PAR->typed(operand(MAMULB))"
     },
     {
+      "kind": "tile_size",
+      "line": 152,
+      "normalized": "->acc<4KB>",
+      "original": "->acc<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 156,
       "normalized": "11950: 0a811181     \tBSTART.CUBE\tACCCVT, FP32",
       "original": "11950: 0a811181     \tBSTART.PAR\tACCCVT, FP32",
       "reason": "BSTART.PAR->typed(operand(ACCCVT))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 158,
+      "normalized": "->u<4KB>",
+      "original": "->u<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -205,11 +387,25 @@
       "reason": "BSTART.PAR->typed(operand(MAMULB))"
     },
     {
+      "kind": "tile_size",
+      "line": 162,
+      "normalized": "->acc<4KB>",
+      "original": "->acc<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 166,
       "normalized": "1196e: 0a811181     \tBSTART.CUBE\tACCCVT, FP32",
       "original": "1196e: 0a811181     \tBSTART.PAR\tACCCVT, FP32",
       "reason": "BSTART.PAR->typed(operand(ACCCVT))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 168,
+      "normalized": "->t<4KB>",
+      "original": "->t<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -224,6 +420,20 @@
       "normalized": "11994: 02001181     \tBSTART.VPAR\tVCALL",
       "original": "11994: 02001181     \tBSTART.PAR\tVCALL",
       "reason": "BSTART.PAR->typed(operand(VCALL))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 178,
+      "normalized": "->u<4KB>",
+      "original": "->u<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
+      "kind": "tile_size",
+      "line": 179,
+      "normalized": "->u<4KB>",
+      "original": "->u<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -247,6 +457,20 @@
       "reason": "BSTART.PAR->typed(operand(VCALL))"
     },
     {
+      "kind": "tile_size",
+      "line": 196,
+      "normalized": "->t<4KB>",
+      "original": "->t<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
+      "kind": "tile_size",
+      "line": 197,
+      "normalized": "->t<4KB>",
+      "original": "->t<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 202,
       "normalized": "119ec: 02001181     \tBSTART.VPAR\tVCALL",
@@ -261,6 +485,13 @@
       "reason": "BSTART.PAR->typed(operand(TLOAD))"
     },
     {
+      "kind": "tile_size",
+      "line": 209,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 214,
       "normalized": "11a14: 22109181     \tBSTART.TMA\tTLOAD, FP16",
@@ -268,11 +499,25 @@
       "reason": "BSTART.PAR->typed(operand(TLOAD))"
     },
     {
+      "kind": "tile_size",
+      "line": 216,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 222,
-      "normalized": "11a2c: 22519181     \tBSTART.VPAR\t163, FP16",
+      "normalized": "11a2c: 22519181     \tBSTART.TEPL\t163, FP16",
       "original": "11a2c: 22519181     \tBSTART.PAR\t163, FP16",
       "reason": "BSTART.PAR->typed(fallback(163))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 224,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -282,11 +527,25 @@
       "reason": "BSTART.PAR->typed(operand(MAMULB))"
     },
     {
+      "kind": "tile_size",
+      "line": 228,
+      "normalized": "->acc<4KB>",
+      "original": "->acc<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 233,
-      "normalized": "11a4c: 22519181     \tBSTART.VPAR\t163, FP16",
+      "normalized": "11a4c: 22519181     \tBSTART.TEPL\t163, FP16",
       "original": "11a4c: 22519181     \tBSTART.PAR\t163, FP16",
       "reason": "BSTART.PAR->typed(fallback(163))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 235,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -296,6 +555,13 @@
       "reason": "BSTART.PAR->typed(operand(MAMULB.ACC))"
     },
     {
+      "kind": "tile_size",
+      "line": 239,
+      "normalized": "->acc<4KB>",
+      "original": "->acc<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 243,
       "normalized": "11a6a: 0a811181     \tBSTART.CUBE\tACCCVT, FP32",
@@ -303,11 +569,25 @@
       "reason": "BSTART.PAR->typed(operand(ACCCVT))"
     },
     {
+      "kind": "tile_size",
+      "line": 245,
+      "normalized": "->t<4KB>",
+      "original": "->t<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 249,
-      "normalized": "11a7c: 22519181     \tBSTART.VPAR\t163, FP16",
+      "normalized": "11a7c: 22519181     \tBSTART.TEPL\t163, FP16",
       "original": "11a7c: 22519181     \tBSTART.PAR\t163, FP16",
       "reason": "BSTART.PAR->typed(fallback(163))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 251,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -317,11 +597,25 @@
       "reason": "BSTART.PAR->typed(operand(MAMULB))"
     },
     {
+      "kind": "tile_size",
+      "line": 255,
+      "normalized": "->acc<4KB>",
+      "original": "->acc<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 260,
-      "normalized": "11a9c: 22519181     \tBSTART.VPAR\t163, FP16",
+      "normalized": "11a9c: 22519181     \tBSTART.TEPL\t163, FP16",
       "original": "11a9c: 22519181     \tBSTART.PAR\t163, FP16",
       "reason": "BSTART.PAR->typed(fallback(163))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 262,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -331,11 +625,25 @@
       "reason": "BSTART.PAR->typed(operand(MAMULB.ACC))"
     },
     {
+      "kind": "tile_size",
+      "line": 266,
+      "normalized": "->acc<4KB>",
+      "original": "->acc<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 270,
       "normalized": "11aba: 0a811181     \tBSTART.CUBE\tACCCVT, FP32",
       "original": "11aba: 0a811181     \tBSTART.PAR\tACCCVT, FP32",
       "reason": "BSTART.PAR->typed(operand(ACCCVT))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 272,
+      "normalized": "->t<4KB>",
+      "original": "->t<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -345,11 +653,25 @@
       "reason": "BSTART.PAR->typed(operand(VCALL))"
     },
     {
+      "kind": "tile_size",
+      "line": 276,
+      "normalized": "->m<4KB>",
+      "original": "->m<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 281,
       "normalized": "11ade: 02001181     \tBSTART.VPAR\tVCALL",
       "original": "11ade: 02001181     \tBSTART.PAR\tVCALL",
       "reason": "BSTART.PAR->typed(operand(VCALL))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 282,
+      "normalized": "->u<4KB>",
+      "original": "->u<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -359,11 +681,25 @@
       "reason": "BSTART.PAR->typed(operand(TLOAD))"
     },
     {
+      "kind": "tile_size",
+      "line": 289,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 294,
       "normalized": "11b08: 22109181     \tBSTART.TMA\tTLOAD, FP16",
       "original": "11b08: 22109181     \tBSTART.PAR\tTLOAD, FP16",
       "reason": "BSTART.PAR->typed(operand(TLOAD))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 296,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -373,11 +709,25 @@
       "reason": "BSTART.PAR->typed(operand(MAMULB))"
     },
     {
+      "kind": "tile_size",
+      "line": 302,
+      "normalized": "->acc<4KB>",
+      "original": "->acc<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 306,
       "normalized": "11b2c: 0a811181     \tBSTART.CUBE\tACCCVT, FP32",
       "original": "11b2c: 0a811181     \tBSTART.PAR\tACCCVT, FP32",
       "reason": "BSTART.PAR->typed(operand(ACCCVT))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 308,
+      "normalized": "->t<4KB>",
+      "original": "->t<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -387,11 +737,25 @@
       "reason": "BSTART.PAR->typed(operand(MAMULB))"
     },
     {
+      "kind": "tile_size",
+      "line": 312,
+      "normalized": "->acc<4KB>",
+      "original": "->acc<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 316,
       "normalized": "11b4a: 0a811181     \tBSTART.CUBE\tACCCVT, FP32",
       "original": "11b4a: 0a811181     \tBSTART.PAR\tACCCVT, FP32",
       "reason": "BSTART.PAR->typed(operand(ACCCVT))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 318,
+      "normalized": "->t<4KB>",
+      "original": "->t<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -401,11 +765,25 @@
       "reason": "BSTART.PAR->typed(operand(MAMULB))"
     },
     {
+      "kind": "tile_size",
+      "line": 322,
+      "normalized": "->acc<4KB>",
+      "original": "->acc<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 326,
       "normalized": "11b68: 0a811181     \tBSTART.CUBE\tACCCVT, FP32",
       "original": "11b68: 0a811181     \tBSTART.PAR\tACCCVT, FP32",
       "reason": "BSTART.PAR->typed(operand(ACCCVT))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 328,
+      "normalized": "->u<4KB>",
+      "original": "->u<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -415,11 +793,25 @@
       "reason": "BSTART.PAR->typed(operand(MAMULB))"
     },
     {
+      "kind": "tile_size",
+      "line": 332,
+      "normalized": "->acc<4KB>",
+      "original": "->acc<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 336,
       "normalized": "11b86: 0a811181     \tBSTART.CUBE\tACCCVT, FP32",
       "original": "11b86: 0a811181     \tBSTART.PAR\tACCCVT, FP32",
       "reason": "BSTART.PAR->typed(operand(ACCCVT))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 338,
+      "normalized": "->t<4KB>",
+      "original": "->t<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -434,6 +826,20 @@
       "normalized": "11bac: 02001181     \tBSTART.VPAR\tVCALL",
       "original": "11bac: 02001181     \tBSTART.PAR\tVCALL",
       "reason": "BSTART.PAR->typed(operand(VCALL))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 348,
+      "normalized": "->u<4KB>",
+      "original": "->u<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
+      "kind": "tile_size",
+      "line": 349,
+      "normalized": "->u<4KB>",
+      "original": "->u<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -457,6 +863,20 @@
       "reason": "BSTART.PAR->typed(operand(VCALL))"
     },
     {
+      "kind": "tile_size",
+      "line": 366,
+      "normalized": "->t<4KB>",
+      "original": "->t<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
+      "kind": "tile_size",
+      "line": 367,
+      "normalized": "->t<4KB>",
+      "original": "->t<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 372,
       "normalized": "11c04: 02001181     \tBSTART.VPAR\tVCALL",
@@ -471,6 +891,13 @@
       "reason": "BSTART.PAR->typed(operand(TLOAD))"
     },
     {
+      "kind": "tile_size",
+      "line": 379,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 384,
       "normalized": "11c2c: 22109181     \tBSTART.TMA\tTLOAD, FP16",
@@ -478,11 +905,25 @@
       "reason": "BSTART.PAR->typed(operand(TLOAD))"
     },
     {
+      "kind": "tile_size",
+      "line": 386,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 392,
-      "normalized": "11c44: 22519181     \tBSTART.VPAR\t163, FP16",
+      "normalized": "11c44: 22519181     \tBSTART.TEPL\t163, FP16",
       "original": "11c44: 22519181     \tBSTART.PAR\t163, FP16",
       "reason": "BSTART.PAR->typed(fallback(163))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 394,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -492,11 +933,25 @@
       "reason": "BSTART.PAR->typed(operand(MAMULB))"
     },
     {
+      "kind": "tile_size",
+      "line": 398,
+      "normalized": "->acc<4KB>",
+      "original": "->acc<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 403,
-      "normalized": "11c64: 22519181     \tBSTART.VPAR\t163, FP16",
+      "normalized": "11c64: 22519181     \tBSTART.TEPL\t163, FP16",
       "original": "11c64: 22519181     \tBSTART.PAR\t163, FP16",
       "reason": "BSTART.PAR->typed(fallback(163))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 405,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -506,6 +961,13 @@
       "reason": "BSTART.PAR->typed(operand(MAMULB.ACC))"
     },
     {
+      "kind": "tile_size",
+      "line": 409,
+      "normalized": "->acc<4KB>",
+      "original": "->acc<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 413,
       "normalized": "11c82: 0a811181     \tBSTART.CUBE\tACCCVT, FP32",
@@ -513,11 +975,25 @@
       "reason": "BSTART.PAR->typed(operand(ACCCVT))"
     },
     {
+      "kind": "tile_size",
+      "line": 415,
+      "normalized": "->t<4KB>",
+      "original": "->t<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 419,
-      "normalized": "11c94: 22519181     \tBSTART.VPAR\t163, FP16",
+      "normalized": "11c94: 22519181     \tBSTART.TEPL\t163, FP16",
       "original": "11c94: 22519181     \tBSTART.PAR\t163, FP16",
       "reason": "BSTART.PAR->typed(fallback(163))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 421,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -527,11 +1003,25 @@
       "reason": "BSTART.PAR->typed(operand(MAMULB))"
     },
     {
+      "kind": "tile_size",
+      "line": 425,
+      "normalized": "->acc<4KB>",
+      "original": "->acc<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 430,
-      "normalized": "11cb4: 22519181     \tBSTART.VPAR\t163, FP16",
+      "normalized": "11cb4: 22519181     \tBSTART.TEPL\t163, FP16",
       "original": "11cb4: 22519181     \tBSTART.PAR\t163, FP16",
       "reason": "BSTART.PAR->typed(fallback(163))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 432,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -541,11 +1031,25 @@
       "reason": "BSTART.PAR->typed(operand(MAMULB.ACC))"
     },
     {
+      "kind": "tile_size",
+      "line": 436,
+      "normalized": "->acc<4KB>",
+      "original": "->acc<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 440,
       "normalized": "11cd2: 0a811181     \tBSTART.CUBE\tACCCVT, FP32",
       "original": "11cd2: 0a811181     \tBSTART.PAR\tACCCVT, FP32",
       "reason": "BSTART.PAR->typed(operand(ACCCVT))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 442,
+      "normalized": "->t<4KB>",
+      "original": "->t<16KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -555,11 +1059,25 @@
       "reason": "BSTART.PAR->typed(operand(VCALL))"
     },
     {
+      "kind": "tile_size",
+      "line": 446,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
+    },
+    {
       "kind": "bstart",
       "line": 451,
       "normalized": "11cf6: 02001181     \tBSTART.VPAR\tVCALL",
       "original": "11cf6: 02001181     \tBSTART.PAR\tVCALL",
       "reason": "BSTART.PAR->typed(operand(VCALL))"
+    },
+    {
+      "kind": "tile_size",
+      "line": 452,
+      "normalized": "->t<4KB>",
+      "original": "->t<8KB>",
+      "reason": "strict v0.3 profile clamps tile transfer/rendered size to <=4KB"
     },
     {
       "kind": "bstart",
@@ -2494,6 +3012,6 @@
       "reason": "legacy L.BSTOP normalized to compressed C.BSTOP"
     }
   ],
-  "input": ".-v0.3-example.asm",
-  "output": "./spec/isa/golden/v0.3/reconcile/linxisa-v0.3-example.normalized.asm"
+  "input": "~/linxisa-v0.3-example.asm",
+  "output": "isa/v0.3/reconcile/linxisa-v0.3-example.normalized.asm"
 }

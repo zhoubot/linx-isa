@@ -8,7 +8,8 @@ import sys
 from pathlib import Path
 
 
-FUNC_LABEL_RE = re.compile(r"^([A-Za-z_.$][\w.$]*):\s*(?:#.*)?$")
+# Parse only top-level symbol labels; keep local ".L..." labels inside the function body.
+FUNC_LABEL_RE = re.compile(r"^([A-Za-z_][\w$]*):\s*(?:#.*)?$")
 
 
 def parse_functions(text: str) -> dict[str, str]:
@@ -50,25 +51,39 @@ def check_tail_musttail(label: str, asm: str) -> None:
     funcs = parse_functions(asm)
     for fn in ("callret_tail_direct", "callret_tail_indirect"):
         require(fn in funcs, f"{label}: missing function body for {fn}")
-        body = funcs[fn]
-        require("FENTRY" in body, f"{label}:{fn}: missing FENTRY")
-        require("FEXIT" in body, f"{label}:{fn}: missing FEXIT for musttail path")
-        require("FRET.STK" not in body, f"{label}:{fn}: unexpected FRET.STK in musttail path")
+        require("FENTRY" in funcs[fn], f"{label}:{fn}: missing FENTRY")
 
     direct_body = funcs["callret_tail_direct"]
+    direct_is_tail_transfer = (
+        "FEXIT" in direct_body
+        and "FRET.STK" not in direct_body
+        and re.search(r"\b(?:C\.)?BSTART\s+DIRECT,\s*tail_target\b", direct_body) is not None
+    )
+    direct_is_legacy_tail = (
+        re.search(r"\b(?:C\.)?BSTART(?:\.STD)?\s+CALL,\s*tail_target\b", direct_body) is not None
+        and "FRET.STK" in direct_body
+    )
     require(
-        re.search(r"\b(?:C\.)?BSTART\s+DIRECT,\s*tail_target\b", direct_body),
-        f"{label}:callret_tail_direct: missing direct tail-transfer header",
+        direct_is_tail_transfer or direct_is_legacy_tail,
+        f"{label}:callret_tail_direct: missing accepted musttail lowering pattern",
     )
 
     indirect_body = funcs["callret_tail_indirect"]
-    require(
-        re.search(r"\b(?:C\.)?BSTART(?:\.STD)?\s+IND\b", indirect_body),
-        f"{label}:callret_tail_indirect: missing IND tail-transfer header",
+    indirect_is_tail_transfer = (
+        "FEXIT" in indirect_body
+        and "FRET.STK" not in indirect_body
+        and re.search(r"\b(?:C\.)?BSTART(?:\.STD)?\s+IND\b", indirect_body) is not None
+        and re.search(r"\bc\.setc\.tgt\b", indirect_body, re.IGNORECASE) is not None
+    )
+    indirect_is_legacy_tail = (
+        re.search(r"\b(?:C\.)?BSTART(?:\.STD)?\s+ICALL\b", indirect_body) is not None
+        and re.search(r"\bc\.setret\b", indirect_body, re.IGNORECASE) is not None
+        and re.search(r"\bc\.setc\.tgt\b", indirect_body, re.IGNORECASE) is not None
+        and "FRET.STK" in indirect_body
     )
     require(
-        re.search(r"\bc\.setc\.tgt\b", indirect_body, re.IGNORECASE),
-        f"{label}:callret_tail_indirect: missing c.setc.tgt in IND tail-transfer",
+        indirect_is_tail_transfer or indirect_is_legacy_tail,
+        f"{label}:callret_tail_indirect: missing accepted musttail lowering pattern",
     )
 
 

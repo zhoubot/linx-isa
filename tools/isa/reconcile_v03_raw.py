@@ -68,9 +68,9 @@ _RULES: Tuple[ItemRule, ...] = (
     ItemRule(
         item_id="tma_baseline_ops",
         status="keep",
-        canonical="TLOAD/TSTORE/TPREFETCH staged in TMA profile",
+        canonical="TLOAD/TSTORE/TPREFETCH/TMOV staged in TMA profile",
         reason="Well-defined in raw text and aligned with existing architecture docs",
-        patterns=("TLOAD", "TSTORE", "TPREFETCH"),
+        patterns=("TLOAD", "TSTORE", "TPREFETCH", "TMOV"),
     ),
     ItemRule(
         item_id="normalize_legacy_l_family",
@@ -82,7 +82,7 @@ _RULES: Tuple[ItemRule, ...] = (
     ItemRule(
         item_id="normalize_bstart_par",
         status="normalize",
-        canonical="BSTART.PAR -> typed BSTART.{TMA,CUBE,VPAR}",
+        canonical="BSTART.PAR -> typed BSTART.{TMA,CUBE,TEPL,VPAR}",
         reason="Canonical typed block-start policy for v0.3 outputs",
         patterns=("BSTART.PAR",),
     ),
@@ -133,6 +133,20 @@ def _find_lines(text: str, needle: str, max_hits: int = 8) -> List[int]:
     return out
 
 
+def _display_path(path: Path, repo_root: Path) -> str:
+    p = path.resolve()
+    home = Path.home().resolve()
+    try:
+        return str(p.relative_to(repo_root))
+    except ValueError:
+        pass
+    try:
+        return "~/" + str(p.relative_to(home))
+    except ValueError:
+        pass
+    return str(p)
+
+
 def _collect_mnems(asm_text: str) -> Set[str]:
     tokens = {m.group(1) for m in _RE_ASM_TOKEN.finditer(asm_text)}
     return {t for t in tokens if t}
@@ -167,7 +181,7 @@ def _classify_asm_tokens(tokens: Iterable[str]) -> List[Dict[str, object]]:
                 {
                     "token": t,
                     "status": "normalize",
-                    "canonical": "BSTART.{TMA|CUBE|VPAR}",
+                    "canonical": "BSTART.{TMA|CUBE|TEPL|VPAR}",
                     "reason": "typed BSTART form is canonical in staged v0.3",
                 }
             )
@@ -316,10 +330,10 @@ def main() -> int:
     report: Dict[str, object] = {
         "version": "0.3",
         "inputs": {
-            "raw_text": str(raw_text_path),
-            "raw_asm": str(raw_asm_path),
-            "janus_ref": str(janus_path),
-            "normalized_asm": str(normalized_asm_path),
+            "raw_text": _display_path(raw_text_path, repo_root),
+            "raw_asm": _display_path(raw_asm_path, repo_root),
+            "janus_ref": _display_path(janus_path, repo_root),
+            "normalized_asm": _display_path(normalized_asm_path, repo_root),
         },
         "summary": {
             "status_counts": status_counts,

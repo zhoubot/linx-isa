@@ -2193,6 +2193,29 @@ EndBlock()
 BeginNextBlock(/* type/kind/target as encoded */)
 ----
 
+[[insndesc-block-split-bstart-acccvt]]
+===== BSTART.ACCCVT
+
+Terminates the current block and begins the next block, encoding both block type and transition kind.
+
+Catalog forms:: 1 form(s) (32 bits).
+
+Assembly forms::
++
+* `BSTART.ACCCVT DataType`
+
+Encoding notes (informative)::
++
+* Alias of BSTART.CUBE Function=8. ACCCVT requires quantization args via B.ARG+B.IOR (scale/zero-point required in strict profile).
+
+Operation (informative)::
++
+[source]
+----
+EndBlock()
+BeginNextBlock(/* type/kind/target as encoded */)
+----
+
 [[insndesc-block-split-bstart-cube]]
 ===== BSTART.CUBE
 
@@ -2202,7 +2225,11 @@ Catalog forms:: 1 form(s) (32 bits).
 
 Assembly forms::
 +
-* `BSTART.CUBE TileOP, DataType`
+* `BSTART.CUBE Function, DataType`
+
+Encoding notes (informative)::
++
+* Generic CUBE selector form. Function=0/2/8 are emitted as BSTART.TMATMUL/BSTART.TMATMUL.ACC/BSTART.ACCCVT aliases.
 
 Operation (informative)::
 +
@@ -2347,7 +2374,34 @@ Catalog forms:: 1 form(s) (32 bits).
 
 Assembly forms::
 +
-* `BSTART.TEPL TileOp, DataType`
+* `BSTART.TEPL TileOp10, DataType`
+
+Encoding notes (informative)::
++
+* TileOp10 selects PTO template ops (for example TADD TSUB TROWMAX). Unassigned TileOp10 values are reserved for future template extension.
+
+Operation (informative)::
++
+[source]
+----
+EndBlock()
+BeginNextBlock(/* type/kind/target as encoded */)
+----
+
+[[insndesc-block-split-bstart-tload]]
+===== BSTART.TLOAD
+
+Terminates the current block and begins the next block, encoding both block type and transition kind.
+
+Catalog forms:: 1 form(s) (32 bits).
+
+Assembly forms::
++
+* `BSTART.TLOAD DataType`
+
+Encoding notes (informative)::
++
+* Alias of BSTART.TMA Function=0. Requires B.ARG layout/pad and B.IOR stride/base plus B.IOT/B.IOTI tile binding.
 
 Operation (informative)::
 +
@@ -2366,7 +2420,103 @@ Catalog forms:: 1 form(s) (32 bits).
 
 Assembly forms::
 +
-* `BSTART.TMA TileOp, DataType`
+* `BSTART.TMA Function, DataType`
+
+Encoding notes (informative)::
++
+* Generic TMA selector form. Function=0/1/2 are emitted as BSTART.TLOAD/BSTART.TSTORE/BSTART.TMOV aliases; 3..31 are reserved in strict v0.3.
+
+Operation (informative)::
++
+[source]
+----
+EndBlock()
+BeginNextBlock(/* type/kind/target as encoded */)
+----
+
+[[insndesc-block-split-bstart-tmatmul]]
+===== BSTART.TMATMUL
+
+Terminates the current block and begins the next block, encoding both block type and transition kind.
+
+Catalog forms:: 1 form(s) (32 bits).
+
+Assembly forms::
++
+* `BSTART.TMATMUL DataType`
+
+Encoding notes (informative)::
++
+* Alias of BSTART.CUBE Function=0. Requires B.DIM (LB0/LB1/LB2 as m,n,k) and tile bindings via B.IOT/B.IOTI.
+
+Operation (informative)::
++
+[source]
+----
+EndBlock()
+BeginNextBlock(/* type/kind/target as encoded */)
+----
+
+[[insndesc-block-split-bstart-tmatmul-acc]]
+===== BSTART.TMATMUL.ACC
+
+Terminates the current block and begins the next block, encoding both block type and transition kind.
+
+Catalog forms:: 1 form(s) (32 bits).
+
+Assembly forms::
++
+* `BSTART.TMATMUL.ACC DataType`
+
+Encoding notes (informative)::
++
+* Alias of BSTART.CUBE Function=2. Requires B.DIM (LB0/LB1/LB2 as m,n,k) and tile bindings via B.IOT/B.IOTI.
+
+Operation (informative)::
++
+[source]
+----
+EndBlock()
+BeginNextBlock(/* type/kind/target as encoded */)
+----
+
+[[insndesc-block-split-bstart-tmov]]
+===== BSTART.TMOV
+
+Terminates the current block and begins the next block, encoding both block type and transition kind.
+
+Catalog forms:: 1 form(s) (32 bits).
+
+Assembly forms::
++
+* `BSTART.TMOV DataType`
+
+Encoding notes (informative)::
++
+* Alias of BSTART.TMA Function=2. TMOV is tile-state only (no GM memory access) and destination allocation is queue-push only.
+
+Operation (informative)::
++
+[source]
+----
+EndBlock()
+BeginNextBlock(/* type/kind/target as encoded */)
+----
+
+[[insndesc-block-split-bstart-tstore]]
+===== BSTART.TSTORE
+
+Terminates the current block and begins the next block, encoding both block type and transition kind.
+
+Catalog forms:: 1 form(s) (32 bits).
+
+Assembly forms::
++
+* `BSTART.TSTORE DataType`
+
+Encoding notes (informative)::
++
+* Alias of BSTART.TMA Function=1. Requires B.ARG layout/pad and B.IOR stride/base plus B.IOT/B.IOTI tile binding.
 
 Operation (informative)::
 +
@@ -2387,6 +2537,10 @@ Assembly forms::
 +
 * `BSTART.VPAR <VS8, VS16>`
 
+Encoding notes (informative)::
++
+* TVEC-equivalent parallel SIMT header; requires B.TEXT body target in decoupled form.
+
 Operation (informative)::
 +
 [source]
@@ -2405,6 +2559,10 @@ Catalog forms:: 1 form(s) (32 bits).
 Assembly forms::
 +
 * `BSTART.VSEQ <VS8, VS16>`
+
+Encoding notes (informative)::
++
+* TVEC-equivalent sequential SIMT header; requires B.TEXT body target in decoupled form.
 
 Operation (informative)::
 +

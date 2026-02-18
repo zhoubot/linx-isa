@@ -27,6 +27,11 @@ SAMPLES: dict[str, dict[str, str]] = {
         "start": "MUSL_CALLRET_START",
         "pass": "MUSL_CALLRET_PASS",
     },
+    "cpp17_smoke": {
+        "src": "linux_musl_cpp17_smoke.cpp",
+        "start": "MUSL_CPP17_START",
+        "pass": "MUSL_CPP17_PASS",
+    },
 }
 
 
@@ -45,6 +50,18 @@ def _default_lld() -> Path:
     cands = [
         Path("/Users/zhoubot/llvm-project/build-linxisa-clang/bin/ld.lld"),
         REPO_ROOT / "compiler" / "llvm" / "build-linxisa-clang" / "bin" / "ld.lld",
+    ]
+    for p in cands:
+        if p.exists():
+            return p
+    return cands[0]
+
+
+def _default_clangxx(clang: Path) -> Path:
+    cands = [
+        Path(str(clang).replace("/clang", "/clang++")),
+        Path("/Users/zhoubot/llvm-project/build-linxisa-clang/bin/clang++"),
+        REPO_ROOT / "compiler" / "llvm" / "build-linxisa-clang" / "bin" / "clang++",
     ]
     for p in cands:
         if p.exists():
@@ -105,6 +122,13 @@ def _find_gen_init_cpio(linux_root: Path, out_dir: Path) -> Path:
     return out_bin
 
 
+def _find_first_file(cands: list[Path]) -> Path | None:
+    for p in cands:
+        if p.exists():
+            return p
+    return None
+
+
 def _parse_mode_summary(path: Path) -> dict[str, str]:
     out: dict[str, str] = {}
     if not path.exists():
@@ -154,6 +178,8 @@ def _run_split_link_modes(args: argparse.Namespace, out_dir: Path, selected_samp
             args.musl_root,
             "--clang",
             args.clang,
+            "--clangxx",
+            args.clangxx,
             "--lld",
             args.lld,
             "--qemu",
@@ -218,6 +244,7 @@ def _run_split_link_modes(args: argparse.Namespace, out_dir: Path, selected_samp
             "linux_root": str(Path(os.path.expanduser(args.linux_root)).resolve()),
             "musl_root": str(Path(os.path.expanduser(args.musl_root)).resolve()),
             "clang": str(Path(os.path.expanduser(args.clang)).resolve()),
+            "clangxx": str(Path(os.path.expanduser(args.clangxx)).resolve()),
             "lld": str(Path(os.path.expanduser(args.lld)).absolute()),
             "qemu": str(Path(os.path.expanduser(args.qemu)).resolve()),
             "out_dir": str(out_dir),
@@ -246,6 +273,7 @@ def main(argv: list[str]) -> int:
     parser.add_argument("--linux-root", default="/Users/zhoubot/linux")
     parser.add_argument("--musl-root", default="/Users/zhoubot/linx-isa/lib/musl")
     parser.add_argument("--clang", default=str(_default_clang()))
+    parser.add_argument("--clangxx", default="")
     parser.add_argument("--lld", default=str(_default_lld()))
     parser.add_argument("--qemu", default=str(_default_qemu()))
     parser.add_argument("--target", default="linx64-unknown-linux-musl")
@@ -279,11 +307,21 @@ def main(argv: list[str]) -> int:
     linux_root = Path(os.path.expanduser(args.linux_root)).resolve()
     musl_root = Path(os.path.expanduser(args.musl_root)).resolve()
     clang = Path(os.path.expanduser(args.clang)).resolve()
+    clangxx = (
+        Path(os.path.expanduser(args.clangxx)).resolve()
+        if args.clangxx
+        else _default_clangxx(clang).resolve()
+    )
     lld = Path(os.path.expanduser(args.lld)).absolute()
     qemu = Path(os.path.expanduser(args.qemu)).resolve()
     out_dir = Path(os.path.expanduser(args.out_dir)).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
     selected_samples = _select_samples(args.sample)
+    args.clang = str(clang)
+    args.clangxx = str(clangxx)
+    args.lld = str(lld)
+    args.qemu = str(qemu)
+    args.out_dir = str(out_dir)
 
     if args.link == "both":
         return _run_split_link_modes(args, out_dir, selected_samples)
@@ -299,6 +337,7 @@ def main(argv: list[str]) -> int:
             "linux_root": str(linux_root),
             "musl_root": str(musl_root),
             "clang": str(clang),
+            "clangxx": str(clangxx),
             "lld": str(lld),
             "qemu": str(qemu),
             "out_dir": str(out_dir),
@@ -320,6 +359,7 @@ def main(argv: list[str]) -> int:
         _write_summary(summary_path, summary)
 
     _check_exe(clang, "clang")
+    _check_exe(clangxx, "clang++")
     _check_exe(lld, "ld.lld")
     _check_exe(qemu, "qemu-system-linx64")
 
@@ -447,42 +487,140 @@ def main(argv: list[str]) -> int:
             sample_bin = out_dir / f"{sample_name}_{link_mode}"
             sample_obj = out_dir / f"{sample_src.stem}_{link_mode}.o"
             compile_log = out_dir / f"compile_{sample_name}_{link_mode}.log"
+            is_cpp = sample_src.suffix in {".cc", ".cpp", ".cxx"}
+            compile_tool = clangxx if is_cpp else clang
+
+            shared_lib = sysroot / "lib" / "libc.so"
+            shared_loader = sysroot / "lib" / "ld-musl-linx64.so.1"
+            lib_search = [
+                sysroot / "lib",
+                sysroot / "usr/lib",
+                REPO_ROOT / "out" / "cpp-runtime" / "musl-cxx17-noeh" / "install" / "lib",
+                REPO_ROOT / "out" / "cpp-runtime" / "musl-cxx17-noeh" / "install" / "usr/lib",
+            ]
+            cpp_static_libs: list[str] = []
+            cpp_unwindlib = "none"
+            cpp_include_dir: Path | None = None
+            if is_cpp:
+                libcxx = _find_first_file([d / "libc++.a" for d in lib_search])
+                libcxxabi = _find_first_file([d / "libc++abi.a" for d in lib_search])
+                libunwind = _find_first_file([d / "libunwind.a" for d in lib_search])
+                if libcxx is None or libcxxabi is None:
+                    add_stage(
+                        f"sample-compile[{sample_name}:{link_mode}]",
+                        "fail",
+                        "missing static C++ runtime archives (libc++, libc++abi)",
+                    )
+                    summary["result"] = {
+                        "ok": False,
+                        "classification": f"{sample_name}_{link_mode}_cpp_runtime_lib_missing",
+                    }
+                    _write_summary(summary_path, summary)
+                    return 2
+                cpp_static_libs = [str(libcxx), str(libcxxabi)]
+                if libunwind is not None:
+                    cpp_static_libs.append(str(libunwind))
+                    cpp_unwindlib = "libunwind"
+                cpp_include_dir = _find_first_file(
+                    [
+                        sysroot / "include" / "c++" / "v1",
+                        sysroot / "usr" / "include" / "c++" / "v1",
+                        REPO_ROOT
+                        / "out"
+                        / "cpp-runtime"
+                        / "musl-cxx17-noeh"
+                        / "install"
+                        / "include"
+                        / "c++"
+                        / "v1",
+                    ]
+                )
+                if cpp_include_dir is None:
+                    add_stage(
+                        f"sample-compile[{sample_name}:{link_mode}]",
+                        "fail",
+                        "missing C++ headers (c++/v1) in sysroot/runtime overlay",
+                    )
+                    summary["result"] = {
+                        "ok": False,
+                        "classification": f"{sample_name}_{link_mode}_cpp_headers_missing",
+                    }
+                    _write_summary(summary_path, summary)
+                    return 2
 
             compile_sample_cmd = [
-                str(clang),
+                str(compile_tool),
                 "-target",
                 args.target,
                 "--sysroot",
                 str(sysroot),
+            ]
+            if is_cpp:
+                compile_sample_cmd += [
+                    "-std=c++17",
+                    "-fno-exceptions",
+                    "-fno-rtti",
+                    "-nostdinc++",
+                    "-isystem",
+                    str(cpp_include_dir),
+                    "-stdlib=libc++",
+                    "-rtlib=compiler-rt",
+                    "-unwindlib=" + cpp_unwindlib,
+                ]
+            compile_sample_cmd += [
                 "-c",
                 str(sample_src),
                 "-o",
                 str(sample_obj),
             ]
 
-            shared_lib = sysroot / "lib" / "libc.so"
-            shared_loader = sysroot / "lib" / "ld-musl-linx64.so.1"
-
             if link_mode == "static":
-                link_cmd = [
-                    str(clang),
-                    "-target",
-                    args.target,
-                    "--sysroot",
-                    str(sysroot),
-                    "-static",
-                    "-fuse-ld=lld",
-                    "-nostdlib",
-                    str(sysroot / "lib" / "crt1.o"),
-                    str(sysroot / "lib" / "crti.o"),
-                    str(sample_obj),
-                    str(runtime_lib),
-                    str(sysroot / "lib" / "libc.a"),
-                    str(sysroot / "lib" / "crtn.o"),
-                    f"-Wl,--image-base={args.image_base}",
-                    "-o",
-                    str(sample_bin),
-                ]
+                if is_cpp:
+                    link_cmd = [
+                        str(clangxx),
+                        "-target",
+                        args.target,
+                        "--sysroot",
+                        str(sysroot),
+                        "-std=c++17",
+                        "-fno-exceptions",
+                        "-fno-rtti",
+                        "-static",
+                        "-no-pie",
+                        "-unwindlib=" + cpp_unwindlib,
+                        "-fuse-ld=lld",
+                        "-nostdlib",
+                        str(sysroot / "lib" / "crt1.o"),
+                        str(sysroot / "lib" / "crti.o"),
+                        str(sample_obj),
+                        str(runtime_lib),
+                        *cpp_static_libs,
+                        str(sysroot / "lib" / "libc.a"),
+                        str(sysroot / "lib" / "crtn.o"),
+                        f"-Wl,--image-base={args.image_base}",
+                        "-o",
+                        str(sample_bin),
+                    ]
+                else:
+                    link_cmd = [
+                        str(clang),
+                        "-target",
+                        args.target,
+                        "--sysroot",
+                        str(sysroot),
+                        "-static",
+                        "-fuse-ld=lld",
+                        "-nostdlib",
+                        str(sysroot / "lib" / "crt1.o"),
+                        str(sysroot / "lib" / "crti.o"),
+                        str(sample_obj),
+                        str(runtime_lib),
+                        str(sysroot / "lib" / "libc.a"),
+                        str(sysroot / "lib" / "crtn.o"),
+                        f"-Wl,--image-base={args.image_base}",
+                        "-o",
+                        str(sample_bin),
+                    ]
             else:
                 if not shared_lib.exists() or not shared_loader.exists():
                     add_stage(
@@ -496,27 +634,55 @@ def main(argv: list[str]) -> int:
                     }
                     _write_summary(summary_path, summary)
                     return 2
-                link_cmd = [
-                    str(clang),
-                    "-target",
-                    args.target,
-                    "--sysroot",
-                    str(sysroot),
-                    "-fuse-ld=lld",
-                    "-nostdlib",
-                    str(sysroot / "lib" / "crt1.o"),
-                    str(sysroot / "lib" / "crti.o"),
-                    str(sample_obj),
-                    str(runtime_lib),
-                    "-L" + str(sysroot / "lib"),
-                    "-L" + str(sysroot / "usr/lib"),
-                    "-lc",
-                    str(sysroot / "lib" / "crtn.o"),
-                    "-Wl,--dynamic-linker=/lib/ld-musl-linx64.so.1",
-                    f"-Wl,--image-base={args.image_base}",
-                    "-o",
-                    str(sample_bin),
-                ]
+                if is_cpp:
+                    link_cmd = [
+                        str(clangxx),
+                        "-target",
+                        args.target,
+                        "--sysroot",
+                        str(sysroot),
+                        "-std=c++17",
+                        "-fno-exceptions",
+                        "-fno-rtti",
+                        "-unwindlib=" + cpp_unwindlib,
+                        "-fuse-ld=lld",
+                        "-nostdlib",
+                        str(sysroot / "lib" / "crt1.o"),
+                        str(sysroot / "lib" / "crti.o"),
+                        str(sample_obj),
+                        str(runtime_lib),
+                        *cpp_static_libs,
+                        "-L" + str(sysroot / "lib"),
+                        "-L" + str(sysroot / "usr/lib"),
+                        "-lc",
+                        str(sysroot / "lib" / "crtn.o"),
+                        "-Wl,--dynamic-linker=/lib/ld-musl-linx64.so.1",
+                        f"-Wl,--image-base={args.image_base}",
+                        "-o",
+                        str(sample_bin),
+                    ]
+                else:
+                    link_cmd = [
+                        str(clang),
+                        "-target",
+                        args.target,
+                        "--sysroot",
+                        str(sysroot),
+                        "-fuse-ld=lld",
+                        "-nostdlib",
+                        str(sysroot / "lib" / "crt1.o"),
+                        str(sysroot / "lib" / "crti.o"),
+                        str(sample_obj),
+                        str(runtime_lib),
+                        "-L" + str(sysroot / "lib"),
+                        "-L" + str(sysroot / "usr/lib"),
+                        "-lc",
+                        str(sysroot / "lib" / "crtn.o"),
+                        "-Wl,--dynamic-linker=/lib/ld-musl-linx64.so.1",
+                        f"-Wl,--image-base={args.image_base}",
+                        "-o",
+                        str(sample_bin),
+                    ]
 
             with compile_log.open("w", encoding="utf-8") as fp:
                 rc = 0

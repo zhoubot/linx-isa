@@ -45,6 +45,7 @@ This table lists unique mnemonics in the v0.3 catalog. Each mnemonic may have mu
 |`BSE` |Execution Control |32 |1
 |`BSTART` |Block Split |32 |2
 |`BSTART CALL` |BSTART |32 |1
+|`BSTART.ACCCVT` |Block Split |32 |1
 |`BSTART.CUBE` |Block Split |32 |1
 |`BSTART.FIXP` |Block Split |32 |1
 |`BSTART.FP` |Block Split |32 |7
@@ -53,7 +54,12 @@ This table lists unique mnemonics in the v0.3 catalog. Each mnemonic may have mu
 |`BSTART.STD` |Block Split |32 |7
 |`BSTART.SYS` |Block Split |32 |1
 |`BSTART.TEPL` |Block Split |32 |1
+|`BSTART.TLOAD` |Block Split |32 |1
 |`BSTART.TMA` |Block Split |32 |1
+|`BSTART.TMATMUL` |Block Split |32 |1
+|`BSTART.TMATMUL.ACC` |Block Split |32 |1
+|`BSTART.TMOV` |Block Split |32 |1
+|`BSTART.TSTORE` |Block Split |32 |1
 |`BSTART.VPAR` |Block Split |32 |1
 |`BSTART.VSEQ` |Block Split |32 |1
 |`BSTOP` |Block Split |32 |1

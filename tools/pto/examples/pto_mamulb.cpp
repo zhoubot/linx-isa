@@ -1,10 +1,16 @@
-#include <pto/linx/TileOps.hpp>
+#include <common/pto_tileop.hpp>
+
+using namespace pto;
 
 extern "C" void pto_mamulb_i32_8x8(const int *lhs, const int *rhs, int *dst) {
-  // v0.3 bring-up size mapping: bytes = 2^(SizeCode+4). 4KiB => SizeCode=8.
-  constexpr unsigned SizeCode = 8u;
-  auto t_lhs = pto::linx::tload<SizeCode>(lhs);
-  auto t_rhs = pto::linx::tload<SizeCode>(rhs);
-  auto t_dst = pto::linx::mamulb<8, 8, 8>(t_lhs, t_rhs);
-  pto::linx::tstore<SizeCode>(dst, t_dst);
+  using tile_i32_8x8 = Tile<Location::Vec, int, 8, 8, BLayout::RowMajor>;
+
+  tile_i32_8x8 t_lhs;
+  tile_i32_8x8 t_rhs;
+  tile_i32_8x8 t_dst;
+
+  TLOAD(t_lhs, lhs);
+  TLOAD(t_rhs, rhs);
+  TMATMUL(t_dst, t_lhs, t_rhs);
+  TSTORE(dst, t_dst);
 }

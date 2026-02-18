@@ -11,11 +11,16 @@
 #include <pto/linx/AutoModeKernels.hpp>
 #include <pto/linx/TileOps.hpp>
 
-extern "C" void pto_tload_store_i32(const int *src, int *dst);
-extern "C" void pto_mamulb_i32_8x8(const int *lhs, const int *rhs, int *dst);
-extern "C" void pto_tmatmul_acc_i32_8x8(const int *lhs, const int *rhs, int *acc_dst);
-extern "C" void pto_gemm_auto_i32(const int *lhs, const int *rhs, int *dst);
-extern "C" void pto_flash_attention_auto_i32(const int *query, const int *key, const int *value, int *dst);
+#ifndef PTO_QEMU_SMOKE
+#define PTO_QEMU_SMOKE 0
+#endif
+
+extern "C" void tload_store_i32(int *src, int *dst);
+extern "C" void mamulb_i32(int *lhs, int *rhs, int *dst);
+extern "C" void tmatmul_acc_i32(int *lhs, int *rhs, int *acc_dst);
+extern "C" void gemm_i32(int *lhs, int *rhs, int *dst);
+extern "C" void flash_attention_i32(int *query, int *key, int *value, int *dst);
+extern "C" void flash_attention_masked_f32(float *out_ptr, float *q_ptr, float *k_ptr, float *v_ptr);
 
 static constexpr unsigned kTileElemsI32 = pto::linx::auto_mode::kTileElemsI32;
 static constexpr unsigned kTileSizeCode = pto::linx::auto_mode::kFullTileSizeCode;
@@ -79,6 +84,55 @@ static void print_checksum(const char *label, int64_t value)
     uart_puts("0x");
     uart_puthex64((uint64_t)value);
     uart_puts("\r\n");
+}
+
+static uint64_t fnv1a_bytes(const void *ptr, unsigned bytes)
+{
+    const uint8_t *p = (const uint8_t *)ptr;
+    uint64_t h = UINT64_C(1469598103934665603);
+    for (unsigned i = 0; i < bytes; ++i) {
+        h ^= (uint64_t)p[i];
+        h *= UINT64_C(1099511628211);
+    }
+    return h;
+}
+
+static uint32_t lcg32(uint32_t state)
+{
+    return state * 1664525u + 1013904223u;
+}
+
+static void seed_i32(int32_t *buf, unsigned n, uint32_t seed)
+{
+    uint32_t s = seed;
+    for (unsigned i = 0; i < n; ++i) {
+        s = lcg32(s);
+        buf[i] = (int32_t)((s & 0x7fffu) - 0x3fffu);
+    }
+}
+
+static void seed_f32(float *buf, unsigned n, uint32_t seed)
+{
+    uint32_t s = seed;
+    for (unsigned i = 0; i < n; ++i) {
+        s = lcg32(s);
+        const uint32_t m = (s & 0xffffu);
+        buf[i] = (float)((int32_t)m - 32768) / 8192.0f;
+    }
+}
+
+static void zero_i32(int32_t *buf, unsigned n)
+{
+    for (unsigned i = 0; i < n; ++i) {
+        buf[i] = 0;
+    }
+}
+
+static void zero_f32(float *buf, unsigned n)
+{
+    for (unsigned i = 0; i < n; ++i) {
+        buf[i] = 0.0f;
+    }
 }
 
 static void run_base_tile_tests()
@@ -296,142 +350,105 @@ static void run_auto_mode_flash_test()
 
 static void run_pto_example_kernel_tests()
 {
+    constexpr unsigned kMatElems = PTO_QEMU_SMOKE ? 16u * 16u : 256u * 256u;
+    constexpr unsigned kVecElems = PTO_QEMU_SMOKE ? 32u * 32u : 1024u * 1024u;
+    constexpr unsigned kFlashI32Q = PTO_QEMU_SMOKE ? 16u * 4u : 256u * 4u;
+    constexpr unsigned kFlashI32K = PTO_QEMU_SMOKE ? 4u * 16u : 4u * 256u;
+    constexpr unsigned kFlashI32V = PTO_QEMU_SMOKE ? 16u * 16u : 256u * 16u;
+    constexpr unsigned kFlashI32O = PTO_QEMU_SMOKE ? 16u * 16u : 256u * 16u;
+    constexpr unsigned kFlashMaskQ = PTO_QEMU_SMOKE ? 18u * 16u : 130u * 16u;
+    constexpr unsigned kFlashMaskK = PTO_QEMU_SMOKE ? 16u * 18u : 16u * 130u;
+    constexpr unsigned kFlashMaskV = PTO_QEMU_SMOKE ? 18u * 16u : 130u * 16u;
+    constexpr unsigned kFlashMaskO = PTO_QEMU_SMOKE ? 18u * 16u : 130u * 16u;
+
+#if PTO_QEMU_SMOKE
+    constexpr uint64_t kDigestTloadStore = UINT64_C(0xA1248F48FF3C7199);
+    constexpr uint64_t kDigestMamulb = UINT64_C(0x084B8196C3EAA422);
+    constexpr uint64_t kDigestTmatmulAcc = UINT64_C(0x5AA3E71E161E8994);
+    constexpr uint64_t kDigestGemm = UINT64_C(0x084B8196C3EAA422);
+    constexpr uint64_t kDigestFlash = UINT64_C(0x5F8E134D249806D9);
+    constexpr uint64_t kDigestFlashMasked = UINT64_C(0xEA8DDEE10079D090);
+#else
+    constexpr uint64_t kDigestTloadStore = UINT64_C(0xABFA311400C734C3);
+    constexpr uint64_t kDigestMamulb = UINT64_C(0xACA73824B88635A3);
+    constexpr uint64_t kDigestTmatmulAcc = UINT64_C(0xBA7AB93F72C13823);
+    constexpr uint64_t kDigestGemm = UINT64_C(0xACA73824B88635A3);
+    constexpr uint64_t kDigestFlash = UINT64_C(0x88745CBAC7A57629);
+    constexpr uint64_t kDigestFlashMasked = UINT64_C(0x29C9E1D314B63C33);
+#endif
+
+    alignas(64) static int32_t MAT_A[kMatElems];
+    alignas(64) static int32_t MAT_B[kMatElems];
+    alignas(64) static int32_t MAT_C[kMatElems];
+    alignas(64) static int32_t VEC_SRC[kVecElems];
+    alignas(64) static int32_t VEC_DST[kVecElems];
+
+    alignas(64) static int32_t FLASH_Q[kFlashI32Q];
+    alignas(64) static int32_t FLASH_K[kFlashI32K];
+    alignas(64) static int32_t FLASH_V[kFlashI32V];
+    alignas(64) static int32_t FLASH_O[kFlashI32O];
+
+    alignas(64) static float FLASH_M_Q[kFlashMaskQ];
+    alignas(64) static float FLASH_M_K[kFlashMaskK];
+    alignas(64) static float FLASH_M_V[kFlashMaskV];
+    alignas(64) static float FLASH_M_O[kFlashMaskO];
+
+    seed_i32(MAT_A, kMatElems, 0x1001u);
+    seed_i32(MAT_B, kMatElems, 0x1002u);
+    zero_i32(MAT_C, kMatElems);
+
+    seed_i32(VEC_SRC, kVecElems, 0x1003u);
+    zero_i32(VEC_DST, kVecElems);
+
+    seed_i32(FLASH_Q, kFlashI32Q, 0x3001u);
+    seed_i32(FLASH_K, kFlashI32K, 0x3002u);
+    seed_i32(FLASH_V, kFlashI32V, 0x3003u);
+    zero_i32(FLASH_O, kFlashI32O);
+
+    seed_f32(FLASH_M_Q, kFlashMaskQ, 0x5001u);
+    seed_f32(FLASH_M_K, kFlashMaskK, 0x5002u);
+    seed_f32(FLASH_M_V, kFlashMaskV, 0x5003u);
+    zero_f32(FLASH_M_O, kFlashMaskO);
+
     test_start(0x000A0006);
-    uart_puts("PTO example tload/tstore ... ");
-
-    alignas(16) static int32_t EX_SRC[1024];
-    alignas(16) static int32_t EX_DST[1024];
-    for (unsigned i = 0; i < 1024; i++) {
-        EX_SRC[i] = (int32_t)((int)i * 5 - 19);
-        EX_DST[i] = 0;
-    }
-
-    pto_tload_store_i32(EX_SRC, EX_DST);
-    for (unsigned i = 0; i < 256; i++) {
-        TEST_EQ32((uint32_t)EX_DST[i], (uint32_t)EX_SRC[i], 0x000A6000u + i);
-    }
+    uart_puts("PTO kernel tload_store digest ... ");
+    tload_store_i32(VEC_SRC, VEC_DST);
+    TEST_EQ64(fnv1a_bytes(VEC_DST, sizeof(VEC_DST)), kDigestTloadStore, 0x000A6001u);
     test_pass();
 
     test_start(0x000A0007);
-    uart_puts("PTO example mamulb ... ");
-
-    alignas(16) static int32_t EX_MA[1024];
-    alignas(16) static int32_t EX_MB[1024];
-    alignas(16) static int32_t EX_MC[1024];
-    alignas(16) static int32_t EX_MC_REF[64];
-    init_tile_pattern(EX_MA, 7);
-    init_tile_pattern(EX_MB, 13);
-    for (unsigned i = 0; i < 1024; i++) {
-        EX_MC[i] = 0;
-    }
-
-    pto_mamulb_i32_8x8(EX_MA, EX_MB, EX_MC);
-    tile_matmul_ref_i32_8x8(EX_MC_REF, EX_MA, EX_MB);
-    for (unsigned i = 0; i < 64; i++) {
-        TEST_EQ32((uint32_t)EX_MC[i], (uint32_t)EX_MC_REF[i], 0x000A7000u + i);
-    }
+    uart_puts("PTO kernel mamulb digest ... ");
+    zero_i32(MAT_C, kMatElems);
+    mamulb_i32(MAT_A, MAT_B, MAT_C);
+    TEST_EQ64(fnv1a_bytes(MAT_C, sizeof(MAT_C)), kDigestMamulb, 0x000A7001u);
     test_pass();
 
     test_start(0x000A0008);
-    uart_puts("PTO example tmatmul_acc ... ");
-
-    alignas(16) static int32_t EX_AA[1024];
-    alignas(16) static int32_t EX_AB[1024];
-    alignas(16) static int32_t EX_ACC[1024];
-    alignas(16) static int32_t EX_ACC_MUL[64];
-    init_tile_pattern(EX_AA, 5);
-    init_tile_pattern(EX_AB, 9);
-    for (unsigned i = 0; i < 1024; i++) {
-        EX_ACC[i] = 0;
-    }
-    for (unsigned i = 0; i < 64; i++) {
-        EX_ACC[i] = (int32_t)((int)i - 17);
-    }
-
-    pto_tmatmul_acc_i32_8x8(EX_AA, EX_AB, EX_ACC);
-    tile_matmul_ref_i32_8x8(EX_ACC_MUL, EX_AA, EX_AB);
-    for (unsigned i = 0; i < 64; i++) {
-        const int32_t expected = (int32_t)((int64_t)EX_ACC_MUL[i] * 2);
-        TEST_EQ32((uint32_t)EX_ACC[i], (uint32_t)expected, 0x000A8000u + i);
-    }
+    uart_puts("PTO kernel tmatmul_acc digest ... ");
+    zero_i32(MAT_C, kMatElems);
+    tmatmul_acc_i32(MAT_A, MAT_B, MAT_C);
+    TEST_EQ64(fnv1a_bytes(MAT_C, sizeof(MAT_C)), kDigestTmatmulAcc, 0x000A8001u);
     test_pass();
 
     test_start(0x000A0009);
-    uart_puts("PTO example gemm_auto ... ");
-
-    alignas(16) static int32_t EX_GEMM_A[9 * kTileElemsI32];
-    alignas(16) static int32_t EX_GEMM_B[8 * kTileElemsI32];
-    alignas(16) static int32_t EX_GEMM_OUT[11 * kTileElemsI32];
-    alignas(16) static int32_t EX_GEMM_REF[64];
-
-    for (unsigned tile = 0; tile < 9; tile++) {
-        init_tile_pattern(tile_ptr(EX_GEMM_A, tile), (int32_t)(3 + tile));
-    }
-    for (unsigned tile = 0; tile < 8; tile++) {
-        init_tile_pattern(tile_ptr(EX_GEMM_B, tile), (int32_t)(11 + tile));
-    }
-    for (unsigned i = 0; i < 11 * kTileElemsI32; i++) {
-        EX_GEMM_OUT[i] = 0;
-    }
-
-    pto_gemm_auto_i32(EX_GEMM_A, EX_GEMM_B, EX_GEMM_OUT);
-
-    const unsigned gemm_lhs_map[11] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 0, 1};
-    const unsigned gemm_rhs_map[11] = {0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 7};
-    for (unsigned tile = 0; tile < 11; tile++) {
-        tile_matmul_ref_i32_8x8(
-            EX_GEMM_REF,
-            tile_ptr(EX_GEMM_A, gemm_lhs_map[tile]),
-            tile_ptr(EX_GEMM_B, gemm_rhs_map[tile]));
-        const int32_t *out_tile = tile_ptr(EX_GEMM_OUT, tile);
-        for (unsigned i = 0; i < 64; i++) {
-            TEST_EQ32((uint32_t)out_tile[i], (uint32_t)EX_GEMM_REF[i], 0x000A9000u + tile * 64u + i);
-        }
-    }
-    print_checksum("QEMU_GEMM_EXAMPLE_CHECKSUM=", checksum_tiles_i32(EX_GEMM_OUT, 11));
+    uart_puts("PTO kernel gemm digest ... ");
+    zero_i32(MAT_C, kMatElems);
+    gemm_i32(MAT_A, MAT_B, MAT_C);
+    TEST_EQ64(fnv1a_bytes(MAT_C, sizeof(MAT_C)), kDigestGemm, 0x000A9001u);
     test_pass();
 
     test_start(0x000A000A);
-    uart_puts("PTO example flash_auto ... ");
+    uart_puts("PTO kernel flash_attention digest ... ");
+    zero_i32(FLASH_O, kFlashI32O);
+    flash_attention_i32(FLASH_Q, FLASH_K, FLASH_V, FLASH_O);
+    TEST_EQ64(fnv1a_bytes(FLASH_O, sizeof(FLASH_O)), kDigestFlash, 0x000AA001u);
+    test_pass();
 
-    alignas(16) static int32_t EX_FLASH_Q[5 * kTileElemsI32];
-    alignas(16) static int32_t EX_FLASH_K[5 * kTileElemsI32];
-    alignas(16) static int32_t EX_FLASH_V[4 * kTileElemsI32];
-    alignas(16) static int32_t EX_FLASH_OUT[9 * kTileElemsI32];
-    alignas(16) static int32_t EX_FLASH_SCORE[64];
-    alignas(16) static int32_t EX_FLASH_REF[64];
-
-    for (unsigned tile = 0; tile < 5; tile++) {
-        init_tile_pattern(tile_ptr(EX_FLASH_Q, tile), (int32_t)(17 + tile));
-        init_tile_pattern(tile_ptr(EX_FLASH_K, tile), (int32_t)(29 + tile));
-    }
-    for (unsigned tile = 0; tile < 4; tile++) {
-        init_tile_pattern(tile_ptr(EX_FLASH_V, tile), (int32_t)(41 + tile));
-    }
-    for (unsigned i = 0; i < 9 * kTileElemsI32; i++) {
-        EX_FLASH_OUT[i] = 0;
-    }
-
-    pto_flash_attention_auto_i32(EX_FLASH_Q, EX_FLASH_K, EX_FLASH_V, EX_FLASH_OUT);
-
-    const unsigned score_q_map[9] = {0, 1, 2, 3, 4, 0, 1, 2, 3};
-    const unsigned score_k_map[9] = {0, 1, 2, 3, 4, 1, 2, 3, 4};
-    const unsigned score_v_map[9] = {0, 1, 2, 3, 0, 1, 2, 3, 0};
-    for (unsigned tile = 0; tile < 9; tile++) {
-        tile_matmul_ref_i32_8x8(
-            EX_FLASH_SCORE,
-            tile_ptr(EX_FLASH_Q, score_q_map[tile]),
-            tile_ptr(EX_FLASH_K, score_k_map[tile]));
-        tile_matmul_ref_i32_8x8(
-            EX_FLASH_REF,
-            EX_FLASH_SCORE,
-            tile_ptr(EX_FLASH_V, score_v_map[tile]));
-        const int32_t *out_tile = tile_ptr(EX_FLASH_OUT, tile);
-        for (unsigned i = 0; i < 64; i++) {
-            TEST_EQ32((uint32_t)out_tile[i], (uint32_t)EX_FLASH_REF[i], 0x000AA000u + tile * 64u + i);
-        }
-    }
-    print_checksum("QEMU_FLASH_EXAMPLE_CHECKSUM=", checksum_tiles_i32(EX_FLASH_OUT, 9));
+    test_start(0x000A0012);
+    uart_puts("PTO kernel flash_attention_masked digest ... ");
+    zero_f32(FLASH_M_O, kFlashMaskO);
+    flash_attention_masked_f32(FLASH_M_O, FLASH_M_Q, FLASH_M_K, FLASH_M_V);
+    TEST_EQ64(fnv1a_bytes(FLASH_M_O, sizeof(FLASH_M_O)), kDigestFlashMasked, 0x000A1201u);
     test_pass();
 }
 

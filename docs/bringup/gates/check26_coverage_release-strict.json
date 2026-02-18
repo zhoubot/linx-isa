@@ -1,0 +1,95 @@
+{
+  "coverage": {
+    "1": [
+      "AVS-TOOL-001"
+    ],
+    "10": [
+      "AVS-TOOL-011"
+    ],
+    "11": [
+      "AVS-TOOL-001"
+    ],
+    "12": [
+      "AVS-TOOL-001"
+    ],
+    "13": [
+      "AVS-BLK-004"
+    ],
+    "14": [
+      "AVS-TOOL-001"
+    ],
+    "15": [
+      "AVS-TOOL-011"
+    ],
+    "16": [
+      "AVS-BLK-004"
+    ],
+    "17": [
+      "AVS-BLK-004"
+    ],
+    "18": [
+      "AVS-SYS-002"
+    ],
+    "19": [
+      "AVS-ABI-001"
+    ],
+    "2": [
+      "AVS-TOOL-001"
+    ],
+    "20": [
+      "AVS-TOOL-001"
+    ],
+    "21": [
+      "AVS-SYS-002"
+    ],
+    "22": [
+      "AVS-SYS-002"
+    ],
+    "23": [
+      "AVS-EMU-001"
+    ],
+    "24": [
+      "AVS-SYS-001"
+    ],
+    "25": [
+      "AVS-ABI-002"
+    ],
+    "26": [
+      "AVS-TOOL-011"
+    ],
+    "3": [
+      "AVS-TOOL-001"
+    ],
+    "4": [
+      "AVS-SYS-001"
+    ],
+    "5": [
+      "AVS-TOOL-001"
+    ],
+    "6": [
+      "AVS-BLK-004"
+    ],
+    "7": [
+      "AVS-BLK-004"
+    ],
+    "8": [
+      "AVS-BLK-004"
+    ],
+    "9": [
+      "AVS-BLK-004"
+    ]
+  },
+  "ok": true,
+  "profile": "release-strict",
+  "required_tests": [
+    "AVS-ABI-001",
+    "AVS-ABI-002",
+    "AVS-BLK-004",
+    "AVS-EMU-001",
+    "AVS-SYS-001",
+    "AVS-SYS-002",
+    "AVS-TOOL-001",
+    "AVS-TOOL-011"
+  ],
+  "uncovered": []
+}

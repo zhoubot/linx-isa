@@ -102,9 +102,11 @@ Block ISA interaction:
 * These are block header descriptors and MUST appear only inside block headers (after `BSTART.*`).
 * `B.TEXT`: Required in decoupled block headers to specify body entrypoint.
 * `B.DIM`: Sets loop-bound registers (LB0, LB1, LB2) for tile/vector operations.
-* `B.ATTR`: Sets block attributes (atomicity, ordering, data layout).
+* `B.ATTR`: Sets full block-attribute fields `{C, DR, DataLayout, DataType, PadValue, T, aq, atom, far, rl}`.
 * `B.HINT`: Optimization hints for the execution engine.
-* `B.IOD`/`B.IOR`/`B.IOT`/`B.IOTI`: Tile block input/output descriptors.
+* `B.IOD`: Deprecated in strict-v0.3 canonical streams (compatibility input only).
+* `B.IOR`/`B.IOT`/`B.IOTI`: Tile block input/output descriptors (`B.IOT` is dynamic-size via `RegSrc`; `B.IOTI` is
+  immediate-size via `SizeCode`).
 
 ==== Floating-Point Instructions
 
@@ -118,13 +120,42 @@ Block ISA interaction:
 
 ==== Tile and Vector Instructions (v0.3)
 
-Instructions: `BSTART.TMA`, `BSTART.CUBE`, `BSTART.VPAR`, `BSTART.VSEQ`, `BSTART.MPAR`, `BSTART.MSEQ`, `TLOAD`, `TSTORE`, `MAMULB`, `TCVT`, and related forms
+Instructions: `BSTART.TLOAD`, `BSTART.TSTORE`, `BSTART.TMOV`, `BSTART.TMATMUL`, `BSTART.TMATMUL.ACC`, `BSTART.ACCCVT`,
+`BSTART.TMA`, `BSTART.CUBE`, `BSTART.TEPL`, `BSTART.VPAR`, `BSTART.VSEQ`, `BSTART.MPAR`, `BSTART.MSEQ`, `TLOAD`,
+`TSTORE`, `TMOV`, `MAMULB`, `TCVT`, and related forms
 
 Block ISA interaction:
 
 * Tile/vector blocks use decoupled form with header + out-of-line body.
 * Headers contain `BSTART.<type>` followed by `B.*` descriptors including `B.TEXT` for body pointer.
-* Bodies MUST be linear (no branches, calls, returns, or block markers) and terminate at `BSTOP`.
+* Alias/encoding split is strict:
+  - `BSTART.TLOAD/TSTORE/TMOV` map to `BSTART.TMA Function=0/1/2`.
+  - `BSTART.TMATMUL/TMATMUL.ACC/ACCCVT` map to `BSTART.CUBE Function=0/2/8`.
+  - `BSTART.TADD/TSUB/TROWMAX/...` map to `BSTART.TEPL TileOp10=<op code>`.
+* Strict-v0.3 `DataType` mapping (u5):
+  - floating: `FP64=0`, `FP32=1`, `FP16=2`, `FP8=3`, `BF16=6`, `FPL8=7`, `FP4=11`, `FPL4=12`.
+  - signed integer: `INT64=16`, `INT32=17`, `INT16=18`, `INT8=19`, `INT4=20`.
+  - unsigned integer: `UINT64=24`, `UINT32=25`, `UINT16=26`, `UINT8=27`, `UINT4=28`.
+* `BSTART.TLOAD/TSTORE` are header-only tile-memory commands and require `B.ARG` (layout/pad) + `B.IOR` (stride/base) +
+  `B.IOT/B.IOTI` (tile binding/size).
+* `B.IOT/B.IOTI` are the canonical tile-binding descriptors for all strict-v0.3 tile blocks.
+* `BSTART.TMATMUL/TMATMUL.ACC` are header-only CUBE commands and require `B.DIM` (`LB0/LB1/LB2` as `m/n/k`) +
+  `B.IOT/B.IOTI` tile bindings.
+* `BSTART.TMATMUL/TMATMUL.ACC` write singleton implicit ACC state (`TMATMUL` seeds, `TMATMUL.ACC` accumulates);
+  strict-v0.3 does not encode an explicit ACC tile id.
+* `BSTART.ACCCVT` is a header-only CUBE command and requires quantization arguments via `B.ARG` + `B.IOR`
+  (scale/zero-point required).
+* `BSTART.ACCCVT` consumes implicit ACC and writes tile destination metadata via `B.IOT/B.IOTI`; no ACC source id is encoded.
+* Required strict chain is `TMATMUL` -> `TMATMUL.ACC` (optional repeats) -> `ACCCVT` before tile materialization.
+* Tile-byte legality is fail-fast with
+  `tile_bytes = ceil(dim0*dim1*dim2*elem_bits/8)` (`dim2=1` when absent); `elem_bits` comes from `DataType`.
+* `BSTART.TEPL` carries PTO template-op selection in `TileOp10`; strict-v0.3 TEPL template blocks are header-driven
+  (no SIMT body).
+* `TVEC` is not a strict-v0.3 block header mnemonic; use `BSTART.VPAR`/`BSTART.VSEQ`.
+* Historical `MCALL` naming remains applicable as legacy text, but strict-v0.3 executable forms are `BSTART.MPAR` and
+  `BSTART.MSEQ`.
+* `BSTART.VPAR/VSEQ` are TVEC-equivalent forms and require `B.TEXT` + SIMT body.
+* Bodies (when present) MUST be linear (no branches, calls, returns, or block markers) and terminate at `BSTOP`.
 * See <<blockisa-forms-decoupled>> for complete rules.
 
 ==== PC-Relative Instructions

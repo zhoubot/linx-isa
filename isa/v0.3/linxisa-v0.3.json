@@ -1,5 +1,5 @@
 {
-  "instruction_count": 734,
+  "instruction_count": 740,
   "instructions": [
     {
       "asm": "acrc rst_type",
@@ -6625,11 +6625,160 @@
       "uid": "9404418d1ae5"
     },
     {
-      "asm": "BSTART.CUBE TileOP, DataType",
+      "asm": "BSTART.ACCCVT DataType",
       "encoding": {
         "length_bits": 32,
         "parts": [
           {
+            "fields": [
+              {
+                "name": "DataType",
+                "pieces": [
+                  {
+                    "insn_lsb": 27,
+                    "insn_msb": 31,
+                    "token": "DataType",
+                    "width": 5
+                  }
+                ],
+                "signed": null
+              }
+            ],
+            "index": 0,
+            "mask": "0x07ffffff",
+            "match": "0x00831181",
+            "pattern": ".....000100000110001000110000001",
+            "width_bits": 32
+          }
+        ]
+      },
+      "group": "Block Split",
+      "id": "bstart_acccvt_32_56c3ce3838c5",
+      "length_bits": 32,
+      "mnemonic": "BSTART.ACCCVT",
+      "note": "Alias of BSTART.CUBE Function=8. ACCCVT requires quantization args via B.ARG+B.IOR (scale/zero-point required in strict profile).",
+      "parts": [
+        {
+          "segments": [
+            {
+              "lsb": 27,
+              "msb": 31,
+              "token": "DataType",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 0,
+                "width": 2
+              },
+              "lsb": 25,
+              "msb": 26,
+              "token": "2'b00",
+              "width": 2
+            },
+            {
+              "const": {
+                "value": 8,
+                "width": 5
+              },
+              "lsb": 20,
+              "msb": 24,
+              "token": "5'b0_1000",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 6,
+                "width": 5
+              },
+              "lsb": 15,
+              "msb": 19,
+              "token": "5'b0_0110",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 1,
+                "width": 3
+              },
+              "lsb": 12,
+              "msb": 14,
+              "token": "3'b001",
+              "width": 3
+            },
+            {
+              "const": {
+                "value": 3,
+                "width": 5
+              },
+              "lsb": 7,
+              "msb": 11,
+              "token": "5'b0_0011",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 0,
+                "width": 3
+              },
+              "lsb": 4,
+              "msb": 6,
+              "token": "3'b000",
+              "width": 3
+            },
+            {
+              "const": {
+                "value": 0,
+                "width": 3
+              },
+              "lsb": 1,
+              "msb": 3,
+              "token": "3'b000",
+              "width": 3
+            },
+            {
+              "const": {
+                "value": 1,
+                "width": 1
+              },
+              "lsb": 0,
+              "msb": 0,
+              "token": "1",
+              "width": 1
+            }
+          ],
+          "width_bits": 32
+        }
+      ],
+      "source": {
+        "file": "opcodes/lx_32.opc",
+        "line": 65
+      },
+      "uid": "56c3ce3838c5"
+    },
+    {
+      "asm": "BSTART.CUBE Function, DataType",
+      "encoding": {
+        "length_bits": 32,
+        "parts": [
+          {
+            "constraints": [
+              {
+                "field": "Function",
+                "op": "!=",
+                "value": "0"
+              },
+              {
+                "field": "Function",
+                "op": "!=",
+                "value": "2"
+              },
+              {
+                "field": "Function",
+                "op": "!=",
+                "value": "8"
+              }
+            ],
             "fields": [
               {
                 "name": "DataType",
@@ -6668,6 +6817,7 @@
       "id": "bstart_cube_32_bd3f337acb9d",
       "length_bits": 32,
       "mnemonic": "BSTART.CUBE",
+      "note": "Generic CUBE selector form. Function=0/2/8 are emitted as BSTART.TMATMUL/BSTART.TMATMUL.ACC/BSTART.ACCCVT aliases.",
       "parts": [
         {
           "segments": [
@@ -6759,7 +6909,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 59
+        "line": 66
       },
       "uid": "bd3f337acb9d"
     },
@@ -6898,7 +7048,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 60
+        "line": 67
       },
       "uid": "3b0ae11126a6"
     },
@@ -6999,7 +7149,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 61
+        "line": 68
       },
       "uid": "2fbcd8fd8e97"
     },
@@ -7100,7 +7250,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 62
+        "line": 69
       },
       "uid": "49b15de09969"
     },
@@ -7201,7 +7351,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 63
+        "line": 70
       },
       "uid": "58ad7954fb49"
     },
@@ -7302,7 +7452,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 64
+        "line": 71
       },
       "uid": "d00a708a81f0"
     },
@@ -7403,7 +7553,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 65
+        "line": 72
       },
       "uid": "daa49730e860"
     },
@@ -7504,7 +7654,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 66
+        "line": 73
       },
       "uid": "dd7bc8dd694c"
     },
@@ -7605,7 +7755,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 67
+        "line": 74
       },
       "uid": "face4f238d84"
     },
@@ -7736,7 +7886,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 68
+        "line": 75
       },
       "uid": "2d163417c615"
     },
@@ -7867,12 +8017,12 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 69
+        "line": 76
       },
       "uid": "39343a456ec5"
     },
     {
-      "asm": "BSTART.PAR TileOp, DataType",
+      "asm": "BSTART.PAR TileOp10, DataType",
       "encoding": {
         "length_bits": 32,
         "parts": [
@@ -7915,6 +8065,7 @@
       "id": "bstart_par_32_49c201a27bd2",
       "length_bits": 32,
       "mnemonic": "BSTART.PAR",
+      "note": "Legacy compatibility TEPL spelling; canonical strict-v0.3 output uses BSTART.TEPL TileOp10, DataType.",
       "parts": [
         {
           "segments": [
@@ -7996,7 +8147,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 78
+        "line": 85
       },
       "uid": "49c201a27bd2"
     },
@@ -8097,7 +8248,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 70
+        "line": 77
       },
       "uid": "1ef99c4cedcb"
     },
@@ -8198,7 +8349,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 71
+        "line": 78
       },
       "uid": "1fc0f7bd871b"
     },
@@ -8299,7 +8450,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 72
+        "line": 79
       },
       "uid": "441ad677fffe"
     },
@@ -8400,7 +8551,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 73
+        "line": 80
       },
       "uid": "4451e08f9fda"
     },
@@ -8501,7 +8652,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 74
+        "line": 81
       },
       "uid": "b05390d367cf"
     },
@@ -8602,7 +8753,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 75
+        "line": 82
       },
       "uid": "b36b111a7134"
     },
@@ -8703,7 +8854,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 76
+        "line": 83
       },
       "uid": "c1de85e06878"
     },
@@ -8804,12 +8955,12 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 77
+        "line": 84
       },
       "uid": "762d9d84a6d8"
     },
     {
-      "asm": "BSTART.TEPL TileOp, DataType",
+      "asm": "BSTART.TEPL TileOp10, DataType",
       "encoding": {
         "length_bits": 32,
         "parts": [
@@ -8852,6 +9003,7 @@
       "id": "bstart_tepl_32_2299f6725e2a",
       "length_bits": 32,
       "mnemonic": "BSTART.TEPL",
+      "note": "TileOp10 selects PTO template ops (for example TADD TSUB TROWMAX). Unassigned TileOp10 values are reserved for future template extension.",
       "parts": [
         {
           "segments": [
@@ -8933,16 +9085,155 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 79
+        "line": 86
       },
       "uid": "2299f6725e2a"
     },
     {
-      "asm": "BSTART.TMA TileOp, DataType",
+      "asm": "BSTART.TLOAD DataType",
       "encoding": {
         "length_bits": 32,
         "parts": [
           {
+            "fields": [
+              {
+                "name": "DataType",
+                "pieces": [
+                  {
+                    "insn_lsb": 27,
+                    "insn_msb": 31,
+                    "token": "DataType",
+                    "width": 5
+                  }
+                ],
+                "signed": null
+              }
+            ],
+            "index": 0,
+            "mask": "0x07ffffff",
+            "match": "0x00011181",
+            "pattern": ".....000000000010001000110000001",
+            "width_bits": 32
+          }
+        ]
+      },
+      "group": "Block Split",
+      "id": "bstart_tload_32_d0c18bb0ab15",
+      "length_bits": 32,
+      "mnemonic": "BSTART.TLOAD",
+      "note": "Alias of BSTART.TMA Function=0. Requires B.ARG layout/pad and B.IOR stride/base plus B.IOT/B.IOTI tile binding.",
+      "parts": [
+        {
+          "segments": [
+            {
+              "lsb": 27,
+              "msb": 31,
+              "token": "DataType",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 0,
+                "width": 2
+              },
+              "lsb": 25,
+              "msb": 26,
+              "token": "2'b00",
+              "width": 2
+            },
+            {
+              "const": {
+                "value": 0,
+                "width": 5
+              },
+              "lsb": 20,
+              "msb": 24,
+              "token": "5'b0_0000",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 2,
+                "width": 5
+              },
+              "lsb": 15,
+              "msb": 19,
+              "token": "5'b0_0010",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 1,
+                "width": 3
+              },
+              "lsb": 12,
+              "msb": 14,
+              "token": "3'b001",
+              "width": 3
+            },
+            {
+              "const": {
+                "value": 3,
+                "width": 5
+              },
+              "lsb": 7,
+              "msb": 11,
+              "token": "5'b0_0011",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 0,
+                "width": 3
+              },
+              "lsb": 4,
+              "msb": 6,
+              "token": "3'b000",
+              "width": 3
+            },
+            {
+              "const": {
+                "value": 0,
+                "width": 3
+              },
+              "lsb": 1,
+              "msb": 3,
+              "token": "3'b000",
+              "width": 3
+            },
+            {
+              "const": {
+                "value": 1,
+                "width": 1
+              },
+              "lsb": 0,
+              "msb": 0,
+              "token": "1",
+              "width": 1
+            }
+          ],
+          "width_bits": 32
+        }
+      ],
+      "source": {
+        "file": "opcodes/lx_32.opc",
+        "line": 87
+      },
+      "uid": "d0c18bb0ab15"
+    },
+    {
+      "asm": "BSTART.TMA Function, DataType",
+      "encoding": {
+        "length_bits": 32,
+        "parts": [
+          {
+            "constraints": [
+              {
+                "field": "Function",
+                "op": ">=",
+                "value": "3"
+              }
+            ],
             "fields": [
               {
                 "name": "DataType",
@@ -8981,6 +9272,7 @@
       "id": "bstart_tma_32_f949c94c39c7",
       "length_bits": 32,
       "mnemonic": "BSTART.TMA",
+      "note": "Generic TMA selector form. Function=0/1/2 are emitted as BSTART.TLOAD/BSTART.TSTORE/BSTART.TMOV aliases; 3..31 are reserved in strict v0.3.",
       "parts": [
         {
           "segments": [
@@ -9072,9 +9364,537 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 80
+        "line": 88
       },
       "uid": "f949c94c39c7"
+    },
+    {
+      "asm": "BSTART.TMATMUL DataType",
+      "encoding": {
+        "length_bits": 32,
+        "parts": [
+          {
+            "fields": [
+              {
+                "name": "DataType",
+                "pieces": [
+                  {
+                    "insn_lsb": 27,
+                    "insn_msb": 31,
+                    "token": "DataType",
+                    "width": 5
+                  }
+                ],
+                "signed": null
+              }
+            ],
+            "index": 0,
+            "mask": "0x07ffffff",
+            "match": "0x00031181",
+            "pattern": ".....000000000110001000110000001",
+            "width_bits": 32
+          }
+        ]
+      },
+      "group": "Block Split",
+      "id": "bstart_tmatmul_32_f9da70e4e0ad",
+      "length_bits": 32,
+      "mnemonic": "BSTART.TMATMUL",
+      "note": "Alias of BSTART.CUBE Function=0. Requires B.DIM (LB0/LB1/LB2 as m,n,k) and tile bindings via B.IOT/B.IOTI.",
+      "parts": [
+        {
+          "segments": [
+            {
+              "lsb": 27,
+              "msb": 31,
+              "token": "DataType",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 0,
+                "width": 2
+              },
+              "lsb": 25,
+              "msb": 26,
+              "token": "2'b00",
+              "width": 2
+            },
+            {
+              "const": {
+                "value": 0,
+                "width": 5
+              },
+              "lsb": 20,
+              "msb": 24,
+              "token": "5'b0_0000",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 6,
+                "width": 5
+              },
+              "lsb": 15,
+              "msb": 19,
+              "token": "5'b0_0110",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 1,
+                "width": 3
+              },
+              "lsb": 12,
+              "msb": 14,
+              "token": "3'b001",
+              "width": 3
+            },
+            {
+              "const": {
+                "value": 3,
+                "width": 5
+              },
+              "lsb": 7,
+              "msb": 11,
+              "token": "5'b0_0011",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 0,
+                "width": 3
+              },
+              "lsb": 4,
+              "msb": 6,
+              "token": "3'b000",
+              "width": 3
+            },
+            {
+              "const": {
+                "value": 0,
+                "width": 3
+              },
+              "lsb": 1,
+              "msb": 3,
+              "token": "3'b000",
+              "width": 3
+            },
+            {
+              "const": {
+                "value": 1,
+                "width": 1
+              },
+              "lsb": 0,
+              "msb": 0,
+              "token": "1",
+              "width": 1
+            }
+          ],
+          "width_bits": 32
+        }
+      ],
+      "source": {
+        "file": "opcodes/lx_32.opc",
+        "line": 89
+      },
+      "uid": "f9da70e4e0ad"
+    },
+    {
+      "asm": "BSTART.TMATMUL.ACC DataType",
+      "encoding": {
+        "length_bits": 32,
+        "parts": [
+          {
+            "fields": [
+              {
+                "name": "DataType",
+                "pieces": [
+                  {
+                    "insn_lsb": 27,
+                    "insn_msb": 31,
+                    "token": "DataType",
+                    "width": 5
+                  }
+                ],
+                "signed": null
+              }
+            ],
+            "index": 0,
+            "mask": "0x07ffffff",
+            "match": "0x00231181",
+            "pattern": ".....000001000110001000110000001",
+            "width_bits": 32
+          }
+        ]
+      },
+      "group": "Block Split",
+      "id": "bstart_tmatmul_acc_32_0c8c62e5f00a",
+      "length_bits": 32,
+      "mnemonic": "BSTART.TMATMUL.ACC",
+      "note": "Alias of BSTART.CUBE Function=2. Requires B.DIM (LB0/LB1/LB2 as m,n,k) and tile bindings via B.IOT/B.IOTI.",
+      "parts": [
+        {
+          "segments": [
+            {
+              "lsb": 27,
+              "msb": 31,
+              "token": "DataType",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 0,
+                "width": 2
+              },
+              "lsb": 25,
+              "msb": 26,
+              "token": "2'b00",
+              "width": 2
+            },
+            {
+              "const": {
+                "value": 2,
+                "width": 5
+              },
+              "lsb": 20,
+              "msb": 24,
+              "token": "5'b0_0010",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 6,
+                "width": 5
+              },
+              "lsb": 15,
+              "msb": 19,
+              "token": "5'b0_0110",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 1,
+                "width": 3
+              },
+              "lsb": 12,
+              "msb": 14,
+              "token": "3'b001",
+              "width": 3
+            },
+            {
+              "const": {
+                "value": 3,
+                "width": 5
+              },
+              "lsb": 7,
+              "msb": 11,
+              "token": "5'b0_0011",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 0,
+                "width": 3
+              },
+              "lsb": 4,
+              "msb": 6,
+              "token": "3'b000",
+              "width": 3
+            },
+            {
+              "const": {
+                "value": 0,
+                "width": 3
+              },
+              "lsb": 1,
+              "msb": 3,
+              "token": "3'b000",
+              "width": 3
+            },
+            {
+              "const": {
+                "value": 1,
+                "width": 1
+              },
+              "lsb": 0,
+              "msb": 0,
+              "token": "1",
+              "width": 1
+            }
+          ],
+          "width_bits": 32
+        }
+      ],
+      "source": {
+        "file": "opcodes/lx_32.opc",
+        "line": 90
+      },
+      "uid": "0c8c62e5f00a"
+    },
+    {
+      "asm": "BSTART.TMOV DataType",
+      "encoding": {
+        "length_bits": 32,
+        "parts": [
+          {
+            "fields": [
+              {
+                "name": "DataType",
+                "pieces": [
+                  {
+                    "insn_lsb": 27,
+                    "insn_msb": 31,
+                    "token": "DataType",
+                    "width": 5
+                  }
+                ],
+                "signed": null
+              }
+            ],
+            "index": 0,
+            "mask": "0x07ffffff",
+            "match": "0x00211181",
+            "pattern": ".....000001000010001000110000001",
+            "width_bits": 32
+          }
+        ]
+      },
+      "group": "Block Split",
+      "id": "bstart_tmov_32_211446509efb",
+      "length_bits": 32,
+      "mnemonic": "BSTART.TMOV",
+      "note": "Alias of BSTART.TMA Function=2. TMOV is tile-state only (no GM memory access) and destination allocation is queue-push only.",
+      "parts": [
+        {
+          "segments": [
+            {
+              "lsb": 27,
+              "msb": 31,
+              "token": "DataType",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 0,
+                "width": 2
+              },
+              "lsb": 25,
+              "msb": 26,
+              "token": "2'b00",
+              "width": 2
+            },
+            {
+              "const": {
+                "value": 2,
+                "width": 5
+              },
+              "lsb": 20,
+              "msb": 24,
+              "token": "5'b0_0010",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 2,
+                "width": 5
+              },
+              "lsb": 15,
+              "msb": 19,
+              "token": "5'b0_0010",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 1,
+                "width": 3
+              },
+              "lsb": 12,
+              "msb": 14,
+              "token": "3'b001",
+              "width": 3
+            },
+            {
+              "const": {
+                "value": 3,
+                "width": 5
+              },
+              "lsb": 7,
+              "msb": 11,
+              "token": "5'b0_0011",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 0,
+                "width": 3
+              },
+              "lsb": 4,
+              "msb": 6,
+              "token": "3'b000",
+              "width": 3
+            },
+            {
+              "const": {
+                "value": 0,
+                "width": 3
+              },
+              "lsb": 1,
+              "msb": 3,
+              "token": "3'b000",
+              "width": 3
+            },
+            {
+              "const": {
+                "value": 1,
+                "width": 1
+              },
+              "lsb": 0,
+              "msb": 0,
+              "token": "1",
+              "width": 1
+            }
+          ],
+          "width_bits": 32
+        }
+      ],
+      "source": {
+        "file": "opcodes/lx_32.opc",
+        "line": 91
+      },
+      "uid": "211446509efb"
+    },
+    {
+      "asm": "BSTART.TSTORE DataType",
+      "encoding": {
+        "length_bits": 32,
+        "parts": [
+          {
+            "fields": [
+              {
+                "name": "DataType",
+                "pieces": [
+                  {
+                    "insn_lsb": 27,
+                    "insn_msb": 31,
+                    "token": "DataType",
+                    "width": 5
+                  }
+                ],
+                "signed": null
+              }
+            ],
+            "index": 0,
+            "mask": "0x07ffffff",
+            "match": "0x00111181",
+            "pattern": ".....000000100010001000110000001",
+            "width_bits": 32
+          }
+        ]
+      },
+      "group": "Block Split",
+      "id": "bstart_tstore_32_4048b6e8b0f4",
+      "length_bits": 32,
+      "mnemonic": "BSTART.TSTORE",
+      "note": "Alias of BSTART.TMA Function=1. Requires B.ARG layout/pad and B.IOR stride/base plus B.IOT/B.IOTI tile binding.",
+      "parts": [
+        {
+          "segments": [
+            {
+              "lsb": 27,
+              "msb": 31,
+              "token": "DataType",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 0,
+                "width": 2
+              },
+              "lsb": 25,
+              "msb": 26,
+              "token": "2'b00",
+              "width": 2
+            },
+            {
+              "const": {
+                "value": 1,
+                "width": 5
+              },
+              "lsb": 20,
+              "msb": 24,
+              "token": "5'b0_0001",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 2,
+                "width": 5
+              },
+              "lsb": 15,
+              "msb": 19,
+              "token": "5'b0_0010",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 1,
+                "width": 3
+              },
+              "lsb": 12,
+              "msb": 14,
+              "token": "3'b001",
+              "width": 3
+            },
+            {
+              "const": {
+                "value": 3,
+                "width": 5
+              },
+              "lsb": 7,
+              "msb": 11,
+              "token": "5'b0_0011",
+              "width": 5
+            },
+            {
+              "const": {
+                "value": 0,
+                "width": 3
+              },
+              "lsb": 4,
+              "msb": 6,
+              "token": "3'b000",
+              "width": 3
+            },
+            {
+              "const": {
+                "value": 0,
+                "width": 3
+              },
+              "lsb": 1,
+              "msb": 3,
+              "token": "3'b000",
+              "width": 3
+            },
+            {
+              "const": {
+                "value": 1,
+                "width": 1
+              },
+              "lsb": 0,
+              "msb": 0,
+              "token": "1",
+              "width": 1
+            }
+          ],
+          "width_bits": 32
+        }
+      ],
+      "source": {
+        "file": "opcodes/lx_32.opc",
+        "line": 92
+      },
+      "uid": "4048b6e8b0f4"
     },
     {
       "asm": "BSTART.VPAR <VS8, VS16>",
@@ -9108,6 +9928,7 @@
       "id": "bstart_vpar_32_8998d3fa51f8",
       "length_bits": 32,
       "mnemonic": "BSTART.VPAR",
+      "note": "TVEC-equivalent parallel SIMT header; requires B.TEXT body target in decoupled form.",
       "parts": [
         {
           "segments": [
@@ -9203,7 +10024,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 81
+        "line": 93
       },
       "uid": "8998d3fa51f8"
     },
@@ -9239,6 +10060,7 @@
       "id": "bstart_vseq_32_9324064902ae",
       "length_bits": 32,
       "mnemonic": "BSTART.VSEQ",
+      "note": "TVEC-equivalent sequential SIMT header; requires B.TEXT body target in decoupled form.",
       "parts": [
         {
           "segments": [
@@ -9334,7 +10156,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 82
+        "line": 94
       },
       "uid": "9324064902ae"
     },
@@ -9426,7 +10248,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 83
+        "line": 95
       },
       "uid": "d25b09fdd59c"
     },
@@ -9557,7 +10379,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 84
+        "line": 96
       },
       "uid": "e5a5240bdf9b"
     },
@@ -9688,7 +10510,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 85
+        "line": 97
       },
       "uid": "d9a0905cb31b"
     },
@@ -9819,7 +10641,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 86
+        "line": 98
       },
       "uid": "5a0fe4a8e61f"
     },
@@ -9964,7 +10786,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 87
+        "line": 99
       },
       "uid": "b1bb003c1703"
     },
@@ -10109,7 +10931,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 88
+        "line": 100
       },
       "uid": "e9ea9715ba62"
     },
@@ -14047,7 +14869,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 89
+        "line": 101
       },
       "uid": "f890415c15b6"
     },
@@ -14202,7 +15024,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 90
+        "line": 102
       },
       "uid": "036813a12ae8"
     },
@@ -14329,7 +15151,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 91
+        "line": 103
       },
       "uid": "da7a5391738d"
     },
@@ -14484,7 +15306,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 92
+        "line": 104
       },
       "uid": "6af7c8f41300"
     },
@@ -14611,7 +15433,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 93
+        "line": 105
       },
       "uid": "252943516dca"
     },
@@ -14766,7 +15588,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 94
+        "line": 106
       },
       "uid": "d88e3a1cfff4"
     },
@@ -14893,7 +15715,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 95
+        "line": 107
       },
       "uid": "48bf7ea50737"
     },
@@ -15048,7 +15870,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 96
+        "line": 108
       },
       "uid": "0c002dc415ef"
     },
@@ -15175,7 +15997,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 97
+        "line": 109
       },
       "uid": "69ec7b908f5d"
     },
@@ -15330,7 +16152,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 98
+        "line": 110
       },
       "uid": "c0b8cc320f12"
     },
@@ -15457,7 +16279,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 99
+        "line": 111
       },
       "uid": "02d3081d120b"
     },
@@ -15612,7 +16434,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 100
+        "line": 112
       },
       "uid": "4377481baebc"
     },
@@ -15739,7 +16561,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 101
+        "line": 113
       },
       "uid": "8676c7bfd797"
     },
@@ -15894,7 +16716,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 102
+        "line": 114
       },
       "uid": "fc47fbb1a0de"
     },
@@ -16021,7 +16843,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 103
+        "line": 115
       },
       "uid": "00abf831b572"
     },
@@ -16176,7 +16998,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 104
+        "line": 116
       },
       "uid": "75e1fa54ba94"
     },
@@ -16303,7 +17125,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 105
+        "line": 117
       },
       "uid": "6d3efbc3d093"
     },
@@ -16466,7 +17288,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 106
+        "line": 118
       },
       "uid": "ba77cbad3c99"
     },
@@ -16611,7 +17433,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 107
+        "line": 119
       },
       "uid": "1761cbcc2a89"
     },
@@ -16742,7 +17564,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 108
+        "line": 120
       },
       "uid": "166b7135e3c1"
     },
@@ -16873,7 +17695,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 109
+        "line": 121
       },
       "uid": "265d686549c8"
     },
@@ -17004,7 +17826,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 110
+        "line": 122
       },
       "uid": "2719115a9246"
     },
@@ -17135,7 +17957,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 111
+        "line": 123
       },
       "uid": "166d5a076f0e"
     },
@@ -17257,7 +18079,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 112
+        "line": 124
       },
       "uid": "3d61563dd077"
     },
@@ -17388,7 +18210,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 113
+        "line": 125
       },
       "uid": "7940273560b2"
     },
@@ -17519,7 +18341,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 114
+        "line": 126
       },
       "uid": "0131d0cf364f"
     },
@@ -17650,7 +18472,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 115
+        "line": 127
       },
       "uid": "0859a1d7aa5b"
     },
@@ -17787,7 +18609,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 116
+        "line": 128
       },
       "uid": "a6efe85f8662"
     },
@@ -17924,7 +18746,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 117
+        "line": 129
       },
       "uid": "cfbc0d1760e4"
     },
@@ -18061,7 +18883,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 118
+        "line": 130
       },
       "uid": "9c9470ef8982"
     },
@@ -18198,7 +19020,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 119
+        "line": 131
       },
       "uid": "b6366c50ac8c"
     },
@@ -18329,7 +19151,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 120
+        "line": 132
       },
       "uid": "4f122d1e6be3"
     },
@@ -18476,7 +19298,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 216
+        "line": 228
       },
       "uid": "dc0be14a2d8b"
     },
@@ -18623,7 +19445,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 215
+        "line": 227
       },
       "uid": "4c4f79fe3171"
     },
@@ -18770,7 +19592,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 121
+        "line": 133
       },
       "uid": "9515e008bf17"
     },
@@ -18925,7 +19747,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 122
+        "line": 134
       },
       "uid": "b78b658e6740"
     },
@@ -19080,7 +19902,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 123
+        "line": 135
       },
       "uid": "1102f5aeeda9"
     },
@@ -19235,7 +20057,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 124
+        "line": 136
       },
       "uid": "010837b9acbd"
     },
@@ -19390,7 +20212,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 125
+        "line": 137
       },
       "uid": "8801f1562870"
     },
@@ -19545,7 +20367,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 126
+        "line": 138
       },
       "uid": "8714ba358d80"
     },
@@ -19700,7 +20522,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 127
+        "line": 139
       },
       "uid": "84354a7aa6b1"
     },
@@ -19855,7 +20677,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 128
+        "line": 140
       },
       "uid": "bee01d31217c"
     },
@@ -20010,7 +20832,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 129
+        "line": 141
       },
       "uid": "04a5bb6ab56f"
     },
@@ -20149,7 +20971,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 130
+        "line": 142
       },
       "uid": "f4783f17d84d"
     },
@@ -20271,7 +21093,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 131
+        "line": 143
       },
       "uid": "a321a2a186b1"
     },
@@ -20414,7 +21236,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 132
+        "line": 144
       },
       "uid": "a47584ec13b6"
     },
@@ -20569,7 +21391,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 133
+        "line": 145
       },
       "uid": "9435d6959c3c"
     },
@@ -20724,7 +21546,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 134
+        "line": 146
       },
       "uid": "1d3011890fa8"
     },
@@ -20867,7 +21689,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 135
+        "line": 147
       },
       "uid": "37b663f2a34d"
     },
@@ -21014,7 +21836,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 136
+        "line": 148
       },
       "uid": "592ef5288c7d"
     },
@@ -21169,7 +21991,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 137
+        "line": 149
       },
       "uid": "b3244b2ffa89"
     },
@@ -21324,7 +22146,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 138
+        "line": 150
       },
       "uid": "e0301fcee743"
     },
@@ -21479,7 +22301,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 139
+        "line": 151
       },
       "uid": "1c09549d8d3f"
     },
@@ -21634,7 +22456,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 140
+        "line": 152
       },
       "uid": "c744c874e6a2"
     },
@@ -21797,7 +22619,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 141
+        "line": 153
       },
       "uid": "c616a17bcb12"
     },
@@ -21952,7 +22774,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 142
+        "line": 154
       },
       "uid": "eaf3880d7739"
     },
@@ -22107,7 +22929,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 143
+        "line": 155
       },
       "uid": "b5c106e5cd7e"
     },
@@ -22270,7 +23092,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 144
+        "line": 156
       },
       "uid": "b83012b83148"
     },
@@ -22425,7 +23247,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 145
+        "line": 157
       },
       "uid": "7d521d9d65e7"
     },
@@ -22580,7 +23402,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 146
+        "line": 158
       },
       "uid": "822c18caca3b"
     },
@@ -22735,7 +23557,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 147
+        "line": 159
       },
       "uid": "9b4b5a493783"
     },
@@ -22898,7 +23720,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 148
+        "line": 160
       },
       "uid": "7f45e606d299"
     },
@@ -23061,7 +23883,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 149
+        "line": 161
       },
       "uid": "6542d56665b3"
     },
@@ -23208,7 +24030,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 150
+        "line": 162
       },
       "uid": "3d51f4f727ea"
     },
@@ -23351,7 +24173,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 151
+        "line": 163
       },
       "uid": "659c886221c1"
     },
@@ -23494,7 +24316,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 152
+        "line": 164
       },
       "uid": "4fe246bd8241"
     },
@@ -23641,7 +24463,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 153
+        "line": 165
       },
       "uid": "84b3495cc6c7"
     },
@@ -23796,7 +24618,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 154
+        "line": 166
       },
       "uid": "a4479d0d4276"
     },
@@ -61825,7 +62647,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 155
+        "line": 167
       },
       "uid": "854f0d4d906a"
     },
@@ -61956,7 +62778,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 156
+        "line": 168
       },
       "uid": "11b9a61dd8b5"
     },
@@ -62063,7 +62885,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 157
+        "line": 169
       },
       "uid": "a303cf05af42"
     },
@@ -62206,7 +63028,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 158
+        "line": 170
       },
       "uid": "c4128e843b05"
     },
@@ -62369,7 +63191,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 159
+        "line": 171
       },
       "uid": "b718aa88e28f"
     },
@@ -62478,7 +63300,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 160
+        "line": 172
       },
       "uid": "3fa2540b22d0"
     },
@@ -62605,7 +63427,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 161
+        "line": 173
       },
       "uid": "9af2cdbeb38f"
     },
@@ -62768,7 +63590,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 162
+        "line": 174
       },
       "uid": "a9a58ab4ea22"
     },
@@ -62877,7 +63699,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 163
+        "line": 175
       },
       "uid": "5b571b0c8dc2"
     },
@@ -63004,7 +63826,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 164
+        "line": 176
       },
       "uid": "c39b9aa11f02"
     },
@@ -63167,7 +63989,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 165
+        "line": 177
       },
       "uid": "7c48838bc4e6"
     },
@@ -63358,7 +64180,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 166
+        "line": 178
       },
       "uid": "a4038a6c7e86"
     },
@@ -63549,7 +64371,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 167
+        "line": 179
       },
       "uid": "2a46b3003480"
     },
@@ -63740,7 +64562,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 168
+        "line": 180
       },
       "uid": "456d270cfc7d"
     },
@@ -63849,7 +64671,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 169
+        "line": 181
       },
       "uid": "99bc3d2d487b"
     },
@@ -64040,7 +64862,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 170
+        "line": 182
       },
       "uid": "a3aad6120226"
     },
@@ -64231,7 +65053,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 171
+        "line": 183
       },
       "uid": "9461d345718f"
     },
@@ -64422,7 +65244,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 172
+        "line": 184
       },
       "uid": "a84af75745d9"
     },
@@ -64613,7 +65435,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 173
+        "line": 185
       },
       "uid": "4bf2f357eff3"
     },
@@ -64804,7 +65626,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 174
+        "line": 186
       },
       "uid": "33072c0fde61"
     },
@@ -64931,7 +65753,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 175
+        "line": 187
       },
       "uid": "d82a643f7a2b"
     },
@@ -65058,7 +65880,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 176
+        "line": 188
       },
       "uid": "111bb521a439"
     },
@@ -65221,7 +66043,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 177
+        "line": 189
       },
       "uid": "d0f04d7d7696"
     },
@@ -65330,7 +66152,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 178
+        "line": 190
       },
       "uid": "aabf46d21e49"
     },
@@ -65457,7 +66279,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 179
+        "line": 191
       },
       "uid": "46a45ec7074d"
     },
@@ -65584,7 +66406,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 180
+        "line": 192
       },
       "uid": "bb0c81c6e61d"
     },
@@ -65747,7 +66569,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 181
+        "line": 193
       },
       "uid": "730caf67ecd1"
     },
@@ -65856,7 +66678,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 182
+        "line": 194
       },
       "uid": "9f4a1c04f258"
     },
@@ -65983,7 +66805,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 183
+        "line": 195
       },
       "uid": "6da39bba900b"
     },
@@ -66110,7 +66932,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 184
+        "line": 196
       },
       "uid": "748b15cd2ced"
     },
@@ -66301,7 +67123,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 185
+        "line": 197
       },
       "uid": "cf80903a761a"
     },
@@ -66492,7 +67314,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 186
+        "line": 198
       },
       "uid": "84d21a553dc1"
     },
@@ -66683,7 +67505,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 187
+        "line": 199
       },
       "uid": "f936df218d63"
     },
@@ -66874,7 +67696,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 188
+        "line": 200
       },
       "uid": "efecc735bb75"
     },
@@ -66993,7 +67815,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 189
+        "line": 201
       },
       "uid": "448b17d7c20a"
     },
@@ -67092,7 +67914,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 190
+        "line": 202
       },
       "uid": "982113b541d6"
     },
@@ -67255,7 +68077,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 191
+        "line": 203
       },
       "uid": "3a77ffafcb34"
     },
@@ -67446,7 +68268,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 192
+        "line": 204
       },
       "uid": "5be3ad1ad081"
     },
@@ -67637,7 +68459,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 193
+        "line": 205
       },
       "uid": "f8dd9866b069"
     },
@@ -67828,7 +68650,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 194
+        "line": 206
       },
       "uid": "d6d2f87706fd"
     },
@@ -67937,7 +68759,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 195
+        "line": 207
       },
       "uid": "d135a1aa4ffb"
     },
@@ -68128,7 +68950,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 196
+        "line": 208
       },
       "uid": "838b8c673c91"
     },
@@ -68319,7 +69141,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 197
+        "line": 209
       },
       "uid": "44452ae44d02"
     },
@@ -68510,7 +69332,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 198
+        "line": 210
       },
       "uid": "3c6a5a534674"
     },
@@ -68701,7 +69523,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 199
+        "line": 211
       },
       "uid": "fd9b7bb538a3"
     },
@@ -68892,7 +69714,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 200
+        "line": 212
       },
       "uid": "4d4aa82c676a"
     },
@@ -69019,7 +69841,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 201
+        "line": 213
       },
       "uid": "7085c98058fa"
     },
@@ -69146,7 +69968,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 202
+        "line": 214
       },
       "uid": "4a7426a70f10"
     },
@@ -69309,7 +70131,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 203
+        "line": 215
       },
       "uid": "678935925636"
     },
@@ -69418,7 +70240,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 204
+        "line": 216
       },
       "uid": "df27ea51c564"
     },
@@ -69545,7 +70367,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 205
+        "line": 217
       },
       "uid": "b435f946eb71"
     },
@@ -69672,7 +70494,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 206
+        "line": 218
       },
       "uid": "1fcbb98df571"
     },
@@ -69827,7 +70649,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 207
+        "line": 219
       },
       "uid": "6208e8e59303"
     },
@@ -69982,7 +70804,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 208
+        "line": 220
       },
       "uid": "9f922b15e674"
     },
@@ -70129,7 +70951,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 209
+        "line": 221
       },
       "uid": "9166468a1db7"
     },
@@ -70276,7 +71098,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 210
+        "line": 222
       },
       "uid": "b8789571339d"
     },
@@ -70423,7 +71245,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 211
+        "line": 223
       },
       "uid": "4fc4a803e995"
     },
@@ -70570,7 +71392,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 212
+        "line": 224
       },
       "uid": "25692b799267"
     },
@@ -70717,7 +71539,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 213
+        "line": 225
       },
       "uid": "9bdb71ef7b19"
     },
@@ -70864,7 +71686,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 214
+        "line": 226
       },
       "uid": "0b932f291932"
     },
@@ -71011,7 +71833,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 217
+        "line": 229
       },
       "uid": "9f2affd8efb8"
     },
@@ -71158,7 +71980,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 218
+        "line": 230
       },
       "uid": "10b9d1936631"
     },
@@ -71305,7 +72127,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 219
+        "line": 231
       },
       "uid": "8f52b3d45e53"
     },
@@ -71452,7 +72274,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 220
+        "line": 232
       },
       "uid": "b90cb6a30a23"
     },
@@ -71615,7 +72437,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 221
+        "line": 233
       },
       "uid": "a7fb80e78831"
     },
@@ -71742,7 +72564,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 222
+        "line": 234
       },
       "uid": "413a6cc76e9a"
     },
@@ -71869,7 +72691,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 223
+        "line": 235
       },
       "uid": "91608caf1ba6"
     },
@@ -72032,7 +72854,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 224
+        "line": 236
       },
       "uid": "84f7ac2ed68f"
     },
@@ -72195,7 +73017,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 225
+        "line": 237
       },
       "uid": "30e6dfe4e3ce"
     },
@@ -72322,7 +73144,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 226
+        "line": 238
       },
       "uid": "167b42882547"
     },
@@ -72459,7 +73281,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 227
+        "line": 239
       },
       "uid": "0abbd6a3b865"
     },
@@ -72596,7 +73418,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 228
+        "line": 240
       },
       "uid": "d7a5d1ebbbf5"
     },
@@ -72733,7 +73555,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 229
+        "line": 241
       },
       "uid": "f10ade2f5ccb"
     },
@@ -72870,7 +73692,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 230
+        "line": 242
       },
       "uid": "22659af46ec0"
     },
@@ -73015,7 +73837,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 231
+        "line": 243
       },
       "uid": "58badc109d49"
     },
@@ -73170,7 +73992,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 232
+        "line": 244
       },
       "uid": "43c106ae3749"
     },
@@ -73295,7 +74117,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 233
+        "line": 245
       },
       "uid": "7625a9a24c59"
     },
@@ -73438,7 +74260,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 234
+        "line": 246
       },
       "uid": "f3c6b796f0d9"
     },
@@ -73629,7 +74451,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 235
+        "line": 247
       },
       "uid": "baf609e1d5c3"
     },
@@ -73820,7 +74642,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 236
+        "line": 248
       },
       "uid": "2e714149031c"
     },
@@ -74011,7 +74833,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 237
+        "line": 249
       },
       "uid": "108941eabac6"
     },
@@ -74202,7 +75024,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 238
+        "line": 250
       },
       "uid": "14b238f02bfd"
     },
@@ -74357,7 +75179,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 239
+        "line": 251
       },
       "uid": "01861bbd5ef2"
     },
@@ -74512,7 +75334,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 240
+        "line": 252
       },
       "uid": "9dbc40328653"
     },
@@ -74687,7 +75509,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 241
+        "line": 253
       },
       "uid": "2a55ae1228bd"
     },
@@ -74862,7 +75684,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 242
+        "line": 254
       },
       "uid": "71963e1769c2"
     },
@@ -75037,7 +75859,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 243
+        "line": 255
       },
       "uid": "2a65eedfae0f"
     },
@@ -75162,7 +75984,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 244
+        "line": 256
       },
       "uid": "2340e0085413"
     },
@@ -75337,7 +76159,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 245
+        "line": 257
       },
       "uid": "e59bf90b50c3"
     },
@@ -75512,7 +76334,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 246
+        "line": 258
       },
       "uid": "188d93125032"
     },
@@ -75667,7 +76489,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 247
+        "line": 259
       },
       "uid": "1602c58c2031"
     },
@@ -75842,7 +76664,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 248
+        "line": 260
       },
       "uid": "89c5ec42be68"
     },
@@ -76017,7 +76839,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 249
+        "line": 261
       },
       "uid": "2388cbb378ac"
     },
@@ -76192,7 +77014,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 250
+        "line": 262
       },
       "uid": "7655ceaf9497"
     },
@@ -76335,7 +77157,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 251
+        "line": 263
       },
       "uid": "fab563230a66"
     },
@@ -76478,7 +77300,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 252
+        "line": 264
       },
       "uid": "cba5a4a04e7b"
     },
@@ -76625,7 +77447,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 253
+        "line": 265
       },
       "uid": "90b4e93ef9d4"
     },
@@ -76752,7 +77574,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 254
+        "line": 266
       },
       "uid": "32fe61c0559b"
     },
@@ -76899,7 +77721,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 255
+        "line": 267
       },
       "uid": "fb06e1dddc5c"
     },
@@ -77026,7 +77848,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 256
+        "line": 268
       },
       "uid": "5b2366a4e55d"
     },
@@ -77173,7 +77995,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 257
+        "line": 269
       },
       "uid": "56a2b539b072"
     },
@@ -77300,7 +78122,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 258
+        "line": 270
       },
       "uid": "c3f4fdc4adcc"
     },
@@ -77447,7 +78269,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 259
+        "line": 271
       },
       "uid": "494f1f79099e"
     },
@@ -77574,7 +78396,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 260
+        "line": 272
       },
       "uid": "6c34bc4ad314"
     },
@@ -77721,7 +78543,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 261
+        "line": 273
       },
       "uid": "10de99f3ad6a"
     },
@@ -77848,7 +78670,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 262
+        "line": 274
       },
       "uid": "89d74d948b74"
     },
@@ -77995,7 +78817,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 263
+        "line": 275
       },
       "uid": "4a1ff65ecafb"
     },
@@ -78122,7 +78944,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 264
+        "line": 276
       },
       "uid": "7908d25901c6"
     },
@@ -78269,7 +79091,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 265
+        "line": 277
       },
       "uid": "77576a5c690c"
     },
@@ -78396,7 +79218,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 266
+        "line": 278
       },
       "uid": "fa01e973ab76"
     },
@@ -78543,7 +79365,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 267
+        "line": 279
       },
       "uid": "740134c709d2"
     },
@@ -78670,7 +79492,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 268
+        "line": 280
       },
       "uid": "183dc15fad54"
     },
@@ -78781,7 +79603,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 269
+        "line": 281
       },
       "uid": "c02656d3a2b8"
     },
@@ -78872,7 +79694,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 270
+        "line": 282
       },
       "uid": "72003dcf3b59"
     },
@@ -79027,7 +79849,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 271
+        "line": 283
       },
       "uid": "bc7d4a7dea28"
     },
@@ -79152,7 +79974,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 272
+        "line": 284
       },
       "uid": "14ba505eb3c2"
     },
@@ -79307,7 +80129,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 273
+        "line": 285
       },
       "uid": "fa87afbf8f24"
     },
@@ -79450,7 +80272,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 274
+        "line": 286
       },
       "uid": "21351c202204"
     },
@@ -79593,7 +80415,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 275
+        "line": 287
       },
       "uid": "caaf3ed72a8f"
     },
@@ -79740,7 +80562,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 276
+        "line": 288
       },
       "uid": "a100b8961e21"
     },
@@ -79877,7 +80699,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 277
+        "line": 289
       },
       "uid": "b43ca2454e3a"
     },
@@ -80014,7 +80836,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 278
+        "line": 290
       },
       "uid": "c6bf463b97ae"
     },
@@ -80161,7 +80983,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 279
+        "line": 291
       },
       "uid": "a37b63c16b27"
     },
@@ -80308,7 +81130,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 280
+        "line": 292
       },
       "uid": "ba03eea6386b"
     },
@@ -80445,7 +81267,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 281
+        "line": 293
       },
       "uid": "e471ea84d4fd"
     },
@@ -80582,7 +81404,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 282
+        "line": 294
       },
       "uid": "db04a6299504"
     },
@@ -80729,7 +81551,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 283
+        "line": 295
       },
       "uid": "5baf37f34241"
     },
@@ -80876,7 +81698,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 284
+        "line": 296
       },
       "uid": "5cfca42c59f3"
     },
@@ -81013,7 +81835,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 285
+        "line": 297
       },
       "uid": "dd29ca058cfe"
     },
@@ -81150,7 +81972,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 286
+        "line": 298
       },
       "uid": "ef4aa650f46e"
     },
@@ -81297,7 +82119,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 287
+        "line": 299
       },
       "uid": "2c6458b2aadb"
     },
@@ -81416,7 +82238,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 288
+        "line": 300
       },
       "uid": "959957ab6b75"
     },
@@ -81535,7 +82357,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 289
+        "line": 301
       },
       "uid": "4dd3b71802c6"
     },
@@ -81662,7 +82484,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 290
+        "line": 302
       },
       "uid": "a01c7e2c7c29"
     },
@@ -81825,7 +82647,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 291
+        "line": 303
       },
       "uid": "af383d4a2b42"
     },
@@ -81952,7 +82774,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 292
+        "line": 304
       },
       "uid": "a0c87f5e7ac4"
     },
@@ -82079,7 +82901,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 293
+        "line": 305
       },
       "uid": "51019ff77d0a"
     },
@@ -82242,7 +83064,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 294
+        "line": 306
       },
       "uid": "3a8d45653c98"
     },
@@ -82397,7 +83219,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 295
+        "line": 307
       },
       "uid": "28ad317b1b41"
     },
@@ -82572,7 +83394,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 296
+        "line": 308
       },
       "uid": "3dca755552cb"
     },
@@ -82747,7 +83569,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 297
+        "line": 309
       },
       "uid": "7ef0872d5502"
     },
@@ -82922,7 +83744,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 298
+        "line": 310
       },
       "uid": "354579538c4e"
     },
@@ -83047,7 +83869,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 299
+        "line": 311
       },
       "uid": "436677679523"
     },
@@ -83222,7 +84044,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 300
+        "line": 312
       },
       "uid": "8bab38a878d7"
     },
@@ -83397,7 +84219,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 301
+        "line": 313
       },
       "uid": "773e7d83b011"
     },
@@ -83552,7 +84374,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 302
+        "line": 314
       },
       "uid": "718a61f75d33"
     },
@@ -83727,7 +84549,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 303
+        "line": 315
       },
       "uid": "5530dfa23323"
     },
@@ -83902,7 +84724,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 304
+        "line": 316
       },
       "uid": "3ce114819cfc"
     },
@@ -84077,7 +84899,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 305
+        "line": 317
       },
       "uid": "874c32572226"
     },
@@ -84268,7 +85090,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 306
+        "line": 318
       },
       "uid": "80733f03b77f"
     },
@@ -84459,7 +85281,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 307
+        "line": 319
       },
       "uid": "cd31ccde2303"
     },
@@ -84650,7 +85472,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 308
+        "line": 320
       },
       "uid": "8c2d4a28bf25"
     },
@@ -84841,7 +85663,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 309
+        "line": 321
       },
       "uid": "ef15c3ebac33"
     },
@@ -84984,7 +85806,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 310
+        "line": 322
       },
       "uid": "147e55489c41"
     },
@@ -85127,7 +85949,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 311
+        "line": 323
       },
       "uid": "1630e926da1a"
     },
@@ -85258,7 +86080,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 312
+        "line": 324
       },
       "uid": "e794d6bf347e"
     },
@@ -85380,7 +86202,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 313
+        "line": 325
       },
       "uid": "0fb421b85c88"
     },
@@ -85511,7 +86333,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 314
+        "line": 326
       },
       "uid": "95f4937d2917"
     },
@@ -85642,7 +86464,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 315
+        "line": 327
       },
       "uid": "bf0a5d1ea211"
     },
@@ -85797,7 +86619,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 316
+        "line": 328
       },
       "uid": "987f4e019c32"
     },
@@ -144618,7 +145440,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 317
+        "line": 329
       },
       "uid": "40ad190a0a7f"
     },
@@ -144781,7 +145603,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 318
+        "line": 330
       },
       "uid": "33510860c585"
     },
@@ -144908,7 +145730,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 319
+        "line": 331
       },
       "uid": "5cf7e5be17e7"
     },
@@ -145035,7 +145857,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 320
+        "line": 332
       },
       "uid": "1f8c6f43e2bd"
     },
@@ -145198,7 +146020,7 @@
       ],
       "source": {
         "file": "opcodes/lx_32.opc",
-        "line": 321
+        "line": 333
       },
       "uid": "32282566e32d"
     }

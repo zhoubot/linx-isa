@@ -96,10 +96,13 @@ def main(argv: list[str]) -> int:
     missing_ra: list[tuple[int, str]] = []
 
     for off, is_hl, has_ra, line in calls:
-        if not has_ra:
-            missing_ra.append((off, line))
-            continue
         has_call_reloc = has_type(relocs, off, CALL_RELOC_TYPES)
+        if not has_ra:
+            # Compatibility path for older Linx LLVM lowering:
+            # local CALL headers may omit fused `ra=` and carry no relocations.
+            if args.strict_relocs or has_call_reloc:
+                missing_ra.append((off, line))
+            continue
         if args.strict_relocs and not has_call_reloc:
             missing_call.append((off, line))
             continue

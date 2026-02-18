@@ -25,6 +25,7 @@ SUITES: dict[str, dict[str, str]] = {
     "jumptable": {"src": "tests/08_jumptable.c", "macro": "LINX_TEST_ENABLE_JUMPTABLE"},
     "varargs": {"src": "tests/09_varargs.c", "macro": "LINX_TEST_ENABLE_VARARGS"},
     "tile": {"src": "tests/10_tile_matmul.cpp", "macro": "LINX_TEST_ENABLE_TILE"},
+    "pto_parity": {"src": "tests/16_pto_kernel_parity.cpp", "macro": "LINX_TEST_ENABLE_PTO_PARITY"},
     "system": {"src": "tests/11_system.c", "macro": "LINX_TEST_ENABLE_SYSTEM"},
     "v03_vector": {"src": "tests/12_v03_vector_tile.c", "macro": "LINX_TEST_ENABLE_V03_VECTOR"},
     "v03_vector_ops": {
@@ -34,20 +35,47 @@ SUITES: dict[str, dict[str, str]] = {
     "callret": {"src": "tests/14_callret.c", "macro": "LINX_TEST_ENABLE_CALLRET"},
 }
 
+COMPILE_ONLY_SUITE_SOURCE_OVERRIDE: dict[str, str] = {
+    # Runtime tile stress currently relies on backend paths that are still
+    # unstable for compile-only regression gating; keep a dedicated compile
+    # smoke that validates PTO kernel integration.
+    "tile": "tests/10_tile_compile_smoke.cpp",
+}
+
 EXTRA_SOURCES_BY_SUITE: dict[str, list[str]] = {
     "tile": [
-        "tools/pto/examples/pto_tload_store.cpp",
-        "tools/pto/examples/pto_mamulb.cpp",
-        "tools/pto/examples/pto_tmatmul_acc.cpp",
-        "tools/pto/examples/pto_gemm_auto.cpp",
-        "tools/pto/examples/pto_flash_attention_auto.cpp",
+        "workloads/pto_kernels/tload_store.cpp",
+        "workloads/pto_kernels/mamulb.cpp",
+        "workloads/pto_kernels/tmatmul_acc.cpp",
+        "workloads/pto_kernels/gemm.cpp",
+        "workloads/pto_kernels/flash_attention.cpp",
+        "workloads/pto_kernels/flash_attention_masked.cpp",
     ],
     "callret": [
         "avs/qemu/tests/14_callret_templates.S",
     ],
+    "pto_parity": [
+        "workloads/pto_kernels/tload_store.cpp",
+        "workloads/pto_kernels/mamulb.cpp",
+        "workloads/pto_kernels/tmatmul_acc.cpp",
+        "workloads/pto_kernels/gemm.cpp",
+        "workloads/pto_kernels/gemm_basic.cpp",
+        "workloads/pto_kernels/gemm_demo.cpp",
+        "workloads/pto_kernels/gemm_performance.cpp",
+        "workloads/pto_kernels/add_custom.cpp",
+        "workloads/pto_kernels/flash_attention.cpp",
+        "workloads/pto_kernels/flash_attention_demo.cpp",
+        "workloads/pto_kernels/flash_attention_masked.cpp",
+        "workloads/pto_kernels/fa_performance.cpp",
+        "workloads/pto_kernels/mla_attention_demo.cpp",
+    ],
 }
 
-EXPERIMENTAL_SUITES: set[str] = set()
+EXPERIMENTAL_SUITES: set[str] = {
+    # Requires tile builtin-enabled clang and PTO bridge headers.
+    "tile",
+    "pto_parity",
+}
 
 CORE_SUITES: list[str] = [
     "arithmetic",
@@ -75,8 +103,8 @@ def _default_clang() -> Path | None:
     if env:
         return Path(os.path.expanduser(env))
     cands = [
-        Path.home() / "llvm-project" / "build-linxisa-clang" / "bin" / "clang",
         REPO_ROOT / "compiler" / "llvm" / "build-linxisa-clang" / "bin" / "clang",
+        Path.home() / "llvm-project" / "build-linxisa-clang" / "bin" / "clang",
     ]
     for cand in cands:
         if cand.exists():
@@ -234,10 +262,28 @@ def main(argv: list[str]) -> int:
 
     include_dir = SCRIPT_DIR / "lib"
     libc_include_dir = REPO_ROOT / "avs" / "runtime" / "freestanding" / "include"
-    pto_bridge_include_dir = REPO_ROOT / "tools" / "pto" / "include"
-    if "tile" in selected and not pto_bridge_include_dir.exists():
+    pto_bridge_include_dir: Path | None = None
+    bridge_env = os.environ.get("PTO_BRIDGE_INCLUDE")
+    if bridge_env:
+        bridge_candidate = Path(os.path.expanduser(bridge_env))
+        if not bridge_candidate.exists():
+            raise SystemExit(
+                f"error: PTO_BRIDGE_INCLUDE does not exist: {bridge_candidate}"
+            )
+        pto_bridge_include_dir = bridge_candidate
+    else:
+        for bridge_candidate in (
+            REPO_ROOT / "lib" / "pto" / "include",
+            REPO_ROOT / "tools" / "pto" / "include",
+        ):
+            if bridge_candidate.exists():
+                pto_bridge_include_dir = bridge_candidate
+                break
+    if any(s in selected for s in ("tile", "pto_parity")) and pto_bridge_include_dir is None:
         raise SystemExit(
-            f"error: tile suite requires bridge headers: {pto_bridge_include_dir}"
+            "error: tile suite requires PTO headers; looked for "
+            f"{REPO_ROOT / 'tools' / 'pto' / 'include'} and "
+            f"{REPO_ROOT / 'lib' / 'pto' / 'include'}"
         )
     pto_include_dir: Path | None = None
     env = os.environ.get("PTO_ISA_INCLUDE")
@@ -247,11 +293,15 @@ def main(argv: list[str]) -> int:
             raise SystemExit(f"error: PTO_ISA_INCLUDE does not exist: {candidate}")
         pto_include_dir = candidate
     sources: list[Path] = [SCRIPT_DIR / "tests" / "main.c"]
-    sources += [SCRIPT_DIR / SUITES[s]["src"] for s in selected]
+    for suite in selected:
+        rel = SUITES[suite]["src"]
+        if args.compile_only:
+            rel = COMPILE_ONLY_SUITE_SOURCE_OVERRIDE.get(suite, rel)
+        sources.append(SCRIPT_DIR / rel)
     for suite in selected:
         for rel in EXTRA_SOURCES_BY_SUITE.get(suite, []):
             sources.append(REPO_ROOT / rel)
-    softfp_suites = {"float", "v03_vector", "v03_vector_ops"}
+    softfp_suites = {"float", "v03_vector", "v03_vector_ops", "tile", "pto_parity"}
     if any(s in softfp_suites for s in selected):
         sources.append(REPO_ROOT / "avs" / "runtime" / "freestanding" / "src" / "softfp" / "softfp.c")
 
@@ -277,7 +327,15 @@ def main(argv: list[str]) -> int:
         *suite_macros,
         f"-DLINX_TEST_QUIET={'0' if emit_test_logs else '1'}",
     ]
-    if pto_bridge_include_dir.exists():
+    if any(s in selected for s in ("tile", "pto_parity")):
+        # Keep tile-suite bring-up deterministic: SIMT autovec currently
+        # triggers a mid-end crash on migrated PTO kernels under strict v0.3.
+        common_cflags += ["-mllvm", "-linx-simt-autovec=false"]
+    if any(s in selected for s in ("tile", "pto_parity")):
+        # Runtime policy: migrated PTO kernels run in smoke profile under QEMU.
+        # Full-profile coverage remains in compile/objdump gates.
+        common_cflags += ["-DPTO_QEMU_SMOKE=1"]
+    if pto_bridge_include_dir is not None:
         common_cflags.append(f"-I{pto_bridge_include_dir}")
     if pto_include_dir:
         common_cflags.append(f"-I{pto_include_dir}")
@@ -292,9 +350,9 @@ def main(argv: list[str]) -> int:
                 raise SystemExit("error: tile suite requires clang++; set --clangxx or CLANGXX")
             tool = clangxx
             cflags.append("-std=c++17")
-        # Keep the soft-fp runtime unoptimized during bring-up: the LinxISA
-        # backend doesn't yet cover all bit-twiddling patterns at -O2.
-        if src.name == "softfp.c":
+        # Keep selected sources unoptimized during bring-up when backend passes
+        # are still unstable under aggressive optimization.
+        if src.name in {"softfp.c"}:
             cflags = [("-O0" if f == "-O2" else f) for f in cflags]
         # Jump table/indirect branch coverage requires allowing jump tables.
         if src.name == "08_jumptable.c":

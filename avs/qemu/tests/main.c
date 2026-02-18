@@ -50,6 +50,9 @@
 #ifndef LINX_TEST_ENABLE_CALLRET
 #define LINX_TEST_ENABLE_CALLRET 0
 #endif
+#ifndef LINX_TEST_ENABLE_PTO_PARITY
+#define LINX_TEST_ENABLE_PTO_PARITY 0
+#endif
 
 /* Forward declarations for test suite functions */
 #if LINX_TEST_ENABLE_ARITHMETIC
@@ -93,6 +96,9 @@ void run_v03_vector_ops_matrix_tests(void);
 #endif
 #if LINX_TEST_ENABLE_CALLRET
 void run_callret_tests(void);
+#endif
+#if LINX_TEST_ENABLE_PTO_PARITY
+void run_pto_parity_tests(void);
 #endif
 
 /* Test counters */
@@ -170,6 +176,9 @@ void _start(void) {
 #if LINX_TEST_ENABLE_CALLRET
     uart_puts(" callret");
 #endif
+#if LINX_TEST_ENABLE_PTO_PARITY
+    uart_puts(" pto-parity");
+#endif
     uart_puts("\r\n");
     uart_puts("\r\n");
     uart_puts("=================================================\r\n");
@@ -217,6 +226,9 @@ void _start(void) {
 #endif
 #if LINX_TEST_ENABLE_CALLRET
     run_suite_with_stats("Call/Ret Conformance Tests", run_callret_tests);
+#endif
+#if LINX_TEST_ENABLE_PTO_PARITY
+    run_suite_with_stats("PTO Kernel Parity Tests", run_pto_parity_tests);
 #endif
     
     /* Print final summary */

@@ -1,0 +1,92 @@
+{
+  "cases": [
+    {
+      "category": "scalar_basic",
+      "id": "MODEL-SCALAR-COMMIT-SMOKE",
+      "log": "/Users/zhoubot/linx-isa/docs/bringup/gates/logs/2026-02-17-r1-external-phase4b/external/model_diff_work/00_MODEL-SCALAR-COMMIT-SMOKE_seed1001/run.log",
+      "required": true,
+      "seed": "1001",
+      "source_kind": "asm",
+      "stage": "complete",
+      "status": "pass"
+    },
+    {
+      "category": "scalar_basic",
+      "id": "MODEL-SCALAR-MCOPY-MSET",
+      "log": "/Users/zhoubot/linx-isa/docs/bringup/gates/logs/2026-02-17-r1-external-phase4b/external/model_diff_work/01_MODEL-SCALAR-MCOPY-MSET_seed1002/run.log",
+      "required": true,
+      "seed": "1002",
+      "source_kind": "asm",
+      "stage": "complete",
+      "status": "pass"
+    },
+    {
+      "category": "vector_lane_control",
+      "id": "MODEL-VECTOR-LANE-CONTROL",
+      "log": "/Users/zhoubot/linx-isa/docs/bringup/gates/logs/2026-02-17-r1-external-phase4b/external/model_diff_work/02_MODEL-VECTOR-LANE-CONTROL_seed2001/run.log",
+      "required": true,
+      "seed": "2001",
+      "source_kind": "asm",
+      "stage": "complete",
+      "status": "pass"
+    },
+    {
+      "category": "tile_descriptor_legality",
+      "id": "MODEL-TILE-DESCRIPTOR-LEGALITY",
+      "log": "/Users/zhoubot/linx-isa/docs/bringup/gates/logs/2026-02-17-r1-external-phase4b/external/model_diff_work/03_MODEL-TILE-DESCRIPTOR-LEGALITY_seed2002/run.log",
+      "required": true,
+      "seed": "2002",
+      "source_kind": "asm",
+      "stage": "complete",
+      "status": "pass"
+    },
+    {
+      "category": "tile_control_flow",
+      "id": "MODEL-TILE-CONTROL-FLOW",
+      "log": "/Users/zhoubot/linx-isa/docs/bringup/gates/logs/2026-02-17-r1-external-phase4b/external/model_diff_work/04_MODEL-TILE-CONTROL-FLOW_seed2003/run.log",
+      "required": true,
+      "seed": "2003",
+      "source_kind": "asm",
+      "stage": "complete",
+      "status": "pass"
+    },
+    {
+      "category": "privileged_exception_edge",
+      "id": "MODEL-PRIVILEGED-EXCEPTION-EDGE",
+      "log": "/Users/zhoubot/linx-isa/docs/bringup/gates/logs/2026-02-17-r1-external-phase4b/external/model_diff_work/05_MODEL-PRIVILEGED-EXCEPTION-EDGE_seed2004/run.log",
+      "required": true,
+      "seed": "2004",
+      "source_kind": "asm",
+      "stage": "complete",
+      "status": "pass"
+    }
+  ],
+  "failing_required_categories": [],
+  "missing_required_categories": [],
+  "ok": true,
+  "profile": "release-strict",
+  "required_categories": [
+    "privileged_exception_edge",
+    "scalar_basic",
+    "tile_control_flow",
+    "tile_descriptor_legality",
+    "vector_lane_control"
+  ],
+  "required_categories_passed": [
+    "privileged_exception_edge",
+    "scalar_basic",
+    "tile_control_flow",
+    "tile_descriptor_legality",
+    "vector_lane_control"
+  ],
+  "required_categories_seen": [
+    "privileged_exception_edge",
+    "scalar_basic",
+    "tile_control_flow",
+    "tile_descriptor_legality",
+    "vector_lane_control"
+  ],
+  "suite": "/Users/zhoubot/linx-isa/avs/model/linx_model_diff_suite.yaml",
+  "trace_schema_version": "1.0",
+  "workdir": "/Users/zhoubot/linx-isa/docs/bringup/gates/logs/2026-02-17-r1-external-phase4b/external/model_diff_work"
+}

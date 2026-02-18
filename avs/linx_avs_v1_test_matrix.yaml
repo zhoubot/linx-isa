@@ -1,6 +1,6 @@
 version: linx-avs-v1
 status: draft
-last_updated: "2026-02-07"
+last_updated: "2026-02-17"
 
 profiles:
   LNX-S32: "Scalar 32-bit, freestanding, little-endian, no MMU"
@@ -20,198 +20,351 @@ pass_fail_rules:
 tests:
   - id: AVS-DEC-001
     area: DEC
+    domain: Emulator
     profiles: [LNX-S32, LNX-S64]
+    must_pass_in_profile: [dev]
+    check26_ids: [1]
     requirement: "Any encoding not matched by the ISA catalog traps as illegal instruction."
     pass_fail: "QEMU and RTL (when available) trap on the same byte sequence at the same TPC; no partial side effects."
 
   - id: AVS-DEC-002
     area: DEC
+    domain: Emulator
     profiles: [LNX-S32, LNX-S64]
+    must_pass_in_profile: [dev]
+    check26_ids: [12]
     requirement: "All-zero 16-bit encoding (0x0000) is handled intentionally as C.BSTOP (or defined illegal), consistently."
     pass_fail: "Executing 0x0000 at a valid TPC produces the defined behavior."
 
   - id: AVS-TOOL-001
     area: TOOL
+    domain: Compiler
     profiles: [LNX-S32, LNX-S64, LNX-PRIV, LNX-ATOM, LNX-FP, LNX-VPAR, LNX-VSEQ]
+    must_pass_in_profile: [dev, release-strict]
+    check26_ids: [1, 2, 3, 5, 11, 12, 14, 20]
     requirement: "llvm-objdump recognizes and prints a mnemonic token for every spec mnemonic."
     pass_fail: "python3 avs/compiler/linx-llvm/tests/analyze_coverage.py --fail-under 100 exits 0."
 
   - id: AVS-TOOL-010
     area: TOOL
+    domain: Compiler
     profiles: [LNX-S32, LNX-S64]
+    must_pass_in_profile: [dev]
+    check26_ids: [10]
     requirement: "llvm-mc asm/disasm round-trip for curated canonical instruction forms."
     pass_fail: "Assemble -> disassemble -> map mnemonic back to same spec entry for curated set."
 
   - id: AVS-TOOL-011
     area: TOOL
+    domain: Compiler
     profiles: [LNX-S32, LNX-S64]
+    must_pass_in_profile: [dev, release-strict]
+    check26_ids: [10, 15, 26]
     requirement: "Spec decode vectors (99_spec_decode) disassemble with 100% mnemonic coverage."
     pass_fail: "analyze_coverage.py (auto-detected out-linx*) reports 100% coverage."
 
   - id: AVS-BLK-001
     area: BLK
+    domain: Emulator
     profiles: [LNX-S32, LNX-S64]
+    must_pass_in_profile: [dev]
+    check26_ids: [8]
     requirement: "Safety rule: control-flow targets must land on a block start marker."
     pass_fail: "Jumping into the middle of a block traps with correct BPC/TPC capture."
 
   - id: AVS-BLK-002
     area: BLK
+    domain: Emulator
     profiles: [LNX-S32, LNX-S64]
+    must_pass_in_profile: [dev]
+    check26_ids: [6, 7, 9, 21]
     requirement: "Block boundary commit rules: blocks end at BSTOP/C.BSTOP or implicitly at next BSTART.*; BARG consulted at commit."
     pass_fail: "Directed programs show correct transitions with/without explicit BSTOP."
 
   - id: AVS-BLK-003
     area: BLK
+    domain: Emulator
     profiles: [LNX-S32, LNX-S64]
+    must_pass_in_profile: [dev]
+    check26_ids: [3]
     requirement: "SETC.* validity: executing SETC.* before any block start is illegal or traps as block-format error."
     pass_fail: "SETC.* at reset TPC traps; SETC.* after a BSTART.* behaves correctly."
 
   - id: AVS-BLK-004
     area: BLK
+    domain: Emulator
     profiles: [LNX-S32, LNX-S64]
+    must_pass_in_profile: [dev, release-strict]
+    check26_ids: [6, 7, 8, 9, 13, 16, 17]
     requirement: "Call header adjacency: BSTART CALL and SETRET/C.SETRET are adjacent; violations trap or are rejected by toolchain."
     pass_fail: "Non-adjacent sequence triggers specified failure; compliant call returns correctly."
 
   - id: AVS-BLK-005
     area: BLK
+    domain: Emulator
     profiles: [LNX-VPAR, LNX-VSEQ]
+    must_pass_in_profile: [dev]
+    check26_ids: [18, 26]
     requirement: "Vector block types are BSTART.VPAR and BSTART.VSEQ; BSTART.VEC does not appear in golden/manual."
     pass_fail: "Repo contains no BSTART.VEC strings except as a negative requirement in AVS."
 
   - id: AVS-ALU-001
     area: ALU
+    domain: Emulator
     profiles: [LNX-S32, LNX-S64]
+    must_pass_in_profile: [dev]
+    check26_ids: [1]
     requirement: "ADD/ADDI/SUB/SUBI basic correctness including edge cases."
     pass_fail: "Directed tests cover 0, -1, INT_MIN/INT_MAX, mixed sign; results match spec."
 
   - id: AVS-ALU-002
     area: ALU
+    domain: Emulator
     profiles: [LNX-S32, LNX-S64]
+    must_pass_in_profile: [dev]
+    check26_ids: [1]
     requirement: "MUL/DIV/REM correctness including signedness and divide-by-zero behavior."
     pass_fail: "Directed tests cover DIV/DIVU/REM/REMU and *W forms; defined outcomes observed."
 
   - id: AVS-BR-001
     area: BR
+    domain: Emulator
     profiles: [LNX-S32, LNX-S64]
+    must_pass_in_profile: [dev]
+    check26_ids: [8]
     requirement: "PC-relative target scaling uses halfword scaling (imm << 1) where defined."
     pass_fail: "Directed tests validate exact target addresses including negative offsets."
 
   - id: AVS-BR-002
     area: BR
+    domain: Emulator
     profiles: [LNX-S32, LNX-S64]
+    must_pass_in_profile: [dev]
+    check26_ids: [7]
     requirement: "Indirect transitions consult SETC.TGT as specified."
     pass_fail: "Directed tests set different targets and observe correct dispatch."
 
   - id: AVS-MEM-001
     area: MEM
+    domain: Emulator
     profiles: [LNX-S32, LNX-S64]
+    must_pass_in_profile: [dev]
+    check26_ids: [23]
     requirement: "Endianness is little-endian."
     pass_fail: "Store a multi-byte pattern and confirm byte/halfword/word loads observe expected ordering."
 
   - id: AVS-MEM-002
     area: MEM
+    domain: Emulator
     profiles: [LNX-S32, LNX-S64]
+    must_pass_in_profile: [dev]
+    check26_ids: [24]
     requirement: "Alignment behavior (trap vs split) is specified and consistent for the profile."
     pass_fail: "Misaligned accesses match defined outcome across QEMU and RTL."
 
   - id: AVS-MEM-003
     area: MEM
+    domain: Emulator
     profiles: [LNX-S32, LNX-S64]
+    must_pass_in_profile: [dev]
+    check26_ids: [25]
     requirement: "Scaled vs unscaled immediate offsets (.U) compute correct addresses."
     pass_fail: "Directed tests validate exact addresses touched by scaled and .U families."
 
   - id: AVS-ATOM-001
     area: ATOM
+    domain: Emulator
     profiles: [LNX-ATOM]
+    must_pass_in_profile: [dev]
+    check26_ids: [23]
     requirement: "Atomic .aq/.rl qualifiers enforce acquire/release ordering as specified."
     pass_fail: "Litmus tests show forbidden outcomes do not occur when qualifiers are used."
 
   - id: AVS-ATOM-002
     area: ATOM
+    domain: Emulator
     profiles: [LNX-ATOM]
+    must_pass_in_profile: [dev]
+    check26_ids: [23]
     requirement: "FENCE.D pred,succ orders the specified operation classes."
     pass_fail: "Litmus tests and microbench confirm ordering and no-op cases."
 
   - id: AVS-ATOM-003
     area: ATOM
+    domain: Emulator
     profiles: [LNX-ATOM]
+    must_pass_in_profile: [dev]
+    check26_ids: [23]
     requirement: "FENCE.I synchronizes instruction fetch with prior stores that modify executable code."
     pass_fail: "Self-modifying-code test behaves as specified (or traps if unsupported; behavior must be defined)."
 
   - id: AVS-ATOM-010
     area: ATOM
+    domain: Emulator
     profiles: [LNX-ATOM]
+    must_pass_in_profile: [dev]
+    check26_ids: [23]
     requirement: "Message passing requires acquire/release or fence to forbid r1=1,r2=0 outcome."
     pass_fail: "Litmus harness observes allowed/forbidden outcome sets per requirement."
 
   - id: AVS-ATOM-011
     area: ATOM
+    domain: Emulator
     profiles: [LNX-ATOM]
+    must_pass_in_profile: [dev]
+    check26_ids: [23]
     requirement: "FENCE.D orders MMIO and Normal memory when O selected."
     pass_fail: "Directed test with MMIO model observes ordering consistent with fence definition."
 
   - id: AVS-SYS-001
     area: SYS
+    domain: Emulator
     profiles: [LNX-PRIV]
+    must_pass_in_profile: [dev, release-strict]
+    check26_ids: [4, 24]
     requirement: "ACRC is last in block and routes/traps as specified."
     pass_fail: "Placement violation triggers defined trap; valid requests route to managing ring vector."
 
   - id: AVS-SYS-002
     area: SYS
+    domain: Emulator
     profiles: [LNX-PRIV]
+    must_pass_in_profile: [dev, release-strict]
+    check26_ids: [18, 21, 22]
     requirement: "ACRE restores state per manual (CSTATE, BPC, and optionally BSTATE/BARG)."
     pass_fail: "Trap handler returns and execution resumes at expected block start."
 
   - id: AVS-ABI-001
     area: ABI
+    domain: Regression
     profiles: [LNX-S32, LNX-S64]
+    must_pass_in_profile: [dev, release-strict]
+    check26_ids: [19]
     requirement: "Calling convention correctness for leaf/non-leaf functions."
     pass_fail: "C tests validate callee-saved regs, stack alignment, and return values."
 
   - id: AVS-ABI-002
     area: ABI
+    domain: Regression
     profiles: [LNX-S32, LNX-S64]
+    must_pass_in_profile: [dev, release-strict]
+    check26_ids: [25]
     requirement: "Varargs correctness for integers and (if enabled) floating-point."
     pass_fail: "Runtime tests match expected sums/prints and do not corrupt caller state."
 
+  - id: AVS-CPP-001
+    area: CPP
+    domain: Compiler
+    profiles: [LNX-S64]
+    must_pass_in_profile: [dev]
+    check26_ids: [19]
+    requirement: "C++17 hosted compile lane finds libc++ headers and compiles no-EH/no-RTTI samples for linx64 musl."
+    pass_fail: "avs/compiler/linx-llvm/tests/run_cpp.sh compiles all C++ samples with -fno-exceptions -fno-rtti."
+
+  - id: AVS-CPP-002
+    area: CPP
+    domain: Compiler
+    profiles: [LNX-S64]
+    must_pass_in_profile: [dev]
+    check26_ids: [19, 23]
+    requirement: "Linx clang++ default link policy is cross-correct for musl and does not route through host g++/ld."
+    pass_fail: "clang driver tests confirm Linx defaults: ld.lld + libc++ + compiler-rt; no host g++ fallback."
+
+  - id: AVS-CPP-003
+    area: CPP
+    domain: Library
+    profiles: [LNX-S64]
+    must_pass_in_profile: [dev]
+    check26_ids: [19]
+    requirement: "LLVM runtime overlay (libunwind/libc++abi/libc++) installs into Linx musl sysroot in deterministic layout."
+    pass_fail: "tools/build_linx_llvm_cpp_runtimes.sh installs headers/libs and emits a machine-readable summary."
+
+  - id: AVS-CPP-010
+    area: CPP
+    domain: Regression
+    profiles: [LNX-S64]
+    must_pass_in_profile: [dev]
+    check26_ids: [19, 23]
+    requirement: "C++17 no-EH/no-RTTI runtime smoke passes in both static and shared musl modes under QEMU."
+    pass_fail: "avs/qemu/run_musl_smoke.py --sample cpp17_smoke --link both observes start/pass markers in both modes."
+
   - id: AVS-FP-001
     area: FP
+    domain: Emulator
     profiles: [LNX-FP]
+    must_pass_in_profile: [dev]
+    check26_ids: [15]
     requirement: "Scalar FP ops match IEEE-754 rounding and FCSR flag behavior."
     pass_fail: "Directed tests cover NaNs, +/-0, infinities, and flag setting/clearing."
 
   - id: AVS-FP-002
     area: FP
+    domain: Emulator
     profiles: [LNX-FP]
+    must_pass_in_profile: [dev]
+    check26_ids: [15]
     requirement: "FP<->int conversions match spec for edge cases."
     pass_fail: "Directed tests validate exact bit patterns and trap/flag behavior."
 
   - id: AVS-VEC-001
     area: VEC
+    domain: Emulator
     profiles: [LNX-VPAR, LNX-VSEQ]
+    must_pass_in_profile: [dev]
+    check26_ids: [16, 22]
     requirement: "Vector ops that require a vector block trap when executed outside a vector block."
     pass_fail: "Vector op outside header traps; inside correct header executes and updates state."
 
   - id: AVS-VEC-002
     area: VEC
+    domain: Emulator
     profiles: [LNX-VPAR, LNX-VSEQ]
+    must_pass_in_profile: [dev]
+    check26_ids: [17, 18]
     requirement: "VPAR vs VSEQ legality is enforced for block-restricted ops."
     pass_fail: "VPAR-only op in VSEQ (and vice versa) triggers defined failure."
 
   - id: AVS-VEC-003
     area: VEC
+    domain: Emulator
     profiles: [LNX-VPAR, LNX-VSEQ]
+    must_pass_in_profile: [dev]
+    check26_ids: [26]
     requirement: "C.BSTART.VPAR/VSEQ compressed fall-through markers begin new vector blocks."
     pass_fail: "Directed program uses compressed marker and subsequent vector ops execute."
 
   - id: AVS-EMU-001
     area: EMU
+    domain: Emulator
     profiles: [LNX-S32, LNX-S64]
+    must_pass_in_profile: [dev, release-strict]
+    check26_ids: [23]
     requirement: "Illegal encodings trap deterministically with no partial state committed."
     pass_fail: "Negative tests validate trap PC/cause and unchanged regs/memory."
 
   - id: AVS-EMU-010
     area: EMU
+    domain: Emulator
     profiles: [LNX-S32, LNX-S64]
+    must_pass_in_profile: [dev]
+    check26_ids: [23]
     requirement: "Dynamic instruction histogram total is close to LINX_INSN_COUNT and both are reported."
     pass_fail: "run_benchmarks.py --dynamic-hist reports both totals and uses plugin total for percentages."
+
+  - id: AVS-MODEL-001
+    area: MODEL
+    domain: Model
+    profiles: [LNX-S64]
+    must_pass_in_profile: [dev]
+    check26_ids: [16, 17]
+    requirement: "QEMU and model commit traces match for deterministic scalar fixture suite."
+    pass_fail: "tools/bringup/run_model_diff_suite.py passes required fixtures with trace schema checks."
+
+  - id: AVS-MODEL-002
+    area: MODEL
+    domain: Model
+    profiles: [LNX-S64, LNX-PRIV]
+    must_pass_in_profile: [dev]
+    check26_ids: [18]
+    requirement: "Trace schema version compatibility is enforced for both producer and consumer paths."
+    pass_fail: "tools/bringup/validate_trace_schema.py validates schema compatibility on QEMU+model traces."

@@ -15,7 +15,7 @@ Canonical public assembly examples for LinxISA v0.3.
 ```asm
 BSTART.TMA   TLOAD, FP16
 B.ARG        ND2ZN.normal, FP16, Null
-B.IOTI       [], last ->t<8KB>
+B.IOTI       [], last ->t<4KB>
 B.IOR        [x2,a6],[]
 C.B.DIMI     64, ->lb0
 C.B.DIMI     64, ->lb1

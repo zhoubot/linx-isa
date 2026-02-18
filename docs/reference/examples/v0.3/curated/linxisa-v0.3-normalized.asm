@@ -5,8 +5,8 @@
    11776: 103c         	C.B.DIMI	64, 	->lb0
    11778: 0001ca03     	B.TEXT	0x11ea0 <_Z12new_max_2srcIN3pto4TileILNS0_8LocationE0EfLi64ELi64ELNS0_7BLayoutE1ELi64ELi64ELNS0_7SLayoutE0ELi512ELNS0_8PadValueE3EEENS1_ILS2_0EfLi64ELi8ELS3_1ELi64ELi1ELS4_0ELi512ELS5_3EEEEvNT0_9TileDTypeES9_NT_9TileDTypeESB_S9_NSA_5DTypeE>
    1177c: 02001181     	BSTART.VPAR	VCALL
-   11780: 02116513     	B.IOTI	[t#3, t#2]	->u<16KB>
-   11784: 62087513     	B.IOTI	[m#1.reuse], last	->u<16KB>
+   11780: 02116513     	B.IOTI	[t#3, t#2]	->u<4KB>
+   11784: 62087513     	B.IOTI	[m#1.reuse], last	->u<4KB>
    11788: 000a0013     	B.IOR	[x0],[]
    1178c: 103c         	C.B.DIMI	64, 	->lb0
    1178e: 503c         	C.B.DIMI	64, 	->lb1
@@ -23,8 +23,8 @@
    117b6: 103c         	C.B.DIMI	64, 	->lb0
    117b8: 0001ba03     	B.TEXT	0x11ea0 <_Z12new_max_2srcIN3pto4TileILNS0_8LocationE0EfLi64ELi64ELNS0_7BLayoutE1ELi64ELi64ELNS0_7SLayoutE0ELi512ELNS0_8PadValueE3EEENS1_ILS2_0EfLi64ELi8ELS3_1ELi64ELi1ELS4_0ELi512ELS5_3EEEEvNT0_9TileDTypeES9_NT_9TileDTypeESB_S9_NSA_5DTypeE>
    117bc: 02001181     	BSTART.VPAR	VCALL
-   117c0: 00066513     	B.IOTI	[u#5, t#1]	->t<16KB>
-   117c4: 60087513     	B.IOTI	[m#1.reuse], last	->t<16KB>
+   117c0: 00066513     	B.IOTI	[u#5, t#1]	->t<4KB>
+   117c4: 60087513     	B.IOTI	[m#1.reuse], last	->t<4KB>
    117c8: 000a0013     	B.IOR	[x0],[]
    117cc: 103c         	C.B.DIMI	64, 	->lb0
    117ce: 503c         	C.B.DIMI	64, 	->lb1
@@ -36,14 +36,14 @@
    117e2: 0003d383     	B.TEXT	0x12730 <_Z12new_sum_2srcIN3pto4TileILNS0_8LocationE0EfLi64ELi64ELNS0_7BLayoutE1ELi64ELi64ELNS0_7SLayoutE0ELi512ELNS0_8PadValueE3EEENS1_ILS2_0EfLi64ELi8ELS3_1ELi64ELi1ELS4_0ELi512ELS5_3EEES7_EvNT0_9TileDTypeENT_9TileDTypeESB_S9_NT1_9TileDTypeE>
    117e6: 22109181     	BSTART.TMA	TLOAD, FP16
    117ea: 180221a3     	B.ARG	ND2ZN.normal, FP16, Null
-   117ee: 30007493     	B.IOTI	[], last	->t<8KB>
+   117ee: 30007493     	B.IOTI	[], last	->t<4KB>
    117f2: 008b0013     	B.IOR	[x2,a6],[]
    117f6: 103c         	C.B.DIMI	64, 	->lb0
    117f8: 503c         	C.B.DIMI	64, 	->lb1
    117fa: 903c         	C.B.DIMI	64, 	->lb2
    117fc: 22109181     	BSTART.TMA	TLOAD, FP16
    11800: 180221a3     	B.ARG	ND2ZN.normal, FP16, Null
-   11804: 30007493     	B.IOTI	[], last	->t<8KB>
+   11804: 30007493     	B.IOTI	[], last	->t<4KB>
    11808: 00858013     	B.IOR	[s0,a6],[]
    1180c: 103c         	C.B.DIMI	64, 	->lb0
    1180e: 503c         	C.B.DIMI	64, 	->lb1
@@ -51,121 +51,121 @@
    11812: 0800         	C.BSTART.STD	
    11814: 22519181     	BSTART.VPAR	163, FP16
    11818: 1800a4a3     	B.ARG	DN2NZ.normal, FP32, Null
-   1181c: 20057493     	B.IOTI	[u#3], last	->t<8KB>
+   1181c: 20057493     	B.IOTI	[u#3], last	->t<4KB>
    11820: 103c         	C.B.DIMI	64, 	->lb0
    11822: 503c         	C.B.DIMI	64, 	->lb1
    11824: 22011181     	BSTART.CUBE	MAMULB, FP16
-   11828: 88207513     	B.IOTI	[t#1, t#3.reuse], last	->acc<16KB>
+   11828: 88207513     	B.IOTI	[t#1, t#3.reuse], last	->acc<4KB>
    1182c: 103c         	C.B.DIMI	64, 	->lb0
    1182e: 503c         	C.B.DIMI	64, 	->lb1
    11830: 903c         	C.B.DIMI	64, 	->lb2
    11832: 0800         	C.BSTART.STD	
    11834: 22519181     	BSTART.VPAR	163, FP16
    11838: 1800a4a3     	B.ARG	DN2NZ.normal, FP32, Null
-   1183c: 2004f493     	B.IOTI	[u#2], last	->t<8KB>
+   1183c: 2004f493     	B.IOTI	[u#2], last	->t<4KB>
    11840: 103c         	C.B.DIMI	64, 	->lb0
    11842: 503c         	C.B.DIMI	64, 	->lb1
    11844: 22211181     	BSTART.CUBE	MAMULB.ACC, FP16
-   11848: 88207513     	B.IOTI	[t#1, t#3.reuse], last	->acc<16KB>
+   11848: 88207513     	B.IOTI	[t#1, t#3.reuse], last	->acc<4KB>
    1184c: 103c         	C.B.DIMI	64, 	->lb0
    1184e: 503c         	C.B.DIMI	64, 	->lb1
    11850: 903c         	C.B.DIMI	64, 	->lb2
    11852: 0a811181     	BSTART.CUBE	ACCCVT, FP32
    11856: 020fae23     	B.ARG	NZ2DN.canon
-   1185a: 30007513     	B.IOTI	[], last	->t<16KB>
+   1185a: 30007513     	B.IOTI	[], last	->t<4KB>
    1185e: 103c         	C.B.DIMI	64, 	->lb0
    11860: 503c         	C.B.DIMI	64, 	->lb1
    11862: 0800         	C.BSTART.STD	
    11864: 22519181     	BSTART.VPAR	163, FP16
    11868: 1800a4a3     	B.ARG	DN2NZ.normal, FP32, Null
-   1186c: 20037493     	B.IOTI	[t#7], last	->t<8KB>
+   1186c: 20037493     	B.IOTI	[t#7], last	->t<4KB>
    11870: 103c         	C.B.DIMI	64, 	->lb0
    11872: 503c         	C.B.DIMI	64, 	->lb1
    11874: 22011181     	BSTART.CUBE	MAMULB, FP16
-   11878: 08507513     	B.IOTI	[t#1, t#6], last	->acc<16KB>
+   11878: 08507513     	B.IOTI	[t#1, t#6], last	->acc<4KB>
    1187c: 103c         	C.B.DIMI	64, 	->lb0
    1187e: 503c         	C.B.DIMI	64, 	->lb1
    11880: 903c         	C.B.DIMI	64, 	->lb2
    11882: 0800         	C.BSTART.STD	
    11884: 22519181     	BSTART.VPAR	163, FP16
    11888: 1800a4a3     	B.ARG	DN2NZ.normal, FP32, Null
-   1188c: 20037493     	B.IOTI	[t#7], last	->t<8KB>
+   1188c: 20037493     	B.IOTI	[t#7], last	->t<4KB>
    11890: 103c         	C.B.DIMI	64, 	->lb0
    11892: 503c         	C.B.DIMI	64, 	->lb1
    11894: 22211181     	BSTART.CUBE	MAMULB.ACC, FP16
-   11898: 08507513     	B.IOTI	[t#1, t#6], last	->acc<16KB>
+   11898: 08507513     	B.IOTI	[t#1, t#6], last	->acc<4KB>
    1189c: 103c         	C.B.DIMI	64, 	->lb0
    1189e: 503c         	C.B.DIMI	64, 	->lb1
    118a0: 903c         	C.B.DIMI	64, 	->lb2
    118a2: 0a811181     	BSTART.CUBE	ACCCVT, FP32
    118a6: 020fae23     	B.ARG	NZ2DN.canon
-   118aa: 30007513     	B.IOTI	[], last	->t<16KB>
+   118aa: 30007513     	B.IOTI	[], last	->t<4KB>
    118ae: 103c         	C.B.DIMI	64, 	->lb0
    118b0: 503c         	C.B.DIMI	64, 	->lb1
    118b2: 02001181     	BSTART.VPAR	VCALL
-   118b6: 043ae513     	B.IOTI	[m#6, t#4]	->m<16KB>
+   118b6: 043ae513     	B.IOTI	[m#6, t#4]	->m<4KB>
    118ba: 2e05f013     	B.IOTI	[u#4], last
    118be: 103c         	C.B.DIMI	64, 	->lb0
    118c0: 503c         	C.B.DIMI	64, 	->lb1
    118c2: 0005a583     	B.TEXT	0x12f58 <_Z13global_updateIN3pto4TileILNS0_8LocationE0EfLi64ELi64ELNS0_7BLayoutE1ELi64ELi64ELNS0_7SLayoutE0ELi512ELNS0_8PadValueE3EEENS1_ILS2_0EfLi64ELi8ELS3_1ELi64ELi1ELS4_0ELi512ELS5_3EEEEvNT_9TileDTypeES9_S9_NT0_9TileDTypeE>
    118c6: 02001181     	BSTART.VPAR	VCALL
-   118ca: 040ae513     	B.IOTI	[m#6, t#1]	->m<16KB>
+   118ca: 040ae513     	B.IOTI	[m#6, t#1]	->m<4KB>
    118ce: 2e047013     	B.IOTI	[u#1], last
    118d2: 103c         	C.B.DIMI	64, 	->lb0
    118d4: 503c         	C.B.DIMI	64, 	->lb1
    118d6: 0005a083     	B.TEXT	0x12f58 <_Z13global_updateIN3pto4TileILNS0_8LocationE0EfLi64ELi64ELNS0_7BLayoutE1ELi64ELi64ELNS0_7SLayoutE0ELi512ELNS0_8PadValueE3EEENS1_ILS2_0EfLi64ELi8ELS3_1ELi64ELi1ELS4_0ELi512ELS5_3EEEEvNT_9TileDTypeES9_S9_NT0_9TileDTypeE>
    118da: 22109181     	BSTART.TMA	TLOAD, FP16
    118de: 18022423     	B.ARG	DN2ZN.normal, FP16, Null
-   118e2: 30007493     	B.IOTI	[], last	->t<8KB>
+   118e2: 30007493     	B.IOTI	[], last	->t<4KB>
    118e6: 00860013     	B.IOR	[s1,a6],[]
    118ea: 103c         	C.B.DIMI	64, 	->lb0
    118ec: 503c         	C.B.DIMI	64, 	->lb1
    118ee: 903c         	C.B.DIMI	64, 	->lb2
    118f0: 22109181     	BSTART.TMA	TLOAD, FP16
    118f4: 18022423     	B.ARG	DN2ZN.normal, FP16, Null
-   118f8: 30007493     	B.IOTI	[], last	->t<8KB>
+   118f8: 30007493     	B.IOTI	[], last	->t<4KB>
    118fc: 00868013     	B.IOR	[s2,a6],[]
    11900: 103c         	C.B.DIMI	64, 	->lb0
    11902: 503c         	C.B.DIMI	64, 	->lb1
    11904: 903c         	C.B.DIMI	64, 	->lb2
    11906: 22011181     	BSTART.CUBE	MAMULB, FP16
-   1190a: c81cf513     	B.IOTI	[n#2.reuse, t#2.reuse], last	->acc<16KB>
+   1190a: c81cf513     	B.IOTI	[n#2.reuse, t#2.reuse], last	->acc<4KB>
    1190e: 103c         	C.B.DIMI	64, 	->lb0
    11910: 503c         	C.B.DIMI	64, 	->lb1
    11912: 903c         	C.B.DIMI	64, 	->lb2
    11914: 0a811181     	BSTART.CUBE	ACCCVT, FP32
    11918: 020fae23     	B.ARG	NZ2DN.canon
-   1191c: 30007513     	B.IOTI	[], last	->t<16KB>
+   1191c: 30007513     	B.IOTI	[], last	->t<4KB>
    11920: 103c         	C.B.DIMI	64, 	->lb0
    11922: 503c         	C.B.DIMI	64, 	->lb1
    11924: 22011181     	BSTART.CUBE	MAMULB, FP16
-   11928: c81cf513     	B.IOTI	[n#2.reuse, t#2.reuse], last	->acc<16KB>
+   11928: c81cf513     	B.IOTI	[n#2.reuse, t#2.reuse], last	->acc<4KB>
    1192c: 103c         	C.B.DIMI	64, 	->lb0
    1192e: 503c         	C.B.DIMI	64, 	->lb1
    11930: 903c         	C.B.DIMI	64, 	->lb2
    11932: 0a811181     	BSTART.CUBE	ACCCVT, FP32
    11936: 020fae23     	B.ARG	NZ2DN.canon
-   1193a: 30007513     	B.IOTI	[], last	->t<16KB>
+   1193a: 30007513     	B.IOTI	[], last	->t<4KB>
    1193e: 103c         	C.B.DIMI	64, 	->lb0
    11940: 503c         	C.B.DIMI	64, 	->lb1
    11942: 22011181     	BSTART.CUBE	MAMULB, FP16
-   11946: 483c7513     	B.IOTI	[n#1.reuse, t#4], last	->acc<16KB>
+   11946: 483c7513     	B.IOTI	[n#1.reuse, t#4], last	->acc<4KB>
    1194a: 103c         	C.B.DIMI	64, 	->lb0
    1194c: 503c         	C.B.DIMI	64, 	->lb1
    1194e: 903c         	C.B.DIMI	64, 	->lb2
    11950: 0a811181     	BSTART.CUBE	ACCCVT, FP32
    11954: 020fae23     	B.ARG	NZ2DN.canon
-   11958: 32007513     	B.IOTI	[], last	->u<16KB>
+   11958: 32007513     	B.IOTI	[], last	->u<4KB>
    1195c: 103c         	C.B.DIMI	64, 	->lb0
    1195e: 503c         	C.B.DIMI	64, 	->lb1
    11960: 22011181     	BSTART.CUBE	MAMULB, FP16
-   11964: 482c7513     	B.IOTI	[n#1.reuse, t#3], last	->acc<16KB>
+   11964: 482c7513     	B.IOTI	[n#1.reuse, t#3], last	->acc<4KB>
    11968: 103c         	C.B.DIMI	64, 	->lb0
    1196a: 503c         	C.B.DIMI	64, 	->lb1
    1196c: 903c         	C.B.DIMI	64, 	->lb2
    1196e: 0a811181     	BSTART.CUBE	ACCCVT, FP32
    11972: 020fae23     	B.ARG	NZ2DN.canon
-   11976: 30007513     	B.IOTI	[], last	->t<16KB>
+   11976: 30007513     	B.IOTI	[], last	->t<4KB>
    1197a: 103c         	C.B.DIMI	64, 	->lb0
    1197c: 503c         	C.B.DIMI	64, 	->lb1
    1197e: 02001181     	BSTART.VPAR	VCALL
@@ -175,8 +175,8 @@
    1198e: 103c         	C.B.DIMI	64, 	->lb0
    11990: 00014403     	B.TEXT	0x11ea0 <_Z12new_max_2srcIN3pto4TileILNS0_8LocationE0EfLi64ELi64ELNS0_7BLayoutE1ELi64ELi64ELNS0_7SLayoutE0ELi512ELNS0_8PadValueE3EEENS1_ILS2_0EfLi64ELi8ELS3_1ELi64ELi1ELS4_0ELi512ELS5_3EEEEvNT0_9TileDTypeES9_NT_9TileDTypeESB_S9_NSA_5DTypeE>
    11994: 02001181     	BSTART.VPAR	VCALL
-   11998: 02116513     	B.IOTI	[t#3, t#2]	->u<16KB>
-   1199c: 62087513     	B.IOTI	[m#1.reuse], last	->u<16KB>
+   11998: 02116513     	B.IOTI	[t#3, t#2]	->u<4KB>
+   1199c: 62087513     	B.IOTI	[m#1.reuse], last	->u<4KB>
    119a0: 000a0013     	B.IOR	[x0],[]
    119a4: 103c         	C.B.DIMI	64, 	->lb0
    119a6: 503c         	C.B.DIMI	64, 	->lb1
@@ -193,8 +193,8 @@
    119ce: 103c         	C.B.DIMI	64, 	->lb0
    119d0: 00013403     	B.TEXT	0x11ea0 <_Z12new_max_2srcIN3pto4TileILNS0_8LocationE0EfLi64ELi64ELNS0_7BLayoutE1ELi64ELi64ELNS0_7SLayoutE0ELi512ELNS0_8PadValueE3EEENS1_ILS2_0EfLi64ELi8ELS3_1ELi64ELi1ELS4_0ELi512ELS5_3EEEEvNT0_9TileDTypeES9_NT_9TileDTypeESB_S9_NSA_5DTypeE>
    119d4: 02001181     	BSTART.VPAR	VCALL
-   119d8: 00066513     	B.IOTI	[u#5, t#1]	->t<16KB>
-   119dc: 60087513     	B.IOTI	[m#1.reuse], last	->t<16KB>
+   119d8: 00066513     	B.IOTI	[u#5, t#1]	->t<4KB>
+   119dc: 60087513     	B.IOTI	[m#1.reuse], last	->t<4KB>
    119e0: 000a0013     	B.IOR	[x0],[]
    119e4: 103c         	C.B.DIMI	64, 	->lb0
    119e6: 503c         	C.B.DIMI	64, 	->lb1
@@ -206,14 +206,14 @@
    119fa: 00034d83     	B.TEXT	0x12730 <_Z12new_sum_2srcIN3pto4TileILNS0_8LocationE0EfLi64ELi64ELNS0_7BLayoutE1ELi64ELi64ELNS0_7SLayoutE0ELi512ELNS0_8PadValueE3EEENS1_ILS2_0EfLi64ELi8ELS3_1ELi64ELi1ELS4_0ELi512ELS5_3EEES7_EvNT0_9TileDTypeENT_9TileDTypeESB_S9_NT1_9TileDTypeE>
    119fe: 22109181     	BSTART.TMA	TLOAD, FP16
    11a02: 180221a3     	B.ARG	ND2ZN.normal, FP16, Null
-   11a06: 30007493     	B.IOTI	[], last	->t<8KB>
+   11a06: 30007493     	B.IOTI	[], last	->t<4KB>
    11a0a: 00870013     	B.IOR	[s3,a6],[]
    11a0e: 103c         	C.B.DIMI	64, 	->lb0
    11a10: 503c         	C.B.DIMI	64, 	->lb1
    11a12: 903c         	C.B.DIMI	64, 	->lb2
    11a14: 22109181     	BSTART.TMA	TLOAD, FP16
    11a18: 180221a3     	B.ARG	ND2ZN.normal, FP16, Null
-   11a1c: 30007493     	B.IOTI	[], last	->t<8KB>
+   11a1c: 30007493     	B.IOTI	[], last	->t<4KB>
    11a20: 00878013     	B.IOR	[s4,a6],[]
    11a24: 103c         	C.B.DIMI	64, 	->lb0
    11a26: 503c         	C.B.DIMI	64, 	->lb1
@@ -221,121 +221,121 @@
    11a2a: 0800         	C.BSTART.STD	
    11a2c: 22519181     	BSTART.VPAR	163, FP16
    11a30: 1800a4a3     	B.ARG	DN2NZ.normal, FP32, Null
-   11a34: 20057493     	B.IOTI	[u#3], last	->t<8KB>
+   11a34: 20057493     	B.IOTI	[u#3], last	->t<4KB>
    11a38: 103c         	C.B.DIMI	64, 	->lb0
    11a3a: 503c         	C.B.DIMI	64, 	->lb1
    11a3c: 22011181     	BSTART.CUBE	MAMULB, FP16
-   11a40: 88207513     	B.IOTI	[t#1, t#3.reuse], last	->acc<16KB>
+   11a40: 88207513     	B.IOTI	[t#1, t#3.reuse], last	->acc<4KB>
    11a44: 103c         	C.B.DIMI	64, 	->lb0
    11a46: 503c         	C.B.DIMI	64, 	->lb1
    11a48: 903c         	C.B.DIMI	64, 	->lb2
    11a4a: 0800         	C.BSTART.STD	
    11a4c: 22519181     	BSTART.VPAR	163, FP16
    11a50: 1800a4a3     	B.ARG	DN2NZ.normal, FP32, Null
-   11a54: 2004f493     	B.IOTI	[u#2], last	->t<8KB>
+   11a54: 2004f493     	B.IOTI	[u#2], last	->t<4KB>
    11a58: 103c         	C.B.DIMI	64, 	->lb0
    11a5a: 503c         	C.B.DIMI	64, 	->lb1
    11a5c: 22211181     	BSTART.CUBE	MAMULB.ACC, FP16
-   11a60: 88207513     	B.IOTI	[t#1, t#3.reuse], last	->acc<16KB>
+   11a60: 88207513     	B.IOTI	[t#1, t#3.reuse], last	->acc<4KB>
    11a64: 103c         	C.B.DIMI	64, 	->lb0
    11a66: 503c         	C.B.DIMI	64, 	->lb1
    11a68: 903c         	C.B.DIMI	64, 	->lb2
    11a6a: 0a811181     	BSTART.CUBE	ACCCVT, FP32
    11a6e: 020fae23     	B.ARG	NZ2DN.canon
-   11a72: 30007513     	B.IOTI	[], last	->t<16KB>
+   11a72: 30007513     	B.IOTI	[], last	->t<4KB>
    11a76: 103c         	C.B.DIMI	64, 	->lb0
    11a78: 503c         	C.B.DIMI	64, 	->lb1
    11a7a: 0800         	C.BSTART.STD	
    11a7c: 22519181     	BSTART.VPAR	163, FP16
    11a80: 1800a4a3     	B.ARG	DN2NZ.normal, FP32, Null
-   11a84: 20037493     	B.IOTI	[t#7], last	->t<8KB>
+   11a84: 20037493     	B.IOTI	[t#7], last	->t<4KB>
    11a88: 103c         	C.B.DIMI	64, 	->lb0
    11a8a: 503c         	C.B.DIMI	64, 	->lb1
    11a8c: 22011181     	BSTART.CUBE	MAMULB, FP16
-   11a90: 08507513     	B.IOTI	[t#1, t#6], last	->acc<16KB>
+   11a90: 08507513     	B.IOTI	[t#1, t#6], last	->acc<4KB>
    11a94: 103c         	C.B.DIMI	64, 	->lb0
    11a96: 503c         	C.B.DIMI	64, 	->lb1
    11a98: 903c         	C.B.DIMI	64, 	->lb2
    11a9a: 0800         	C.BSTART.STD	
    11a9c: 22519181     	BSTART.VPAR	163, FP16
    11aa0: 1800a4a3     	B.ARG	DN2NZ.normal, FP32, Null
-   11aa4: 20037493     	B.IOTI	[t#7], last	->t<8KB>
+   11aa4: 20037493     	B.IOTI	[t#7], last	->t<4KB>
    11aa8: 103c         	C.B.DIMI	64, 	->lb0
    11aaa: 503c         	C.B.DIMI	64, 	->lb1
    11aac: 22211181     	BSTART.CUBE	MAMULB.ACC, FP16
-   11ab0: 08507513     	B.IOTI	[t#1, t#6], last	->acc<16KB>
+   11ab0: 08507513     	B.IOTI	[t#1, t#6], last	->acc<4KB>
    11ab4: 103c         	C.B.DIMI	64, 	->lb0
    11ab6: 503c         	C.B.DIMI	64, 	->lb1
    11ab8: 903c         	C.B.DIMI	64, 	->lb2
    11aba: 0a811181     	BSTART.CUBE	ACCCVT, FP32
    11abe: 020fae23     	B.ARG	NZ2DN.canon
-   11ac2: 30007513     	B.IOTI	[], last	->t<16KB>
+   11ac2: 30007513     	B.IOTI	[], last	->t<4KB>
    11ac6: 103c         	C.B.DIMI	64, 	->lb0
    11ac8: 503c         	C.B.DIMI	64, 	->lb1
    11aca: 02001181     	BSTART.VPAR	VCALL
-   11ace: 043ae513     	B.IOTI	[m#6, t#4]	->m<16KB>
+   11ace: 043ae513     	B.IOTI	[m#6, t#4]	->m<4KB>
    11ad2: 2e05f013     	B.IOTI	[u#4], last
    11ad6: 103c         	C.B.DIMI	64, 	->lb0
    11ad8: 503c         	C.B.DIMI	64, 	->lb1
    11ada: 00051f83     	B.TEXT	0x12f58 <_Z13global_updateIN3pto4TileILNS0_8LocationE0EfLi64ELi64ELNS0_7BLayoutE1ELi64ELi64ELNS0_7SLayoutE0ELi512ELNS0_8PadValueE3EEENS1_ILS2_0EfLi64ELi8ELS3_1ELi64ELi1ELS4_0ELi512ELS5_3EEEEvNT_9TileDTypeES9_S9_NT0_9TileDTypeE>
    11ade: 02001181     	BSTART.VPAR	VCALL
-   11ae2: 020ae513     	B.IOTI	[m#6, t#1]	->u<16KB>
+   11ae2: 020ae513     	B.IOTI	[m#6, t#1]	->u<4KB>
    11ae6: 2e047013     	B.IOTI	[u#1], last
    11aea: 103c         	C.B.DIMI	64, 	->lb0
    11aec: 503c         	C.B.DIMI	64, 	->lb1
    11aee: 00051a83     	B.TEXT	0x12f58 <_Z13global_updateIN3pto4TileILNS0_8LocationE0EfLi64ELi64ELNS0_7BLayoutE1ELi64ELi64ELNS0_7SLayoutE0ELi512ELNS0_8PadValueE3EEENS1_ILS2_0EfLi64ELi8ELS3_1ELi64ELi1ELS4_0ELi512ELS5_3EEEEvNT_9TileDTypeES9_S9_NT0_9TileDTypeE>
    11af2: 22109181     	BSTART.TMA	TLOAD, FP16
    11af6: 18022423     	B.ARG	DN2ZN.normal, FP16, Null
-   11afa: 30007493     	B.IOTI	[], last	->t<8KB>
+   11afa: 30007493     	B.IOTI	[], last	->t<4KB>
    11afe: 00880013     	B.IOR	[s5,a6],[]
    11b02: 103c         	C.B.DIMI	64, 	->lb0
    11b04: 503c         	C.B.DIMI	64, 	->lb1
    11b06: 903c         	C.B.DIMI	64, 	->lb2
    11b08: 22109181     	BSTART.TMA	TLOAD, FP16
    11b0c: 18022423     	B.ARG	DN2ZN.normal, FP16, Null
-   11b10: 30007493     	B.IOTI	[], last	->t<8KB>
+   11b10: 30007493     	B.IOTI	[], last	->t<4KB>
    11b14: 00888013     	B.IOR	[s6,a6],[]
    11b18: 103c         	C.B.DIMI	64, 	->lb0
    11b1a: 503c         	C.B.DIMI	64, 	->lb1
    11b1c: 903c         	C.B.DIMI	64, 	->lb2
    11b1e: 22011181     	BSTART.CUBE	MAMULB, FP16
-   11b22: c81cf513     	B.IOTI	[n#2.reuse, t#2.reuse], last	->acc<16KB>
+   11b22: c81cf513     	B.IOTI	[n#2.reuse, t#2.reuse], last	->acc<4KB>
    11b26: 103c         	C.B.DIMI	64, 	->lb0
    11b28: 503c         	C.B.DIMI	64, 	->lb1
    11b2a: 903c         	C.B.DIMI	64, 	->lb2
    11b2c: 0a811181     	BSTART.CUBE	ACCCVT, FP32
    11b30: 020fae23     	B.ARG	NZ2DN.canon
-   11b34: 30007513     	B.IOTI	[], last	->t<16KB>
+   11b34: 30007513     	B.IOTI	[], last	->t<4KB>
    11b38: 103c         	C.B.DIMI	64, 	->lb0
    11b3a: 503c         	C.B.DIMI	64, 	->lb1
    11b3c: 22011181     	BSTART.CUBE	MAMULB, FP16
-   11b40: 881cf513     	B.IOTI	[n#2, t#2.reuse], last	->acc<16KB>
+   11b40: 881cf513     	B.IOTI	[n#2, t#2.reuse], last	->acc<4KB>
    11b44: 103c         	C.B.DIMI	64, 	->lb0
    11b46: 503c         	C.B.DIMI	64, 	->lb1
    11b48: 903c         	C.B.DIMI	64, 	->lb2
    11b4a: 0a811181     	BSTART.CUBE	ACCCVT, FP32
    11b4e: 020fae23     	B.ARG	NZ2DN.canon
-   11b52: 30007513     	B.IOTI	[], last	->t<16KB>
+   11b52: 30007513     	B.IOTI	[], last	->t<4KB>
    11b56: 103c         	C.B.DIMI	64, 	->lb0
    11b58: 503c         	C.B.DIMI	64, 	->lb1
    11b5a: 22011181     	BSTART.CUBE	MAMULB, FP16
-   11b5e: 483c7513     	B.IOTI	[n#1.reuse, t#4], last	->acc<16KB>
+   11b5e: 483c7513     	B.IOTI	[n#1.reuse, t#4], last	->acc<4KB>
    11b62: 103c         	C.B.DIMI	64, 	->lb0
    11b64: 503c         	C.B.DIMI	64, 	->lb1
    11b66: 903c         	C.B.DIMI	64, 	->lb2
    11b68: 0a811181     	BSTART.CUBE	ACCCVT, FP32
    11b6c: 020fae23     	B.ARG	NZ2DN.canon
-   11b70: 32007513     	B.IOTI	[], last	->u<16KB>
+   11b70: 32007513     	B.IOTI	[], last	->u<4KB>
    11b74: 103c         	C.B.DIMI	64, 	->lb0
    11b76: 503c         	C.B.DIMI	64, 	->lb1
    11b78: 22011181     	BSTART.CUBE	MAMULB, FP16
-   11b7c: 082c7513     	B.IOTI	[n#1, t#3], last	->acc<16KB>
+   11b7c: 082c7513     	B.IOTI	[n#1, t#3], last	->acc<4KB>
    11b80: 103c         	C.B.DIMI	64, 	->lb0
    11b82: 503c         	C.B.DIMI	64, 	->lb1
    11b84: 903c         	C.B.DIMI	64, 	->lb2
    11b86: 0a811181     	BSTART.CUBE	ACCCVT, FP32
    11b8a: 020fae23     	B.ARG	NZ2DN.canon
-   11b8e: 30007513     	B.IOTI	[], last	->t<16KB>
+   11b8e: 30007513     	B.IOTI	[], last	->t<4KB>
    11b92: 103c         	C.B.DIMI	64, 	->lb0
    11b94: 503c         	C.B.DIMI	64, 	->lb1
    11b96: 02001181     	BSTART.VPAR	VCALL
@@ -345,8 +345,8 @@
    11ba6: 103c         	C.B.DIMI	64, 	->lb0
    11ba8: 0000be03     	B.TEXT	0x11ea0 <_Z12new_max_2srcIN3pto4TileILNS0_8LocationE0EfLi64ELi64ELNS0_7BLayoutE1ELi64ELi64ELNS0_7SLayoutE0ELi512ELNS0_8PadValueE3EEENS1_ILS2_0EfLi64ELi8ELS3_1ELi64ELi1ELS4_0ELi512ELS5_3EEEEvNT0_9TileDTypeES9_NT_9TileDTypeESB_S9_NSA_5DTypeE>
    11bac: 02001181     	BSTART.VPAR	VCALL
-   11bb0: 0221e513     	B.IOTI	[t#4, t#3]	->u<16KB>
-   11bb4: 22007513     	B.IOTI	[t#1], last	->u<16KB>
+   11bb0: 0221e513     	B.IOTI	[t#4, t#3]	->u<4KB>
+   11bb4: 22007513     	B.IOTI	[t#1], last	->u<4KB>
    11bb8: 000a0013     	B.IOR	[x0],[]
    11bbc: 103c         	C.B.DIMI	64, 	->lb0
    11bbe: 503c         	C.B.DIMI	64, 	->lb1
@@ -363,8 +363,8 @@
    11be6: 103c         	C.B.DIMI	64, 	->lb0
    11be8: 0000ae03     	B.TEXT	0x11ea0 <_Z12new_max_2srcIN3pto4TileILNS0_8LocationE0EfLi64ELi64ELNS0_7BLayoutE1ELi64ELi64ELNS0_7SLayoutE0ELi512ELNS0_8PadValueE3EEENS1_ILS2_0EfLi64ELi8ELS3_1ELi64ELi1ELS4_0ELi512ELS5_3EEEEvNT0_9TileDTypeES9_NT_9TileDTypeESB_S9_NSA_5DTypeE>
    11bec: 02001181     	BSTART.VPAR	VCALL
-   11bf0: 0026e513     	B.IOTI	[u#6, t#3]	->t<16KB>
-   11bf4: 20007513     	B.IOTI	[t#1], last	->t<16KB>
+   11bf0: 0026e513     	B.IOTI	[u#6, t#3]	->t<4KB>
+   11bf4: 20007513     	B.IOTI	[t#1], last	->t<4KB>
    11bf8: 000a0013     	B.IOR	[x0],[]
    11bfc: 103c         	C.B.DIMI	64, 	->lb0
    11bfe: 503c         	C.B.DIMI	64, 	->lb1
@@ -376,14 +376,14 @@
    11c12: 0002c783     	B.TEXT	0x12730 <_Z12new_sum_2srcIN3pto4TileILNS0_8LocationE0EfLi64ELi64ELNS0_7BLayoutE1ELi64ELi64ELNS0_7SLayoutE0ELi512ELNS0_8PadValueE3EEENS1_ILS2_0EfLi64ELi8ELS3_1ELi64ELi1ELS4_0ELi512ELS5_3EEES7_EvNT0_9TileDTypeENT_9TileDTypeESB_S9_NT1_9TileDTypeE>
    11c16: 22109181     	BSTART.TMA	TLOAD, FP16
    11c1a: 180221a3     	B.ARG	ND2ZN.normal, FP16, Null
-   11c1e: 30007493     	B.IOTI	[], last	->t<8KB>
+   11c1e: 30007493     	B.IOTI	[], last	->t<4KB>
    11c22: 00890013     	B.IOR	[s7,a6],[]
    11c26: 103c         	C.B.DIMI	64, 	->lb0
    11c28: 503c         	C.B.DIMI	64, 	->lb1
    11c2a: 903c         	C.B.DIMI	64, 	->lb2
    11c2c: 22109181     	BSTART.TMA	TLOAD, FP16
    11c30: 180221a3     	B.ARG	ND2ZN.normal, FP16, Null
-   11c34: 30007493     	B.IOTI	[], last	->t<8KB>
+   11c34: 30007493     	B.IOTI	[], last	->t<4KB>
    11c38: 00898013     	B.IOR	[s8,a6],[]
    11c3c: 103c         	C.B.DIMI	64, 	->lb0
    11c3e: 503c         	C.B.DIMI	64, 	->lb1
@@ -391,65 +391,65 @@
    11c42: 0800         	C.BSTART.STD	
    11c44: 22519181     	BSTART.VPAR	163, FP16
    11c48: 1800a4a3     	B.ARG	DN2NZ.normal, FP32, Null
-   11c4c: 20067493     	B.IOTI	[u#5], last	->t<8KB>
+   11c4c: 20067493     	B.IOTI	[u#5], last	->t<4KB>
    11c50: 103c         	C.B.DIMI	64, 	->lb0
    11c52: 503c         	C.B.DIMI	64, 	->lb1
    11c54: 22011181     	BSTART.CUBE	MAMULB, FP16
-   11c58: 88207513     	B.IOTI	[t#1, t#3.reuse], last	->acc<16KB>
+   11c58: 88207513     	B.IOTI	[t#1, t#3.reuse], last	->acc<4KB>
    11c5c: 103c         	C.B.DIMI	64, 	->lb0
    11c5e: 503c         	C.B.DIMI	64, 	->lb1
    11c60: 903c         	C.B.DIMI	64, 	->lb2
    11c62: 0800         	C.BSTART.STD	
    11c64: 22519181     	BSTART.VPAR	163, FP16
    11c68: 1800a4a3     	B.ARG	DN2NZ.normal, FP32, Null
-   11c6c: 2005f493     	B.IOTI	[u#4], last	->t<8KB>
+   11c6c: 2005f493     	B.IOTI	[u#4], last	->t<4KB>
    11c70: 103c         	C.B.DIMI	64, 	->lb0
    11c72: 503c         	C.B.DIMI	64, 	->lb1
    11c74: 22211181     	BSTART.CUBE	MAMULB.ACC, FP16
-   11c78: 88207513     	B.IOTI	[t#1, t#3.reuse], last	->acc<16KB>
+   11c78: 88207513     	B.IOTI	[t#1, t#3.reuse], last	->acc<4KB>
    11c7c: 103c         	C.B.DIMI	64, 	->lb0
    11c7e: 503c         	C.B.DIMI	64, 	->lb1
    11c80: 903c         	C.B.DIMI	64, 	->lb2
    11c82: 0a811181     	BSTART.CUBE	ACCCVT, FP32
    11c86: 020fae23     	B.ARG	NZ2DN.canon
-   11c8a: 30007513     	B.IOTI	[], last	->t<16KB>
+   11c8a: 30007513     	B.IOTI	[], last	->t<4KB>
    11c8e: 103c         	C.B.DIMI	64, 	->lb0
    11c90: 503c         	C.B.DIMI	64, 	->lb1
    11c92: 0800         	C.BSTART.STD	
    11c94: 22519181     	BSTART.VPAR	163, FP16
    11c98: 1800a4a3     	B.ARG	DN2NZ.normal, FP32, Null
-   11c9c: 20037493     	B.IOTI	[t#7], last	->t<8KB>
+   11c9c: 20037493     	B.IOTI	[t#7], last	->t<4KB>
    11ca0: 103c         	C.B.DIMI	64, 	->lb0
    11ca2: 503c         	C.B.DIMI	64, 	->lb1
    11ca4: 22011181     	BSTART.CUBE	MAMULB, FP16
-   11ca8: 08507513     	B.IOTI	[t#1, t#6], last	->acc<16KB>
+   11ca8: 08507513     	B.IOTI	[t#1, t#6], last	->acc<4KB>
    11cac: 103c         	C.B.DIMI	64, 	->lb0
    11cae: 503c         	C.B.DIMI	64, 	->lb1
    11cb0: 903c         	C.B.DIMI	64, 	->lb2
    11cb2: 0800         	C.BSTART.STD	
    11cb4: 22519181     	BSTART.VPAR	163, FP16
    11cb8: 1800a4a3     	B.ARG	DN2NZ.normal, FP32, Null
-   11cbc: 20037493     	B.IOTI	[t#7], last	->t<8KB>
+   11cbc: 20037493     	B.IOTI	[t#7], last	->t<4KB>
    11cc0: 103c         	C.B.DIMI	64, 	->lb0
    11cc2: 503c         	C.B.DIMI	64, 	->lb1
    11cc4: 22211181     	BSTART.CUBE	MAMULB.ACC, FP16
-   11cc8: 08507513     	B.IOTI	[t#1, t#6], last	->acc<16KB>
+   11cc8: 08507513     	B.IOTI	[t#1, t#6], last	->acc<4KB>
    11ccc: 103c         	C.B.DIMI	64, 	->lb0
    11cce: 503c         	C.B.DIMI	64, 	->lb1
    11cd0: 903c         	C.B.DIMI	64, 	->lb2
    11cd2: 0a811181     	BSTART.CUBE	ACCCVT, FP32
    11cd6: 020fae23     	B.ARG	NZ2DN.canon
-   11cda: 30007513     	B.IOTI	[], last	->t<16KB>
+   11cda: 30007513     	B.IOTI	[], last	->t<4KB>
    11cde: 103c         	C.B.DIMI	64, 	->lb0
    11ce0: 503c         	C.B.DIMI	64, 	->lb1
    11ce2: 02001181     	BSTART.VPAR	VCALL
-   11ce6: 00386493     	B.IOTI	[m#1, t#4]	->t<8KB>
+   11ce6: 00386493     	B.IOTI	[m#1, t#4]	->t<4KB>
    11cea: 0ea6f013     	B.IOTI	[u#6, u#3], last
    11cee: 103c         	C.B.DIMI	64, 	->lb0
    11cf0: 503c         	C.B.DIMI	64, 	->lb1
    11cf2: 0004a783     	B.TEXT	0x12f90 <_Z26normalize_with_last_updateIN3pto4TileILNS0_8LocationE0EDF16_Li64ELi64ELNS0_7BLayoutE1ELi64ELi64ELNS0_7SLayoutE0ELi512ELNS0_8PadValueE3EEENS1_ILS2_0EfLi64ELi64ELS3_1ELi64ELi64ELS4_0ELi512ELS5_3EEENS1_ILS2_0EfLi64ELi8ELS3_1ELi64ELi1ELS4_0ELi512ELS5_3EEES8_EvNT_9TileDTypeENT0_9TileDTypeESC_NT2_9TileDTypeENT1_9TileDTypeE>
    11cf6: 02001181     	BSTART.VPAR	VCALL
-   11cfa: 0017e493     	B.IOTI	[u#8, t#2]	->t<8KB>
+   11cfa: 0017e493     	B.IOTI	[u#8, t#2]	->t<4KB>
    11cfe: 0e84f013     	B.IOTI	[u#2, u#1], last
    11d02: 103c         	C.B.DIMI	64, 	->lb0
    11d04: 503c         	C.B.DIMI	64, 	->lb1

@@ -161,7 +161,7 @@ The bring-up profile constrains certain combinations (examples):
   execution modes.
 * `.FP` blocks mirror `.STD` transitions but mark a floating-point execution context.
 
-Block types beyond the scalar core (e.g. `.TMA`, `.VPAR`, `.VSEQ`, `.CUBE`, `.FIXP`) appear in the catalog as
+Block types beyond the scalar core (e.g. `.TMA`, `.CUBE`, `.TEPL`, `.VPAR`, `.VSEQ`, `.FIXP`) appear in the catalog as
 Block Split forms; this manual treats their detailed execution semantics as staged in v0.3 unless explicitly specified
 in the golden sources (`isa/v0.3/`).
 
@@ -170,7 +170,7 @@ in the golden sources (`isa/v0.3/`).
 
 Linx defines *tile blocks* for hardware-accelerated tile operations. A tile block is a basic block that:
 
-* starts with a typed tile/vector header (`BSTART.TMA`, `BSTART.CUBE`, `BSTART.MPAR`, `BSTART.MSEQ`,
+* starts with a typed tile/vector header (`BSTART.TMA`, `BSTART.CUBE`, `BSTART.TEPL`, `BSTART.MPAR`, `BSTART.MSEQ`,
   `BSTART.VPAR`, `BSTART.VSEQ`), and
 * ends at `BSTOP` / `C.BSTOP` or the next block start marker.
 
@@ -183,12 +183,15 @@ Tile blocks operate on **tile registers** (see <<progmodel-tile>>), and use expl
 
 Bring-up contract (strict v0.3 current profile):
 
-* Typed block starts are canonical (`BSTART.TMA`, `BSTART.CUBE`, `BSTART.MPAR`, `BSTART.MSEQ`, `BSTART.VPAR`,
+* Typed block starts are canonical (`BSTART.TMA`, `BSTART.CUBE`, `BSTART.TEPL`, `BSTART.MPAR`, `BSTART.MSEQ`, `BSTART.VPAR`,
   `BSTART.VSEQ`).
 * Legacy PAR-style block-start spelling is compatibility input only and MUST NOT appear in canonical outputs.
-* Compatibility opcode streams carrying legacy tile-op `163` are normalized to the corresponding typed form by profile
-  reconciliation tooling.
+* Compatibility opcode streams carrying legacy packed tile-op selectors are normalized to typed forms (`TMA`/`CUBE`/`TEPL`)
+  by profile reconciliation tooling.
 * `TLOAD`/`TSTORE`/`TPREFETCH` are the staged memory-tile baseline for AI workloads.
+* `TMOV` is the staged tile-state move baseline operation under typed `BSTART.TMA`.
+* PTO vector template operations (`TADD`, `TSUB`, `TROWMAX`, etc.) are staged under `BSTART.TEPL`.
+* `TVEC` is not a standalone strict-v0.3 header mnemonic; TVEC-style execution is represented by `BSTART.VPAR`/`BSTART.VSEQ`.
 * `MCALL` semantics remain represented via `.MPAR`/`.MSEQ` execution modes in the staged profile.
 
 **Immutability rule (design intent):** a tile block consumes input tiles and produces a new destination tile; it does
@@ -208,6 +211,9 @@ Bring-up v0.3 descriptor rules (normative for this bring-up profile):
 ** `n#k` → tile-id `24+(k-1)` (24..31)
   These tile-ids name positions within the corresponding hand’s architectural tile-register queue.
 * `B.IOTI` `SizeCode` maps to bytes as `bytes = 2^(SizeCode+4)` with strict architectural clamp to `512B..4KB`.
+* `B.IOT` (dynamic-size form) uses `RegSrc` to carry runtime output size. Strict-v0.3 accepts only values that decode
+  to `512B..4KB` (either direct `SizeCode` style values `5..8` or equivalent power-of-two byte counts).
+  Compiler/runtime MUST fail fast on out-of-range dynamic sizes.
 * `S0V` / `S1V` semantics are *inverted*: `0` means the corresponding `SrcTile*` is present as an input; `1` means absent.
   When a source is absent, its corresponding `SrcTile*` field is ignored and SHOULD be encoded as `0` in canonical v0.3 output.
 * `DstTile` encodes the destination *kind* and controls where the tile-producing engine allocates the output:
@@ -216,8 +222,9 @@ Bring-up v0.3 descriptor rules (normative for this bring-up profile):
 ** `2`: `m` hand (M queue)
 ** `3`: `n` hand (N queue)
 ** `4`: implicit accumulator (`acc`)
+  (`acc`) is a singleton architectural accumulator in strict-v0.3 (no encoded ACC depth/index).
 * For destination kinds `t/u/m/n`, the destination tile register is allocated implicitly as a **queue push**:
-** the output becomes the new `hand#1` definition (for example `->u<16KB>` allocates a new `u#1`),
+** the output becomes the new `hand#1` definition (for example `->u<4KB>` allocates a new `u#1`),
 ** existing definitions in that hand shift down (`hand#1→hand#2`, `hand#2→hand#3`, …),
 ** the oldest definition (`hand#8`) is evicted.
 ** for `B.IOTI`, the `SizeCode` updates the newly allocated (`hand#1`) tile register’s tracked byte-size.
@@ -229,6 +236,114 @@ Bring-up v0.3 descriptor rules (normative for this bring-up profile):
 * `group=1` is used as the terminal descriptor form in bring-up streams and is rendered as `last` in disassembly.
 * `B.IOR` disassembly omits zero GPR inputs/outputs and prints the input list in encoding order (`RegSrc0`, `RegSrc1`, `RegSrc2`)
   (for example, `[s0,a6],[]`).
+
+Strict-v0.3 tile header encoding assignments (from `isa/v0.3/opcodes/lx_32.opc`):
+
+* `BSTART.TMA`: `31..27=DataType`, `26..25=00`, `24..20=Function`, `19..15=00010`, `14..0` fixed block-split tail.
+* `BSTART.CUBE`: `31..27=DataType`, `26..25=00`, `24..20=Function`, `19..15=00110`, `14..0` fixed block-split tail.
+* `BSTART.TEPL`: `31..27=DataType`, `26..25=01`, `24..15=TileOp10`, `14..0` fixed block-split tail.
+* `BSTART.VPAR`: `26..25=Mode`, `19..15=00100` with fixed block-split tail.
+* `BSTART.VSEQ`: `26..25=Mode`, `19..15=00101` with fixed block-split tail.
+
+Strict-v0.3 tile `DataType` field assignments (u5):
+
+* Floating: `FP64=0`, `FP32=1`, `FP16=2`, `FP8=3`, `BF16=6`, `FPL8=7`, `FP4=11`, `FPL4=12`.
+* Signed integer: `INT64=16`, `INT32=17`, `INT16=18`, `INT8=19`, `INT4=20`.
+* Unsigned integer: `UINT64=24`, `UINT32=25`, `UINT16=26`, `UINT8=27`, `UINT4=28`.
+* Unassigned values are reserved in strict-v0.3 and MUST NOT appear in canonical streams.
+
+Strict-v0.3 alias policy (normative):
+
+* Canonical encoded headers are `BSTART.TMA`, `BSTART.CUBE`, `BSTART.TEPL`, `BSTART.VPAR`, `BSTART.VSEQ`.
+* Alias mnemonics are explicit strict-v0.3 instruction forms in the golden catalog and resolve to encoding selectors:
+** `BSTART.TLOAD` -> `BSTART.TMA Function=0`
+** `BSTART.TSTORE` -> `BSTART.TMA Function=1`
+** `BSTART.TMOV` -> `BSTART.TMA Function=2`
+** `BSTART.TMATMUL` (`BSTART.MAMULB`) -> `BSTART.CUBE Function=0`
+** `BSTART.TMATMUL.ACC` (`BSTART.MAMULB.ACC`) -> `BSTART.CUBE Function=2`
+** `BSTART.ACCCVT` -> `BSTART.CUBE Function=8`
+** `BSTART.TADD`, `BSTART.TSUB`, `BSTART.TROWMAX`, ... -> `BSTART.TEPL TileOp10=<assigned code>`
+* Preferred strict-v0.3 textual spellings in docs/tests are the alias mnemonics (`BSTART.TLOAD`, `BSTART.TSTORE`,
+  `BSTART.TMOV`, `BSTART.TMATMUL`, `BSTART.TMATMUL.ACC`, `BSTART.ACCCVT`, `BSTART.<TEPL-op>`), while the encoded
+  contract remains `BSTART.TMA/CUBE/TEPL + selector field`.
+* Legacy mixed forms such as `BSTART.TMA TLOAD, <DataType>` or `BSTART.CUBE MAMULB, <DataType>` are compatibility input
+  only and MUST NOT be used in new strict-v0.3 examples.
+* Legacy `PAR` block-start spelling is compatibility input only and MUST NOT appear in canonical strict-v0.3 output streams.
+
+Strict-v0.3 TMA `Function` freeze:
+
+* `Function=0` => `TLOAD`
+* `Function=1` => `TSTORE`
+* `Function=2` => `TMOV`
+* `Function=3..31` are reserved in strict v0.3 and MUST NOT appear in canonical outputs.
+
+Strict-v0.3 CUBE `Function` assignment:
+
+* `Function=0` => `TMATMUL` (`MAMULB` compatibility spelling)
+* `Function=2` => `TMATMUL.ACC` (`MAMULB.ACC` compatibility spelling)
+* `Function=8` => `ACCCVT`
+
+Strict-v0.3 TEPL `TileOp10` assignment (current canonical map):
+
+* Elementwise/base: `TADD=0x000`, `TSUB=0x001`, `TMUL=0x002`, `TDIV=0x003`, `TMAX=0x004`, `TMIN=0x005`,
+  `TAND=0x006`, `TOR=0x007`, `TXOR=0x008`, `TSHL=0x009`, `TSHR=0x00A`, `TRELU=0x00D`, `TPRELU=0x00E`, `TCVT=0x00F`.
+* Row/column reductions: `TROWMAX=0x020`, `TROWMIN=0x021`, `TROWSUM=0x022`, `TCOLMAX=0x024`, `TCOLMIN=0x025`,
+  `TCOLSUM=0x026`.
+* Math transforms: `TEXP=0x040`, `TLOG=0x041`, `TSQRT=0x042`, `TRSQRT=0x043`, `TRECIP=0x044`.
+* Data movement/shape: `TGATHER=0x060`, `TSCATTER=0x061`, `TRESHAPE=0x062`, `TTRANSPOSE=0x063`.
+* Unassigned `TileOp10` values are reserved for future PTO template extension.
+
+Strict-v0.3 `TMOV` contracts:
+
+* `TMOV` is a tile-state operation; it MUST NOT directly access GM memory.
+* For `DstTile` kinds `t/u/m/n`, destination allocation is queue-push only (new `hand#1`).
+* Explicit destination depth encoding (`->t#k`/`->u#k`/`->m#k`/`->n#k`) is not part of strict v0.3.
+* `B.IOTI` size semantics for `TMOV` follow the same strict `SizeCode` clamp (`512B..4KB`) as `TLOAD/TSTORE`.
+* `B.ARG` provides TMOV mode selection in strict profile (`V2V`, `A2V` required; other modes are staged/deferred).
+
+Strict-v0.3 block split patterns and per-family constraints:
+
+* `BSTART.TLOAD` / `BSTART.TSTORE` (alias of `BSTART.TMA Function=0/1`):
+** require `B.ARG` for layout/pad selection.
+** require at least one `B.IOR` binding carrying base/stride arguments (strict profile convention: stride and base are explicit scalar inputs).
+** strict binding convention is `RegSrc0=stride/ld`, `RegSrc1=base` when both are present.
+** require tile binding via `B.IOT`/`B.IOTI`.
+** are header-driven block commands (no SIMT body; do not use `B.TEXT`).
+* `BSTART.TMATMUL` / `BSTART.TMATMUL.ACC` (alias of `BSTART.CUBE Function=0/2`):
+** require `B.DIM`/`C.B.DIM*` with `LB0/LB1/LB2` bound as `m/n/k`.
+** require two source tile inputs via `B.IOT/B.IOTI`.
+** both commands target the singleton implicit accumulator domain (`->acc`).
+** `TMATMUL` seeds/replaces accumulator state; `TMATMUL.ACC` accumulates into the current accumulator state.
+** no explicit accumulator tile id is encoded in strict-v0.3 descriptors.
+** strict chain contract: `TMATMUL` starts ACC state, `TMATMUL.ACC` may repeat, and `ACCCVT` materializes tile output.
+** are header-driven block commands (no SIMT body; do not use `B.TEXT`).
+* `BSTART.ACCCVT` (alias of `BSTART.CUBE Function=8`):
+** requires quantization arguments.
+** quantization arguments are carried by `B.ARG` (quantization mode) plus `B.IOR` scalar bindings (`scale` and
+   `zero-point` are required; optional extra scalar controls are profile-defined).
+** consumes the singleton implicit accumulator state and writes a converted tile destination.
+** strict-v0.3 descriptors bind only destination tile metadata (`->t/u/m/n<size>`); no accumulator source id is encoded.
+** is header-driven (no SIMT body; do not use `B.TEXT`).
+* `BSTART.TEPL`:
+** operation is selected only by `TileOp10`.
+** descriptor requirements are op-profile-specific, but tile and scalar bindings MUST still be expressed through block descriptors.
+** PTO template-op forms (`TADD`, `TSUB`, `TROWMAX`, etc.) are header-driven in strict v0.3 (no SIMT body).
+* `BSTART.VPAR` / `BSTART.VSEQ`:
+** are the only TVEC-equivalent headers.
+** require one `B.TEXT` target for the SIMT body in decoupled form.
+** no `BSTART.TVEC` encoding exists in strict v0.3.
+
+Future encoding-space growth policy:
+
+* TMA `Function` and CUBE `Function` expand by assigning new function codes; any new assignment MUST update:
+** `isa/v0.3/opcodes/lx_32.opc`
+** the alias table above
+** strict profile checks and regression tests.
+* TEPL uses a 10-bit selector (`TileOp10`, 0..1023) and is the primary expansion space for future PTO template ops.
+* Recommended allocation strategy for future TEPL growth:
+** low ranges for portable/core ops,
+** mid ranges for profile-standardized extension families (for example quantization/activation families),
+** high ranges reserved for vendor/private experimental space until promoted.
 
 [[blockisa-descriptors]]
 === Block header descriptors (B.* metadata)
@@ -249,12 +364,14 @@ The v0.3 staged catalog includes the following descriptor families:
 * **Block I/O binding**
   - `B.IOR`: binds GPR inputs/outputs for a block.
   - `B.IOT` / `B.IOTI`: binds tile inputs/outputs for a block (including optional input reuse and transfer sizing).
-  - `B.IOD`: binds dependency metadata (e.g. for scheduling between producer/consumer blocks).
+  - `B.IOD`: deprecated in strict-v0.3 canonical streams (compatibility input only).
 * **Block arguments**
   - `B.ARG`: writes a per-block argument used by TMA tile load/store pipelines (layout format + pad policy).
   - `B.DIM`: writes a block argument register (`LB0`–`LB2`) used for loop bounds, dimensions, and valid masks.
 * **Block attributes and hints**
-  - `B.ATTR`: sets generic block attributes/hints; strict TMA execution does not source dtype/layout/pad from `B.ATTR`.
+  - `B.ATTR`: full encoded fields are `{C, DR, DataLayout[4:0], DataType[4:0], PadValue[4:0], T, aq, atom, far, rl}`.
+    Strict TMA execution does not source dtype/layout/pad from `B.ATTR`; layout/pad come from `B.ARG` and datatype from
+    `BSTART.<tile-header>`.
   - `B.HINT`: sets performance hints (branch likelihood, temperature, prefetch sizing, trace markers).
 * **Text/offset annotations**
   - `B.TEXT`: in a decoupled block header, selects the out-of-line body entrypoint (`BodyTPC`). In coupled blocks it
@@ -263,6 +380,15 @@ The v0.3 staged catalog includes the following descriptor families:
 NOTE: Detailed semantics for tile operand binding and for attribute/hint fields are under active bring-up. This manual
 specifies the *encoded contract* (see <<insnref>>) and provides bring-up guidance; implementations may initially treat
 these as metadata that does not affect scalar execution unless explicitly stated by the platform profile.
+
+Strict runtime checks required by current bring-up profile:
+
+* Tile descriptor size legality is fail-fast for both `B.IOTI` and dynamic `B.IOT`.
+* Tile-byte legality for tile blocks is fail-fast with the compiler/runtime formula:
+  `tile_bytes = ceil(dim0 * dim1 * dim2 * element_bits / 8)` (`dim2=1` if absent for that block family).
+  `element_bits` is derived from strict-v0.3 `DataType` mapping (including packed 4-bit formats).
+* For SIMT-body blocks (`MPAR`/`MSEQ`/`VPAR`/`VSEQ`), descriptor legality is enforced at header ingestion:
+  max 3 unique tile inputs and max 1 tile output descriptor binding.
 
 [[blockisa-v03-ai]]
 === v0.3 staged AI extension rules
@@ -281,19 +407,29 @@ The v0.3 staged profile integrates only reconciled and internally consistent AI-
 The canonical v0.3 auto-mode profile maps PTO tile primitives to typed TAU block headers and descriptors:
 
 * `PTO TLOAD`:
-  `BSTART.TMA(TLOAD)` + `B.DIM(LB0/LB1/LB2)` + `B.ARG` + `B.IOR*` + `B.IOT/B.IOTI`
+  `BSTART.TLOAD` + `B.DIM(LB0/LB1/LB2)` + `B.ARG` + `B.IOR*` + `B.IOT/B.IOTI`
 * `PTO TSTORE`:
-  `BSTART.TMA(TSTORE)` + `B.DIM(LB0/LB1/LB2)` + `B.ARG` + `B.IOR*` + `B.IOT/B.IOTI`
+  `BSTART.TSTORE` + `B.DIM(LB0/LB1/LB2)` + `B.ARG` + `B.IOR*` + `B.IOT/B.IOTI`
+* `PTO TMOV`:
+  `BSTART.TMOV` + `B.ARG` + optional `B.DIM/B.IOR` + `B.IOT/B.IOTI`
 * `PTO TMATMUL`:
-  `BSTART.CUBE(MAMULB)` (+ ACC convert/output block when needed)
+  `BSTART.TMATMUL` (+ ACC convert/output block when needed)
 * `PTO TMATMUL_ACC`:
-  `BSTART.CUBE(MAMULB.ACC)` (+ ACC convert/output block when needed)
+  `BSTART.TMATMUL.ACC` (+ ACC convert/output block when needed)
+* `PTO vec template ops` (`TADD`, `TSUB`, `TROWMAX`, ...):
+  `BSTART.TEPL(<TileOp10>)` + descriptor stream (`B.ARG`/`B.IOR`/`B.IOT/B.IOTI`) as required by the op profile.
 
 Normative notes:
 
 * `B.ARG + B.IOR` are both required for descriptor-rich `TLOAD/TSTORE`.
-* `TLOAD/TSTORE` dtype comes from `BSTART.TMA`, and pad policy comes from `B.ARG` (not `B.ATTR`).
+* `TLOAD/TSTORE` dtype comes from encoded `BSTART.TMA` selector state (surfaced as `BSTART.TLOAD/BSTART.TSTORE` aliases),
+  and pad policy comes from `B.ARG` (not `B.ATTR`).
+* `TMOV` mode/convert policy comes from `B.ARG`; destination tile kind/size comes from `B.IOTI`.
+* TEPL template-op selector is carried by `BSTART.TEPL TileOp10`; no standalone `TVEC` header encoding exists.
 * Multiple `B.IOR` and `B.IOT/B.IOTI` descriptors in one header are legal and consumed in order.
+* Strict CUBE chain: `TMATMUL` seeds ACC, zero or more `TMATMUL.ACC` update ACC, then `ACCCVT` materializes tile output.
+* Compiler strict checks MUST reject `TMATMUL.ACC`/`ACCCVT` when the accumulator dependency does not derive from
+  a prior `TMATMUL`/`TMATMUL.ACC` producer.
 * Canonical v0.3 artifacts MUST NOT encode unresolved `group=2` behavior.
 
 [[blockisa-simt]]
@@ -301,6 +437,9 @@ Normative notes:
 
 Linx vector execution is SIMT-style: a vector block body specifies **one lane** of computation, and hardware repeats
 that body across a multi-dimensional lane space defined by `LB0..LB2`.
+
+`TVEC` is not a strict-v0.3 header mnemonic. TVEC-style execution is represented by `BSTART.VPAR`/`BSTART.VSEQ` with
+an out-of-line SIMT body selected by `B.TEXT`.
 
 Bring-up execution model (normative for strict v0.3):
 
@@ -443,10 +582,13 @@ The architectural interface between the first and second layer is a block comman
 [[blockisa-tepl]]
 === Generic accelerator block (`BSTART.TEPL`)
 
-`BSTART.TEPL` provides a generic extensible block type for implementation-defined in-core accelerators.
+`BSTART.TEPL` provides a generic extensible block type for implementation-defined in-core accelerators and for
+PTO template-op families (`TADD`, `TSUB`, `TROWMAX`, etc.).
 
 * `BSTART.TEPL` headers use the same descriptor families (`B.ATTR`, `B.ARG`, `B.IOR`, `B.IOT`) as other decoupled
   blocks.
+* `TileOp10` is the operation selector; `DataType` is carried in the same header.
+* TEPL template ops are header-driven and do not require a separate SIMT body selector.
 * `BSTART.TEPL` blocks must follow the same block-boundary legality rules and must not directly bypass the memory and
   privilege contracts defined in this manual.
 

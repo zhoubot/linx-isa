@@ -32,6 +32,11 @@ Strict v0.3 explicitly models two architectural memory issue channels:
 * **BCC channel**: scalar `load/store/atomic/fence` operations and ordering point for scalar blocks.
 * **MTC channel**: tile-oriented memory blocks (`TLOAD`, `TSTORE`, `TPREFETCH`) and staged MCALL-like memory mode.
 
+Legacy naming note: historical `BSTART.MCALL` text maps to strict-v0.3 `BSTART.MPAR`/`BSTART.MSEQ`.
+
+`TMOV` is a tile-state move operation in typed `BSTART.TMA` blocks, but it is not a memory operation and is therefore
+outside the MTC memory-ordering contract in this chapter.
+
 Rules:
 
 * In normal tile mode, BCC and MTC requests share one architectural TSO ordering domain.
@@ -112,14 +117,19 @@ Canonical strict-v0.3 profile constraints:
 * `B.ARG + B.IOR` are mandatory in descriptor-rich `TLOAD/TSTORE` headers.
 * TMA execution state is not sourced from `B.ATTR`; `TLOAD/TSTORE` consume only `BSTART/B.ARG/B.DIM/B.IOR/B.IOT`.
 * Repeated `B.IOR` and repeated `B.IOT/B.IOTI` are legal and are consumed in header order.
+* `B.IOT` dynamic-size descriptors are legal only when `RegSrc` resolves to strict `512B..4KB`; runtime rejects invalid
+  dynamic sizes.
 * For bring-up code size, emit `C.B.DIMI` for `LB0/LB1/LB2` when the value fits in `imm8` (and `RegSrc=zero`).
 * Unresolved raw contracts (`group=2`, broad fixed-pipe/TCVT metadata flows) are explicitly deferred from canonical behavior.
 
-Canonical strict-v0.3 disassembly form for tile memory blocks is:
+Preferred strict-v0.3 textual form for tile memory blocks is:
 
-* `BSTART.TMA TLOAD, <DataType>` for tile loads
-* `BSTART.TMA TSTORE, <DataType>` for tile stores
-* Compatibility PAR-style forms are accepted for input only and normalized to typed forms.
+* `BSTART.TLOAD <DataType>` for tile loads (encoding: `BSTART.TMA Function=0`)
+* `BSTART.TSTORE <DataType>` for tile stores (encoding: `BSTART.TMA Function=1`)
+* Compatibility PAR-style forms and mixed TMA forms are accepted for input only and normalized to typed forms.
+
+For completeness: strict-v0.3 also permits non-memory typed TMA headers `BSTART.TMOV <DataType>`
+(encoding: `BSTART.TMA Function=2`), but those are governed by <<blockisa-tile>> (not by memory-operation semantics).
 
 `B.IOTI` descriptor rendering uses `last` for the terminal descriptor and prints transfer footprints in KiB (for example
 `->t<1KB>`, `->acc<4KB>`). The strict architectural range is `512B..4KB`.
@@ -127,9 +137,9 @@ Canonical strict-v0.3 disassembly form for tile memory blocks is:
 [[memory-mcall]]
 === MCALL staged semantics
 
-MCALL-like behavior remains staged through `.MPAR/.MSEQ` execution modes:
+MCALL-like behavior remains staged through `.MPAR/.MSEQ` execution modes (`MCALL` is a legacy alias name):
 
-* Execution is non-speculative until declared input dependencies (`B.IOT`/`B.IOD`) are resolved.
+* Execution is non-speculative until declared input dependencies (`B.IOT`/`B.IOTI`) are resolved.
 * Prior side-effecting tile stores must be globally ordered before MCALL-like execution starts (TSO-preserving barrier
   requirement).
 * Detailed VREG-only local register semantics from raw notes are deferred until fully reconciled.
