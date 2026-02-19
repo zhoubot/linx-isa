@@ -34,3 +34,8 @@
 	url = https://github.com/LinxISA/LinxCore.git
 	branch = main
 	update = checkout
+[submodule "workloads/pto_kernels"]
+	path = workloads/pto_kernels
+	url = https://github.com/LinxISA/PTO-Kernel.git
+	branch = main
+	update = checkout

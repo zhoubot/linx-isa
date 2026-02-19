@@ -4,6 +4,7 @@ Unified home for runnable workload content:
 
 - benchmark suites and runner scripts under `workloads/` (for example `coremark/`, `dhrystone/`, `ctuning/`, `run_benchmarks.py`).
 - TSVC auto-vectorization workflow under `workloads/tsvc/`.
+- PTO kernel/tool/header submodule under `workloads/pto_kernels/`.
 - `generated/` - generated artifacts from workload runs.
 
 ## Primary runners

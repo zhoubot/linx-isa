@@ -44,35 +44,35 @@ COMPILE_ONLY_SUITE_SOURCE_OVERRIDE: dict[str, str] = {
 
 EXTRA_SOURCES_BY_SUITE: dict[str, list[str]] = {
     "tile": [
-        "workloads/pto_kernels/tload_store.cpp",
-        "workloads/pto_kernels/mamulb.cpp",
-        "workloads/pto_kernels/tmatmul_acc.cpp",
-        "workloads/pto_kernels/gemm.cpp",
-        "workloads/pto_kernels/flash_attention.cpp",
-        "workloads/pto_kernels/flash_attention_masked.cpp",
+        "workloads/pto_kernels/kernels/tload_store.cpp",
+        "workloads/pto_kernels/kernels/mamulb.cpp",
+        "workloads/pto_kernels/kernels/tmatmul_acc.cpp",
+        "workloads/pto_kernels/kernels/gemm.cpp",
+        "workloads/pto_kernels/kernels/flash_attention.cpp",
+        "workloads/pto_kernels/kernels/flash_attention_masked.cpp",
     ],
     "callret": [
         "avs/qemu/tests/14_callret_templates.S",
     ],
     "pto_parity": [
-        "workloads/pto_kernels/tload_store.cpp",
-        "workloads/pto_kernels/mamulb.cpp",
-        "workloads/pto_kernels/tmatmul_acc.cpp",
-        "workloads/pto_kernels/gemm.cpp",
-        "workloads/pto_kernels/gemm_basic.cpp",
-        "workloads/pto_kernels/gemm_demo.cpp",
-        "workloads/pto_kernels/gemm_performance.cpp",
-        "workloads/pto_kernels/add_custom.cpp",
-        "workloads/pto_kernels/flash_attention.cpp",
-        "workloads/pto_kernels/flash_attention_demo.cpp",
-        "workloads/pto_kernels/flash_attention_masked.cpp",
-        "workloads/pto_kernels/fa_performance.cpp",
-        "workloads/pto_kernels/mla_attention_demo.cpp",
+        "workloads/pto_kernels/kernels/tload_store.cpp",
+        "workloads/pto_kernels/kernels/mamulb.cpp",
+        "workloads/pto_kernels/kernels/tmatmul_acc.cpp",
+        "workloads/pto_kernels/kernels/gemm.cpp",
+        "workloads/pto_kernels/kernels/gemm_basic.cpp",
+        "workloads/pto_kernels/kernels/gemm_demo.cpp",
+        "workloads/pto_kernels/kernels/gemm_performance.cpp",
+        "workloads/pto_kernels/kernels/add_custom.cpp",
+        "workloads/pto_kernels/kernels/flash_attention.cpp",
+        "workloads/pto_kernels/kernels/flash_attention_demo.cpp",
+        "workloads/pto_kernels/kernels/flash_attention_masked.cpp",
+        "workloads/pto_kernels/kernels/fa_performance.cpp",
+        "workloads/pto_kernels/kernels/mla_attention_demo.cpp",
     ],
 }
 
 EXPERIMENTAL_SUITES: set[str] = {
-    # Requires tile builtin-enabled clang and PTO bridge headers.
+    # Requires tile builtin-enabled clang and PTO kernel headers.
     "tile",
     "pto_parity",
 }
@@ -262,28 +262,24 @@ def main(argv: list[str]) -> int:
 
     include_dir = SCRIPT_DIR / "lib"
     libc_include_dir = REPO_ROOT / "avs" / "runtime" / "freestanding" / "include"
-    pto_bridge_include_dir: Path | None = None
-    bridge_env = os.environ.get("PTO_BRIDGE_INCLUDE")
-    if bridge_env:
-        bridge_candidate = Path(os.path.expanduser(bridge_env))
-        if not bridge_candidate.exists():
+    pto_kernel_include_dir: Path | None = None
+    include_env = os.environ.get("PTO_KERNEL_INCLUDE")
+    if include_env:
+        include_candidate = Path(os.path.expanduser(include_env))
+        if not include_candidate.exists():
             raise SystemExit(
-                f"error: PTO_BRIDGE_INCLUDE does not exist: {bridge_candidate}"
+                f"error: PTO_KERNEL_INCLUDE does not exist: {include_candidate}"
             )
-        pto_bridge_include_dir = bridge_candidate
+        pto_kernel_include_dir = include_candidate
     else:
-        for bridge_candidate in (
-            REPO_ROOT / "lib" / "pto" / "include",
-            REPO_ROOT / "tools" / "pto" / "include",
-        ):
-            if bridge_candidate.exists():
-                pto_bridge_include_dir = bridge_candidate
-                break
-    if any(s in selected for s in ("tile", "pto_parity")) and pto_bridge_include_dir is None:
+        default_include = REPO_ROOT / "workloads" / "pto_kernels" / "include"
+        if default_include.exists():
+            pto_kernel_include_dir = default_include
+    if any(s in selected for s in ("tile", "pto_parity")) and pto_kernel_include_dir is None:
         raise SystemExit(
             "error: tile suite requires PTO headers; looked for "
-            f"{REPO_ROOT / 'tools' / 'pto' / 'include'} and "
-            f"{REPO_ROOT / 'lib' / 'pto' / 'include'}"
+            f"{REPO_ROOT / 'workloads' / 'pto_kernels' / 'include'} "
+            "or set PTO_KERNEL_INCLUDE=/path/to/include"
         )
     pto_include_dir: Path | None = None
     env = os.environ.get("PTO_ISA_INCLUDE")
@@ -292,18 +288,27 @@ def main(argv: list[str]) -> int:
         if not candidate.exists():
             raise SystemExit(f"error: PTO_ISA_INCLUDE does not exist: {candidate}")
         pto_include_dir = candidate
-    sources: list[Path] = [SCRIPT_DIR / "tests" / "main.c"]
+    sources: list[Path] = []
+    seen_sources: set[Path] = set()
+
+    def add_source(path: Path) -> None:
+        if path in seen_sources:
+            return
+        seen_sources.add(path)
+        sources.append(path)
+
+    add_source(SCRIPT_DIR / "tests" / "main.c")
     for suite in selected:
         rel = SUITES[suite]["src"]
         if args.compile_only:
             rel = COMPILE_ONLY_SUITE_SOURCE_OVERRIDE.get(suite, rel)
-        sources.append(SCRIPT_DIR / rel)
+        add_source(SCRIPT_DIR / rel)
     for suite in selected:
         for rel in EXTRA_SOURCES_BY_SUITE.get(suite, []):
-            sources.append(REPO_ROOT / rel)
+            add_source(REPO_ROOT / rel)
     softfp_suites = {"float", "v03_vector", "v03_vector_ops", "tile", "pto_parity"}
     if any(s in softfp_suites for s in selected):
-        sources.append(REPO_ROOT / "avs" / "runtime" / "freestanding" / "src" / "softfp" / "softfp.c")
+        add_source(REPO_ROOT / "avs" / "runtime" / "freestanding" / "src" / "softfp" / "softfp.c")
 
     suite_macros: list[str] = []
     for name, meta in SUITES.items():
@@ -335,8 +340,8 @@ def main(argv: list[str]) -> int:
         # Runtime policy: migrated PTO kernels run in smoke profile under QEMU.
         # Full-profile coverage remains in compile/objdump gates.
         common_cflags += ["-DPTO_QEMU_SMOKE=1"]
-    if pto_bridge_include_dir is not None:
-        common_cflags.append(f"-I{pto_bridge_include_dir}")
+    if pto_kernel_include_dir is not None:
+        common_cflags.append(f"-I{pto_kernel_include_dir}")
     if pto_include_dir:
         common_cflags.append(f"-I{pto_include_dir}")
 

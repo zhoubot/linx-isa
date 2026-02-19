@@ -18,6 +18,8 @@ must_not_exist=(
   "tools/ctuning"
   "tools/libc"
   "tools/glibc"
+  "tools/pto"
+  "lib/pto"
   "workloads/benchmarks"
   "workloads/examples"
   "~"
@@ -77,6 +79,7 @@ expected_submodules=(
   "tools/pyCircuit"
   "lib/glibc"
   "lib/musl"
+  "workloads/pto_kernels"
 )
 for p in "${expected_submodules[@]}"; do
   if ! git config -f .gitmodules --get-regexp '^submodule\..*\.path$' | awk '{print $2}' | grep -qx "$p"; then

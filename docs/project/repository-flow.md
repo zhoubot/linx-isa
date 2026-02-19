@@ -18,6 +18,7 @@ Pinned ecosystem repos:
 - `tools/pyCircuit`
 - `lib/glibc`
 - `lib/musl`
+- `workloads/pto_kernels`
 
 ## Flow
 

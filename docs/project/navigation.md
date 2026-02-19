@@ -12,7 +12,7 @@ This is the canonical navigation contract for contributors and agents.
 - `kernel/` — upstream Linux submodule (`kernel/linux`)
 - `rtl/` — LinxCore submodule (`rtl/LinxCore`) + rtl notes
 - `tools/` — generators, regression, pyCircuit submodule
-- `workloads/` — benchmark runners + generated workload artifacts
+- `workloads/` — benchmark runners + generated artifacts + PTO kernel submodule
 - `isa/` — ISA source of truth and generated catalogs
 - `docs/` — architecture, bring-up, migration, project references
 - `lib/` — glibc/musl fork submodules
@@ -27,7 +27,8 @@ This is the canonical navigation contract for contributors and agents.
 
 - Freestanding libc support used by AVS/tests: `avs/runtime/freestanding/`
 - Linux libc source forks: `lib/glibc/`, `lib/musl/`
-- PTO headers (vendored snapshot + Linx backend): `lib/pto/include/pto/`
+- PTO kernels/tools/headers (submodule): `workloads/pto_kernels/`
+- PTO header include root: `workloads/pto_kernels/include/`
 - LLVM opcode sync helper: `tools/isa/sync_generated_opcodes.sh`
 
 ## Benchmark locations

@@ -21,6 +21,7 @@ Follow `docs/project/navigation.md` as the canonical map.
 - Compile-only tests: `avs/compiler/linx-llvm/tests/`
 - Freestanding libc support: `avs/runtime/freestanding/`
 - pyCircuit workspace mirror: `tools/pyCircuit/` (submodule)
+- PTO kernel workspace mirror: `workloads/pto_kernels/` (submodule)
 - Assembly sample pack: `docs/reference/examples/v0.3/`
 
 ## Forbidden / replaced paths
@@ -50,7 +51,7 @@ Do not introduce new top-level directories. Place new files only in canonical do
 ```bash
 git submodule sync --recursive
 git submodule update --init --recursive
-git submodule update --remote compiler/llvm emulator/qemu kernel/linux rtl/LinxCore tools/pyCircuit lib/glibc lib/musl
+git submodule update --remote compiler/llvm emulator/qemu kernel/linux rtl/LinxCore tools/pyCircuit lib/glibc lib/musl workloads/pto_kernels
 ```
 
 Then run:

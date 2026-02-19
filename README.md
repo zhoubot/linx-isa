@@ -33,6 +33,7 @@ In-repo focus is:
 - `tools/pyCircuit` -> `git@github.com:LinxISA/pyCircuit.git`
 - `lib/glibc` -> `git@github.com:LinxISA/glibc.git`
 - `lib/musl` -> `git@github.com:LinxISA/musl.git`
+- `workloads/pto_kernels` -> `https://github.com/LinxISA/PTO-Kernel.git`
 
 Clone + init:
 
@@ -59,7 +60,7 @@ git submodule update --init --recursive
 - `kernel/`: Linux submodule
 - `rtl/`: LinxCore submodule + RTL notes
 - `tools/`: generators, pyCircuit submodule, regression scripts
-- `workloads/`: upstream benchmark sources + runners
+- `workloads/`: benchmark sources + runners + `pto_kernels` submodule mirror
 - `isa/`: ISA specification assets
 - `docs/`: bring-up, architecture, migration, navigation
 

@@ -32,6 +32,7 @@ Submodule map:
 - `tools/pyCircuit` -> `LinxISA/pyCircuit`
 - `lib/glibc` -> `LinxISA/glibc`
 - `lib/musl` -> `LinxISA/musl`
+- `workloads/pto_kernels` -> `LinxISA/PTO-Kernel`
 
 ## 3. Validate Baseline
 
@@ -67,8 +68,8 @@ python3 tools/bringup/check26_contract.py --root .
 Submodule bump command:
 
 ```bash
-git submodule update --remote compiler/llvm emulator/qemu kernel/linux rtl/LinxCore tools/pyCircuit lib/glibc lib/musl
-git add .gitmodules compiler/llvm emulator/qemu kernel/linux rtl/LinxCore tools/pyCircuit lib/glibc lib/musl
+git submodule update --remote compiler/llvm emulator/qemu kernel/linux rtl/LinxCore tools/pyCircuit lib/glibc lib/musl workloads/pto_kernels
+git add .gitmodules compiler/llvm emulator/qemu kernel/linux rtl/LinxCore tools/pyCircuit lib/glibc lib/musl workloads/pto_kernels
 git commit -m "chore(submodules): bump ecosystem revisions"
 ```
 
@@ -78,6 +79,7 @@ git commit -m "chore(submodules): bump ecosystem revisions"
 - AVS compile tests: `avs/compiler/linx-llvm/tests/`
 - Freestanding libc support used by AVS: `avs/runtime/freestanding/`
 - Linux libc source forks: `lib/glibc/`, `lib/musl/`
+- PTO kernel headers: `workloads/pto_kernels/include/`
 - Assembly sample pack: `docs/reference/examples/v0.3/`
 
 ## 6. Coordination References

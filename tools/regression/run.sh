@@ -178,6 +178,9 @@ python3 "$ROOT/avs/compiler/linx-llvm/tests/analyze_coverage.py" --out-dir "$ROO
 
 RUN_CPP_GATES="${RUN_CPP_GATES:-0}" # 0|1
 CPP_MODE="${CPP_MODE:-phase-b}"
+RUN_TSVC_GATES="${RUN_TSVC_GATES:-0}" # 0|1
+TSVC_OUT_DIR="${TSVC_OUT_DIR:-$ROOT/workloads/generated}"
+TSVC_STRICT_FAIL_UNDER="${TSVC_STRICT_FAIL_UNDER:-151}"
 RUN_PTO_PARITY_GATE="${RUN_PTO_PARITY_GATE-}" # 0|1
 if [[ "$LINX_BRINGUP_PROFILE" == "release-strict" ]]; then
   [[ -n "$RUN_PTO_PARITY_GATE" ]] || RUN_PTO_PARITY_GATE=1
@@ -212,6 +215,40 @@ echo
 echo "-- QEMU runtime tests"
 (cd "$ROOT/avs/qemu" && LINX_DISABLE_TIMER_IRQ="$LINX_EMU_DISABLE_TIMER_IRQ" CLANG="$CLANG" LLD="$LLD" QEMU="$QEMU" ./run_tests.sh --all --timeout 10)
 
+if [[ "$RUN_TSVC_GATES" == "1" ]]; then
+  echo
+  echo "-- TSVC baseline OFF"
+  python3 "$ROOT/workloads/tsvc/run_tsvc.py" \
+    --clang "$CLANG" \
+    --lld "$LLD" \
+    --qemu "$QEMU" \
+    --iterations 32 \
+    --len-1d 320 \
+    --len-2d 16 \
+    --lane-policy auto \
+    --vector-mode off \
+    --out-dir "$TSVC_OUT_DIR"
+
+  echo
+  echo "-- TSVC AUTO + checksum parity"
+  python3 "$ROOT/workloads/tsvc/run_tsvc.py" \
+    --clang "$CLANG" \
+    --lld "$LLD" \
+    --qemu "$QEMU" \
+    --iterations 32 \
+    --len-1d 320 \
+    --len-2d 16 \
+    --lane-policy auto \
+    --vector-mode auto \
+    --strict-fail-under "$TSVC_STRICT_FAIL_UNDER" \
+    --compare-baseline-log "$TSVC_OUT_DIR/qemu/tsvc/tsvc.off.stdout.txt" \
+    --fail-on-checksum-mismatch \
+    --out-dir "$TSVC_OUT_DIR"
+else
+  echo
+  echo "note: skipping TSVC gates (set RUN_TSVC_GATES=1 to enable)"
+fi
+
 if [[ "$RUN_CPP_GATES" == "1" ]]; then
   CLANGXX="$(cd "$(dirname "$CLANG")" && pwd)/clang++"
   if [[ ! -x "$CLANGXX" ]]; then
@@ -236,7 +273,7 @@ fi
 if [[ "$RUN_PTO_PARITY_GATE" == "1" ]]; then
   echo
   echo "-- PTO host-vs-QEMU parity gate"
-  python3 "$ROOT/tools/pto/run_pto_kernel_parity.py" --timeout "${PTO_PARITY_TIMEOUT:-180}"
+  python3 "$ROOT/workloads/pto_kernels/tools/run_pto_kernel_parity.py" --timeout "${PTO_PARITY_TIMEOUT:-180}"
 else
   echo
   echo "note: skipping PTO parity gate (set RUN_PTO_PARITY_GATE=1 to enable)"
