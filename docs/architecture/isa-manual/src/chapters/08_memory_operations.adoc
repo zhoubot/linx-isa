@@ -238,6 +238,65 @@ Several immediate-offset families encode an immediate that is implicitly scaled 
 Unscaled variants use a `.U` suffix (e.g. `LWI.U`, `LDI.U`) and use the immediate value in
 bytes without the implicit shift.
 
+[[memory-writeback]]
+=== Pre/post-index (writeback) scalar memory ops
+
+The 48-bit `HL.*` scalar load/store families include **writeback** addressing forms that combine a memory access with a
+base-pointer update.
+
+Writeback forms are spelled with:
+
+* `.PO` (**post-index**): access at the original base, then compute the updated base.
+* `.PR` (**pre-index**): compute the updated base first, then access at the updated base.
+* `.UPO` / `.UPR`: same semantics as `.PO` / `.PR`, but the immediate/register offset is interpreted as an **unscaled**
+  byte delta (no width-implied scaling).
+
+Writeback produces an updated base value as an explicit architectural result:
+
+* **Writeback loads** return two GPR results: the loaded value (`Dst0`) and the updated base (`Dst1`).
+* **Writeback stores** return the updated base in `Rd` (and may also update block-private queue registers such as `t/u`
+  as described by the instruction reference).
+
+Informal semantics for immediate writeback forms (for example `HL.LDI.PO`, `HL.SWI.UPR`):
+
+* Let `base = GPR[SrcL]` for loads, or `base = GPR[SrcR]` for stores (per instruction form).
+* Let `delta` be the sign-extended immediate interpreted as:
+  - **scaled**: `delta = sext(simm) << log2(access_size_bytes)`
+  - **unscaled** (`.UPO/.UPR`): `delta = sext(simm)` (bytes)
+* Post-index (`*.PO` / `*.UPO`):
+  - `addr = base`
+  - perform the memory access at `addr`
+  - `new_base = base + delta`
+* Pre-index (`*.PR` / `*.UPR`):
+  - `new_base = base + delta`
+  - `addr = new_base`
+  - perform the memory access at `addr`
+* Write `new_base` to the writeback destination (`Dst1` or `Rd`).
+
+The base register and the writeback destination MAY alias. Architecturally, the writeback destination is updated after
+the address is computed; if a precise exception is taken by the memory access, the writeback result is not committed.
+
+[[memory-pairs]]
+=== Load/store pairs
+
+The 48-bit `HL.*P` / `HL.*IP` families perform **two adjacent** scalar accesses and transfer them to/from two GPRs. For
+example, `HL.LDIP` loads two consecutive doublewords, and `HL.SWIP` stores two consecutive words.
+
+For immediate forms (`HL.*IP`):
+
+* scaled forms interpret `simm` in units of the access size (as in <<memory-scaled-immediates>>)
+* `.U` variants interpret `simm` as an unscaled byte offset
+
+Semantics model (informal) for a pair load at base `B` and offset `O`:
+
+* `addr0 = B + O`
+* `addr1 = addr0 + access_size_bytes`
+* perform the two accesses in program order at `addr0` then `addr1`
+
+Pair operations are not atomic as a pair: other agents may observe the first access without the second. If an exception
+is taken by one of the two accesses, the exception is taken at the faulting access; software MUST NOT assume that the
+pair is restartable without observing partial effects (in particular for store-pair instructions).
+
 [[memory-pcrel]]
 === PC-relative loads/stores
 
