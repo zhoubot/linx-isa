@@ -2,6 +2,7 @@
  * Load/Store Unit Tests for LinxISA
  * Tests: LB, LBU, LH, LHU, LW, LWU, LD, SB, SH, SW, SD
  *        LBI, LHI, LWI, LDI, SBI, SHI, SWI, SDI
+ *        HL.* writeback (pre/post-index) and pair ops
  */
 
 #include "linx_test.h"
@@ -199,6 +200,164 @@ static void test_sext_half(void) {
     TEST_EQ32(sext, -8464, 0xC0E1);
 }
 
+static void test_hl_lwuip_pair(void) {
+    uint64_t d0 = 0;
+    uint64_t d1 = 0;
+    const uintptr_t base = (uintptr_t)u32_data;
+
+    __asm__ volatile ("hl.lwuip [%2, 0], ->%0, %1"
+                      : "=r"(d0), "=r"(d1)
+                      : "r"(base)
+                      : "memory");
+
+    TEST_EQ64(d0, 0x12345678ULL, 0xC100);
+    TEST_EQ64(d1, 0x9ABCDEF0ULL, 0xC101);
+}
+
+static void test_hl_lwui_writeback(void) {
+    const uintptr_t base = (uintptr_t)u32_data;
+
+    uint64_t val = 0;
+    uint64_t wb = 0;
+
+    // Post-index: load at base, then wb = base + 4.
+    __asm__ volatile ("hl.lwui.po [%2, 4], ->%0, %1"
+                      : "=r"(val), "=r"(wb)
+                      : "r"(base)
+                      : "memory");
+    TEST_EQ64(val, 0x12345678ULL, 0xC110);
+    TEST_EQ64(wb, (uint64_t)(base + 4u), 0xC111);
+
+    // Pre-index: wb = base + 4, then load at wb.
+    __asm__ volatile ("hl.lwui.pr [%2, 4], ->%0, %1"
+                      : "=r"(val), "=r"(wb)
+                      : "r"(base)
+                      : "memory");
+    TEST_EQ64(val, 0x9ABCDEF0ULL, 0xC112);
+    TEST_EQ64(wb, (uint64_t)(base + 4u), 0xC113);
+
+    // Unscaled variants (use aligned delta so semantics match scaled forms).
+    __asm__ volatile ("hl.lwui.upo [%2, 4], ->%0, %1"
+                      : "=r"(val), "=r"(wb)
+                      : "r"(base)
+                      : "memory");
+    TEST_EQ64(val, 0x12345678ULL, 0xC114);
+    TEST_EQ64(wb, (uint64_t)(base + 4u), 0xC115);
+
+    __asm__ volatile ("hl.lwui.upr [%2, 4], ->%0, %1"
+                      : "=r"(val), "=r"(wb)
+                      : "r"(base)
+                      : "memory");
+    TEST_EQ64(val, 0x9ABCDEF0ULL, 0xC116);
+    TEST_EQ64(wb, (uint64_t)(base + 4u), 0xC117);
+}
+
+static void test_hl_swi_writeback(void) {
+    // Post-index store: store at base, then wb = base + 4.
+    store_u32[0] = 0;
+    store_u32[1] = 0;
+    const uintptr_t base = (uintptr_t)store_u32;
+    const uint64_t v0 = 0xAABBCCDDULL;
+
+    uint64_t wb = 0;
+    __asm__ volatile ("hl.swi.po %1, [%2, 4], ->%0"
+                      : "=&r"(wb)
+                      : "r"(v0), "r"(base)
+                      : "memory");
+    TEST_EQ(store_u32[0], 0xAABBCCDDu, 0xC120);
+    TEST_EQ64(wb, (uint64_t)(base + 4u), 0xC121);
+
+    // Pre-index store: wb = base + 4, then store at wb.
+    store_u32[0] = 0;
+    store_u32[1] = 0;
+    const uint64_t v1 = 0x11223344ULL;
+
+    __asm__ volatile ("hl.swi.pr %1, [%2, 4], ->%0"
+                      : "=&r"(wb)
+                      : "r"(v1), "r"(base)
+                      : "memory");
+    TEST_EQ(store_u32[1], 0x11223344u, 0xC122);
+    TEST_EQ64(wb, (uint64_t)(base + 4u), 0xC123);
+
+    // Unscaled variants (aligned delta).
+    store_u32[0] = 0;
+    store_u32[1] = 0;
+    const uint64_t v2 = 0x55667788ULL;
+
+    __asm__ volatile ("hl.swi.upo %1, [%2, 4], ->%0"
+                      : "=&r"(wb)
+                      : "r"(v2), "r"(base)
+                      : "memory");
+    TEST_EQ(store_u32[0], 0x55667788u, 0xC124);
+    TEST_EQ64(wb, (uint64_t)(base + 4u), 0xC125);
+
+    store_u32[0] = 0;
+    store_u32[1] = 0;
+    const uint64_t v3 = 0x99AABBCCULL;
+
+    __asm__ volatile ("hl.swi.upr %1, [%2, 4], ->%0"
+                      : "=&r"(wb)
+                      : "r"(v3), "r"(base)
+                      : "memory");
+    TEST_EQ(store_u32[1], 0x99AABBCCu, 0xC126);
+    TEST_EQ64(wb, (uint64_t)(base + 4u), 0xC127);
+}
+
+static void test_hl_swip_store_pair(void) {
+    store_u32[0] = 0;
+    store_u32[1] = 0;
+    const uintptr_t base = (uintptr_t)store_u32;
+
+    const uint64_t v0 = 0x01020304ULL;
+    const uint64_t v1 = 0xA0B0C0D0ULL;
+
+    __asm__ volatile ("hl.swip %0, %1, [%2, 0]"
+                      :
+                      : "r"(v0), "r"(v1), "r"(base)
+                      : "memory");
+    TEST_EQ(store_u32[0], 0x01020304u, 0xC130);
+    TEST_EQ(store_u32[1], 0xA0B0C0D0u, 0xC131);
+
+    // Unscaled form (same at offset 0).
+    store_u32[0] = 0;
+    store_u32[1] = 0;
+    const uint64_t v2 = 0x0A0B0C0DULL;
+    const uint64_t v3 = 0xEEFF0011ULL;
+
+    __asm__ volatile ("hl.swip.u %0, %1, [%2, 0]"
+                      :
+                      : "r"(v2), "r"(v3), "r"(base)
+                      : "memory");
+    TEST_EQ(store_u32[0], 0x0A0B0C0Du, 0xC132);
+    TEST_EQ(store_u32[1], 0xEEFF0011u, 0xC133);
+}
+
+static void test_hl_ldip_sdip_pair(void) {
+    const uint64_t src[2] = { 0x0123456789ABCDEFULL, 0xDEADBEEFCAFEBABEULL };
+    uint64_t d0 = 0;
+    uint64_t d1 = 0;
+    const uintptr_t base = (uintptr_t)src;
+
+    __asm__ volatile ("hl.ldip [%2, 0], ->%0, %1"
+                      : "=r"(d0), "=r"(d1)
+                      : "r"(base)
+                      : "memory");
+    TEST_EQ64(d0, 0x0123456789ABCDEFULL, 0xC140);
+    TEST_EQ64(d1, 0xDEADBEEFCAFEBABEULL, 0xC141);
+
+    uint64_t dst[2] = { 0, 0 };
+    const uintptr_t out = (uintptr_t)dst;
+    const uint64_t v0 = 0x1122334455667788ULL;
+    const uint64_t v1 = 0x8877665544332211ULL;
+
+    __asm__ volatile ("hl.sdip %0, %1, [%2, 0]"
+                      :
+                      : "r"(v0), "r"(v1), "r"(out)
+                      : "memory");
+    TEST_EQ64(dst[0], 0x1122334455667788ULL, 0xC142);
+    TEST_EQ64(dst[1], 0x8877665544332211ULL, 0xC143);
+}
+
 /* Main test runner */
 void run_loadstore_tests(void) {
     test_suite_begin(0xC000);
@@ -261,6 +420,13 @@ void run_loadstore_tests(void) {
     /* Sign extension */
     RUN_TEST(test_sext_byte, 0xC0E0);
     RUN_TEST(test_sext_half, 0xC0E1);
+
+    /* HL writeback + pair ops */
+    RUN_TEST(test_hl_lwuip_pair, 0xC100);
+    RUN_TEST(test_hl_lwui_writeback, 0xC110);
+    RUN_TEST(test_hl_swi_writeback, 0xC120);
+    RUN_TEST(test_hl_swip_store_pair, 0xC130);
+    RUN_TEST(test_hl_ldip_sdip_pair, 0xC140);
     
-    test_suite_end(27, 27);
+    test_suite_end(32, 32);
 }
