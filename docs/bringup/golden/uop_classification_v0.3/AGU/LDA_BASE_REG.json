@@ -1,0 +1,315 @@
+{
+  "big_kind": "AGU",
+  "count": 22,
+  "instructions": [
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LB"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LBU"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LD"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LH"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LHU"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LW"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LWU"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "PRF"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LB"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LB.BRG"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LBU"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LBU.BRG"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LD"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LD.BRG"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LH"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LH.BRG"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LHU"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LHU.BRG"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LW"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LW.BRG"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LWU"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LWU.BRG"
+    }
+  ],
+  "sub_kind": "LDA/BASE_REG"
+}

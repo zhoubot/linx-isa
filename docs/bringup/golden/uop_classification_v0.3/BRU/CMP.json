@@ -1,0 +1,513 @@
+{
+  "big_kind": "BRU",
+  "count": 42,
+  "instructions": [
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "note": "C.TINST split",
+        "source": "override",
+        "uop_kind": "BRU"
+      },
+      "group": "C.TINST",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.CMP.EQI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "note": "C.TINST split",
+        "source": "override",
+        "uop_kind": "BRU"
+      },
+      "group": "C.TINST",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.CMP.NEI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "CMP.AND"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "CMP.ANDI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "CMP.EQ"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "CMP.EQI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "CMP.GE"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "CMP.GEI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "CMP.GEU"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "CMP.GEUI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "CMP.LT"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "CMP.LTI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "CMP.LTU"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "CMP.LTUI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "CMP.NE"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "CMP.NEI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "CMP.OR"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "CMP.ORI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.CMP.ANDI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.CMP.EQI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.CMP.GEI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.CMP.GEUI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.CMP.LTI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.CMP.LTUI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.CMP.NEI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.CMP.ORI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.CMP.AND"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.CMP.ANDI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.CMP.EQ"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.CMP.EQI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.CMP.GE"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.CMP.GEI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.CMP.GEU"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.CMP.GEUI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.CMP.LT"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.CMP.LTI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.CMP.LTU"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.CMP.LTUI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.CMP.NE"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.CMP.NEI"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.CMP.OR"
+    },
+    {
+      "class": {
+        "bru_kind": "CMP",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Compare Instruction",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.CMP.ORI"
+    }
+  ],
+  "sub_kind": "CMP"
+}

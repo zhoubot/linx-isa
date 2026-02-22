@@ -1,0 +1,20 @@
+{
+  "big_kind": "CMD",
+  "count": 1,
+  "instructions": [
+    {
+      "class": {
+        "cmd_kind": "DESC_B_HINT",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "CMD"
+      },
+      "group": "Block Hint",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "B.HINT"
+    }
+  ],
+  "sub_kind": "DESC_B_HINT"
+}

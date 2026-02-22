@@ -1,0 +1,105 @@
+{
+  "big_kind": "AGU",
+  "count": 7,
+  "instructions": [
+    {
+      "class": {
+        "addr_mode": "PC_REL",
+        "agu_kind": "LDA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load PC-Relative",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LB.PCR"
+    },
+    {
+      "class": {
+        "addr_mode": "PC_REL",
+        "agu_kind": "LDA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load PC-Relative",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LBU.PCR"
+    },
+    {
+      "class": {
+        "addr_mode": "PC_REL",
+        "agu_kind": "LDA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load PC-Relative",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LD.PCR"
+    },
+    {
+      "class": {
+        "addr_mode": "PC_REL",
+        "agu_kind": "LDA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load PC-Relative",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LH.PCR"
+    },
+    {
+      "class": {
+        "addr_mode": "PC_REL",
+        "agu_kind": "LDA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load PC-Relative",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LHU.PCR"
+    },
+    {
+      "class": {
+        "addr_mode": "PC_REL",
+        "agu_kind": "LDA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load PC-Relative",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LW.PCR"
+    },
+    {
+      "class": {
+        "addr_mode": "PC_REL",
+        "agu_kind": "LDA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load PC-Relative",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LWU.PCR"
+    }
+  ],
+  "sub_kind": "LDA/PC_REL"
+}

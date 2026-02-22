@@ -1,0 +1,20 @@
+{
+  "big_kind": "CMD",
+  "count": 1,
+  "instructions": [
+    {
+      "class": {
+        "cmd_kind": "DESC_B_TEXT",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "CMD"
+      },
+      "group": "Block Offset",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "B.TEXT"
+    }
+  ],
+  "sub_kind": "DESC_B_TEXT"
+}

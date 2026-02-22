@@ -1,0 +1,127 @@
+{
+  "big_kind": "SYS",
+  "count": 10,
+  "instructions": [
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "SYS"
+      },
+      "group": "Execution Control",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "ACRC"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "SYS"
+      },
+      "group": "Execution Control",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "ACRE"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "SYS"
+      },
+      "group": "Execution Control",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "ASSERT"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "SYS"
+      },
+      "group": "Execution Control",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "BSE"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "SYS"
+      },
+      "group": "Execution Control",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "BWE"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "SYS"
+      },
+      "group": "Execution Control",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "BWI"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "SYS"
+      },
+      "group": "Execution Control",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "BWT"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "SYS"
+      },
+      "group": "Execution Control",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "EBREAK"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "SYS"
+      },
+      "group": "Execution Control",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FENCE.D"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "SYS"
+      },
+      "group": "Execution Control",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FENCE.I"
+    }
+  ],
+  "sub_kind": "SYS"
+}

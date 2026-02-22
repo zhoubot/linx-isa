@@ -1,0 +1,631 @@
+{
+  "big_kind": "FSU",
+  "count": 52,
+  "instructions": [
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Floating-point Arithmetic",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FABS"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Floating-point Arithmetic",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FADD"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Format Convert",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FCVT"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Format Convert",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FCVTA"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Format Convert",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FCVTM"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Format Convert",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FCVTN"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Format Convert",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FCVTP"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Format Convert",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FCVTZ"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Floating-point Arithmetic",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FDIV"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Floating-point Compare",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FEQ"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Floating-point Compare",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FEQS"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Floating-point Arithmetic",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FEXP"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Floating-point Compare",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FGE"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Floating-point Compare",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FGES"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Floating-point Compare",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FLT"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Floating-point Compare",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FLTS"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Floating-point Arithmetic",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FMADD"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Floating-point Arithmetic",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FMSUB"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Floating-point Arithmetic",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FMUL"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Floating-point Compare",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FNE"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Floating-point Compare",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FNES"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Floating-point Arithmetic",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FNMADD"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Floating-point Arithmetic",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FNMSUB"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Floating-point Arithmetic",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FRECIP"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Floating-point Arithmetic",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FSQRT"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Floating-point Arithmetic",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FSUB"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Format Convert",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SCVTF"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Format Convert",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "UCVTF"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Three-Source Floating Point",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FADD"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Format Convert",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FCVT"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Format Convert",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FCVTI"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Three-Source Floating Point",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FDIV"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Two-Source Floating Point",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FEQ"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Two-Source Floating Point",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FEQS"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Two-Source Floating Point",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FGE"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Two-Source Floating Point",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FGES"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Two-Source Floating Point",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FLT"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Two-Source Floating Point",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FLTS"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Three-Source Floating Point",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FMADD"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Two-Source Floating Point",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FMAX"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Two-Source Floating Point",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FMIN"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Three-Source Floating Point",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FMSUB"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Three-Source Floating Point",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FMUL"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Two-Source Floating Point",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FNE"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Two-Source Floating Point",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FNES"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Three-Source Floating Point",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FNMADD"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Three-Source Floating Point",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FNMSUB"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Three-Source Floating Point",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FSUB"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Format Convert",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.ICVT"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Format Convert",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.ICVTF"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Two-Source Floating Point",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.MAX"
+    },
+    {
+      "class": {
+        "note": "User: FP groups are FSU type and must be implemented",
+        "source": "group_rule",
+        "uop_kind": "FSU"
+      },
+      "group": "Two-Source Floating Point",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.MIN"
+    }
+  ],
+  "sub_kind": "DEFAULT"
+}

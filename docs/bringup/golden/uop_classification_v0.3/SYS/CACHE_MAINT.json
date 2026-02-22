@@ -1,0 +1,215 @@
+{
+  "big_kind": "SYS",
+  "count": 16,
+  "instructions": [
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "CACHE_MAINT",
+        "uop_kind": "SYS"
+      },
+      "group": "Cache Maintain",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "BC.IALL"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "CACHE_MAINT",
+        "uop_kind": "SYS"
+      },
+      "group": "Cache Maintain",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "BC.IVA"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "CACHE_MAINT",
+        "uop_kind": "SYS"
+      },
+      "group": "Cache Maintain",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "DC.CISW"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "CACHE_MAINT",
+        "uop_kind": "SYS"
+      },
+      "group": "Cache Maintain",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "DC.CIVA"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "CACHE_MAINT",
+        "uop_kind": "SYS"
+      },
+      "group": "Cache Maintain",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "DC.CSW"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "CACHE_MAINT",
+        "uop_kind": "SYS"
+      },
+      "group": "Cache Maintain",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "DC.CVA"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "CACHE_MAINT",
+        "uop_kind": "SYS"
+      },
+      "group": "Cache Maintain",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "DC.IALL"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "CACHE_MAINT",
+        "uop_kind": "SYS"
+      },
+      "group": "Cache Maintain",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "DC.ISW"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "CACHE_MAINT",
+        "uop_kind": "SYS"
+      },
+      "group": "Cache Maintain",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "DC.IVA"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "CACHE_MAINT",
+        "uop_kind": "SYS"
+      },
+      "group": "Cache Maintain",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "DC.ZVA"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "CACHE_MAINT",
+        "uop_kind": "SYS"
+      },
+      "group": "Cache Maintain",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "IC.IALL"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "CACHE_MAINT",
+        "uop_kind": "SYS"
+      },
+      "group": "Cache Maintain",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "IC.IVA"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "CACHE_MAINT",
+        "uop_kind": "SYS"
+      },
+      "group": "Cache Maintain",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "TLB.IA"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "CACHE_MAINT",
+        "uop_kind": "SYS"
+      },
+      "group": "Cache Maintain",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "TLB.IALL"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "CACHE_MAINT",
+        "uop_kind": "SYS"
+      },
+      "group": "Cache Maintain",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "TLB.IAV"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "CACHE_MAINT",
+        "uop_kind": "SYS"
+      },
+      "group": "Cache Maintain",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "TLB.IV"
+    }
+  ],
+  "sub_kind": "CACHE_MAINT"
+}

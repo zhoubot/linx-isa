@@ -1,0 +1,41 @@
+{
+  "big_kind": "ALU",
+  "count": 2,
+  "instructions": [
+    {
+      "class": {
+        "alu_kind": "BARREL_CCAT",
+        "note": "User confirmed A; double-output implemented as 2 ALU uops (macro_uid bound)",
+        "source": "group_rule",
+        "split": [
+          "ALU",
+          "ALU"
+        ],
+        "uop_kind": "ALU"
+      },
+      "group": "Concat",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.CCAT"
+    },
+    {
+      "class": {
+        "alu_kind": "BARREL_CCAT",
+        "note": "User confirmed A; double-output implemented as 2 ALU uops (macro_uid bound)",
+        "source": "group_rule",
+        "split": [
+          "ALU",
+          "ALU"
+        ],
+        "uop_kind": "ALU"
+      },
+      "group": "Concat",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.CCATW"
+    }
+  ],
+  "sub_kind": "BARREL_CCAT"
+}

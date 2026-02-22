@@ -1,0 +1,72 @@
+{
+  "big_kind": "VEC",
+  "count": 5,
+  "instructions": [
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "VEC",
+        "vec_kind": "VEC_FP"
+      },
+      "group": "Floating Point Arithmetic",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FABS"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "VEC",
+        "vec_kind": "VEC_FP"
+      },
+      "group": "Floating Point Arithmetic",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FCLASS"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "VEC",
+        "vec_kind": "VEC_FP"
+      },
+      "group": "Floating Point Arithmetic",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FEXP"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "VEC",
+        "vec_kind": "VEC_FP"
+      },
+      "group": "Floating Point Arithmetic",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FRECIP"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "VEC",
+        "vec_kind": "VEC_FP"
+      },
+      "group": "Floating Point Arithmetic",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.FSQRT"
+    }
+  ],
+  "sub_kind": "VEC_FP"
+}

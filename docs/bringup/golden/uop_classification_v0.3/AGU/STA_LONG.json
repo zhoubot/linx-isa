@@ -1,0 +1,133 @@
+{
+  "big_kind": "AGU",
+  "count": 7,
+  "instructions": [
+    {
+      "class": {
+        "addr_mode": "LONG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Long Offset",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SBI"
+    },
+    {
+      "class": {
+        "addr_mode": "LONG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Long Offset",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SDI"
+    },
+    {
+      "class": {
+        "addr_mode": "LONG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Long Offset",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SDI.U"
+    },
+    {
+      "class": {
+        "addr_mode": "LONG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Long Offset",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SHI"
+    },
+    {
+      "class": {
+        "addr_mode": "LONG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Long Offset",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SHI.U"
+    },
+    {
+      "class": {
+        "addr_mode": "LONG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Long Offset",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SWI"
+    },
+    {
+      "class": {
+        "addr_mode": "LONG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Long Offset",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SWI.U"
+    }
+  ],
+  "sub_kind": "STA/LONG"
+}

@@ -26,12 +26,12 @@ C.BSTOP [{"asm":"C.BSTOP","group":"Block Split","length_bits":16}] : 15..4=12'b0
 C.CMP.EQI [{"asm":"c.cmp.eqi t#1, simm, ->t","group":"C.TINST","length_bits":16}] : 15..14=2'b00 13..11=3'b000 10..6=simm5 5..4=2'b10 3..1=3'b110 0=0 ; simm5 ; -
 C.CMP.NEI [{"asm":"c.cmp.nei t#1, simm, ->t","group":"C.TINST","length_bits":16}] : 15..14=2'b00 13..11=3'b001 10..6=simm5 5..4=2'b10 3..1=3'b110 0=0 ; simm5 ; -
 C.EBREAK [{"asm":"c.break imm","group":"C.TINST","length_bits":16}] : 15..14=2'b11 13..11=3'b000 10..6=imm5 5..4=2'b10 3..1=3'b110 0=0 ; imm5 ; -
-C.LDI [{"asm":"c.ldi [srcL, simm], ->t","group":"Load/Store Immediate Offset","length_bits":16}] : 15..11=simm5 10..6=SrcL 5..4=2'b01 3..1=3'b101 0=0 ; SrcL simm5 ; -
-C.LWI [{"asm":"c.lwi [srcL, simm], ->t","group":"Load/Store Immediate Offset","length_bits":16}] : 15..11=simm5 10..6=SrcL 5..4=2'b00 3..1=3'b101 0=0 ; SrcL simm5 ; -
+C.LDI [{"asm":"c.ldi [srcL, simm], ->t","group":"Load Immediate Offset","length_bits":16}] : 15..11=simm5 10..6=SrcL 5..4=2'b01 3..1=3'b101 0=0 ; SrcL simm5 ; -
+C.LWI [{"asm":"c.lwi [srcL, simm], ->t","group":"Load Immediate Offset","length_bits":16}] : 15..11=simm5 10..6=SrcL 5..4=2'b00 3..1=3'b101 0=0 ; SrcL simm5 ; -
 C.MOVI [{"asm":"c.movi simm, ->{t, u, Rd}","group":"Move","length_bits":16}] : 15..11=RegDst 10..6=simm5 5..4=2'b01 3..1=3'b011 0=0 ; RegDst simm5 ; RegDst!=RA
 C.MOVR [{"asm":"c.movr SrcL, ->{t, u, Rd}","group":"Move","length_bits":16}] : 15..11=RegDst 10..6=SrcL 5..4=2'b00 3..1=3'b011 0=0 ; RegDst SrcL ; -
 C.OR [{"asm":"c.or srcL, srcR, ->t","group":"Arithmetic Operation","length_bits":16}] : 15..11=SrcR 10..6=SrcL 5..4=2'b11 3..1=3'b100 0=0 ; SrcL SrcR ; -
-C.SDI [{"asm":"c.sdi t#1, [srcL, simm]","group":"Load/Store Immediate Offset","length_bits":16}] : 15..11=simm5 10..6=SrcL 5..4=2'b11 3..1=3'b101 0=0 ; SrcL simm5 ; -
+C.SDI [{"asm":"c.sdi t#1, [srcL, simm]","group":"Store Immediate Offset","length_bits":16}] : 15..11=simm5 10..6=SrcL 5..4=2'b11 3..1=3'b101 0=0 ; SrcL simm5 ; -
 C.SETC.EQ [{"asm":"c.setc.eq srcL, srcR","group":"Set Commit Argument","length_bits":16}] : 15..11=SrcR 10..6=SrcL 5..4=2'b10 3..1=3'b011 0=0 ; SrcL SrcR ; -
 C.SETC.NE [{"asm":"c.setc.ne srcL, srcR","group":"Set Commit Argument","length_bits":16}] : 15..11=SrcR 10..6=SrcL 5..4=2'b11 3..1=3'b011 0=0 ; SrcL SrcR ; -
 C.SETC.TGT [{"asm":"c.setc.tgt srcL","group":"C.UNARY","length_bits":16}] : 15..14=2'b00 13..11=3'b000 10..6=SrcL 5..4=2'b01 3..1=3'b110 0=0 ; SrcL ; -
@@ -43,7 +43,7 @@ C.SLLI [{"asm":"c.slli t#1, uimm, ->t","group":"C.TINST","length_bits":16}] : 15
 C.SRLI [{"asm":"c.srli t#1, uimm, ->t","group":"C.TINST","length_bits":16}] : 15..14=2'b00 13..11=3'b011 10..6=uimm5 5..4=2'b10 3..1=3'b110 0=0 ; uimm5 ; -
 C.SSRGET [{"asm":"c.ssrget SSR-ID, ->t","group":"C.TINST","length_bits":16}] : 15..14=2'b10 13..11=3'b000 10..6=SSRID 5..4=2'b10 3..1=3'b110 0=0 ; SSRID ; -
 C.SUB [{"asm":"c.sub srcL, srcR, ->t","group":"Arithmetic Operation","length_bits":16}] : 15..11=SrcR 10..6=SrcL 5..4=2'b01 3..1=3'b100 0=0 ; SrcL SrcR ; -
-C.SWI [{"asm":"c.swi t#1, [srcL, simm]","group":"Load/Store Immediate Offset","length_bits":16}] : 15..11=simm5 10..6=SrcL 5..4=2'b10 3..1=3'b101 0=0 ; SrcL simm5 ; -
+C.SWI [{"asm":"c.swi t#1, [srcL, simm]","group":"Store Immediate Offset","length_bits":16}] : 15..11=simm5 10..6=SrcL 5..4=2'b10 3..1=3'b101 0=0 ; SrcL simm5 ; -
 C.ZEXT.B [{"asm":"c.zext.b srcL, ->t","group":"C.UNARY","length_bits":16}] : 15..14=2'b01 13..11=3'b011 10..6=SrcL 5..4=2'b01 3..1=3'b110 0=0 ; SrcL ; -
 C.ZEXT.H [{"asm":"c.zext.h srcL, ->t","group":"C.UNARY","length_bits":16}] : 15..14=2'b01 13..11=3'b100 10..6=SrcL 5..4=2'b01 3..1=3'b110 0=0 ; SrcL ; -
 C.ZEXT.W [{"asm":"c.zext.w srcL, ->t","group":"C.UNARY","length_bits":16}] : 15..14=2'b01 13..11=3'b101 10..6=SrcL 5..4=2'b01 3..1=3'b110 0=0 ; SrcL ; -

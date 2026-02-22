@@ -1,0 +1,33 @@
+{
+  "big_kind": "CMD",
+  "count": 2,
+  "instructions": [
+    {
+      "class": {
+        "cmd_kind": "BLOCK_DIMENSION",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "CMD"
+      },
+      "group": "Block Dimension",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.B.DIM"
+    },
+    {
+      "class": {
+        "cmd_kind": "BLOCK_DIMENSION",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "CMD"
+      },
+      "group": "Block Dimension",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.B.DIMI"
+    }
+  ],
+  "sub_kind": "BLOCK_DIMENSION"
+}

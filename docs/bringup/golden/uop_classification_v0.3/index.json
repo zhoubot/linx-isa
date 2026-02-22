@@ -1,0 +1,84 @@
+{
+  "big_kinds": {
+    "AGU": [
+      "LDA",
+      "LDA/BASE_IMM",
+      "LDA/BASE_REG",
+      "LDA/LONG",
+      "LDA/PAIR",
+      "LDA/PC_REL",
+      "LDA/POST_INDEX",
+      "LDA/PRE_INDEX",
+      "LDA/UNSCALED",
+      "STA",
+      "STA/BASE_IMM",
+      "STA/BASE_REG",
+      "STA/LONG",
+      "STA/PAIR",
+      "STA/PC_REL",
+      "STA/POST_INDEX",
+      "STA/PRE_INDEX"
+    ],
+    "ALU": [
+      "ALU",
+      "ALU_MULTI_CYCLE",
+      "BARREL_CCAT",
+      "SHIFT"
+    ],
+    "AMO": [
+      "AMO",
+      "CAS"
+    ],
+    "BBD": [
+      "BSTART"
+    ],
+    "BRU": [
+      "BRU",
+      "CMP",
+      "SETC"
+    ],
+    "CMD": [
+      "BLOCK_ARGUMENT",
+      "BLOCK_DIMENSION",
+      "BLOCK_IO",
+      "BLOCK_SPLIT",
+      "DESC_B_ATTR",
+      "DESC_B_HINT",
+      "DESC_B_TEXT",
+      "Q_MANAGE",
+      "Q_POP",
+      "Q_PUSH",
+      "VEC_ENGINE_CMD engine=VEC"
+    ],
+    "FSU": [
+      "DEFAULT"
+    ],
+    "RSV": [
+      "DEFAULT"
+    ],
+    "SYS": [
+      "CACHE_MAINT",
+      "SSR",
+      "SYS",
+      "TRAP"
+    ],
+    "VEC": [
+      "VEC",
+      "VEC_DIV",
+      "VEC_FP",
+      "VEC_SEL"
+    ]
+  },
+  "note": "Directory tree split of uop_classification_v0.3.json: big_kind/sub_kind/*.json",
+  "sources": {
+    "group_rules": "workspace/linxisa_v03_group_to_uopkind_draft.json",
+    "isa": "isa/v0.3/linxisa-v0.3.json",
+    "mnemonic_overrides": "workspace/linxisa_v03_mnemonic_to_uopkind_overrides.json"
+  },
+  "stats": {
+    "needs_override": 0,
+    "total_mnemonics": 710,
+    "unmapped": 0
+  },
+  "version": "v0.3"
+}

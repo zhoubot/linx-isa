@@ -1,0 +1,9 @@
+{
+  "big_kind": "VEC",
+  "sub_kinds": [
+    "VEC",
+    "VEC_DIV",
+    "VEC_FP",
+    "VEC_SEL"
+  ]
+}

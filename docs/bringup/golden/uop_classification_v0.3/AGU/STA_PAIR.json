@@ -1,0 +1,259 @@
+{
+  "big_kind": "AGU",
+  "count": 14,
+  "instructions": [
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SBIP"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SBP"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SDIP"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SDIP.U"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SDP"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SDP.U"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SHIP"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SHIP.U"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SHP"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SHP.U"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SWIP"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SWIP.U"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SWP"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SWP.U"
+    }
+  ],
+  "sub_kind": "STA/PAIR"
+}

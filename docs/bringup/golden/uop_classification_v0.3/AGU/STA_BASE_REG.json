@@ -1,0 +1,385 @@
+{
+  "big_kind": "AGU",
+  "count": 21,
+  "instructions": [
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Register Offset",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SB"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Register Offset",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SD"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Register Offset",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SD.U"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Register Offset",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SH"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Register Offset",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SH.U"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Register Offset",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SW"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Register Offset",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SW.U"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SB"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SB.BRG"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SD"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SD.BRG"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SD.U"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SD.U.BRG"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SH"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SH.BRG"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SH.U"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SH.U.BRG"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SW"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SW.BRG"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SW.U"
+    },
+    {
+      "class": {
+        "addr_mode": "BASE_REG",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Register Offset",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SW.U.BRG"
+    }
+  ],
+  "sub_kind": "STA/BASE_REG"
+}

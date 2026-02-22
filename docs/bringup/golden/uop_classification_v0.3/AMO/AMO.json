@@ -1,0 +1,823 @@
+{
+  "big_kind": "AMO",
+  "count": 68,
+  "instructions": [
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LD.ADD"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LD.AND"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LD.OR"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LD.SMAX"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LD.SMIN"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LD.UMAX"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LD.UMIN"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LD.XOR"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LR.B"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LR.D"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LR.H"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LR.W"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LW.ADD"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LW.AND"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LW.OR"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LW.SMAX"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LW.SMIN"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LW.UMAX"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LW.UMIN"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LW.XOR"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SC.B"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SC.D"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SC.H"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SC.W"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SD.ADD"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SD.AND"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SD.OR"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SD.SMAX"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SD.SMIN"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SD.UMAX"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SD.UMIN"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SD.XOR"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SW.ADD"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SW.AND"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SW.OR"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SW.SMAX"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SW.SMIN"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SW.UMAX"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SW.UMIN"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SW.XOR"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SWAPB"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SWAPD"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SWAPH"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SWAPW"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LD.ADD"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LD.AND"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LD.MAX"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LD.MIN"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LD.OR"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LD.XOR"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LW.ADD"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LW.AND"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LW.MAX"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LW.MIN"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LW.OR"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LW.XOR"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SD.ADD"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SD.AND"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SD.MAX"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SD.MIN"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SD.OR"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SD.XOR"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SW.ADD"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SW.AND"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SW.MAX"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SW.MIN"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SW.OR"
+    },
+    {
+      "class": {
+        "note": "User confirmed A: atomic ops execute in AMO class",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SW.XOR"
+    }
+  ],
+  "sub_kind": "AMO"
+}

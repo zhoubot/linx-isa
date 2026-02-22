@@ -1,0 +1,273 @@
+{
+  "big_kind": "AGU",
+  "count": 19,
+  "instructions": [
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LBIP"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LBP"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LBUIP"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LBUP"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LDIP"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LDIP.U"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LDP"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LHIP"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LHIP.U"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LHP"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LHUIP"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LHUIP.U"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LHUP"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LWIP"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LWIP.U"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LWP"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LWUIP"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LWUIP.U"
+    },
+    {
+      "class": {
+        "addr_mode": "PAIR",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pair",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LWUP"
+    }
+  ],
+  "sub_kind": "LDA/PAIR"
+}

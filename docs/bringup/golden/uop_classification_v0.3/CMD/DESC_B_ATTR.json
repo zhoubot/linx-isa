@@ -1,0 +1,20 @@
+{
+  "big_kind": "CMD",
+  "count": 1,
+  "instructions": [
+    {
+      "class": {
+        "cmd_kind": "DESC_B_ATTR",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "CMD"
+      },
+      "group": "Block Attribute",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "B.ATTR"
+    }
+  ],
+  "sub_kind": "DESC_B_ATTR"
+}

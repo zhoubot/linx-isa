@@ -1,0 +1,22 @@
+{
+  "big_kind": "AGU",
+  "sub_kinds": [
+    "LDA",
+    "LDA/BASE_IMM",
+    "LDA/BASE_REG",
+    "LDA/LONG",
+    "LDA/PAIR",
+    "LDA/PC_REL",
+    "LDA/POST_INDEX",
+    "LDA/PRE_INDEX",
+    "LDA/UNSCALED",
+    "STA",
+    "STA/BASE_IMM",
+    "STA/BASE_REG",
+    "STA/LONG",
+    "STA/PAIR",
+    "STA/PC_REL",
+    "STA/POST_INDEX",
+    "STA/PRE_INDEX"
+  ]
+}

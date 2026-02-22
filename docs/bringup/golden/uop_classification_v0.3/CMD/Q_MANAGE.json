@@ -1,0 +1,20 @@
+{
+  "big_kind": "CMD",
+  "count": 1,
+  "instructions": [
+    {
+      "class": {
+        "cmd_kind": "Q_MANAGE",
+        "note": "general queue manager",
+        "source": "override",
+        "uop_kind": "CMD"
+      },
+      "group": "General",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.QMT"
+    }
+  ],
+  "sub_kind": "Q_MANAGE"
+}

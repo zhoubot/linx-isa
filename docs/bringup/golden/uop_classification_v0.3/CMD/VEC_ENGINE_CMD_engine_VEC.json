@@ -1,0 +1,35 @@
+{
+  "big_kind": "CMD",
+  "count": 2,
+  "instructions": [
+    {
+      "class": {
+        "cmd_kind": "VEC_ENGINE_CMD",
+        "engine_target": "VEC",
+        "note": "User: vec engine cmd",
+        "source": "group_rule",
+        "uop_kind": "CMD"
+      },
+      "group": "General Manager",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.QPOP"
+    },
+    {
+      "class": {
+        "cmd_kind": "VEC_ENGINE_CMD",
+        "engine_target": "VEC",
+        "note": "User: vec engine cmd",
+        "source": "group_rule",
+        "uop_kind": "CMD"
+      },
+      "group": "General Manager",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.QPUSH"
+    }
+  ],
+  "sub_kind": "VEC_ENGINE_CMD engine=VEC"
+}

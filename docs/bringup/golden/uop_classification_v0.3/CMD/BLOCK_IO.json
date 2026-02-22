@@ -1,0 +1,59 @@
+{
+  "big_kind": "CMD",
+  "count": 4,
+  "instructions": [
+    {
+      "class": {
+        "cmd_kind": "BLOCK_IO",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "CMD"
+      },
+      "group": "Block Input & Output",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "B.IOD"
+    },
+    {
+      "class": {
+        "cmd_kind": "BLOCK_IO",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "CMD"
+      },
+      "group": "Block Input & Output",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "B.IOR"
+    },
+    {
+      "class": {
+        "cmd_kind": "BLOCK_IO",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "CMD"
+      },
+      "group": "Block Input & Output",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "B.IOT"
+    },
+    {
+      "class": {
+        "cmd_kind": "BLOCK_IO",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "CMD"
+      },
+      "group": "Block Input & Output",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "B.IOTI"
+    }
+  ],
+  "sub_kind": "BLOCK_IO"
+}

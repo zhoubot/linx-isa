@@ -1,0 +1,259 @@
+{
+  "big_kind": "AGU",
+  "count": 14,
+  "instructions": [
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SB.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SBI.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SD.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SD.UPR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SDI.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SDI.UPR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SH.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SH.UPR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SHI.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SHI.UPR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SW.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SW.UPR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SWI.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SWI.UPR"
+    }
+  ],
+  "sub_kind": "STA/PRE_INDEX"
+}

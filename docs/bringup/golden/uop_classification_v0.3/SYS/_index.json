@@ -1,0 +1,9 @@
+{
+  "big_kind": "SYS",
+  "sub_kinds": [
+    "CACHE_MAINT",
+    "SSR",
+    "SYS",
+    "TRAP"
+  ]
+}

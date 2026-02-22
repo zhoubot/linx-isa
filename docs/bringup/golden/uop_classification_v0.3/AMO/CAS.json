@@ -1,0 +1,59 @@
+{
+  "big_kind": "AMO",
+  "count": 4,
+  "instructions": [
+    {
+      "class": {
+        "amo_kind": "CAS",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.CASB"
+    },
+    {
+      "class": {
+        "amo_kind": "CAS",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.CASD"
+    },
+    {
+      "class": {
+        "amo_kind": "CAS",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.CASH"
+    },
+    {
+      "class": {
+        "amo_kind": "CAS",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AMO"
+      },
+      "group": "Atomic",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.CASW"
+    }
+  ],
+  "sub_kind": "CAS"
+}

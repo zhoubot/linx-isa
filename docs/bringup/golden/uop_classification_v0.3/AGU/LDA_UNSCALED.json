@@ -1,0 +1,231 @@
+{
+  "big_kind": "AGU",
+  "count": 16,
+  "instructions": [
+    {
+      "class": {
+        "addr_mode": "UNSCALED",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load UnScaled",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LDI.U"
+    },
+    {
+      "class": {
+        "addr_mode": "UNSCALED",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load UnScaled",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LHI.U"
+    },
+    {
+      "class": {
+        "addr_mode": "UNSCALED",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load UnScaled",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LHUI.U"
+    },
+    {
+      "class": {
+        "addr_mode": "UNSCALED",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load UnScaled",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LWI.U"
+    },
+    {
+      "class": {
+        "addr_mode": "UNSCALED",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load UnScaled",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LWUI.U"
+    },
+    {
+      "class": {
+        "addr_mode": "UNSCALED",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load UnScaled",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "PRFI.U"
+    },
+    {
+      "class": {
+        "addr_mode": "UNSCALED",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load UnScaled",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LDI.U"
+    },
+    {
+      "class": {
+        "addr_mode": "UNSCALED",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load UnScaled",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LDI.U.BRG"
+    },
+    {
+      "class": {
+        "addr_mode": "UNSCALED",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load UnScaled",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LHI.U"
+    },
+    {
+      "class": {
+        "addr_mode": "UNSCALED",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load UnScaled",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LHI.U.BRG"
+    },
+    {
+      "class": {
+        "addr_mode": "UNSCALED",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load UnScaled",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LHUI.U"
+    },
+    {
+      "class": {
+        "addr_mode": "UNSCALED",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load UnScaled",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LHUI.U.BRG"
+    },
+    {
+      "class": {
+        "addr_mode": "UNSCALED",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load UnScaled",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LWI.U"
+    },
+    {
+      "class": {
+        "addr_mode": "UNSCALED",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load UnScaled",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LWI.U.BRG"
+    },
+    {
+      "class": {
+        "addr_mode": "UNSCALED",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load UnScaled",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LWUI.U"
+    },
+    {
+      "class": {
+        "addr_mode": "UNSCALED",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load UnScaled",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.LWUI.U.BRG"
+    }
+  ],
+  "sub_kind": "LDA/UNSCALED"
+}

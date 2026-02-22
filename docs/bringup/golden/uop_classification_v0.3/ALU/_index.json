@@ -1,0 +1,9 @@
+{
+  "big_kind": "ALU",
+  "sub_kinds": [
+    "ALU",
+    "ALU_MULTI_CYCLE",
+    "BARREL_CCAT",
+    "SHIFT"
+  ]
+}
