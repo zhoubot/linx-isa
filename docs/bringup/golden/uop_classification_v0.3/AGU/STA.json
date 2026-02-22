@@ -1,0 +1,75 @@
+{
+  "big_kind": "AGU",
+  "count": 4,
+  "instructions": [
+    {
+      "class": {
+        "agu_kind": "STA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Symbol",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SB.PCR"
+    },
+    {
+      "class": {
+        "agu_kind": "STA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Symbol",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SD.PCR"
+    },
+    {
+      "class": {
+        "agu_kind": "STA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Symbol",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SH.PCR"
+    },
+    {
+      "class": {
+        "agu_kind": "STA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Symbol",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SW.PCR"
+    }
+  ],
+  "sub_kind": "STA"
+}

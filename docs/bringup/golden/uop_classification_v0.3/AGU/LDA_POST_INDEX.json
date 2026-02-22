@@ -1,0 +1,273 @@
+{
+  "big_kind": "AGU",
+  "count": 19,
+  "instructions": [
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LB.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LBI.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LBU.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LBUI.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LD.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LDI.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LDI.UPO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LH.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LHI.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LHI.UPO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LHU.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LHUI.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LHUI.UPO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LW.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LWI.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LWI.UPO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LWU.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LWUI.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LWUI.UPO"
+    }
+  ],
+  "sub_kind": "LDA/POST_INDEX"
+}

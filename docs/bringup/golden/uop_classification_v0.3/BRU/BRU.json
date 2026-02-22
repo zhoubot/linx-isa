@@ -1,0 +1,165 @@
+{
+  "big_kind": "BRU",
+  "count": 14,
+  "instructions": [
+    {
+      "class": {
+        "note": "User confirmed C (pc read is BRU)",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "PC-Relative",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "ADDTPC"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Branch",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "B.EQ"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Branch",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "B.GE"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Branch",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "B.GEU"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Branch",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "B.LT"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Branch",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "B.LTU"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Branch",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "B.NE"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Branch",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "B.NZ"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Branch",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "B.Z"
+    },
+    {
+      "class": {
+        "note": "User confirmed C (pc read is BRU)",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "PC-Relative",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.ADDTPC"
+    },
+    {
+      "class": {
+        "note": "User confirmed C (pc read is BRU)",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "PC-Relative",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SETRET"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Branch",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "J"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Branch",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "JR"
+    },
+    {
+      "class": {
+        "note": "User confirmed C (pc read is BRU)",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "PC-Relative",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SETRET"
+    }
+  ],
+  "sub_kind": "BRU"
+}

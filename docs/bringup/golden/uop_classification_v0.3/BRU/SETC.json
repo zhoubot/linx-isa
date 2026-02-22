@@ -1,0 +1,345 @@
+{
+  "big_kind": "BRU",
+  "count": 26,
+  "instructions": [
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.SETC.EQ"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.SETC.NE"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SETC.ANDI"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SETC.EQI"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SETC.GEI"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SETC.GEUI"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SETC.LTI"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SETC.LTUI"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SETC.NEI"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SETC.ORI"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SETC.AND"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SETC.ANDI"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SETC.EQ"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SETC.EQI"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SETC.GE"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SETC.GEI"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SETC.GEU"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SETC.GEUI"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SETC.LT"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SETC.LTI"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SETC.LTU"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SETC.LTUI"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SETC.NE"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SETC.NEI"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SETC.OR"
+    },
+    {
+      "class": {
+        "bru_kind": "SETC",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BRU"
+      },
+      "group": "Set Commit Argument",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SETC.ORI"
+    }
+  ],
+  "sub_kind": "SETC"
+}

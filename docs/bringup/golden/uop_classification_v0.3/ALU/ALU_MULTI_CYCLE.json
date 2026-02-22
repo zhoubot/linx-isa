@@ -1,0 +1,343 @@
+{
+  "big_kind": "ALU",
+  "count": 28,
+  "instructions": [
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "DIV"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "DIVU"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "DIVUW"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "DIVW"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.DIV"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.DIVU"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.DIVUW"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.DIVW"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.MADD"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.MADDW"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.MUL"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.MULU"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.REM"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.REMU"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.REMUW"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.REMW"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "MADD"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "MADDW"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "MUL"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "MULU"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "MULUW"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "MULW"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "REM"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "REMU"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "REMUW"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "REMW"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.MADD"
+    },
+    {
+      "class": {
+        "alu_kind": "ALU_MULTI_CYCLE",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Multi-Cycle ALU",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.MUL"
+    }
+  ],
+  "sub_kind": "ALU_MULTI_CYCLE"
+}

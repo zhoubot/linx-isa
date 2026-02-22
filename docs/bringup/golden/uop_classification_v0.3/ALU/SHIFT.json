@@ -1,0 +1,33 @@
+{
+  "big_kind": "ALU",
+  "count": 2,
+  "instructions": [
+    {
+      "class": {
+        "alu_kind": "SHIFT",
+        "note": "C.TINST split",
+        "source": "override",
+        "uop_kind": "ALU"
+      },
+      "group": "C.TINST",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.SLLI"
+    },
+    {
+      "class": {
+        "alu_kind": "SHIFT",
+        "note": "C.TINST split",
+        "source": "override",
+        "uop_kind": "ALU"
+      },
+      "group": "C.TINST",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.SRLI"
+    }
+  ],
+  "sub_kind": "SHIFT"
+}

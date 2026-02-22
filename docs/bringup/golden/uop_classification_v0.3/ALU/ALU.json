@@ -1,0 +1,1145 @@
+{
+  "big_kind": "ALU",
+  "count": 100,
+  "instructions": [
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 64bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "ADD"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 64bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "ADDI"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 32bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "ADDIW"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 32bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "ADDW"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 64bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "AND"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 64bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "ANDI"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 32bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "ANDIW"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 32bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "ANDW"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Bit Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "BCNT"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Bit Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "BIC"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Bit Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "BIS"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Bit Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "BXS"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Bit Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "BXU"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.ADD"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.ADDI"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.AND"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Move",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.MOVI"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Move",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.MOVR"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.OR"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "C.UNARY",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.SETC.TGT"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Move",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.SETRET"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "C.UNARY",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.SEXT.B"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "C.UNARY",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.SEXT.H"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "C.UNARY",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.SEXT.W"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.SUB"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "C.UNARY",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.ZEXT.B"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "C.UNARY",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.ZEXT.H"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "C.UNARY",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.ZEXT.W"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Bit Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "CLZ"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Compound Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "CSEL"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Bit Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "CTZ"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Max-Min",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FMAX"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Max-Min",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "FMIN"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 64bit",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.ADDI"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 32bit",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.ADDIW"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 64bit",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.ANDI"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 32bit",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.ANDIW"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Long Immediate",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LIS"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Long Immediate",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LIU"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Immediate",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LUI"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 64bit",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.ORI"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 32bit",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.ORIW"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 64bit",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SUBI"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 32bit",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SUBIW"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 64bit",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.XORI"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 32bit",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.XORIW"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Immediate",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LUI"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Max-Min",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "MAX"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Max-Min",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "MAXU"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Max-Min",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "MIN"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Max-Min",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "MINU"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 64bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "OR"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 64bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "ORI"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 32bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "ORIW"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 32bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "ORW"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Bit Operation",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "REV"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 64bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SLL"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 64bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SLLI"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 32bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SLLIW"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 32bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SLLW"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 64bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SRA"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 64bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SRAI"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 32bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SRAIW"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 32bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SRAW"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 64bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SRL"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 64bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SRLI"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 32bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SRLIW"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 32bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SRLW"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 64bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SUB"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 64bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SUBI"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 32bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SUBIW"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 32bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SUBW"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.ADD"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.ADDI"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.AND"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.ANDI"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Bit Manipulation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.BCNT"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Bit Manipulation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.BIC"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Bit Manipulation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.BIS"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Bit Manipulation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.BXS"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Bit Manipulation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.BXU"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Bit Manipulation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.CLZ"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Bit Manipulation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.CTZ"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.OR"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.ORI"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Bit Manipulation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.REV"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SLL"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SLLI"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SRA"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SRAI"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SRL"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SRLI"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SUB"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SUBI"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.XOR"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.XORI"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 64bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "XOR"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 64bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "XORI"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 32bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "XORIW"
+    },
+    {
+      "class": {
+        "source": "group_rule",
+        "uop_kind": "ALU"
+      },
+      "group": "Arithmetic Operation 32bit",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "XORW"
+    }
+  ],
+  "sub_kind": "ALU"
+}

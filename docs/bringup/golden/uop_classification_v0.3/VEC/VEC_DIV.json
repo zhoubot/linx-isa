@@ -1,0 +1,33 @@
+{
+  "big_kind": "VEC",
+  "count": 2,
+  "instructions": [
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "VEC",
+        "vec_kind": "VEC_DIV"
+      },
+      "group": "Division",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.DIV"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "VEC",
+        "vec_kind": "VEC_DIV"
+      },
+      "group": "Division",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.REM"
+    }
+  ],
+  "sub_kind": "VEC_DIV"
+}

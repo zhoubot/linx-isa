@@ -1,0 +1,259 @@
+{
+  "big_kind": "AGU",
+  "count": 14,
+  "instructions": [
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SB.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SBI.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SD.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SD.UPO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SDI.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SDI.UPO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SH.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SH.UPO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SHI.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SHI.UPO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SW.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SW.UPO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SWI.PO"
+    },
+    {
+      "class": {
+        "addr_mode": "POST_INDEX",
+        "agu_kind": "STA",
+        "note": "User confirmed all stores are AGU/STA + STD",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store Post-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SWI.UPO"
+    }
+  ],
+  "sub_kind": "STA/POST_INDEX"
+}

@@ -1,0 +1,163 @@
+{
+  "big_kind": "BBD",
+  "count": 12,
+  "instructions": [
+    {
+      "class": {
+        "bbd_kind": "BSTART",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BBD"
+      },
+      "group": "BSTART",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "BSTART CALL"
+    },
+    {
+      "class": {
+        "bbd_kind": "BSTART",
+        "note": "User confirmed A (compressed boundary)",
+        "source": "group_rule",
+        "uop_kind": "BBD"
+      },
+      "group": "C.BSTART",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.BSTART.FP"
+    },
+    {
+      "class": {
+        "bbd_kind": "BSTART",
+        "note": "User confirmed A (compressed boundary)",
+        "source": "group_rule",
+        "uop_kind": "BBD"
+      },
+      "group": "C.BSTART",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.BSTART.MPAR"
+    },
+    {
+      "class": {
+        "bbd_kind": "BSTART",
+        "note": "User confirmed A (compressed boundary)",
+        "source": "group_rule",
+        "uop_kind": "BBD"
+      },
+      "group": "C.BSTART",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.BSTART.MSEQ"
+    },
+    {
+      "class": {
+        "bbd_kind": "BSTART",
+        "note": "User confirmed A (compressed boundary)",
+        "source": "group_rule",
+        "uop_kind": "BBD"
+      },
+      "group": "C.BSTART",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.BSTART.STD"
+    },
+    {
+      "class": {
+        "bbd_kind": "BSTART",
+        "note": "User confirmed A (compressed boundary)",
+        "source": "group_rule",
+        "uop_kind": "BBD"
+      },
+      "group": "C.BSTART",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.BSTART.SYS"
+    },
+    {
+      "class": {
+        "bbd_kind": "BSTART",
+        "note": "User confirmed A (compressed boundary)",
+        "source": "group_rule",
+        "uop_kind": "BBD"
+      },
+      "group": "C.BSTART",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.BSTART.VPAR"
+    },
+    {
+      "class": {
+        "bbd_kind": "BSTART",
+        "note": "User confirmed A (compressed boundary)",
+        "source": "group_rule",
+        "uop_kind": "BBD"
+      },
+      "group": "C.BSTART",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.BSTART.VSEQ"
+    },
+    {
+      "class": {
+        "bbd_kind": "BSTART",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BBD"
+      },
+      "group": "BSTART",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.BSTART CALL"
+    },
+    {
+      "class": {
+        "bbd_kind": "BSTART",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BBD"
+      },
+      "group": "BSTART",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.BSTART.FP"
+    },
+    {
+      "class": {
+        "bbd_kind": "BSTART",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BBD"
+      },
+      "group": "BSTART",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.BSTART.STD"
+    },
+    {
+      "class": {
+        "bbd_kind": "BSTART",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "BBD"
+      },
+      "group": "BSTART",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.BSTART.SYS"
+    }
+  ],
+  "sub_kind": "BSTART"
+}

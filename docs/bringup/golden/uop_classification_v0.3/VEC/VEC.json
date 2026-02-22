@@ -1,0 +1,211 @@
+{
+  "big_kind": "VEC",
+  "count": 17,
+  "instructions": [
+    {
+      "class": {
+        "note": "User confirmed VEC with internal subclasses",
+        "source": "group_rule",
+        "uop_kind": "VEC"
+      },
+      "group": "Reduce Operation with Register",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.RDADD"
+    },
+    {
+      "class": {
+        "note": "User confirmed VEC with internal subclasses",
+        "source": "group_rule",
+        "uop_kind": "VEC"
+      },
+      "group": "Reduce Operation with Register",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.RDAND"
+    },
+    {
+      "class": {
+        "note": "User confirmed VEC with internal subclasses",
+        "source": "group_rule",
+        "uop_kind": "VEC"
+      },
+      "group": "Reduce Operation with Register",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.RDFADD"
+    },
+    {
+      "class": {
+        "note": "User confirmed VEC with internal subclasses",
+        "source": "group_rule",
+        "uop_kind": "VEC"
+      },
+      "group": "Reduce Operation with Register",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.RDFMAX"
+    },
+    {
+      "class": {
+        "note": "User confirmed VEC with internal subclasses",
+        "source": "group_rule",
+        "uop_kind": "VEC"
+      },
+      "group": "Reduce Operation with Register",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.RDFMIN"
+    },
+    {
+      "class": {
+        "note": "User confirmed VEC with internal subclasses",
+        "source": "group_rule",
+        "uop_kind": "VEC"
+      },
+      "group": "Reduce Operation with Register",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.RDMAX"
+    },
+    {
+      "class": {
+        "note": "User confirmed VEC with internal subclasses",
+        "source": "group_rule",
+        "uop_kind": "VEC"
+      },
+      "group": "Reduce Operation with Register",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.RDMIN"
+    },
+    {
+      "class": {
+        "note": "User confirmed VEC with internal subclasses",
+        "source": "group_rule",
+        "uop_kind": "VEC"
+      },
+      "group": "Reduce Operation with Register",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.RDOR"
+    },
+    {
+      "class": {
+        "note": "User confirmed VEC with internal subclasses",
+        "source": "group_rule",
+        "uop_kind": "VEC"
+      },
+      "group": "Reduce Operation with Register",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.RDXOR"
+    },
+    {
+      "class": {
+        "note": "User confirmed VEC with internal subclasses",
+        "source": "group_rule",
+        "uop_kind": "VEC"
+      },
+      "group": "Shuffle",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SHFL.BFLY"
+    },
+    {
+      "class": {
+        "note": "User confirmed VEC with internal subclasses",
+        "source": "group_rule",
+        "uop_kind": "VEC"
+      },
+      "group": "Shuffle",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SHFL.DOWN"
+    },
+    {
+      "class": {
+        "note": "User confirmed VEC with internal subclasses",
+        "source": "group_rule",
+        "uop_kind": "VEC"
+      },
+      "group": "Shuffle",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SHFL.IDX"
+    },
+    {
+      "class": {
+        "note": "User confirmed VEC with internal subclasses",
+        "source": "group_rule",
+        "uop_kind": "VEC"
+      },
+      "group": "Shuffle",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SHFL.UP"
+    },
+    {
+      "class": {
+        "note": "User confirmed VEC with internal subclasses",
+        "source": "group_rule",
+        "uop_kind": "VEC"
+      },
+      "group": "Shuffle",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SHFLI.BFLY"
+    },
+    {
+      "class": {
+        "note": "User confirmed VEC with internal subclasses",
+        "source": "group_rule",
+        "uop_kind": "VEC"
+      },
+      "group": "Shuffle",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SHFLI.DOWN"
+    },
+    {
+      "class": {
+        "note": "User confirmed VEC with internal subclasses",
+        "source": "group_rule",
+        "uop_kind": "VEC"
+      },
+      "group": "Shuffle",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SHFLI.IDX"
+    },
+    {
+      "class": {
+        "note": "User confirmed VEC with internal subclasses",
+        "source": "group_rule",
+        "uop_kind": "VEC"
+      },
+      "group": "Shuffle",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.SHFLI.UP"
+    }
+  ],
+  "sub_kind": "VEC"
+}

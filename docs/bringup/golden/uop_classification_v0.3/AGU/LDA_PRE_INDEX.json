@@ -1,0 +1,273 @@
+{
+  "big_kind": "AGU",
+  "count": 19,
+  "instructions": [
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LB.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LBI.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LBU.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LBUI.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LD.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LDI.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LDI.UPR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LH.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LHI.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LHI.UPR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LHU.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LHUI.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LHUI.UPR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LW.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LWI.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LWI.UPR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LWU.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LWUI.PR"
+    },
+    {
+      "class": {
+        "addr_mode": "PRE_INDEX",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Pre-Index",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LWUI.UPR"
+    }
+  ],
+  "sub_kind": "LDA/PRE_INDEX"
+}

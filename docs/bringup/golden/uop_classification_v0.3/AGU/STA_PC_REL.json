@@ -1,0 +1,79 @@
+{
+  "big_kind": "AGU",
+  "count": 4,
+  "instructions": [
+    {
+      "class": {
+        "addr_mode": "PC_REL",
+        "agu_kind": "STA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store PC-Relative",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SB.PCR"
+    },
+    {
+      "class": {
+        "addr_mode": "PC_REL",
+        "agu_kind": "STA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store PC-Relative",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SD.PCR"
+    },
+    {
+      "class": {
+        "addr_mode": "PC_REL",
+        "agu_kind": "STA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store PC-Relative",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SH.PCR"
+    },
+    {
+      "class": {
+        "addr_mode": "PC_REL",
+        "agu_kind": "STA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "split": [
+          "AGU",
+          "STD"
+        ],
+        "uop_kind": "AGU"
+      },
+      "group": "Store PC-Relative",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SW.PCR"
+    }
+  ],
+  "sub_kind": "STA/PC_REL"
+}

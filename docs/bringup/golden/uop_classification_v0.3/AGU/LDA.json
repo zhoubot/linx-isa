@@ -1,0 +1,150 @@
+{
+  "big_kind": "AGU",
+  "count": 11,
+  "instructions": [
+    {
+      "class": {
+        "agu_kind": "LDA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Prefetch",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.PRF"
+    },
+    {
+      "class": {
+        "agu_kind": "LDA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Prefetch",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.PRF.A"
+    },
+    {
+      "class": {
+        "agu_kind": "LDA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Prefetch",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.PRFI.U"
+    },
+    {
+      "class": {
+        "agu_kind": "LDA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Prefetch",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.PRFI.UA"
+    },
+    {
+      "class": {
+        "agu_kind": "LDA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Symbol",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LB.PCR"
+    },
+    {
+      "class": {
+        "agu_kind": "LDA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Symbol",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LBU.PCR"
+    },
+    {
+      "class": {
+        "agu_kind": "LDA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Symbol",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LD.PCR"
+    },
+    {
+      "class": {
+        "agu_kind": "LDA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Symbol",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LH.PCR"
+    },
+    {
+      "class": {
+        "agu_kind": "LDA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Symbol",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LHU.PCR"
+    },
+    {
+      "class": {
+        "agu_kind": "LDA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Symbol",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LW.PCR"
+    },
+    {
+      "class": {
+        "agu_kind": "LDA",
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Symbol",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LWU.PCR"
+    }
+  ],
+  "sub_kind": "LDA"
+}

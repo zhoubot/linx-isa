@@ -1,0 +1,20 @@
+{
+  "big_kind": "SYS",
+  "count": 1,
+  "instructions": [
+    {
+      "class": {
+        "note": "C.TINST split",
+        "source": "override",
+        "sys_kind": "TRAP",
+        "uop_kind": "SYS"
+      },
+      "group": "C.TINST",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.EBREAK"
+    }
+  ],
+  "sub_kind": "TRAP"
+}

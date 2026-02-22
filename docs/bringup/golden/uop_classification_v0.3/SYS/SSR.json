@@ -1,0 +1,111 @@
+{
+  "big_kind": "SYS",
+  "count": 8,
+  "instructions": [
+    {
+      "class": {
+        "note": "C.TINST split",
+        "source": "override",
+        "sys_kind": "SSR",
+        "uop_kind": "SYS"
+      },
+      "group": "C.TINST",
+      "length_bits": [
+        16
+      ],
+      "mnemonic": "C.SSRGET"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "SSR",
+        "uop_kind": "SYS"
+      },
+      "group": "SSR Access",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SSRGET"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "SSR",
+        "uop_kind": "SYS"
+      },
+      "group": "SSR Access",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.SSRSET"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "SSR",
+        "uop_kind": "SYS"
+      },
+      "group": "SSR Access",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "LSRGET"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "SSR",
+        "uop_kind": "SYS"
+      },
+      "group": "SSR Access",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SETC.TGT"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "SSR",
+        "uop_kind": "SYS"
+      },
+      "group": "SSR Access",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SSRGET"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "SSR",
+        "uop_kind": "SYS"
+      },
+      "group": "SSR Access",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SSRSET"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "sys_kind": "SSR",
+        "uop_kind": "SYS"
+      },
+      "group": "SSR Access",
+      "length_bits": [
+        32
+      ],
+      "mnemonic": "SSRSWAP"
+    }
+  ],
+  "sub_kind": "SSR"
+}

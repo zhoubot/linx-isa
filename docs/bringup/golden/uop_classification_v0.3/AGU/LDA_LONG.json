@@ -1,0 +1,175 @@
+{
+  "big_kind": "AGU",
+  "count": 12,
+  "instructions": [
+    {
+      "class": {
+        "addr_mode": "LONG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Long Offset",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LBI"
+    },
+    {
+      "class": {
+        "addr_mode": "LONG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Long Offset",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LBUI"
+    },
+    {
+      "class": {
+        "addr_mode": "LONG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Long Offset",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LDI"
+    },
+    {
+      "class": {
+        "addr_mode": "LONG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Long Offset",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LDI.U"
+    },
+    {
+      "class": {
+        "addr_mode": "LONG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Long Offset",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LHI"
+    },
+    {
+      "class": {
+        "addr_mode": "LONG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Long Offset",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LHI.U"
+    },
+    {
+      "class": {
+        "addr_mode": "LONG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Long Offset",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LHUI"
+    },
+    {
+      "class": {
+        "addr_mode": "LONG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Long Offset",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LHUI.U"
+    },
+    {
+      "class": {
+        "addr_mode": "LONG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Long Offset",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LWI"
+    },
+    {
+      "class": {
+        "addr_mode": "LONG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Long Offset",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LWI.U"
+    },
+    {
+      "class": {
+        "addr_mode": "LONG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Long Offset",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LWUI"
+    },
+    {
+      "class": {
+        "addr_mode": "LONG",
+        "agu_kind": "LDA",
+        "note": "User confirmed all loads are AGU/LDA",
+        "source": "group_rule",
+        "uop_kind": "AGU"
+      },
+      "group": "Load Long Offset",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.LWUI.U"
+    }
+  ],
+  "sub_kind": "LDA/LONG"
+}

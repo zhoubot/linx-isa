@@ -1,0 +1,33 @@
+{
+  "big_kind": "VEC",
+  "count": 2,
+  "instructions": [
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "VEC",
+        "vec_kind": "VEC_SEL"
+      },
+      "group": "Three Source Integer",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.CSEL"
+    },
+    {
+      "class": {
+        "note": "User confirmed A",
+        "source": "group_rule",
+        "uop_kind": "VEC",
+        "vec_kind": "VEC_SEL"
+      },
+      "group": "Three Source Integer",
+      "length_bits": [
+        64
+      ],
+      "mnemonic": "V.PSEL"
+    }
+  ],
+  "sub_kind": "VEC_SEL"
+}

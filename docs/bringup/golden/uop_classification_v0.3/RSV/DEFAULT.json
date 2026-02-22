@@ -1,0 +1,43 @@
+{
+  "big_kind": "RSV",
+  "count": 3,
+  "instructions": [
+    {
+      "class": {
+        "note": "User: add dedicated RSV uop_kind for reserve group",
+        "source": "group_rule",
+        "uop_kind": "RSV"
+      },
+      "group": "RESERVE",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.BFI"
+    },
+    {
+      "class": {
+        "note": "User: add dedicated RSV uop_kind for reserve group",
+        "source": "group_rule",
+        "uop_kind": "RSV"
+      },
+      "group": "RESERVE",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.MIADD"
+    },
+    {
+      "class": {
+        "note": "User: add dedicated RSV uop_kind for reserve group",
+        "source": "group_rule",
+        "uop_kind": "RSV"
+      },
+      "group": "RESERVE",
+      "length_bits": [
+        48
+      ],
+      "mnemonic": "HL.MISUB"
+    }
+  ],
+  "sub_kind": "DEFAULT"
+}

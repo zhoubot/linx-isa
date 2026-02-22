@@ -1,0 +1,16 @@
+{
+  "big_kind": "CMD",
+  "sub_kinds": [
+    "BLOCK_ARGUMENT",
+    "BLOCK_DIMENSION",
+    "BLOCK_IO",
+    "BLOCK_SPLIT",
+    "DESC_B_ATTR",
+    "DESC_B_HINT",
+    "DESC_B_TEXT",
+    "Q_MANAGE",
+    "Q_POP",
+    "Q_PUSH",
+    "VEC_ENGINE_CMD engine=VEC"
+  ]
+}
